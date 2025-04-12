@@ -29,6 +29,7 @@ __all__ = [
     "tensor_parallel",
     "utils",
     "DistributedDataParallel",
+    "MyDistributedDataParallel",
     "InferenceParams",
     "ModelParallelConfig",
     "Timers",

@@ -1,6 +1,5 @@
 # Copyright (c) 2023, NVIDIA CORPORATION.  All rights reserved.
 """Pretrain GPT."""
-
 import torch
 from functools import partial
 from contextlib import nullcontext
@@ -36,7 +35,6 @@ from megatron.core.models.gpt.gpt_layer_specs import (
     get_gpt_mtp_block_spec,
 )
 from megatron.core.transformer.transformer_block import TransformerBlockSubmodules
-
 
 stimer = StragglerDetector()
 
@@ -325,10 +323,8 @@ def train_valid_test_datasets_provider(train_val_test_num_samples):
 
 
 if __name__ == "__main__":
-
     # Temporary for transition to core datasets
     train_valid_test_datasets_provider.is_distributed = True
-
     pretrain(
         train_valid_test_datasets_provider,
         model_provider,

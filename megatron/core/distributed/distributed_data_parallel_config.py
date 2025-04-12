@@ -8,6 +8,8 @@ from typing import Optional
 class DistributedDataParallelConfig:
     """Configuration for DistributedDataParallel."""
 
+    low_comm_mode: bool = True
+
     grad_reduce_in_fp32: bool = False
     """If true, reduce grads in fp32."""
 

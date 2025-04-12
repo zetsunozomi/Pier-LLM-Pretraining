@@ -19,7 +19,17 @@ _GLOBAL_ONE_LOGGER = None
 _GLOBAL_ADLR_AUTORESUME = None
 _GLOBAL_TIMERS = None
 _GLOBAL_SIGNAL_HANDLER = None
+_my_global_dict = {}
 
+def my_set_value(key,value):
+    _my_global_dict[key] = value
+
+def my_get_value(key):
+    try:
+        return _my_global_dict[key]
+    except KeyError:
+        print(f"Can't find that key!")
+        return 0
 def get_args():
     """Return arguments."""
     _ensure_var_is_initialized(_GLOBAL_ARGS, 'args')

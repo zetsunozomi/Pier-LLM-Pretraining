@@ -389,7 +389,7 @@ def main():
                                                              key, level)
             builders[key].add_index(full_partition_output_prefix)
         builders[key].finalize(output_idx_files[key])
-
+    print(f"complete!")   
 
 if __name__ == '__main__':
 

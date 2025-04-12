@@ -12,3 +12,7 @@ local/
 wandb/
 onelogger.log
 onelogger.err
+data/
+checkpoints/
+gpt-2-small-baseline-checkpoints/
+gpt2-small-logs/

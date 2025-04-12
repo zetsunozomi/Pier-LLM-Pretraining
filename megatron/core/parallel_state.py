@@ -148,6 +148,18 @@ def get_nccl_options(pg_name, nccl_comm_cfgs):
     else:
         return None
 
+def create_sub_groups(num_sub_groups, world_size):
+    assert world_size%num_sub_groups == 0, "world_size must be divisible by num_sub_groups"
+    sub_group_size = world_size // num_sub_groups
+    rank_to_group = {}
+    sub_groups = []
+    for i in range(num_sub_groups):
+        group_ranks = list(range(i * sub_group_size, (i + 1) * sub_group_size))
+        group = create_group(ranks=group_ranks)
+        sub_groups.append((group_ranks, group))
+        for rank in group_ranks:
+            rank_to_group[rank] = group
+    return rank_to_group
 
 def create_group(
     ranks=None,
@@ -324,7 +336,6 @@ def create_hierarchical_parallel_groups(
                     hierarchical_groups.append(sub_group)
         processed_group_sizes *= hierarchical_group_size
     return hierarchical_groups
-
 
 class RankGenerator(object):
     """A class for generating rank groups for different modes of parallelism."""

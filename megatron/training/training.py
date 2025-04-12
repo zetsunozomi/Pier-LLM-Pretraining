@@ -106,6 +106,8 @@ from .global_vars import (
     get_tensorboard_writer,
     get_wandb_writer,
     get_one_logger,
+    my_set_value,
+    my_get_value
 )
 from . import one_logger_utils
 
@@ -600,7 +602,6 @@ def pretrain(
 
     args = get_args()
     timers = get_timers()
-
     if args.log_progress:
         append_to_progress_log("Starting job")
 
