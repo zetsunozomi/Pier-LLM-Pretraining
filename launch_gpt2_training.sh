@@ -8,10 +8,19 @@
 #PBS -j oe
 #PBS -M sf850@scarletmail.rutgers.edu                                        
 #PBS -m bae 
+
+export NCCL_SOCKET_IFNAME=enp226s0
+export NCCL_DEBUG=INFO
+export NCCL_P2P_DISABLE=0
+export NCCL_IB_DISABLE=1
+export NCCL_SHM_DISABLE=1    
+export NCCL_LAUNCH_MODE=GROUP
+export NCCL_SHM_NAMESPACE=run_$(date +%s)
+
 module add conda
 conda activate megatron-lm
 export CUDA_DEVICE_MAX_CONNECTIONS=1
-GPUS_PER_NODE=8
+GPUS_PER_NODE=4
 # Change for multinode config
 MASTER_ADDR=localhost
 MASTER_PORT=6000
@@ -43,7 +52,7 @@ GPT_MODEL_ARGS=(
 
 TRAINING_ARGS=(
     --micro-batch-size 12
-    --global-batch-size 480
+    --global-batch-size 240
     --train-iters 100000  
     --weight-decay 0.01 
     --adam-beta1 0.9 
@@ -71,11 +80,9 @@ DATA_ARGS=(
 )
 
 EVAL_AND_LOGGING_ARGS=(
-    --log-interval 100
+    --log-interval 10
     --save-interval 1000
-    --eval-interval 1000 
-    --save $CHECKPOINT_PATH 
-    --load $CHECKPOINT_PATH 
+    --eval-interval 100 
     --eval-iters 10
     --tensorboard-dir $TENSORBOARD_LOGS_PATH 
 )

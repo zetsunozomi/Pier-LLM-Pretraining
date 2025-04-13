@@ -599,6 +599,8 @@ def pretrain(
         get_embedding_ranks=get_embedding_ranks,
         get_position_embedding_ranks=get_position_embedding_ranks
     )
+    import torch.distributed as dist
+    import datetime
 
     args = get_args()
     timers = get_timers()
@@ -2195,6 +2197,7 @@ def evaluate_and_print_results(prefix, forward_step_func,
         return
     string = f' validation loss at {prefix} | '
     for key in total_loss_dict:
+        loss_value = total_loss_dict[key].item()
         string += '{} value: {:.6E} | '.format(key, total_loss_dict[key].item())
         ppl = math.exp(min(20, total_loss_dict[key].item()))
         string += '{} PPL: {:.6E} | '.format(key, ppl)
@@ -2217,11 +2220,16 @@ def evaluate_and_print_results(prefix, forward_step_func,
 
     if process_non_loss_data_func is not None and writer and is_last_rank():
         process_non_loss_data_func(collected_non_loss_data, iteration, writer)
-
+    rank = torch.distributed.get_rank()
     length = len(string) + 1
-    print_rank_last('-' * length)
-    print_rank_last(string)
-    print_rank_last('-' * length)
+    #print_rank_last('-' * length)
+    print(f"The rank is: {rank}, the loss value is: {type(loss_value)}, {loss_value}")
+    inner_group = mpu.get_data_parallel_sub_group()
+    
+    loss_tensor = torch.tensor([loss_value], dtype=torch.float).cuda()
+    torch.distributed.all_reduce(loss_tensor,group = inner_group)
+    print(f"after inner communication, rank {rank} has {loss_tensor}")
+    #print_rank_last('-' * length)
 
 
 def cyclic_iter(iter):

@@ -50,8 +50,7 @@ class MyDistributedDataParallel(_BaseDataParallel):
         self.outer_group = parallel_state.get_data_parallel_group(with_context_parallel=True, partial_data_parallel=True)
         print(f"I'm rank {self.rank} in global group")
         # Assigning inner group: hardcode here. Assume we have 8 gpus.
-        rank_to_subgroup = parallel_state.create_sub_groups(2, parallel_state.get_data_parallel_world_size())
-        self.inner_group = rank_to_subgroup[self.rank]
+        self.inner_group = parallel_state.get_data_parallel_sub_group()
         print(f"inner group: {type(self.inner_group)}")
         print(f"outer group: {type(self.outer_group)}")
 

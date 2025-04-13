@@ -148,19 +148,6 @@ def get_nccl_options(pg_name, nccl_comm_cfgs):
     else:
         return None
 
-def create_sub_groups(num_sub_groups, world_size):
-    assert world_size%num_sub_groups == 0, "world_size must be divisible by num_sub_groups"
-    sub_group_size = world_size // num_sub_groups
-    rank_to_group = {}
-    sub_groups = []
-    for i in range(num_sub_groups):
-        group_ranks = list(range(i * sub_group_size, (i + 1) * sub_group_size))
-        group = create_group(ranks=group_ranks)
-        sub_groups.append((group_ranks, group))
-        for rank in group_ranks:
-            rank_to_group[rank] = group
-    return rank_to_group
-
 def create_group(
     ranks=None,
     timeout=None,
@@ -794,6 +781,7 @@ def initialize_model_parallel(
     # Build the data-parallel groups.
     global _DATA_PARALLEL_GROUP
     global _DATA_PARALLEL_GROUP_GLOO
+    global _DATA_PARALLEL_SUBGROUP
     global _DATA_PARALLEL_GLOBAL_RANKS
     global _DATA_PARALLEL_GROUP_WITH_CP
     global _DATA_PARALLEL_GROUP_WITH_CP_GLOO
@@ -803,6 +791,7 @@ def initialize_model_parallel(
     global _INTER_PARTIAL_DATA_PARALLEL_GROUP_WITH_CP
     assert _DATA_PARALLEL_GROUP is None, 'data parallel group is already initialized'
 
+    # Global communication group was created here.
     for ranks in generator_wrapper('dp'):
         group = create_group(
             ranks,
@@ -821,6 +810,26 @@ def initialize_model_parallel(
             _DATA_PARALLEL_GROUP_GLOO = group_gloo
             _DATA_PARALLEL_GLOBAL_RANKS = ranks
 
+    # Creating subgroups
+    world_size = torch.distributed.get_world_size()
+    # hardcode here: how many subgroups do we need?
+    num_subgroups = 2
+    assert world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly."
+    subgroup_size = world_size // num_subgroups
+    subgroup_index = rank // subgroup_size
+
+    subgroup_start = subgroup_index * subgroup_size
+    subgroup_end = subgroup_start + subgroup_size
+    subgroup_ranks = list(range(subgroup_start, subgroup_end))
+    print(f"I'm rank {rank}, see: subgroup ranks is {subgroup_ranks}")
+    if subgroup_ranks is not None:
+        _DATA_PARALLEL_SUBGROUP = create_group(
+        subgroup_ranks,
+        timeout=timeout,
+        pg_options=get_nccl_options('dp', nccl_comm_cfgs),
+        group_desc='DATA_PARALLEL_SUBGROUP',
+        )
+    
     assert (
         data_parallel_size * context_parallel_size
     ) % num_distributed_optimizer_instances == 0, (
@@ -1291,6 +1300,10 @@ def get_data_parallel_group(with_context_parallel=False, partial_data_parallel=F
         assert partial_data_parallel == False, 'Partial DP for Optimizer needs to include CP'
         return _DATA_PARALLEL_GROUP
 
+def get_data_parallel_sub_group():
+    "Get the subgroup we used in the low-communication setting."
+    assert _DATA_PARALLEL_SUBGROUP is not None, "subgroup is not initialized"
+    return _DATA_PARALLEL_SUBGROUP
 
 def get_data_parallel_group_gloo(with_context_parallel=False, partial_data_parallel=False):
     """Get the Gloo data-parallel group the caller rank belongs to."""
