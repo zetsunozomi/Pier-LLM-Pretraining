@@ -218,9 +218,9 @@ def loss_func(loss_mask: torch.Tensor, output_tensor: torch.Tensor):
             fatal=False,
         )
     # Reduce loss for logging.
+    # For the logging loss, we always use the reduced loss, in the current validation implementation the model weight are not the same among subgroups.
     reporting_loss = loss.clone().detach()
-    # What if we don't all reduce on loss?
-    # torch.distributed.all_reduce(reporting_loss, group=mpu.get_data_parallel_sub_group())
+    torch.distributed.all_reduce(reporting_loss, group=mpu.get_data_parallel_group())
 
     # loss[0] is a view of loss, so it has ._base not None, which triggers assert error
     # in core/pipeline_parallel/schedule.py::deallocate_output_tensor, calling .clone()

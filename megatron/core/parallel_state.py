@@ -813,22 +813,29 @@ def initialize_model_parallel(
     # Creating subgroups
     world_size = torch.distributed.get_world_size()
     # hardcode here: how many subgroups do we need?
-    num_subgroups = 2
+    num_subgroups = 8
     assert world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly."
     subgroup_size = world_size // num_subgroups
-    subgroup_index = rank // subgroup_size
+    all_subgroup_ranks = []
 
-    subgroup_start = subgroup_index * subgroup_size
-    subgroup_end = subgroup_start + subgroup_size
-    subgroup_ranks = list(range(subgroup_start, subgroup_end))
-    print(f"I'm rank {rank}, see: subgroup ranks is {subgroup_ranks}")
-    if subgroup_ranks is not None:
-        _DATA_PARALLEL_SUBGROUP = create_group(
-        subgroup_ranks,
-        timeout=timeout,
-        pg_options=get_nccl_options('dp', nccl_comm_cfgs),
-        group_desc='DATA_PARALLEL_SUBGROUP',
+    for i in range(num_subgroups):
+        start = i * subgroup_size
+        end = start + subgroup_size
+        subgroup_ranks = list(range(start, end))
+        all_subgroup_ranks.append(subgroup_ranks)
+    print(f"We have subgroups: {all_subgroup_ranks}")
+    _DATA_PARALLEL_SUBGROUP = None
+    for i, ranks in enumerate(all_subgroup_ranks):
+        group = create_group(
+            ranks = ranks,
+            timeout=timeout,
+            pg_options=get_nccl_options('dp', nccl_comm_cfgs),
+            group_desc='DATA_PARALLEL_SUB_GROUP',
         )
+        if rank in ranks:
+            _DATA_PARALLEL_SUBGROUP = group
+            print(f"[Rank {rank}] belongs to subgroup {i}, ranks: {ranks}")
+
     
     assert (
         data_parallel_size * context_parallel_size

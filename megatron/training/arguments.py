@@ -2082,6 +2082,10 @@ def _add_distributed_args(parser):
                        "and must be consistent across all ranks.")
     group.add_argument('--replication-factor', default=2, type=int,
                        help="Number of machines storing the replica of a given rank's data.")
+    group.add_argument('--outer-sync-interval',default=100,type=int,
+                        help="The number of interations that we wait after each outer sync.")
+    group.add_argument('--outer-optimizer',default="SGDM",type=str,
+                        help="Select the outer optimizer")
     return parser
 
 

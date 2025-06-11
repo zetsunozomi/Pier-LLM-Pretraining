@@ -112,6 +112,8 @@ from .global_vars import (
 from . import one_logger_utils
 
 from . import ft_integration
+    
+import hashlib
 
 stimer = StragglerDetector()
 
@@ -757,6 +759,7 @@ def pretrain(
                                    iteration, process_non_loss_data_func, config,
                                    verbose=True, write_to_tensorboard=not args.skip_train,
                                    non_loss_data_func=non_loss_data_func)
+
 
     if args.do_test:
         prefix = f'iteration {iteration} on test set'
@@ -1724,6 +1727,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     args = get_args()
     timers = get_timers()
     one_logger = get_one_logger()
+    rank = torch.distributed.get_rank()
 
     if args.run_workload_inspector_server:
         try:
@@ -1862,9 +1866,35 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
             "Parameter hashes not matching across DP replicas"
         torch.distributed.barrier()
         print_rank_0(f">>> Weight hashes match after {iteration} iterations...")
-
+    def get_master_weights(optimizer):
+        return{
+            id(p): p.detach().cpu().clone()
+            for group in optimizer.param_groups 
+            for p in group['params']
+        }
+    # Save model parameter in CPU for reference
+    if rank == 0:
+        reference = get_master_weights(optimizer)
+        look_ahead_point = get_master_weights(optimizer)
+    else:
+        reference = None
+        look_ahead_point = None
     # Run training iterations till done.
+    def get_optimizer_checksum(optimizer):
+        os.environ["OMP_NUM_THREADS"] = "1"
+        os.environ["MKL_NUM_THREADS"] = "1"
+        os.environ["OPENBLAS_NUM_THREADS"] = "1"
+        m = hashlib.sha256()
+        for group in optimizer.param_groups:
+            for p in group['params']:
+                p_data = p.detach().to(dtype=torch.float32, device='cpu')
+                m.update(p_data.numpy().tobytes())
+        return m.hexdigest()
+    similarity_log = "similarity.log"
     while iteration < args.train_iters:
+        # Before this iteration begun, check the checksum of optimzier model.
+        # print(f"iteration {iteration}")
+        # print(f"check sum of optimizer of rank {rank} is {get_optimizer_checksum(optimizer)}")
         if args.profile and torch.distributed.get_rank() in args.profile_ranks:
             if args.use_pytorch_profiler:
                 prof.step()
@@ -1980,7 +2010,128 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                                           iteration, loss_scale,
                                           report_memory_flag, skipped_iter,
                                           grad_norm, params_norm, num_zeros_in_grad)
+        momentum_buffer = {}
+        if iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0:
+            if args.outer_optimizer=="SGD-M":
+                # load reference into gpu, Calculate delta in each GPU, and allreduce.
+                delta = {}
+                outer_lr = 1
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # rank 0 load from gpu
+                        if rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=0)
 
+                        # Calculate delta
+                        delta_tensor = reference_gpu- p.detach() 
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
+
+                        # Update momentum buffer
+                        if key not in momentum_buffer:
+                            momentum_buffer[key] = torch.zeros_like(p)
+                        momentum_buffer[key].mul_(0.9).add_(delta_tensor)
+                        # TODO:这里的momentum buffer是要存checkpoint的
+                        theta_new = reference_gpu - outer_lr * momentum_buffer[key]
+                        p.data.copy_(theta_new)
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+            elif args.outer_optimizer=="nesterov":
+                delta = {}
+                outer_lr = 1
+                momentum_decay = 0.9
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # restore look_ahead_point instead of reference for delta calculation.
+                        if rank == 0:
+                            look_ahead_point_gpu = look_ahead_point[key].to(p.device)
+                        else:
+                            look_ahead_point_gpu = torch.empty_like(p)
+                        # Other ranks receive from rank0
+                        torch.distributed.broadcast(look_ahead_point_gpu,src=0)
+
+                        # Calculate delta and allreduce.
+                        delta_tensor = look_ahead_point_gpu - p.detach()
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
+
+                        # Initialize momentum buffer if needed
+                        # TODO:这里的momentum buffer是要存checkpoint的
+                        if key not in momentum_buffer:
+                            momentum_buffer[key] = torch.zeros_like(p)
+                        # update momentum
+                        momentum_buffer[key].mul_(momentum_decay).add_(delta_tensor)
+
+                        # Maybe we need to delete lookahead here in GPU Memory to avoid OOM
+                        del look_ahead_point_gpu
+
+                        # Go back to "reference" point
+                        if rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=0)
+                        theta_new = reference_gpu - outer_lr * momentum_buffer[key]
+                        p.data.copy_(theta_new)
+                # Quit forloop of param groups. Save reference: It's true weight at the end of last nesterov step.
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+                # Move one step for look ahead, our gradient was calculated here.
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        look_ahead = p.detach() - momentum_decay * momentum_buffer[key]
+                        p.data.copy_(look_ahead)
+                # Save the start point of look_ahead for calculation of delta
+                if rank == 0:
+                    look_ahead_point = get_master_weights(optimizer)
+            elif args.outer_optimizer=="pytorch_nesterov":
+                miu = 0.9
+                # load reference into gpu, Calculate delta in each GPU, and allreduce.
+                delta = {}
+                # add 2000 step warmup here
+                if iteration < 22000:
+                    outer_lr = (iteration - 20000)/2000
+                else:
+                    outer_lr = 1
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # rank 0 load from gpu
+                        if rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=0)
+                        # Calculate delta
+                        delta_tensor = reference_gpu - p.detach() 
+                        delta_tensor_local = delta_tensor.clone()
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
+                        # Check cos similarity of each delta 
+                        import torch.nn.functional as F
+                        cos_sim = F.cosine_similarity(delta_tensor_local.view(1, -1), delta_tensor.view(1, -1), dim=1).item()
+                        #with open(similarity_log, 'a') as f:
+                        #    f.write(f"iteration {iteration}, [rank {rank}] cosine similarity: {cos_sim:.6f}\n")
+                        # Update momentum buffer
+                        if key not in momentum_buffer:
+                            momentum_buffer[key] = torch.zeros_like(p)
+                        momentum_buffer[key].mul_(miu).add_(delta_tensor)
+                        # TODO: 这里的momentum buffer是要存checkpoint的
+                        theta_new = reference_gpu - outer_lr * (delta_tensor + miu * momentum_buffer[key])
+                        p.data.copy_(theta_new)
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+            else:
+                print(f"Outer optimizer {args.outer_optimizer} is not supported!")
+                quit()
+        # print(f"iteration {iteration} Before Evaluation:")
+        # print(f"check sum of optimizer of rank {rank} is {get_optimizer_checksum(optimizer)}")
         # Evaluation.
         if args.eval_interval and iteration % args.eval_interval == 0 and \
             args.do_valid:
@@ -2222,15 +2373,22 @@ def evaluate_and_print_results(prefix, forward_step_func,
         process_non_loss_data_func(collected_non_loss_data, iteration, writer)
     rank = torch.distributed.get_rank()
     length = len(string) + 1
-    #print_rank_last('-' * length)
-    print(f"The rank is: {rank}, the loss value is: {type(loss_value)}, {loss_value}")
-    inner_group = mpu.get_data_parallel_sub_group()
+    if rank == 0:
+        print(f"The loss value is: {type(loss_value)}, {loss_value}")
+    '''
+    core_model = model[0].module.module # one module for ddp, one module for fp16
+    m = hashlib.sha256()
+    torch.set_num_threads(1)
+    os.environ["OMP_NUM_THREADS"] = "1"
+    os.environ["MKL_NUM_THREADS"] = "1"
+    os.environ["OPENBLAS_NUM_THREADS"] = "1"
+    for name, param in core_model.named_parameters():
+        param_fp32 = param.detach().to(dtype=torch.float32, device='cpu')
+        m.update(param_fp32.numpy().tobytes())
+    m = m.hexdigest()
+    print(f"The rank is: {rank}, the check sum of forward model is: {m}")
+    '''
     
-    loss_tensor = torch.tensor([loss_value], dtype=torch.float).cuda()
-    torch.distributed.all_reduce(loss_tensor,group = inner_group)
-    print(f"after inner communication, rank {rank} has {loss_tensor}")
-    #print_rank_last('-' * length)
-
 
 def cyclic_iter(iter):
     while True:

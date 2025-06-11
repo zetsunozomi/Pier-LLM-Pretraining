@@ -16,7 +16,7 @@ export NCCL_IB_DISABLE=1
 module add conda
 conda activate megatron-lm
 export CUDA_DEVICE_MAX_CONNECTIONS=1
-GPUS_PER_NODE=8
+GPUS_PER_NODE=2
 # Change for multinode config
 MASTER_ADDR=localhost
 MASTER_PORT=6000
@@ -24,7 +24,7 @@ NUM_NODES=1
 NODE_RANK=0
 WORLD_SIZE=$(($GPUS_PER_NODE*$NUM_NODES))
 
-CHECKPOINT_PATH=/lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/checkpoints
+CHECKPOINT_PATH=/lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/gpt2-small-logs/exp7
 TENSORBOARD_LOGS_PATH=/lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/logs
 VOCAB_FILE=/lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/data/gpt2-vocab.json
 MERGE_FILE=/lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/data/gpt2-merges.txt
@@ -47,18 +47,18 @@ GPT_MODEL_ARGS=(
 )
 
 TRAINING_ARGS=(
-    --micro-batch-size 16
-    --global-batch-size 512
+    --micro-batch-size 12
+    --global-batch-size 480
     --train-iters 100000  
-    --weight-decay 0.1
+    --weight-decay 0.01 
     --adam-beta1 0.9 
     --adam-beta2 0.999
     --init-method-std 0.02
     --clip-grad 1.0 
     --bf16
-    --lr 4e-4
+    --lr 1e-4
     --lr-decay-style cosine 
-    --min-lr 4e-5
+    --min-lr 1e-5
     --lr-warmup-iters 2000
     --lr-decay-iters 100000   
 )
@@ -77,28 +77,19 @@ DATA_ARGS=(
 
 EVAL_AND_LOGGING_ARGS=(
     --log-interval 10
-    --save-interval 4000
+    --save-interval 5000
     --eval-interval 1000
     --save $CHECKPOINT_PATH 
     --load $CHECKPOINT_PATH 
     --eval-iters 10
     --tensorboard-dir $TENSORBOARD_LOGS_PATH 
-    --ckpt-format torch
+
 )
 # --load-iteration 1000
-torchrun ${DISTRIBUTED_ARGS[@]} /lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/pretrain_gpt.py \
+torchrun ${DISTRIBUTED_ARGS[@]} /lus/eagle/projects/Local-LLM/shuyuanfan/Megatron-LM/pretrain_gpt.py \
     ${GPT_MODEL_ARGS[@]} \
     ${TRAINING_ARGS[@]} \
     ${MODEL_PARALLEL_ARGS[@]} \
     ${DATA_ARGS[@]} \
-    ${EVAL_AND_LOGGING_ARGS[@]}\
-    --transformer-impl local \
-    --outer-sync-interval 50 \
-    --outer-optimizer pytorch_nesterov \
-    --use-legacy-models
 
-# Using subgroup number == 8
-# Several parameter was changed:
-# weight decay 0.01 -> 0.1
-# lr 4e-4 -> 1e-4
-# batchsize 12/480 -> 16/512
+
