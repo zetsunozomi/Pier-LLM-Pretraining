@@ -835,8 +835,6 @@ def initialize_model_parallel(
         if rank in ranks:
             _DATA_PARALLEL_SUBGROUP = group
             print(f"[Rank {rank}] belongs to subgroup {i}, ranks: {ranks}")
-
-    
     assert (
         data_parallel_size * context_parallel_size
     ) % num_distributed_optimizer_instances == 0, (

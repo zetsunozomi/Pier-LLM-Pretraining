@@ -17,3 +17,6 @@ checkpoints/
 gpt-2-small-baseline-checkpoints/
 gpt2-small-logs/
 NOTE.md
+Plans.md
+checkpoints_at_20000
+momentum_buffer_at_120000.pt

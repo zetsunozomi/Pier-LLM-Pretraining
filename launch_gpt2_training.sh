@@ -94,11 +94,12 @@ torchrun ${DISTRIBUTED_ARGS[@]} /lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/
     ${EVAL_AND_LOGGING_ARGS[@]}\
     --transformer-impl local \
     --outer-sync-interval 50 \
-    --outer-optimizer pytorch_nesterov \
+    --outer-optimizer lars \
     --use-legacy-models
 
 # Using subgroup number == 8
-# Several parameter was changed:
-# weight decay 0.01 -> 0.1
-# lr 4e-4 -> 1e-4
-# batchsize 12/480 -> 16/512
+# outer learning rate using warmup.
+# Double training steps.
+# weight decay 0.1
+# lr 4e-4 
+# batchsize 16/512
