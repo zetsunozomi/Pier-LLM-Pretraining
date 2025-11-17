@@ -1895,7 +1895,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     # parameter id to name map
     param_id_to_name = {(p.shape, p.data_ptr()): name for name, p in model[0].module.named_parameters()}
     momentum_buffer = []
-    momentum_checkpoint_path = "/lus/eagle/projects/Local-LLM/shuyuanfan/Diloco/checkpoints/momentum_buffer.pt"
+    momentum_checkpoint_path = os.path.join(args.save, "momentum_buffer.pt")
     # initialize momentum buffer.
     if os.path.exists(momentum_checkpoint_path):
         loaded_state = torch.load(momentum_checkpoint_path, map_location="cpu")
@@ -1974,6 +1974,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
         ft_integration.on_training_step_end()
         if iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
             if args.outer_optimizer=="SGD-M":
+                miu==0.9
                 # load reference into gpu, Calculate delta in each GPU, and allreduce.
                 delta = {}
                 outer_lr = 1
@@ -1989,15 +1990,15 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         torch.distributed.broadcast(reference_gpu,src=0)
 
                         # Calculate delta
-                        delta_tensor = reference_gpu- p.detach() 
+                        delta_tensor = reference_gpu - p.detach() 
                         torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
 
                         # Update momentum buffer
-                        if key not in momentum_buffer:
-                            momentum_buffer[key] = torch.zeros_like(p)
-                        momentum_buffer[key].mul_(0.9).add_(delta_tensor)
-                        theta_new = reference_gpu - outer_lr * momentum_buffer[key]
+                        p_momentum = momentum_buffer[momentum_idx]
+                        p_momentum.mul_(miu).add_(delta_tensor)
+                        theta_new = reference_gpu - outer_lr * (miu * p_momentum)
                         p.data.copy_(theta_new)
+                        momentum_idx+=1
                 if rank == 0:
                     reference = get_master_weights(optimizer)
             elif args.outer_optimizer=="nesterov":
@@ -2051,15 +2052,52 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                 if rank == 0:
                     look_ahead_point = get_master_weights(optimizer)
             elif args.outer_optimizer=="pytorch_nesterov":
-                miu = 0.9
+                # For subgroup 32 weak scaling, changed steps.
+                if iteration < 3750:
+                    miu = 0.99
+                elif iteration < 5000:
+                    miu = 0.95
+                else: 
+                    miu = 0.9
+                lr_warmup_steps = 2500
+                '''
+                # code for large miu start.
+                lr_warmup_steps = 10000
+                if iteration < 15000:
+                    miu = 0.99
+                elif iteration < 20000:
+                    miu = 0.95
+                else: 
+                    miu = 0.9
+                # code for miu warmup
+                
+                miu_min = 0.5
+                miu_max = 0.95
                 # load reference into gpu, Calculate delta in each GPU, and allreduce.
                 delta = {}
-                # add 2000 step warmup here
-                #if iteration < 22000:
-                #    outer_lr = (iteration - 20000)/2000
-                #else:
-                #    outer_lr = 1
-                outer_lr = 1
+                
+                miu_warmup_steps=5000
+                if iteration - start_iteration < miu_warmup_steps:
+                    miu = miu_min + (miu_max - miu_min)*(iteration - start_iteration)/miu_warmup_steps
+                else:
+                    miu = miu_max
+                '''
+                #if rank == 0:
+                #    print(f"miu = {miu}")
+                # determine the base_lr automatically?
+                if iteration > 20000:
+                    base_lr = 0.9
+                elif iteration < 5000:
+                    base_lr = 1
+                else:
+                    base_lr = 1.1
+                if iteration - 5000 < lr_warmup_steps:
+                    outer_lr = base_lr * (iteration - 5000)/lr_warmup_steps
+                else:
+                    outer_lr = base_lr
+                #if rank == 0:
+                #    print(f"lr = {outer_lr}")
+                
                 momentum_idx = 0
                 for group in optimizer.param_groups:
                     for p in group['params']:
@@ -2073,7 +2111,6 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         torch.distributed.broadcast(reference_gpu,src=0)
                         # Calculate delta
                         delta_tensor = reference_gpu - p.detach() 
-                        delta_tensor_local = delta_tensor.clone()
                         torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
                         # Check cos similarity of each delta 
                         #import torch.nn.functional as F
@@ -2083,7 +2120,6 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         # Update momentum buffer
                         p_momentum = momentum_buffer[momentum_idx]
                         p_momentum.mul_(miu).add_(delta_tensor)
-                        # TODO: 这里的momentum buffer是要存checkpoint的
                         theta_new = reference_gpu - outer_lr * (delta_tensor + miu * p_momentum)
                         p.data.copy_(theta_new)
                         momentum_idx+=1

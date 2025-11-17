@@ -181,7 +181,6 @@ class MyDistributedDataParallel(_BaseDataParallel):
                         )
                 else:
                     assert gradient_scaling_factor == target_gradient_scaling_factor
-
             # Allocate the grad buffers and map the grads.
             buffers = []
             for (param_dtype, grad_dtype), params in param_and_grad_dtype_to_params.items():
@@ -281,7 +280,6 @@ class MyDistributedDataParallel(_BaseDataParallel):
 
                 gradient_scaling_factor = 1.0 / data_parallel_world_size
                 expert_gradient_scaling_factor = 1.0 / data_parallel_world_size
-
         # Allocate the param+grad buffers for dense params' grads.
         self.buffers, self.bucket_groups = _allocate_buffers_for_parameters(
             dense_params,

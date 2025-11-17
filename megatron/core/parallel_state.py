@@ -813,7 +813,7 @@ def initialize_model_parallel(
     # Creating subgroups
     world_size = torch.distributed.get_world_size()
     # hardcode here: how many subgroups do we need?
-    num_subgroups = 8
+    num_subgroups = 1
     assert world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly."
     subgroup_size = world_size // num_subgroups
     all_subgroup_ranks = []
