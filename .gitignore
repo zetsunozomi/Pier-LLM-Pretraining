@@ -18,10 +18,11 @@ gpt-2-small-baseline-checkpoints/
 gpt2-small-logs/
 NOTE.md
 Plans.md
+
 checkpoints_at_10000_32(small)
 momentum_buffer_at_120000.pt
 exp
 checkpoints_at_20000
 benchmark*
 launch*
-convert_from_dist.sh
+
