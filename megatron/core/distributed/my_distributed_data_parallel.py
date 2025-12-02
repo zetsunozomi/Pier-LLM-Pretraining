@@ -51,8 +51,6 @@ class MyDistributedDataParallel(_BaseDataParallel):
         print(f"I'm rank {self.rank} in global group")
         # Assigning inner group: hardcode here. Assume we have 8 gpus.
         self.inner_group = parallel_state.get_data_parallel_sub_group()
-        print(f"inner group: {type(self.inner_group)}")
-        print(f"outer group: {type(self.outer_group)}")
 
         # If bucket_size is not provided as an input, use sane default.
         # If using very large dp_sizes, make buckets larger to ensure that chunks used in NCCL
