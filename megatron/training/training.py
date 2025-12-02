@@ -2103,27 +2103,25 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                     for p in group['params']:
                         key = id(p)
                         # rank 0 load from gpu
-                        if rank == 0:
+                        if dp_rank == 0:
                             reference_gpu = reference[key].to(p.device)
                         else:
                             reference_gpu = torch.empty_like(p)
                         # Others receive from rank0
-                        torch.distributed.broadcast(reference_gpu,src=0)
+                        torch.distributed.broadcast(reference_gpu,src=0,group=dp_group)
                         # Calculate delta
                         delta_tensor = reference_gpu - p.detach() 
-                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
-                        # Check cos similarity of each delta 
-                        #import torch.nn.functional as F
-                        #cos_sim = F.cosine_similarity(delta_tensor_local.view(1, -1), delta_tensor.view(1, -1), dim=1).item()
-                        #with open(similarity_log, 'a') as f:
-                        #    f.write(f"iteration {iteration}, [rank {rank}] cosine similarity: {cos_sim:.6f}\n")
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG, group=dp_group)
                         # Update momentum buffer
-                        p_momentum = momentum_buffer[momentum_idx]
-                        p_momentum.mul_(miu).add_(delta_tensor)
-                        theta_new = reference_gpu - outer_lr * (delta_tensor + miu * p_momentum)
+                        p_momentum_cpu = momentum_buffer[momentum_idx]
+                        p_momentum_gpu = p_momentum_cpu.to(p.device,non_blocking=True)
+                        p_momentum_gpu.mul_(miu).add_(delta_tensor)
+                        momentum_buffer[momentum_idx] = p_momentum_gpu.cpu()
+
+                        theta_new = reference_gpu - outer_lr * (delta_tensor + miu * p_momentum_gpu)
                         p.data.copy_(theta_new)
                         momentum_idx+=1
-                if rank == 0:
+                if dp_rank == 0:
                     reference = get_master_weights(optimizer)
             elif args.outer_optimizer=="lars":
                 # load reference into gpu, Calculate delta in each GPU, and allreduce.

@@ -446,6 +446,7 @@ def initialize_model_parallel(
     get_embedding_ranks: Optional[Callable[[List[int], Optional[int]], List[int]]] = None,
     get_position_embedding_ranks: Optional[Callable[[List[int], Optional[int]], List[int]]] = None,
     create_gloo_process_groups: bool = True,
+    num_subgroups: int = 1,
 ) -> None:
     # pylint: disable=line-too-long
     """Initialize model data parallel groups.
@@ -810,31 +811,6 @@ def initialize_model_parallel(
             _DATA_PARALLEL_GROUP_GLOO = group_gloo
             _DATA_PARALLEL_GLOBAL_RANKS = ranks
 
-    # Creating subgroups
-    world_size = torch.distributed.get_world_size()
-    # hardcode here: how many subgroups do we need?
-    num_subgroups = 1
-    assert world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly."
-    subgroup_size = world_size // num_subgroups
-    all_subgroup_ranks = []
-
-    for i in range(num_subgroups):
-        start = i * subgroup_size
-        end = start + subgroup_size
-        subgroup_ranks = list(range(start, end))
-        all_subgroup_ranks.append(subgroup_ranks)
-    print(f"We have subgroups: {all_subgroup_ranks}")
-    _DATA_PARALLEL_SUBGROUP = None
-    for i, ranks in enumerate(all_subgroup_ranks):
-        group = create_group(
-            ranks = ranks,
-            timeout=timeout,
-            pg_options=get_nccl_options('dp', nccl_comm_cfgs),
-            group_desc='DATA_PARALLEL_SUB_GROUP',
-        )
-        if rank in ranks:
-            _DATA_PARALLEL_SUBGROUP = group
-            print(f"[Rank {rank}] belongs to subgroup {i}, ranks: {ranks}")
     assert (
         data_parallel_size * context_parallel_size
     ) % num_distributed_optimizer_instances == 0, (
@@ -1149,6 +1125,43 @@ def initialize_model_parallel(
         )
         if rank in ranks:
             _TENSOR_AND_CONTEXT_PARALLEL_GROUP = group
+
+    # Creating subgroups
+    dp_world_size = get_data_parallel_world_size()
+    tp_world_size = get_tensor_model_parallel_world_size()
+    # hardcode here: how many subgroups do we need?
+    if rank == 0:
+        print(f"world_size: {world_size}, dp_size: {dp_world_size}, tp_size: {tp_world_size}, diloco_subgroup_size: {num_subgroups}")
+    assert dp_world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly, expected dp_size < num_subgroups"
+    subgroup_size = dp_world_size // num_subgroups
+    all_subgroup_ranks = []
+
+    if rank == 0:
+        print(f"dp worldsize:{dp_world_size}, subgroup size: {num_subgroups}, tp worldsize: {tp_world_size}")
+        print(f"expected {num_subgroups*tp_world_size} subgroups in total")
+    assert dp_world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly."
+    dp_subgroup_size = dp_world_size // num_subgroups
+    dp_subgroups = [
+        list(range(i*dp_subgroup_size, (i+1)*dp_subgroup_size))
+        for i in range(num_subgroups)
+    ]
+    all_subgroup_ranks = []
+    for dp_sub in dp_subgroups:
+            for tp in range(tp_world_size):
+                grp = [dp * tp_world_size + tp for dp in dp_sub]
+                all_subgroup_ranks.append(grp)
+    print(f"We have subgroups: {all_subgroup_ranks}")
+    _DATA_PARALLEL_SUBGROUP = None
+    for i, ranks in enumerate(all_subgroup_ranks):
+        group = create_group(
+            ranks = ranks,
+            timeout=timeout,
+            pg_options=get_nccl_options('dp', nccl_comm_cfgs),
+            group_desc='DATA_PARALLEL_SUB_GROUP',
+        )
+        if rank in ranks:
+            _DATA_PARALLEL_SUBGROUP = group
+            print(f"[Rank {rank}] belongs to subgroup {i}, ranks: {ranks}")
 
     ### Expert-related parallel groups initialization
     # Build the expert model parallel group
