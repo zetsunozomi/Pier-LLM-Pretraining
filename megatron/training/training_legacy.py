@@ -2026,7 +2026,85 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
 
         # standard diloco with our momentum tuning strategy
         elif iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
-            if args.outer_optimizer=="pytorch_nesterov":
+            if args.outer_optimizer=="SGD-M":
+                miu==0.9
+                # load reference into gpu, Calculate delta in each GPU, and allreduce.
+                delta = {}
+                outer_lr = 1
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # rank 0 load from gpu
+                        if rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=0)
+
+                        # Calculate delta
+                        delta_tensor = reference_gpu - p.detach() 
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
+
+                        # Update momentum buffer
+                        p_momentum = momentum_buffer[momentum_idx]
+                        p_momentum.mul_(miu).add_(delta_tensor)
+                        theta_new = reference_gpu - outer_lr * (miu * p_momentum)
+                        p.data.copy_(theta_new)
+                        momentum_idx+=1
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+            elif args.outer_optimizer=="nesterov":
+                delta = {}
+                outer_lr = 1
+                momentum_decay = 0.9
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # restore look_ahead_point instead of reference for delta calculation.
+                        if rank == 0:
+                            look_ahead_point_gpu = look_ahead_point[key].to(p.device)
+                        else:
+                            look_ahead_point_gpu = torch.empty_like(p)
+                        # Other ranks receive from rank0
+                        torch.distributed.broadcast(look_ahead_point_gpu,src=0)
+
+                        # Calculate delta and allreduce.
+                        delta_tensor = look_ahead_point_gpu - p.detach()
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
+
+                        # Initialize momentum buffer if needed
+                        # TODO:这里的momentum buffer是要存checkpoint的
+                        if key not in momentum_buffer:
+                            momentum_buffer[key] = torch.zeros_like(p)
+                        # update momentum
+                        momentum_buffer[key].mul_(momentum_decay).add_(delta_tensor)
+
+                        # Maybe we need to delete lookahead here in GPU Memory to avoid OOM
+                        del look_ahead_point_gpu
+
+                        # Go back to "reference" point
+                        if rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=0)
+                        theta_new = reference_gpu - outer_lr * momentum_buffer[key]
+                        p.data.copy_(theta_new)
+                # Quit forloop of param groups. Save reference: It's true weight at the end of last nesterov step.
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+                # Move one step for look ahead, our gradient was calculated here.
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        look_ahead = p.detach() - momentum_decay * momentum_buffer[key]
+                        p.data.copy_(look_ahead)
+                # Save the start point of look_ahead for calculation of delta
+                if rank == 0:
+                    look_ahead_point = get_master_weights(optimizer)
+            elif args.outer_optimizer=="pytorch_nesterov":
                 # For subgroup 32 weak scaling, changed steps.
                 if iteration < 3750:
                     miu = 0.99
@@ -2098,6 +2176,46 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         momentum_idx+=1
                 if dp_rank == 0:
                     reference = get_master_weights(optimizer)
+            '''
+            elif args.outer_optimizer=="lars":
+                # load reference into gpu, Calculate delta in each GPU, and allreduce.
+                delta = {}
+                # add warmup here
+                warmup_steps = 4000
+                if iteration < (20000 + warmup_steps):
+                    outer_lr = (iteration - 20000)/warmup_steps
+                else:
+                    outer_lr = 1
+                epsilon = 1e-8
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # rank 0 load from gpu
+                        if rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=0)
+
+                        # Calculate delta
+                        delta_tensor = reference_gpu - p.detach() 
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG)
+
+                        # Calculate lars scale
+                        param_norm = reference_gpu.norm()
+                        update_norm = delta_tensor.norm()
+                        lars_scale = param_norm / (update_norm + epsilon)
+
+                        # Update momentum buffer
+                        if key not in momentum_buffer:
+                            momentum_buffer[key] = torch.zeros_like(p)
+                        momentum_buffer[key].mul_(0.9).add_(delta_tensor)
+                        theta_new = reference_gpu - outer_lr * lars_scale * momentum_buffer[key]
+                        p.data.copy_(theta_new)
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+            '''
             else:
                 print(f"Outer optimizer {args.outer_optimizer} is not supported!")
                 quit()
