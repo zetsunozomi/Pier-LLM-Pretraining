@@ -1201,6 +1201,13 @@ def train_step(forward_step_func, data_iterator,
         unwrapped_model.cancel_gradients_last_layer(args.curr_iteration)
 
     # Update parameters.
+    if args.curr_iteration < args.momentum_warmup_steps:
+        for group in optimizer.param_groups:
+            for p in group['params']:
+                if p.grad is not None:
+                    torch.distributed.all_reduce(p.grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
+                elif hasattr(p, 'main_grad') and p.main_grad is not None:
+                    torch.distributed.all_reduce(p.main_grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
 
     timers('optimizer', log_level=1).start(barrier=args.barrier_with_L1_time)
     update_successful, grad_norm, num_zeros_in_grad = optimizer.step()
@@ -1918,7 +1925,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     for i, p in enumerate(optim_params):
         if i < len(loaded_state):
             # momentum_buffer.append(loaded_state[i].to(p.device))
-            momentum_buffer.appennd(loaded_state[i])
+            momentum_buffer.append(loaded_state[i])
         else:
             momentum_buffer.append(torch.zeros_like(p, device='cpu'))
 
@@ -1979,7 +1986,45 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                        opt_param_scheduler,
                        config)
         ft_integration.on_training_step_end()
-        if iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
+        if iteration == args.momentum_warmup_steps:
+            if rank == 0:
+                print(f"Switching from Momentum Produce to DiLoCo mode. Loss oscillation may occur.")
+        # momentum produce
+        if iteration < args.momentum_warmup_steps:
+            if iteration % args.outer_sync_interval == 0 and iteration != starting_iteration:
+                miu = 0.9
+                # load reference into gpu, Calculate delta in each GPU, and allreduce.
+                momentum_idx = 0
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # rank 0 load from gpu
+                        if dp_rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=tp_rank, group=dp_group)
+                        # Calculate delta
+                        delta_tensor = reference_gpu - p.detach() 
+                        # Update momentum buffer
+                        p_momentum_cpu = momentum_buffer[momentum_idx]
+                        p_momentum_gpu = p_momentum_cpu.to(p.device,non_blocking=True)
+                        p_momentum_gpu.mul_(miu).add_(delta_tensor)
+
+                        momentum_buffer[momentum_idx] = p_momentum_gpu.cpu()
+                        momentum_idx+=1
+                if rank == 0:
+                    reference = get_master_weights(optimizer)
+                    print(f"successfully updated simulated momentum")
+                if dp_rank == 0 and iteration % args.save_interval == 0 and iteration != starting_iteration:
+                    print(f"dp{dp_rank},tp{tp_rank} is saving momentum buffer at iteration {iteration}")
+                    # momentum_to_save = [buf.cpu() for buf in momentum_buffer]
+                    torch.save(momentum_buffer, momentum_checkpoint_path)
+                    print(f"dp{dp_rank},tp{tp_rank} saved to {momentum_checkpoint_path} at {iteration}")
+
+        # standard diloco with our momentum tuning strategy
+        elif iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
             if args.outer_optimizer=="SGD-M":
                 miu==0.9
                 # load reference into gpu, Calculate delta in each GPU, and allreduce.
