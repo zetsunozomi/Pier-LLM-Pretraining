@@ -1126,31 +1126,28 @@ def initialize_model_parallel(
         if rank in ranks:
             _TENSOR_AND_CONTEXT_PARALLEL_GROUP = group
 
-    # Creating subgroups
+    #----------------------------------Modified Subgroup Creation Start -----------------------------
     dp_world_size = get_data_parallel_world_size()
-    tp_world_size = get_tensor_model_parallel_world_size()
-    # hardcode here: how many subgroups do we need?
+    
     if rank == 0:
-        print(f"world_size: {world_size}, dp_size: {dp_world_size}, tp_size: {tp_world_size}, diloco_subgroup_size: {num_subgroups}")
-    assert dp_world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly, expected dp_size < num_subgroups"
-    subgroup_size = dp_world_size // num_subgroups
+        print(f"Subgroup creation: dp_size={dp_world_size}, num_subgroups={num_subgroups}")
+
+    assert dp_world_size % num_subgroups == 0, f"Can't divide ranks into subgroups evenly. dp_size={dp_world_size}, num_subgroups={num_subgroups}"
+    
     all_subgroup_ranks = []
+    # generator_wrapper('dp') yields global ranks for each DP group.
+    # We iterate over all of them (covering all TP and PP ranks) and split each DP group.
+    for ranks in generator_wrapper('dp'):
+        # ranks is a list of global ranks in one DP group.
+        # Its length should be dp_world_size.
+        chunk_size = len(ranks) // num_subgroups
+        for i in range(num_subgroups):
+            subgroup = ranks[i*chunk_size : (i+1)*chunk_size]
+            all_subgroup_ranks.append(subgroup)
 
     if rank == 0:
-        print(f"dp worldsize:{dp_world_size}, subgroup size: {num_subgroups}, tp worldsize: {tp_world_size}")
-        print(f"expected {num_subgroups*tp_world_size} subgroups in total")
-    assert dp_world_size % num_subgroups == 0, "Can't divide ranks into subgroups evenly."
-    dp_subgroup_size = dp_world_size // num_subgroups
-    dp_subgroups = [
-        list(range(i*dp_subgroup_size, (i+1)*dp_subgroup_size))
-        for i in range(num_subgroups)
-    ]
-    all_subgroup_ranks = []
-    for dp_sub in dp_subgroups:
-            for tp in range(tp_world_size):
-                grp = [dp * tp_world_size + tp for dp in dp_sub]
-                all_subgroup_ranks.append(grp)
-    print(f"We have subgroups: {all_subgroup_ranks}")
+        print(f"We have {len(all_subgroup_ranks)} subgroups in total.")
+
     _DATA_PARALLEL_SUBGROUP = None
     for i, ranks in enumerate(all_subgroup_ranks):
         group = create_group(
@@ -1162,6 +1159,8 @@ def initialize_model_parallel(
         if rank in ranks:
             _DATA_PARALLEL_SUBGROUP = group
             print(f"[Rank {rank}] belongs to subgroup {i}, ranks: {ranks}")
+    #----------------------------------Modified Subgroup Creation End -----------------------------
+    #----------------------------------Modified Subgroup Creation End -----------------------------
 
     ### Expert-related parallel groups initialization
     # Build the expert model parallel group

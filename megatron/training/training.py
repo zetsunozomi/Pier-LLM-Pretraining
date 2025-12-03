@@ -70,7 +70,9 @@ from megatron.core.parallel_state import (
     destroy_model_parallel,
     get_amax_reduction_group,
     get_data_parallel_rank,
-    get_data_parallel_group,    
+    get_data_parallel_group,
+    get_data_parallel_src_rank,
+    get_pipeline_model_parallel_rank,
     get_tensor_model_parallel_rank,
     model_parallel_is_initialized,
 )
@@ -1885,6 +1887,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     # Save model parameter in CPU for reference
     dp_rank = get_data_parallel_rank()
     tp_rank = get_tensor_model_parallel_rank()
+    pp_rank = get_pipeline_model_parallel_rank()
     dp_group = get_data_parallel_group()
     if dp_rank == 0:
         reference = get_master_weights(optimizer)
@@ -1908,20 +1911,20 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     # parameter id to name map
     param_id_to_name = {(p.shape, p.data_ptr()): name for name, p in model[0].module.named_parameters()}
     momentum_buffer = []
-    momentum_checkpoint_path = os.path.join(args.save, f"momentum_buffer{tp_rank}.pt")
+    momentum_checkpoint_path = os.path.join(args.save, f"momentum_buffer_tp{tp_rank}_pp{pp_rank}.pt")
     # initialize momentum buffer.
     # All ranks load momentum, but different tp_rank find different file.
     if os.path.exists(momentum_checkpoint_path):
         loaded_state = torch.load(momentum_checkpoint_path, map_location="cpu")
-        print(f"dp{dp_rank},tp{tp_rank} has found a momentum:{momentum_checkpoint_path}")
+        print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} has found a momentum:{momentum_checkpoint_path}")
     else:
         loaded_state = []
-        print(f"dp{dp_rank},tp{tp_rank} couldn't find a momentum, initializing from 0.")
+        print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} couldn't find a momentum checkpoint, initializing from 0.")
     # Use the order of optim_params to load.
     optim_params = []
     for group in optimizer.param_groups:
         optim_params.extend(group['params'])
-    print(f"dp{dp_rank},tp{tp_rank}, loaded_state length {len(loaded_state)}, optim_params length {len(optim_params)}")
+    print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank}, loaded_state length {len(loaded_state)}, optim_params length {len(optim_params)}")
     for i, p in enumerate(optim_params):
         if i < len(loaded_state):
             # momentum_buffer.append(loaded_state[i].to(p.device))
@@ -2004,7 +2007,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         else:
                             reference_gpu = torch.empty_like(p)
                         # Others receive from rank0
-                        torch.distributed.broadcast(reference_gpu,src=tp_rank, group=dp_group)
+                        torch.distributed.broadcast(reference_gpu,src=get_data_parallel_src_rank(), group=dp_group)
                         # Calculate delta
                         delta_tensor = reference_gpu - p.detach() 
                         # Update momentum buffer
@@ -2019,10 +2022,9 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                     if rank == 0:
                         print(f"successfully updated simulated momentum")
                 if dp_rank == 0 and iteration % args.save_interval == 0 and iteration != starting_iteration:
-                    print(f"dp{dp_rank},tp{tp_rank} is saving momentum buffer at iteration {iteration}")
                     # momentum_to_save = [buf.cpu() for buf in momentum_buffer]
                     torch.save(momentum_buffer, momentum_checkpoint_path)
-                    print(f"dp{dp_rank},tp{tp_rank} saved to {momentum_checkpoint_path} at {iteration}")
+                    print(f"dp{dp_rank},tp{tp_rank}, pp{pp_rank} saved to {momentum_checkpoint_path} at {iteration}")
 
         # standard diloco with our momentum tuning strategy
         elif iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
@@ -2083,7 +2085,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         else:
                             reference_gpu = torch.empty_like(p)
                         # Others receive from rank0
-                        torch.distributed.broadcast(reference_gpu,src=tp_rank,group=dp_group)
+                        torch.distributed.broadcast(reference_gpu,src=get_data_parallel_src_rank(),group=dp_group)
                         # Calculate delta
                         delta_tensor = reference_gpu - p.detach() 
                         torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG, group=dp_group)
@@ -2101,12 +2103,11 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
             else:
                 print(f"Outer optimizer {args.outer_optimizer} is not supported!")
                 quit()
-        if iteration % args.save_interval == 0 and iteration != starting_iteration:
-            if dp_rank == 0:
-                print(f"dp{dp_rank},tp{tp_rank} is saving momentum buffer at iteration {iteration}")
-                # momentum_to_save = [buf.cpu() for buf in momentum_buffer]
-                torch.save(momentum_buffer, momentum_checkpoint_path)
-                print(f"dp{dp_rank},tp{tp_rank} saved to {momentum_checkpoint_path} at {iteration}")
+            if iteration % args.save_interval == 0 and iteration != starting_iteration:
+                if dp_rank == 0:
+                    # momentum_to_save = [buf.cpu() for buf in momentum_buffer]
+                    torch.save(momentum_buffer, momentum_checkpoint_path)
+                    print(f"dp{dp_rank},tp{tp_rank}, pp{pp_rank} saved to {momentum_checkpoint_path} at {iteration}")
         # print(f"iteration {iteration} Before Evaluation:")
         # print(f"check sum of optimizer of rank {rank} is {get_optimizer_checksum(optimizer)}")
 
