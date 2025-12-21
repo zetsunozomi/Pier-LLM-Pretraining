@@ -1,6 +1,6 @@
 # PIER: Efficient Large Language Model Pretraining with Relaxed Global Communication
 [![arXiv](https://img.shields.io/badge/arXiv-2511.17849-b31b1b.svg)](https://arxiv.org/abs/2511.17849)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)V
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 ## Introduction
 This repository contains the implementation of PIER, a novel approach for low-communication Large Language Model (LLM) pretraining. It introduces relaxed global communication strategies to mitigate the overhead of synchronization in large-scale distributed training settings.
 
