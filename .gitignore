@@ -27,3 +27,5 @@ benchmark*
 launch*
 launch_debug.sh
 
+*.out
+new_result/

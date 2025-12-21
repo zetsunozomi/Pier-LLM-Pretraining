@@ -1911,10 +1911,13 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     # parameter id to name map
     param_id_to_name = {(p.shape, p.data_ptr()): name for name, p in model[0].module.named_parameters()}
     momentum_buffer = []
-    momentum_checkpoint_path = os.path.join(args.save, f"momentum_buffer_tp{tp_rank}_pp{pp_rank}.pt")
+    if args.save:
+        momentum_checkpoint_path = os.path.join(args.save, f"momentum_buffer_tp{tp_rank}_pp{pp_rank}.pt")
+    else:
+        momentum_checkpoint_path = None
     # initialize momentum buffer.
     # All ranks load momentum, but different tp_rank find different file.
-    if os.path.exists(momentum_checkpoint_path):
+    if momentum_checkpoint_path is not None and os.path.exists(momentum_checkpoint_path):
         loaded_state = torch.load(momentum_checkpoint_path, map_location="cpu")
         print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} has found a momentum:{momentum_checkpoint_path}")
     else:
@@ -2023,8 +2026,9 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         print(f"successfully updated simulated momentum")
                 if dp_rank == 0 and iteration % args.save_interval == 0 and iteration != starting_iteration:
                     # momentum_to_save = [buf.cpu() for buf in momentum_buffer]
-                    torch.save(momentum_buffer, momentum_checkpoint_path)
-                    print(f"dp{dp_rank},tp{tp_rank}, pp{pp_rank} saved to {momentum_checkpoint_path} at {iteration}")
+                    if momentum_checkpoint_path is not None:
+                        torch.save(momentum_buffer, momentum_checkpoint_path)
+                        print(f"dp{dp_rank},tp{tp_rank}, pp{pp_rank} saved to {momentum_checkpoint_path} at {iteration}")
 
         # standard diloco with our momentum tuning strategy
         elif iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
@@ -2104,7 +2108,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                 print(f"Outer optimizer {args.outer_optimizer} is not supported!")
                 quit()
             if iteration % args.save_interval == 0 and iteration != starting_iteration:
-                if dp_rank == 0:
+                if dp_rank == 0 and momentum_checkpoint_path is not None:
                     # momentum_to_save = [buf.cpu() for buf in momentum_buffer]
                     torch.save(momentum_buffer, momentum_checkpoint_path)
                     print(f"dp{dp_rank},tp{tp_rank}, pp{pp_rank} saved to {momentum_checkpoint_path} at {iteration}")
