@@ -26,6 +26,13 @@ checkpoints_at_20000
 benchmark*
 launch*
 launch_debug.sh
-
+checkpoints_*
 *.out
 new_result/
+legacy_benchmark_script
+new_miu_exp
+new_result
+requirements
+debug*
+get_all_result.sh
+get_benchmark_result.py

@@ -72,6 +72,7 @@ from megatron.core.parallel_state import (
     get_data_parallel_rank,
     get_data_parallel_group,
     get_data_parallel_src_rank,
+    get_data_parallel_sub_group,
     get_pipeline_model_parallel_rank,
     get_tensor_model_parallel_rank,
     model_parallel_is_initialized,
@@ -1202,15 +1203,26 @@ def train_step(forward_step_func, data_iterator,
         unwrapped_model = unwrap_model(model[0])
         unwrapped_model.cancel_gradients_last_layer(args.curr_iteration)
 
-    # Update parameters.
+    # Lazy start: simulate vanilla DDP by syncing gradients across the full DP group.
+    # MyDDP inner sync already did SUM(inner_k_grads) * (1/N) where N = full DP size.
+    # A naive full-DP AVG on top gives sum_all / (N * m) instead of sum_all / N
+    # (m = num_subgroups). Rescaling by m first restores each GPU to avg(inner_group),
+    # then full-DP AVG of equal-sized group averages equals the global average —
+    # identical to vanilla Megatron's single full-DP all_reduce.
     if args.curr_iteration < args.momentum_warmup_steps:
-        for group in optimizer.param_groups:
-            for p in group['params']:
-                if p.grad is not None:
-                    torch.distributed.all_reduce(p.grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
-                elif hasattr(p, 'main_grad') and p.main_grad is not None:
-                    torch.distributed.all_reduce(p.main_grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
-
+        dp_world_size = torch.distributed.get_world_size(get_data_parallel_group())
+        sub_world_size = torch.distributed.get_world_size(get_data_parallel_sub_group())
+        num_subgroups = dp_world_size // sub_world_size
+        for model_chunk in model:
+            for p in model_chunk.parameters():
+                if p.requires_grad:
+                    if hasattr(p, 'main_grad') and p.main_grad is not None:
+                        p.main_grad.mul_(num_subgroups)
+                        torch.distributed.all_reduce(p.main_grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
+                    elif p.grad is not None:
+                        p.grad.mul_(num_subgroups)
+                        torch.distributed.all_reduce(p.grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
+    # optimizer step here.        
     timers('optimizer', log_level=1).start(barrier=args.barrier_with_L1_time)
     update_successful, grad_norm, num_zeros_in_grad = optimizer.step()
     timers('optimizer').stop()
@@ -2031,53 +2043,66 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                         print(f"dp{dp_rank},tp{tp_rank}, pp{pp_rank} saved to {momentum_checkpoint_path} at {iteration}")
 
         # standard diloco with our momentum tuning strategy
+        # miu Rate: 10% lazy start, 10-15% miu=0.99, 15-20% miu=0.95, 20% miu=0.9
+        # outer lr: 10% lazy start, 10-20% linear warmup, 20%-80% set to 1.1, 80%-100% set to 0.9.
         elif iteration % args.outer_sync_interval == 0 and args.outer_sync_interval != 0 and iteration != starting_iteration:
             if args.outer_optimizer=="pytorch_nesterov":
                 # For subgroup 32 weak scaling, changed steps.
-                if iteration < 3750:
-                    miu = 0.99
-                elif iteration < 5000:
-                    miu = 0.95
-                else: 
-                    miu = 0.9
-                lr_warmup_steps = 2500
-                '''
-                # code for large miu start.
-                lr_warmup_steps = 10000
-                if iteration < 15000:
-                    miu = 0.99
-                elif iteration < 20000:
-                    miu = 0.95
-                else: 
-                    miu = 0.9
-                # code for miu warmup
+                total_steps = args.train_iters
+                # Continuous cosine annealing: miu smoothly decays 0.99 → 0.90
+                # after a 10% lazy-start window (no momentum update before then).
+                _miu_start, _miu_end = 0.99, 0.90
+                _lazy_frac = 0.10
+                _t = max(0.0, (iteration / total_steps - _lazy_frac) / (1.0 - _lazy_frac))
+                _t = min(_t, 1.0)
+                miu = _miu_end + 0.5 * (_miu_start - _miu_end) * (1 + math.cos(math.pi * _t))
+                # Continuous outer LR schedule:
+                #   - 10% linear warmup: 0 → 1.1
+                #   - Cosine decay: 1.1 → 0.9
+                _lr_max, _lr_min = 1.1, 0.9
+                lr_warmup_steps = total_steps * 0.1
+                warmup_start = args.momentum_warmup_steps
+                warmup_end = warmup_start + lr_warmup_steps
+
+                if iteration < warmup_end:
+                    # Linear warmup: 0 → _lr_max
+                    outer_lr = _lr_max * (iteration - warmup_start) / lr_warmup_steps
+                else:
+                    # Cosine decay: _lr_max → _lr_min
+                    _t = (iteration - warmup_end) / max(total_steps - warmup_end, 1)
+                    _t = min(_t, 1.0)
+                    outer_lr = _lr_min + 0.5 * (_lr_max - _lr_min) * (1 + math.cos(math.pi * _t))
+                if rank == 0:
+                    print(f"lr = {outer_lr}")
                 
-                miu_min = 0.5
-                miu_max = 0.95
-                # load reference into gpu, Calculate delta in each GPU, and allreduce.
-                delta = {}
-                
-                miu_warmup_steps=5000
-                if iteration - start_iteration < miu_warmup_steps:
-                    miu = miu_min + (miu_max - miu_min)*(iteration - start_iteration)/miu_warmup_steps
-                else:
-                    miu = miu_max
-                '''
-                #if rank == 0:
-                #    print(f"miu = {miu}")
-                # determine the base_lr automatically?
-                if iteration > 20000:
-                    base_lr = 0.9
-                elif iteration < 5000:
-                    base_lr = 1
-                else:
-                    base_lr = 1.1
-                if iteration - 5000 < lr_warmup_steps:
-                    outer_lr = base_lr * (iteration - 5000)/lr_warmup_steps
-                else:
-                    outer_lr = base_lr
-                #if rank == 0:
-                #    print(f"lr = {outer_lr}")
+                momentum_idx = 0
+                for group in optimizer.param_groups:
+                    for p in group['params']:
+                        key = id(p)
+                        # rank 0 load from gpu
+                        if dp_rank == 0:
+                            reference_gpu = reference[key].to(p.device)
+                        else:
+                            reference_gpu = torch.empty_like(p)
+                        # Others receive from rank0
+                        torch.distributed.broadcast(reference_gpu,src=get_data_parallel_src_rank(),group=dp_group)
+                        # Calculate delta
+                        delta_tensor = reference_gpu - p.detach() 
+                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG, group=dp_group)
+                        # Update momentum buffer
+                        p_momentum_cpu = momentum_buffer[momentum_idx]
+                        p_momentum_gpu = p_momentum_cpu.to(p.device,non_blocking=True)
+                        p_momentum_gpu.mul_(miu).add_(delta_tensor)
+                        momentum_buffer[momentum_idx] = p_momentum_gpu.cpu()
+
+                        theta_new = reference_gpu - outer_lr * (delta_tensor + miu * p_momentum_gpu)
+                        p.data.copy_(theta_new)
+                        momentum_idx+=1
+                if dp_rank == 0:
+                    reference = get_master_weights(optimizer)
+            elif args.outer_optimizer=="pytorch_nesterov_without_pier":          
+                outer_lr = 1
+                miu = 0.9
                 
                 momentum_idx = 0
                 for group in optimizer.param_groups:
