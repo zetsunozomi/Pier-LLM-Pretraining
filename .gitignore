@@ -36,3 +36,6 @@ requirements
 debug*
 get_all_result.sh
 get_benchmark_result.py
+._dbindex_/
+!replace_exps/
+!replace_exps/*.sh
