@@ -1,0 +1,34 @@
+DiLoCo, small, subgroup8, bsz 512, 1000 steps
+8 GPU
+693.020202020202
+16 GPU
+360.4020202020202
+32 GPU
+187.76666666666668
+
+DiLoCo, small, subgroup 16, bsz 512, 1000 steps
+16 GPU
+354.74040404040403
+32 GPU
+190.74141414141414
+
+ddp, small, subgroup8, bsz 512, 1000 steps
+8gpu
+708.5181818181818
+16gpu
+370.7858585858586
+32gpu
+201.65252525252527
+
+------------------------------
+同样是small model, 16 gpu, bsz 512, 1000 steps:
+ddp: 370.7858585858586
+diloco-8subgroup:360.4020202020202
+diloco-16subgroup:354.74040404040403
+------------------------------
+small model, 32 gpu, bsz 512, 1000 steps:
+ddp: 201.65252525252527
+subgroup8: 187.76666666666668
+subgroup16: 190.74141414141414
+
+这个文件夹下面的图，是subgroup8定死之后增加gpu的scaling。
