@@ -24,21 +24,23 @@
 
 ```bash
 cd /你的集群路径/Pier
-# 先激活原来能够运行这个 Pier checkout 的 Python/CUDA 环境。
+module add conda
+conda activate diloco
 sbatch experiments/centered_outer/e0.sbatch
 ```
 
-如果集群要求 account、partition、qos 或 constraint，在同一条 sbatch 命令添加
-原来作业使用的参数。脚本不猜测这些站点配置，也不自动安装/升级 PyTorch、Apex 或 TE。
+脚本已沿用本库现有 NERSC 作业的 `--account=m4431`、`--qos=regular`、
+`--constraint=gpu` 和邮件通知。E0 保留一节点四卡、20 分钟上限。
+缺少 account 或 constraint 会触发 NERSC 的
+`Job request does not match any supported policy` 提交错误；这发生在 Python 运行之前。
+参见 [NERSC 作业说明](https://docs.nersc.gov/systems/perlmutter/running-jobs/)。
+脚本不自动安装/升级 PyTorch、Apex 或 TE。
 默认继承提交时的已激活环境；可用 `export PIER_PYTHON=/完整路径/bin/python` 指定。
 默认工作目录为 `SLURM_SUBMIT_DIR`，所以需要从仓库根目录提交；也可设置 `PIER_ROOT`。
 
-可选：GH200 每节点一卡，用四节点跑同一 gate：
-
-```bash
-export PIER_GPUS_PER_NODE=1
-sbatch --nodes=4 --gpus-per-node=1 experiments/centered_outer/e0.sbatch
-```
+GH200 的四节点单卡布局需要设置 `PIER_GPUS_PER_NODE=1`、`--nodes=4`、
+`--gpus-per-node=1`，并使用那个集群的 account/qos/constraint 和环境配置。
+当前提交头针对 NERSC A100，不能只改节点数就直接用于另一个集群。
 
 推荐先提交 A100 一次。默认 walltime 是 20 分钟的上限，不是耗时预测。
 输出目录使用 job ID，拒绝复用旧结果目录；不会调用 sbatch 提交其他作业。

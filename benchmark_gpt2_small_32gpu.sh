@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --account=m4410
+#SBATCH --account=m4431
 #SBATCH --qos=regular
 #SBATCH --time=01:00:00
 #SBATCH --constraint=gpu 
