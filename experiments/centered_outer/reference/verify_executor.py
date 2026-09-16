@@ -244,7 +244,8 @@ def worker(rank, k, init_method, device_kind, output):
     dist.init_process_group(backend, init_method=init_method, rank=rank, world_size=k,
                             timeout=timedelta(seconds=120))
     try:
-        dist.barrier()
+        # Bind the first NCCL collective to the device selected by LOCAL_RANK.
+        dist.barrier(device_ids=[device.index] if device.type == 'cuda' else None)
         local = {'operator': operator_checks(rank, k, device),
                  'training': training_checks(rank, k, device),
                  'rejected_unsafe_configs': rejection_checks(rank, k, device)}

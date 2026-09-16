@@ -37,9 +37,12 @@ class CenteredExecutor:
                  model=None, group=None):
         if not dist.is_initialized():
             raise ValueError('initialize a distributed group first')
-        self.group = group
-        self.k, self.rank = dist.get_world_size(group), dist.get_rank(group)
-        self.peers = dist.get_process_group_ranks(group)
+        # Older PyTorch accepts None for get_rank/get_world_size, but not for
+        # get_process_group_ranks. Resolve the default once for all operations.
+        self.group = dist.group.WORLD if group is None else group
+        self.k = dist.get_world_size(self.group)
+        self.rank = dist.get_rank(self.group)
+        self.peers = dist.get_process_group_ranks(self.group)
         self.s = int(cohort)
         if not power2(self.k) or not power2(self.s) or self.k % self.s:
             raise ValueError('nested power-of-two K and s required')
