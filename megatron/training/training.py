@@ -45,6 +45,8 @@ except ImportError:
     HAVE_FSDP2 = False
 
 from megatron.core.distributed import finalize_model_grads
+from megatron.core.outer_sync.legacy import centered_allreduce_update
+from megatron.core.outer_sync.normalization import warmup_rescale
 from megatron.core.enums import ModelType
 from megatron.core.optimizer import get_megatron_optimizer, OptimizerConfig
 from megatron.core.rerun_state_machine import (
@@ -1204,7 +1206,9 @@ def train_step(forward_step_func, data_iterator,
         unwrapped_model.cancel_gradients_last_layer(args.curr_iteration)
 
     # Lazy start: simulate vanilla DDP by syncing gradients across the full DP group.
-    # MyDDP inner sync already did SUM(inner_k_grads) * (1/N) where N = full DP size.
+    # Historical MyDDP uses SUM(inner grads)/full_DP. The explicit inner-average
+    # recipe instead uses SUM(inner grads)/inner_DP and needs no compensation.
+    # For the historical scaling, N below is the full DP size.
     # A naive full-DP AVG on top gives sum_all / (N * m) instead of sum_all / N
     # (m = num_subgroups). Rescaling by m first restores each GPU to avg(inner_group),
     # then full-DP AVG of equal-sized group averages equals the global average —
@@ -1212,15 +1216,17 @@ def train_step(forward_step_func, data_iterator,
     if args.curr_iteration < args.momentum_warmup_steps:
         dp_world_size = torch.distributed.get_world_size(get_data_parallel_group())
         sub_world_size = torch.distributed.get_world_size(get_data_parallel_sub_group())
-        num_subgroups = dp_world_size // sub_world_size
+        rescale = warmup_rescale(
+            dp_world_size, sub_world_size, inner_average=args.local_sgd_inner_average,
+        )
         for model_chunk in model:
             for p in model_chunk.parameters():
                 if p.requires_grad:
                     if hasattr(p, 'main_grad') and p.main_grad is not None:
-                        p.main_grad.mul_(num_subgroups)
+                        p.main_grad.mul_(rescale)
                         torch.distributed.all_reduce(p.main_grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
                     elif p.grad is not None:
-                        p.grad.mul_(num_subgroups)
+                        p.grad.mul_(rescale)
                         torch.distributed.all_reduce(p.grad, op=torch.distributed.ReduceOp.AVG, group=get_data_parallel_group())
     # optimizer step here.        
     timers('optimizer', log_level=1).start(barrier=args.barrier_with_L1_time)
@@ -1895,6 +1901,8 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     pp_rank = get_pipeline_model_parallel_rank()
     dp_group = get_data_parallel_group()
     dp_world_size = torch.distributed.get_world_size(dp_group)
+    if args.outer_sync_interval > 0:
+        optimizer.validate_outer_update_support()
     outer_shard = args.outer_shard
     outer_offload_to_cpu = args.outer_cpu_offload
 
@@ -2193,44 +2201,24 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                 if rank == 0:
                     print(f"lr = {outer_lr}")
                 
-                momentum_idx = 0
-                for group in optimizer.param_groups:
-                    for p in group['params']:
-                        key = id(p)
-                        reference_gpu = get_outer_reference_for_param(reference, key, p)
-                        # Calculate delta
-                        delta_tensor = reference_gpu - p.detach() 
-                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG, group=dp_group)
-                        # Update momentum buffer
-                        p_momentum_gpu = get_outer_state_for_param(momentum_buffer[momentum_idx], p)
-                        p_momentum_gpu.mul_(miu).add_(delta_tensor)
-                        momentum_buffer[momentum_idx] = store_outer_state(p_momentum_gpu, p)
-
-                        theta_new = reference_gpu - outer_lr * (delta_tensor + miu * p_momentum_gpu)
-                        p.data.copy_(theta_new)
-                        momentum_idx+=1
+                centered_allreduce_update(
+                    optimizer, momentum_buffer,
+                    reference_for_param=lambda p: get_outer_reference_for_param(reference, id(p), p),
+                    load_state=get_outer_state_for_param, store_state=store_outer_state,
+                    group=dp_group, momentum=miu, learning_rate=outer_lr,
+                )
                 if outer_shard or dp_rank == 0:
                     reference = get_master_weights(optimizer)
             elif args.outer_optimizer=="pytorch_nesterov_without_pier":          
                 outer_lr = 1
                 miu = 0.9
                 
-                momentum_idx = 0
-                for group in optimizer.param_groups:
-                    for p in group['params']:
-                        key = id(p)
-                        reference_gpu = get_outer_reference_for_param(reference, key, p)
-                        # Calculate delta
-                        delta_tensor = reference_gpu - p.detach() 
-                        torch.distributed.all_reduce(delta_tensor, op=torch.distributed.ReduceOp.AVG, group=dp_group)
-                        # Update momentum buffer
-                        p_momentum_gpu = get_outer_state_for_param(momentum_buffer[momentum_idx], p)
-                        p_momentum_gpu.mul_(miu).add_(delta_tensor)
-                        momentum_buffer[momentum_idx] = store_outer_state(p_momentum_gpu, p)
-
-                        theta_new = reference_gpu - outer_lr * (delta_tensor + miu * p_momentum_gpu)
-                        p.data.copy_(theta_new)
-                        momentum_idx+=1
+                centered_allreduce_update(
+                    optimizer, momentum_buffer,
+                    reference_for_param=lambda p: get_outer_reference_for_param(reference, id(p), p),
+                    load_state=get_outer_state_for_param, store_state=store_outer_state,
+                    group=dp_group, momentum=miu, learning_rate=outer_lr,
+                )
                 if outer_shard or dp_rank == 0:
                     reference = get_master_weights(optimizer)
             else:

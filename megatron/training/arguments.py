@@ -2094,6 +2094,9 @@ def _add_distributed_args(parser):
                        help="Offload outer optimizer reference and momentum states to CPU.")
     group.add_argument('--outer-shard', action='store_true',
                        help="Shard outer optimizer reference and momentum states across the full data-parallel group.")
+    group.add_argument('--local-sgd-inner-average', action='store_true',
+                       help="Normalize inner gradients by the learner's inner DP size. "
+                            "Required by the new centered-outer recipe; changes historical scaling.")
     return parser
 
 

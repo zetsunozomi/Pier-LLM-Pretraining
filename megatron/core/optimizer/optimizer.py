@@ -118,6 +118,18 @@ class MegatronOptimizer(ABC):
         self.config = config
         self.init_state_fn = init_state_fn
 
+    def validate_outer_update_support(self):
+        """Fail before touching state when an outer adapter has not been validated."""
+        raise NotImplementedError(
+            f"{type(self).__name__} has no validated outer master/model adapter. "
+            "The first GPU gate supports ordinary FP32/BF16 optimizers; "
+            "distributed/precision-aware optimizers require a separate ownership adapter."
+        )
+
+    def commit_outer_update(self):
+        """Make externally updated FP32 masters visible to the next forward."""
+        self.validate_outer_update_support()
+
     def get_parameters(self) -> List[torch.nn.Parameter]:
         """
         Get list of parameters wrapped in optimizer.
@@ -648,6 +660,16 @@ class Float16OptimizerWithFloat16Params(MixedPrecisionOptimizer):
             for model_param in model_group:
                 model_param.grad = model_param.main_grad
 
+    def validate_outer_update_support(self):
+        if self.config.use_precision_aware_optimizer:
+            raise NotImplementedError('precision-aware outer adapter is not validated')
+
+    @torch.no_grad()
+    def commit_outer_update(self):
+        self.validate_outer_update_support()
+        if not self.is_stub_optimizer:
+            self._copy_main_params_to_model_params()
+
     def _copy_main_params_to_model_params(self):
         # Only needed for the float16 params.
         model_data, main_data = self._get_model_and_main_params_data_float16()
@@ -861,6 +883,14 @@ class FP32Optimizer(MegatronOptimizer):
         # No overflow for FP32 optimizer.
         return success, grad_norm, num_zeros_in_grad
 
+    def validate_outer_update_support(self):
+        if self.config.use_precision_aware_optimizer:
+            raise NotImplementedError('precision-aware outer adapter is not validated')
+
+    def commit_outer_update(self):
+        # FP32 optimizer parameters are the forward parameters themselves.
+        self.validate_outer_update_support()
+
     def reload_model_params(self):
         pass
 
@@ -944,6 +974,15 @@ class ChainedOptimizer(MegatronOptimizer):
     Args:
         chained_optimizers: a list of optimizers.
     """
+
+    def validate_outer_update_support(self):
+        for optimizer in self.chained_optimizers:
+            optimizer.validate_outer_update_support()
+
+    def commit_outer_update(self):
+        self.validate_outer_update_support()
+        for optimizer in self.chained_optimizers:
+            optimizer.commit_outer_update()
 
     def __init__(self, chained_optimizers: List[MegatronOptimizer]):
         self.model_chunks = []

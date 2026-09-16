@@ -10,6 +10,11 @@ class DistributedDataParallelConfig:
 
     low_comm_mode: bool = True
 
+    local_sgd_inner_average: bool = False
+    """Average within each learner. False preserves the historical full-DP divisor.
+    New centered-outer experiments explicitly enable this setting.
+    """
+
     grad_reduce_in_fp32: bool = False
     """If true, reduce grads in fp32."""
 

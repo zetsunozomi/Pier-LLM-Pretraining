@@ -7,6 +7,7 @@ import torch
 import torch.distributed as dist
 
 from .. import parallel_state
+from ..outer_sync.normalization import inner_gradient_scale
 from ..config_logger import has_config_logger_enabled, log_config_to_disk
 from ..fp8_utils import is_float8tensor
 from ..transformer.cuda_graphs import is_graph_capturing
@@ -51,6 +52,17 @@ class MyDistributedDataParallel(_BaseDataParallel):
         print(f"I'm rank {self.rank} in global group")
         # Assigning inner group: hardcode here. Assume we have 8 gpus.
         self.inner_group = parallel_state.get_data_parallel_sub_group()
+        full_dp_size = parallel_state.get_data_parallel_world_size(with_context_parallel=True)
+        inner_dp_size = torch.distributed.get_world_size(self.inner_group)
+        if ddp_config.local_sgd_inner_average and (
+            config.calculate_per_token_loss or ddp_config.use_distributed_optimizer
+            or config.context_parallel_size != 1 or config.num_moe_experts is not None
+        ):
+            raise NotImplementedError(
+                'inner-average gate currently supports dense, CP1, ordinary optimizers '
+                'with per-sequence loss; other ownership/normalization adapters are pending'
+            )
+        normalization_size = inner_dp_size if ddp_config.local_sgd_inner_average else full_dp_size
 
         # If bucket_size is not provided as an input, use sane default.
         # If using very large dp_sizes, make buckets larger to ensure that chunks used in NCCL
@@ -109,6 +121,8 @@ class MyDistributedDataParallel(_BaseDataParallel):
         def _allocate_buffers_for_parameters(
             input_params, data_parallel_group, gradient_scaling_factor
         ):
+            if not input_params:
+                return [], []
             param_and_grad_dtype_to_params = {}
             param_and_grad_dtype_to_offsets = {}
             param_and_grad_dtype_to_indices = {}
@@ -154,9 +168,7 @@ class MyDistributedDataParallel(_BaseDataParallel):
                 param_and_grad_dtype_to_indices[(param_dtype, grad_dtype)] = indices
 
             if not config.calculate_per_token_loss:
-                target_gradient_scaling_factor = 1.0 / parallel_state.get_data_parallel_world_size(
-                    with_context_parallel=True
-                )
+                target_gradient_scaling_factor = 1.0 / normalization_size
                 if self.ddp_config.average_in_collective:
                     if self.ddp_config.num_distributed_optimizer_instances == 1:
                         # Collective is averaging gradients in collective with data_parallel_group.
@@ -278,6 +290,12 @@ class MyDistributedDataParallel(_BaseDataParallel):
 
                 gradient_scaling_factor = 1.0 / data_parallel_world_size
                 expert_gradient_scaling_factor = 1.0 / data_parallel_world_size
+        if not config.calculate_per_token_loss:
+            gradient_scaling_factor = inner_gradient_scale(
+                full_dp_size, inner_dp_size,
+                inner_average=self.ddp_config.local_sgd_inner_average,
+                collective_average=self.ddp_config.average_in_collective,
+            )
         # Allocate the param+grad buffers for dense params' grads.
         self.buffers, self.bucket_groups = _allocate_buffers_for_parameters(
             dense_params,
