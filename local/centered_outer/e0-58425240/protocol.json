@@ -1,0 +1,7077 @@
+{
+  "status": "passed",
+  "backend": "nccl",
+  "device": "cuda",
+  "torch_version": "2.6.0+cu124",
+  "ranks": 4,
+  "records": {
+    "operator": [
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 315,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 16,
+          "momentum_bytes": 4,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            12,
+            12,
+            0
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 741,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 387,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 32,
+          "momentum_bytes": 8,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            24,
+            24,
+            0
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2001,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 420,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 80,
+          "momentum_bytes": 20,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            60,
+            60,
+            0
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6720,
+        "allocation": {
+          "workspace_tensor_bytes": 84,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 16,
+          "slot_count": 1,
+          "formula_bytes": 84,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1260,
+        "allocation": {
+          "workspace_tensor_bytes": 588,
+          "reference_bytes": 256,
+          "momentum_bytes": 64,
+          "C_bytes": 112,
+          "slot_count": 1,
+          "formula_bytes": 588,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            0,
+            192,
+            192,
+            0
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 276,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 8,
+          "momentum_bytes": 4,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            8,
+            4,
+            4,
+            8
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 663,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 348,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 16,
+          "momentum_bytes": 8,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            16,
+            8,
+            8,
+            16
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1806,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 381,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 40,
+          "momentum_bytes": 20,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            40,
+            20,
+            20,
+            40
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6096,
+        "allocation": {
+          "workspace_tensor_bytes": 60,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 8,
+          "slot_count": 1,
+          "formula_bytes": 60,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1143,
+        "allocation": {
+          "workspace_tensor_bytes": 420,
+          "reference_bytes": 128,
+          "momentum_bytes": 64,
+          "C_bytes": 56,
+          "slot_count": 1,
+          "formula_bytes": 420,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            128,
+            64,
+            64,
+            128
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 1,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 327,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 4,
+          "momentum_bytes": 4,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            12,
+            0,
+            0,
+            12
+          ],
+          "sent_tensor_bytes": 24,
+          "padded_master_bytes": 16
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 765,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 5,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 399,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 8,
+          "momentum_bytes": 8,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            24,
+            0,
+            0,
+            24
+          ],
+          "sent_tensor_bytes": 48,
+          "padded_master_bytes": 32
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 2061,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 17,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 432,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 20,
+          "momentum_bytes": 20,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            60,
+            0,
+            0,
+            60
+          ],
+          "sent_tensor_bytes": 120,
+          "padded_master_bytes": 80
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 1,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 6912,
+        "allocation": {
+          "workspace_tensor_bytes": 48,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 4,
+          "slot_count": 1,
+          "formula_bytes": 48,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "device",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "N": 64,
+        "tile_elements_per_momentum_owner": 7,
+        "state_tier": "host",
+        "outer_boundaries": 3,
+        "bitwise_states_and_model": true,
+        "fixed_workspace_storages": true,
+        "guarded_operations": 1296,
+        "allocation": {
+          "workspace_tensor_bytes": 336,
+          "reference_bytes": 64,
+          "momentum_bytes": 64,
+          "C_bytes": 28,
+          "slot_count": 1,
+          "formula_bytes": 336,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        "payload": {
+          "sent_tensor_bytes_by_phase": [
+            192,
+            0,
+            0,
+            192
+          ],
+          "sent_tensor_bytes": 384,
+          "padded_master_bytes": 256
+        }
+      }
+    ],
+    "training": [
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 1,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 2,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 0,
+        "K": 4,
+        "s": 4,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 1,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 2,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 1,
+        "K": 4,
+        "s": 4,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 1,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 2,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 2,
+        "K": 4,
+        "s": 4,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 1,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 2,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      },
+      {
+        "rank": 3,
+        "K": 4,
+        "s": 4,
+        "inner_steps": 7,
+        "sync_period": 2,
+        "outer_boundaries": 3,
+        "next_forward_and_inner_moments_bitwise": true,
+        "drained_boundary_executor_restore": true,
+        "model": "20-parameter BF16 two-layer toy network, FP32 master and AdamW"
+      }
+    ]
+  },
+  "actual_distributed_transport": true,
+  "rejected_unsafe_configs_per_rank": [
+    3,
+    3,
+    3,
+    3
+  ],
+  "GPU_executed": true,
+  "performance_result": false,
+  "memory_claim": "explicit executor tensor storages only; library/allocator excluded",
+  "not_tested": [
+    "production Megatron integration",
+    "multi-slot pipeline",
+    "interrupted-round recovery",
+    "network/device fault recovery"
+  ],
+  "source_sha256": {
+    "executor.py": "3e3fa8dfc8140d4b3037c2f719bd61843dc244f1379f49234045bb2661061cc2",
+    "verify_executor.py": "2592c30e3a441476949e5b7bca9cc160495542b671e0e5e9bac42bfd72f259a3"
+  }
+}
