@@ -1,0 +1,1697 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 679, in run
+    raise RendezvousTimeoutError
+torch.distributed.elastic.rendezvous.api.RendezvousTimeoutError
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    run(args)
+    result = f(*args, **kwargs)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+    result = agent.run()
+             ^^^^^^^^^^^
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 679, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 679, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    raise RendezvousTimeoutError
+torch.distributed.elastic.rendezvous.api.RendezvousTimeoutError
+    raise RendezvousTimeoutError
+torch.distributed.elastic.rendezvous.api.RendezvousTimeoutError
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    return launch_agent(self._config, self._entrypoint, list(args))
+    result = agent.run()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    raise RendezvousClosedError
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    main()
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+[W1007 00:16:51.512337111 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=3, addr=[nid003212-hsn0]:42274, remote=[nid001893-hsn0]:29500): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7fd2ec37eeb0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d694f1 (0x7fd2d008a4f1 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: <unknown function> + 0x5d6ab4d (0x7fd2d008bb4d in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: <unknown function> + 0x5d6b209 (0x7fd2d008c209 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x1c6 (0x7fd2d0087616 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x33 (0x7fd2d0089003 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x114 (0x7fd2d008a114 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #7: <unknown function> + 0xc472e6 (0x7fd2df4202e6 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #8: <unknown function> + 0x3838b0 (0x7fd2deb5c8b0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #9: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x528db7]
+frame #10: _PyObject_MakeTpCall + 0x26c (0x50454c in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #11: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5582e9]
+frame #12: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #13: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #14: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #15: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #16: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #17: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #18: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #19: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #20: _PyObject_FastCallDictTstate + 0x65 (0x508e15 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #21: _PyObject_Call_Prepend + 0xe0 (0x541020 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #22: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x612887]
+frame #23: PyObject_Call + 0xbd (0x54351d in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #24: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #25: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #26: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #27: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5cd0aa]
+frame #28: PyEval_EvalCode + 0x9f (0x5cc77f in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #29: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5e5bc3]
+frame #30: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x51edf7]
+frame #31: PyObject_Vectorcall + 0x31 (0x51ece1 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #32: _PyEval_EvalFrameDefault + 0x6a6 (0x511cf6 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #33: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #34: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5f81ff]
+frame #35: Py_RunMain + 0x14a (0x5f7c0a in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #36: Py_BytesMain + 0x39 (0x5bcdf9 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #37: __libc_start_main + 0xef (0x7fd2ed17d1fd in /lib64/libc.so.6)
+frame #38: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5bcc43]
+
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+[W1007 00:16:51.584156582 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=3, addr=[nid001913-hsn0]:60534, remote=[nid001893-hsn0]:29500): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f4eeab55eb0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d694f1 (0x7f4f4728a4f1 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: <unknown function> + 0x5d6ab4d (0x7f4f4728bb4d in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: <unknown function> + 0x5d6b209 (0x7f4f4728c209 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x1c6 (0x7f4f47287616 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x33 (0x7f4f47289003 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x114 (0x7f4f4728a114 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #7: <unknown function> + 0xc472e6 (0x7f4f566202e6 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #8: <unknown function> + 0x3838b0 (0x7f4f55d5c8b0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #9: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x528db7]
+frame #10: _PyObject_MakeTpCall + 0x26c (0x50454c in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #11: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5582e9]
+frame #12: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #13: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #14: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #15: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #16: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #17: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #18: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #19: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #20: _PyObject_FastCallDictTstate + 0x65 (0x508e15 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #21: _PyObject_Call_Prepend + 0xe0 (0x541020 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #22: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x612887]
+frame #23: PyObject_Call + 0xbd (0x54351d in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #24: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #25: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #26: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #27: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5cd0aa]
+frame #28: PyEval_EvalCode + 0x9f (0x5cc77f in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #29: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5e5bc3]
+frame #30: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x51edf7]
+frame #31: PyObject_Vectorcall + 0x31 (0x51ece1 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #32: _PyEval_EvalFrameDefault + 0x6a6 (0x511cf6 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #33: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #34: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5f81ff]
+frame #35: Py_RunMain + 0x14a (0x5f7c0a in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #36: Py_BytesMain + 0x39 (0x5bcdf9 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #37: __libc_start_main + 0xef (0x7f4f6418a1fd in /lib64/libc.so.6)
+frame #38: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5bcc43]
+
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 676, in run
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+    raise RendezvousClosedError
+torch.distributed.elastic.rendezvous.api.RendezvousClosedError
+[W1007 00:16:52.000687943 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=3, addr=[nid001913-hsn0]:60534, remote=[nid001893-hsn0]:29500): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f4eeab55eb0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d694f1 (0x7f4f4728a4f1 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: <unknown function> + 0x5d69d82 (0x7f4f4728ad82 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: <unknown function> + 0x5d6b88e (0x7f4f4728c88e in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x19e (0x7f4f472875ee in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x33 (0x7f4f47289003 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x114 (0x7f4f4728a114 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #7: <unknown function> + 0xc472e6 (0x7f4f566202e6 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #8: <unknown function> + 0x3838b0 (0x7f4f55d5c8b0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #9: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x528db7]
+frame #10: _PyObject_MakeTpCall + 0x26c (0x50454c in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #11: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5582e9]
+frame #12: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #13: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #14: _PyObject_FastCallDictTstate + 0x65 (0x508e15 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #15: _PyObject_Call_Prepend + 0xe0 (0x541020 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #16: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x612887]
+frame #17: PyObject_Call + 0xbd (0x54351d in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #18: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #19: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #20: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #21: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5cd0aa]
+frame #22: PyEval_EvalCode + 0x9f (0x5cc77f in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #23: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5e5bc3]
+frame #24: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x51edf7]
+frame #25: PyObject_Vectorcall + 0x31 (0x51ece1 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #26: _PyEval_EvalFrameDefault + 0x6a6 (0x511cf6 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #27: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #28: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5f81ff]
+frame #29: Py_RunMain + 0x14a (0x5f7c0a in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #30: Py_BytesMain + 0x39 (0x5bcdf9 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #31: __libc_start_main + 0xef (0x7f4f6418a1fd in /lib64/libc.so.6)
+frame #32: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5bcc43]
+
+[W1007 00:16:52.074498928 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=3, addr=[nid003212-hsn0]:42274, remote=[nid001893-hsn0]:29500): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7fd2ec37eeb0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d694f1 (0x7fd2d008a4f1 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: <unknown function> + 0x5d69d82 (0x7fd2d008ad82 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: <unknown function> + 0x5d6b88e (0x7fd2d008c88e in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x19e (0x7fd2d00875ee in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x33 (0x7fd2d0089003 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x114 (0x7fd2d008a114 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
+frame #7: <unknown function> + 0xc472e6 (0x7fd2df4202e6 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #8: <unknown function> + 0x3838b0 (0x7fd2deb5c8b0 in /global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
+frame #9: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x528db7]
+frame #10: _PyObject_MakeTpCall + 0x26c (0x50454c in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #11: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5582e9]
+frame #12: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #13: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #14: _PyObject_FastCallDictTstate + 0x65 (0x508e15 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #15: _PyObject_Call_Prepend + 0xe0 (0x541020 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #16: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x612887]
+frame #17: PyObject_Call + 0xbd (0x54351d in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #18: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #19: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #20: _PyEval_EvalFrameDefault + 0x4908 (0x515f58 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #21: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5cd0aa]
+frame #22: PyEval_EvalCode + 0x9f (0x5cc77f in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #23: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5e5bc3]
+frame #24: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x51edf7]
+frame #25: PyObject_Vectorcall + 0x31 (0x51ece1 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #26: _PyEval_EvalFrameDefault + 0x6a6 (0x511cf6 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #27: _PyFunction_Vectorcall + 0x173 (0x539503 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #28: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5f81ff]
+frame #29: Py_RunMain + 0x14a (0x5f7c0a in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #30: Py_BytesMain + 0x39 (0x5bcdf9 in /global/homes/s/syfan/.conda/envs/megatron/bin/python3)
+frame #31: __libc_start_main + 0xef (0x7fd2ed17d1fd in /lib64/libc.so.6)
+frame #32: /global/homes/s/syfan/.conda/envs/megatron/bin/python3() [0x5bcc43]
+
+W1007 00:16:52.564000 1155923 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1292] The node 'nid001913-hsn0_1155923_0' has failed to shutdown the rendezvous '43668212' due to an error of type RendezvousConnectionError.
+Traceback (most recent call last):
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 117, in _call_store
+W1007 00:16:52.599000 1173470 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1292] The node 'nid003212-hsn0_1173470_0' has failed to shutdown the rendezvous '43668212' due to an error of type RendezvousConnectionError.
+Traceback (most recent call last):
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 117, in _call_store
+    return getattr(self._store, store_op)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.distributed.DistNetworkError: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return getattr(self._store, store_op)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.distributed.DistNetworkError: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 905, in <module>
+    main()
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 901, in main
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    run(args)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 715, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 873, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    result = f(*args, **kwargs)
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 683, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 498, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1170, in next_rendezvous
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 648, in run
+    self._op_executor.run(join_op, deadline, self._get_deadline)
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 648, in run
+    has_set = self._state_holder.sync()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 437, in sync
+    get_response = self._backend.get_state()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 75, in get_state
+    has_set = self._state_holder.sync()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 437, in sync
+    get_response = self._backend.get_state()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 75, in get_state
+    base64_state: bytes = self._call_store("get", self._key)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 119, in _call_store
+    base64_state: bytes = self._call_store("get", self._key)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 119, in _call_store
+    raise RendezvousConnectionError(
+torch.distributed.elastic.rendezvous.api.RendezvousConnectionError: The connection to the C10d store has failed. See inner exception for details.
+    raise RendezvousConnectionError(
+torch.distributed.elastic.rendezvous.api.RendezvousConnectionError: The connection to the C10d store has failed. See inner exception for details.
+srun: error: nid001900: task 3: Exited with exit code 1
+srun: Terminating StepId=43668212.0
+srun: error: nid001916: task 11: Exited with exit code 1
+srun: error: nid001908: task 7: Exited with exit code 1
+srun: error: nid001912: task 9: Exited with exit code 1
+srun: error: nid003213: task 23: Exited with exit code 1
+srun: error: nid003525: task 27: Exited with exit code 1
+srun: error: nid003205: task 19: Exited with exit code 1
+srun: error: nid003528: task 28: Exited with exit code 1
+srun: error: nid001897: task 2: Exited with exit code 1
+srun: error: nid001893: task 0: Exited with exit code 1
+srun: error: nid001920: task 13: Exited with exit code 1
+srun: error: nid003201: task 17: Exited with exit code 1
+srun: error: nid001909: task 8: Exited with exit code 1
+srun: error: nid001905: task 6: Exited with exit code 1
+srun: error: nid003532: task 30: Exited with exit code 1
+srun: error: nid003529: task 29: Exited with exit code 1
+srun: error: nid003217: task 25: Exited with exit code 1
+srun: error: nid001917: task 12: Exited with exit code 1
+srun: error: nid001896: task 1: Exited with exit code 1
+srun: error: nid001901: task 4: Exited with exit code 1
+srun: error: nid003216: task 24: Exited with exit code 1
+srun: error: nid003196: task 14: Exited with exit code 1
+srun: error: nid003200: task 16: Exited with exit code 1
+srun: error: nid003204: task 18: Exited with exit code 1
+srun: error: nid003220: task 26: Exited with exit code 1
+srun: error: nid003533: task 31: Exited with exit code 1
+srun: error: nid001913: task 10: Exited with exit code 1
+srun: error: nid001904: task 5: Exited with exit code 1
+srun: error: nid003208: task 20: Exited with exit code 1
+srun: error: nid003212: task 22: Exited with exit code 1
+srun: error: nid003197: task 15: Exited with exit code 1
+srun: error: nid003209: task 21: Exited with exit code 1

@@ -1,0 +1,1484 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+using world size: 64, data-parallel size: 64, context-parallel size: 1, hierarchical context-parallel sizes: Nonetensor-model-parallel size: 1, encoder-tensor-model-parallel size: 0, pipeline-model-parallel size: 1, encoder-pipeline-model-parallel size: 0
+Number of virtual stages per pipeline stage: None
+accumulate and all-reduce gradients in fp32 for bfloat16 data type.
+using torch.bfloat16 for parameters ...
+------------------------ arguments ------------------------
+  account_for_embedding_in_pipeline_split ......... False
+  account_for_loss_in_pipeline_split .............. False
+  accumulate_allreduce_grads_in_fp32 .............. True
+  adam_beta1 ...................................... 0.9
+  adam_beta2 ...................................... 0.999
+  adam_eps ........................................ 1e-08
+  add_bias_linear ................................. True
+  add_position_embedding .......................... True
+  add_qkv_bias .................................... True
+  adlr_autoresume ................................. False
+  adlr_autoresume_interval ........................ 1000
+  align_grad_reduce ............................... True
+  align_param_gather .............................. False
+  app_tag_run_name ................................ None
+  app_tag_run_version ............................. 0.0.0
+  apply_layernorm_1p .............................. False
+  apply_query_key_layer_scaling ................... False
+  apply_residual_connection_post_layernorm ........ False
+  apply_rope_fusion ............................... False
+  async_save ...................................... None
+  async_tensor_model_parallel_allreduce ........... True
+  attention_backend ............................... AttnBackend.auto
+  attention_dropout ............................... 0.1
+  attention_softmax_in_fp32 ....................... False
+  auto_detect_ckpt_format ......................... False
+  barrier_with_L1_time ............................ True
+  bert_binary_head ................................ True
+  bert_embedder_type .............................. megatron
+  bert_load ....................................... None
+  bf16 ............................................ True
+  bias_dropout_fusion ............................. True
+  bias_gelu_fusion ................................ True
+  bias_swiglu_fusion .............................. True
+  biencoder_projection_dim ........................ 0
+  biencoder_shared_query_context_model ............ False
+  block_data_path ................................. None
+  calc_ft_timeouts ................................ False
+  calculate_per_token_loss ........................ False
+  check_for_large_grads ........................... False
+  check_for_nan_in_loss_and_grad .................. True
+  check_for_spiky_loss ............................ False
+  check_weight_hash_across_dp_replicas_interval ... None
+  ckpt_assume_constant_structure .................. False
+  ckpt_convert_format ............................. None
+  ckpt_convert_save ............................... None
+  ckpt_convert_update_legacy_dist_opt_format ...... False
+  ckpt_format ..................................... torch
+  ckpt_fully_parallel_load ........................ False
+  ckpt_fully_parallel_save ........................ True
+  ckpt_fully_parallel_save_deprecated ............. False
+  ckpt_step ....................................... None
+  classes_fraction ................................ 1.0
+  clip_grad ....................................... 1.0
+  clone_scatter_output_in_embedding ............... True
+  config_logger_dir ............................... 
+  consumed_train_samples .......................... 0
+  consumed_valid_samples .......................... 0
+  context_parallel_size ........................... 1
+  cp_comm_type .................................... ['p2p']
+  create_attention_mask_in_dataloader ............. True
+  cross_entropy_fusion_impl ....................... native
+  cross_entropy_loss_fusion ....................... False
+  cuda_graph_scope ................................ full
+  cuda_graph_warmup_steps ......................... 3
+  data_args_path .................................. None
+  data_cache_path ................................. None
+  data_parallel_random_init ....................... False
+  data_parallel_sharding_strategy ................. no_shard
+  data_parallel_size .............................. 64
+  data_path ....................................... ['/pscratch/sd/s/syfan/Diloco/data/my-gpt2_text_document']
+  data_per_class_fraction ......................... 1.0
+  data_sharding ................................... True
+  dataloader_type ................................. single
+  ddp_average_in_collective ....................... False
+  ddp_bucket_size ................................. None
+  ddp_num_buckets ................................. None
+  ddp_pad_buckets_for_high_nccl_busbw ............. False
+  decoder_first_pipeline_num_layers ............... None
+  decoder_last_pipeline_num_layers ................ None
+  decoder_num_layers .............................. None
+  decoder_seq_length .............................. None
+  decoupled_lr .................................... None
+  decoupled_min_lr ................................ None
+  decrease_batch_size_if_needed ................... False
+  defer_embedding_wgrad_compute ................... False
+  deprecated_use_mcore_models ..................... False
+  deterministic_mode .............................. False
+  dino_bottleneck_size ............................ 256
+  dino_freeze_last_layer .......................... 1
+  dino_head_hidden_size ........................... 2048
+  dino_local_crops_number ......................... 10
+  dino_local_img_size ............................. 96
+  dino_norm_last_layer ............................ False
+  dino_teacher_temp ............................... 0.07
+  dino_warmup_teacher_temp ........................ 0.04
+  dino_warmup_teacher_temp_epochs ................. 30
+  disable_bf16_reduced_precision_matmul ........... False
+  disable_mamba_mem_eff_path ...................... False
+  disable_straggler_on_startup .................... False
+  dist_ckpt_format_deprecated ..................... None
+  dist_ckpt_strictness ............................ assume_ok_unexpected
+  distribute_saved_activations .................... False
+  distributed_backend ............................. nccl
+  distributed_timeout_minutes ..................... 10
+  embedding_path .................................. None
+  empty_unused_memory_level ....................... 0
+  enable_cuda_graph ............................... False
+  enable_ft_package ............................... False
+  enable_gloo_process_groups ...................... True
+  enable_msc ...................................... True
+  enable_one_logger ............................... True
+  encoder_num_layers .............................. 24
+  encoder_pipeline_model_parallel_size ............ 0
+  encoder_seq_length .............................. 1024
+  encoder_tensor_model_parallel_size .............. 0
+  end_weight_decay ................................ 0.1
+  eod_mask_loss ................................... False
+  error_injection_rate ............................ 0
+  error_injection_type ............................ transient_error
+  eval_interval ................................... 10000
+  eval_iters ...................................... 10
+  evidence_data_path .............................. None
+  exit_duration_in_mins ........................... None
+  exit_interval ................................... None
+  exit_on_missing_checkpoint ...................... False
+  exit_signal_handler ............................. False
+  exp_avg_dtype ................................... torch.float32
+  exp_avg_sq_dtype ................................ torch.float32
+  expert_model_parallel_size ...................... 1
+  expert_tensor_parallel_size ..................... 1
+  external_cuda_graph ............................. False
+  ffn_hidden_size ................................. 4096
+  finetune ........................................ False
+  first_last_layers_bf16 .......................... False
+  flash_decode .................................... False
+  fp16 ............................................ False
+  fp16_lm_cross_entropy ........................... False
+  fp32_residual_connection ........................ False
+  fp8 ............................................. None
+  fp8_amax_compute_algo ........................... most_recent
+  fp8_amax_history_len ............................ 1
+  fp8_interval .................................... 1
+  fp8_margin ...................................... 0
+  fp8_param_gather ................................ False
+  fp8_recipe ...................................... delayed
+  fp8_wgrad ....................................... True
+  global_batch_size ............................... 512
+  grad_reduce_in_bf16 ............................. False
+  gradient_accumulation_fusion .................... True
+  gradient_reduce_div_fusion ...................... True
+  group_query_attention ........................... False
+  head_lr_mult .................................... 1.0
+  heterogeneous_layers_config_encoded_json ........ None
+  heterogeneous_layers_config_path ................ None
+  hidden_dropout .................................. 0.1
+  hidden_size ..................................... 1024
+  hierarchical_context_parallel_sizes ............. None
+  hybrid_attention_ratio .......................... 0.0
+  hybrid_mlp_ratio ................................ 0.0
+  hybrid_override_pattern ......................... None
+  hysteresis ...................................... 2
+  ict_head_size ................................... None
+  ict_load ........................................ None
+  img_h ........................................... 224
+  img_w ........................................... 224
+  indexer_batch_size .............................. 128
+  indexer_log_interval ............................ 1000
+  inference_batch_times_seqlen_threshold .......... -1
+  inference_dynamic_batching ...................... False
+  inference_dynamic_batching_buffer_guaranteed_fraction  0.2
+  inference_dynamic_batching_buffer_overflow_factor  None
+  inference_dynamic_batching_buffer_size_gb ....... 40.0
+  inference_dynamic_batching_chunk_size ........... 256
+  inference_dynamic_batching_max_requests_override  None
+  inference_dynamic_batching_max_tokens_override .. None
+  inference_max_batch_size ........................ 8
+  inference_max_seq_length ........................ 2560
+  inference_rng_tracker ........................... False
+  init_method_std ................................. 0.02
+  init_method_xavier_uniform ...................... False
+  init_model_with_meta_device ..................... False
+  initial_loss_scale .............................. 4294967296
+  is_hybrid_model ................................. False
+  iter_per_epoch .................................. 1250
+  iterations_to_skip .............................. []
+  keep_fp8_transpose_cache_when_using_custom_fsdp . False
+  kv_channels ..................................... 64
+  kv_lora_rank .................................... 32
+  lazy_mpu_init ................................... None
+  load ............................................ None
+  local_rank ...................................... 0
+  log_interval .................................... 10
+  log_loss_scale_to_tensorboard ................... True
+  log_memory_to_tensorboard ....................... False
+  log_num_zeros_in_grad ........................... False
+  log_params_norm ................................. False
+  log_progress .................................... False
+  log_straggler ................................... False
+  log_throughput .................................. False
+  log_timers_to_tensorboard ....................... False
+  log_validation_ppl_to_tensorboard ............... False
+  log_world_size_to_tensorboard ................... False
+  logging_level ................................... None
+  loss_scale ...................................... None
+  loss_scale_window ............................... 1000
+  lr .............................................. 0.0004
+  lr_decay_iters .................................. 100000
+  lr_decay_samples ................................ None
+  lr_decay_style .................................. cosine
+  lr_warmup_fraction .............................. None
+  lr_warmup_init .................................. 0.0
+  lr_warmup_iters ................................. 2000
+  lr_warmup_samples ............................... 0
+  lr_wsd_decay_iters .............................. None
+  lr_wsd_decay_samples ............................ None
+  lr_wsd_decay_style .............................. exponential
+  main_grads_dtype ................................ torch.float32
+  main_params_dtype ............................... torch.float32
+  make_vocab_size_divisible_by .................... 128
+  mamba_head_dim .................................. 64
+  mamba_num_groups ................................ 8
+  mamba_num_heads ................................. None
+  mamba_state_dim ................................. 128
+  manual_gc ....................................... False
+  manual_gc_eval .................................. True
+  manual_gc_interval .............................. 0
+  mask_factor ..................................... 1.0
+  mask_prob ....................................... 0.15
+  mask_type ....................................... random
+  masked_softmax_fusion ........................... True
+  max_position_embeddings ......................... 1024
+  max_tokens_to_oom ............................... 12000
+  memory_snapshot_path ............................ snapshot.pickle
+  merge_file ...................................... /pscratch/sd/s/syfan/Diloco/data/gpt2-merges.txt
+  micro_batch_size ................................ 4
+  microbatch_group_size_per_vp_stage .............. None
+  mid_level_dataset_surplus ....................... 0.005
+  min_loss_scale .................................. 1.0
+  min_lr .......................................... 4e-05
+  mlp_chunks_for_prefill .......................... 1
+  mmap_bin_files .................................. True
+  mock_data ....................................... False
+  moe_aux_loss_coeff .............................. 0.0
+  moe_enable_deepep ............................... False
+  moe_expert_capacity_factor ...................... None
+  moe_extended_tp ................................. False
+  moe_ffn_hidden_size ............................. None
+  moe_grouped_gemm ................................ False
+  moe_input_jitter_eps ............................ None
+  moe_layer_freq .................................. 1
+  moe_layer_recompute ............................. False
+  moe_pad_expert_input_to_capacity ................ False
+  moe_per_layer_logging ........................... False
+  moe_permute_fusion .............................. False
+  moe_router_bias_update_rate ..................... 0.001
+  moe_router_dtype ................................ None
+  moe_router_enable_expert_bias ................... False
+  moe_router_group_topk ........................... None
+  moe_router_load_balancing_type .................. aux_loss
+  moe_router_num_groups ........................... None
+  moe_router_pre_softmax .......................... False
+  moe_router_score_function ....................... softmax
+  moe_router_topk ................................. 2
+  moe_router_topk_scaling_factor .................. None
+  moe_shared_expert_intermediate_size ............. None
+  moe_shared_expert_overlap ....................... False
+  moe_token_dispatcher_type ....................... allgather
+  moe_token_drop_policy ........................... probs
+  moe_use_legacy_grouped_gemm ..................... False
+  moe_use_upcycling ............................... False
+  moe_z_loss_coeff ................................ None
+  mrope_section ................................... None
+  mscale .......................................... 1.0
+  mscale_all_dim .................................. 1.0
+  mtp_loss_scaling_factor ......................... 0.1
+  mtp_num_layers .................................. None
+  multi_latent_attention .......................... False
+  nccl_communicator_config_path ................... None
+  no_load_optim ................................... None
+  no_load_rng ..................................... None
+  no_persist_layer_norm ........................... False
+  no_save_optim ................................... None
+  no_save_rng ..................................... None
+  non_persistent_ckpt_type ........................ None
+  non_persistent_global_ckpt_dir .................. None
+  non_persistent_local_ckpt_algo .................. fully_parallel
+  non_persistent_local_ckpt_dir ................... None
+  non_persistent_save_interval .................... None
+  norm_epsilon .................................... 1e-05
+  normalization ................................... LayerNorm
+  num_attention_heads ............................. 16
+  num_channels .................................... 3
+  num_classes ..................................... 1000
+  num_dataset_builder_threads ..................... 1
+  num_distributed_optimizer_instances ............. 1
+  num_experts ..................................... None
+  num_layers ...................................... 24
+  num_layers_at_end_in_bf16 ....................... 1
+  num_layers_at_start_in_bf16 ..................... 1
+  num_layers_per_virtual_pipeline_stage ........... None
+  num_query_groups ................................ 1
+  num_virtual_stages_per_pipeline_rank ............ None
+  num_workers ..................................... 2
+  object_storage_cache_path ....................... None
+  one_logger_async ................................ False
+  one_logger_project .............................. megatron-lm
+  one_logger_run_name ............................. None
+  onnx_safe ....................................... None
+  openai_gelu ..................................... False
+  optimizer ....................................... adam
+  optimizer_cpu_offload ........................... False
+  optimizer_offload_fraction ...................... 1.0
+  output_bert_embeddings .......................... False
+  overlap_cpu_optimizer_d2h_h2d ................... False
+  overlap_grad_reduce ............................. False
+  overlap_p2p_comm ................................ False
+  overlap_p2p_comm_warmup_flush ................... False
+  overlap_param_gather ............................ False
+  overlap_param_gather_with_optimizer_step ........ False
+  override_opt_param_scheduler .................... False
+  params_dtype .................................... torch.bfloat16
+  patch_dim ....................................... 16
+  per_split_data_args_path ........................ None
+  perform_initialization .......................... True
+  pin_cpu_grads ................................... True
+  pin_cpu_params .................................. True
+  pipeline_model_parallel_comm_backend ............ None
+  pipeline_model_parallel_size .................... 1
+  pipeline_model_parallel_split_rank .............. None
+  position_embedding_type ......................... learned_absolute
+  pretrained_checkpoint ........................... None
+  profile ......................................... False
+  profile_ranks ................................... [0]
+  profile_step_end ................................ 12
+  profile_step_start .............................. 10
+  q_lora_rank ..................................... None
+  qk_head_dim ..................................... 128
+  qk_layernorm .................................... False
+  qk_pos_emb_head_dim ............................. 64
+  query_in_block_prob ............................. 0.1
+  rampup_batch_size ............................... None
+  rank ............................................ 0
+  recompute_granularity ........................... None
+  recompute_method ................................ None
+  recompute_modules ............................... None
+  recompute_num_layers ............................ None
+  record_memory_history ........................... False
+  relative_attention_max_distance ................. 128
+  relative_attention_num_buckets .................. 32
+  replication ..................................... False
+  replication_factor .............................. 2
+  replication_jump ................................ None
+  rerun_mode ...................................... disabled
+  reset_attention_mask ............................ False
+  reset_position_ids .............................. False
+  result_rejected_tracker_filename ................ None
+  retriever_report_topk_accuracies ................ []
+  retriever_score_scaling ......................... False
+  retriever_seq_length ............................ 256
+  retro_add_retriever ............................. False
+  retro_attention_gate ............................ 1
+  retro_cyclic_train_iters ........................ None
+  retro_encoder_attention_dropout ................. 0.1
+  retro_encoder_hidden_dropout .................... 0.1
+  retro_encoder_layers ............................ 2
+  retro_num_neighbors ............................. 2
+  retro_num_retrieved_chunks ...................... 2
+  retro_project_dir ............................... None
+  retro_verify_neighbor_count ..................... True
+  rope_scaling_factor ............................. 8.0
+  rotary_base ..................................... 10000
+  rotary_interleaved .............................. False
+  rotary_percent .................................. 1.0
+  rotary_scaling_factor ........................... 1.0
+  rotary_seq_len_interpolation_factor ............. None
+  run_workload_inspector_server ................... False
+  sample_rate ..................................... 1.0
+  save ............................................ None
+  save_interval ................................... 10000
+  scatter_gather_tensors_in_pipeline .............. True
+  seed ............................................ 1234
+  seq_length ...................................... 1024
+  sequence_parallel ............................... False
+  sgd_momentum .................................... 0.9
+  short_seq_prob .................................. 0.1
+  skip_train ...................................... False
+  skipped_train_samples ........................... 0
+  spec ............................................ None
+  split ........................................... 949,50,1
+  squared_relu .................................... False
+  start_weight_decay .............................. 0.1
+  straggler_ctrlr_port ............................ 65535
+  straggler_minmax_count .......................... 1
+  suggested_communication_unit_size ............... None
+  swiglu .......................................... False
+  swin_backbone_type .............................. tiny
+  te_rng_tracker .................................. False
+  tensor_model_parallel_size ...................... 1
+  tensorboard_dir ................................. /pscratch/sd/s/syfan/Megatron-LM/logs
+  tensorboard_log_interval ........................ 1
+  tensorboard_queue_size .......................... 1000
+  test_data_path .................................. None
+  test_mode ....................................... False
+  tiktoken_num_special_tokens ..................... 1000
+  tiktoken_pattern ................................ None
+  tiktoken_special_tokens ......................... None
+  timing_log_level ................................ 0
+  timing_log_option ............................... minmax
+  titles_data_path ................................ None
+  tokenizer_model ................................. None
+  tokenizer_type .................................. GPT2BPETokenizer
+  tp_comm_bootstrap_backend ....................... nccl
+  tp_comm_bulk_dgrad .............................. True
+  tp_comm_bulk_wgrad .............................. True
+  tp_comm_overlap ................................. False
+  tp_comm_overlap_ag .............................. True
+  tp_comm_overlap_cfg ............................. None
+  tp_comm_overlap_rs .............................. True
+  tp_comm_overlap_rs_dgrad ........................ False
+  tp_comm_split_ag ................................ True
+  tp_comm_split_rs ................................ True
+  train_data_path ................................. None
+  train_iters ..................................... 2000
+  train_samples ................................... None
+  train_sync_interval ............................. None
+  transformer_impl ................................ local
+  transformer_pipeline_model_parallel_size ........ 1
+  untie_embeddings_and_output_weights ............. False
+  use_checkpoint_args ............................. False
+  use_checkpoint_opt_param_scheduler .............. False
+  use_cpu_initialization .......................... None
+  use_custom_fsdp ................................. False
+  use_dist_ckpt ................................... False
+  use_dist_ckpt_deprecated ........................ False
+  use_distributed_optimizer ....................... False
+  use_flash_attn .................................. True
+  use_legacy_models ............................... True
+  use_mp_args_from_checkpoint_args ................ False
+  use_one_sent_docs ............................... False
+  use_persistent_ckpt_worker ...................... False
+  use_precision_aware_optimizer ................... False
+  use_pytorch_profiler ............................ False
+  use_ring_exchange_p2p ........................... False
+  use_rope_scaling ................................ False
+  use_rotary_position_embeddings .................. False
+  use_tokenizer_model_from_checkpoint_args ........ True
+  use_torch_fsdp2 ................................. False
+  use_torch_optimizer_for_cpu_offload ............. False
+  use_tp_pp_dp_mapping ............................ False
+  v_head_dim ...................................... 128
+  valid_data_path ................................. None
+  variable_seq_lengths ............................ False
+  virtual_pipeline_model_parallel_size ............ None
+  vision_backbone_type ............................ vit
+  vision_pretraining .............................. False
+  vision_pretraining_type ......................... classify
+  vocab_extra_ids ................................. 0
+  vocab_file ...................................... /pscratch/sd/s/syfan/Diloco/data/gpt2-vocab.json
+  vocab_size ...................................... None
+  wandb_exp_name .................................. 
+  wandb_project ................................... 
+  wandb_save_dir .................................. 
+  weight_decay .................................... 0.1
+  weight_decay_incr_style ......................... constant
+  wgrad_deferral_limit ............................ 0
+  world_size ...................................... 64
+  yaml_cfg ........................................ None
+-------------------- end of arguments ---------------------
+> building GPT2BPETokenizer tokenizer ...
+ > padded vocab (size: 50257) with 47 dummy tokens (new size: 50304)
+WARNING:megatron.core.rerun_state_machine:RerunStateMachine initialized in mode RerunMode.DISABLED
+> initializing torch distributed ...
+WARNING: TensorBoard writing requested but is not available (are you using PyTorch 1.1.0 or later?), no TensorBoard logs will be written.
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+[Gloo] Rank 50 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 49 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 48 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 1 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 39 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 36 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 38 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 3 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 51 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 0 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 2 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 37 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 12 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 13 is connected to 63[Gloo] Rank  peer ranks. Expected number of connected peer ranks is : 63[Gloo] Rank 14
+ is connected to 63 peer ranks. Expected number of connected peer ranks is : 1563 is connected to 
+63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank [Gloo] Rank 1718 is connected to  is connected to 6363 peer ranks. Expected number of connected peer ranks is :  peer ranks. 63Expected number of connected peer ranks is : 
+63
+[Gloo] Rank 16 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 19 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 25 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 24 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 26 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 27 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 4 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 6 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 7 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 5 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 8 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 9 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 10 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 11 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 20 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 21 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 22 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 23 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 28 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 30 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 32 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 33 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 34 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 35 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 40 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 41 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 42 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 43 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 29 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 54 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 55 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 31 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 52 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 53 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 47 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 44 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 45 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 46 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 57 is connected to 63 peer ranks. Expected number of connected peer ranks is : [Gloo] Rank 63
+56 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 59 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 58 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 61 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 60 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 62 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 63 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 3 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 0 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 1 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 2 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 51 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63[Gloo] Rank 
+49 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 48 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 50 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 17 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 16 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 19 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 18 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 37 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 36 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 39 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 38 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 54 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 4 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 5 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 6 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 7 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 53 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 12 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 13 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 14 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 15 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 24 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 25 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 26 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 27 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 52 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 55 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 45 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 47 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 46 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 44 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 8 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 9 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 10 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 20 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 21 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 22 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 23 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 28 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 29 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 30 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 31 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 32 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 33 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 34 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 35 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 40 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 11 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 41 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 42 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 43 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 56 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 57 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 59 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 58 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 60 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 62 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 61 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 63 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 49 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 48 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 51 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 2 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 0 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 3 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+> initialized tensor model parallel with size 1
+> initialized pipeline model parallel with size 1
+> setting random seeds to 1234 ...
+[Gloo] Rank 50 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 1 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 4 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 6 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 19 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 16 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63[Gloo] Rank 
+17[Gloo] Rank  is connected to 63 peer ranks. 18Expected number of connected peer ranks is :  is connected to 6363
+ peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 5 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 7 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 8 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 12 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 13 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 9 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 14 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 15 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 10 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 11 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 20 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 21 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 22 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 24 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 26 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 25 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 23 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[Gloo] Rank 27 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 28 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 29 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 30 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[rank51]:[W909 11:33:28.731690878 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 51]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[Gloo] Rank 31 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[Gloo] Rank 32 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 33 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 34 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[rank50]:[W909 11:33:28.732223558 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 50]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[Gloo] Rank 35 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[rank49]:[W909 11:33:28.732451448 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 49]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank48]:[W909 11:33:28.735658357 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 48]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+> compiling dataset index builder ...
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank3]:[W909 11:33:28.195093678 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 3]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank2]:[W909 11:33:28.195296440 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 2]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank1]:[W909 11:33:28.195964712 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 1]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank16]:[W909 11:33:28.122911425 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 16]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank19]:[W909 11:33:28.123942537 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 19]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank17]:[W909 11:33:28.124249119 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 17]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[Gloo] Rank [Gloo] Rank 3738 is connected to  is connected to 6363 peer ranks.  peer ranks. Expected number of connected peer ranks is : Expected number of connected peer ranks is : 6363
+
+[Gloo] Rank 36 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63[Gloo] Rank 
+39 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank18]:[W909 11:33:28.126476631 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 18]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank6]:[W909 11:33:28.195811393 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 6]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank30]:[W909 11:33:28.299456403 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 30]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank28]:[W909 11:33:28.299582908 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 28]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank29]:[W909 11:33:28.299700816 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 29]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank31]:[W909 11:33:28.299816360 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 31]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank11]:[W909 11:33:28.060897472 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 11]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank4]:[W909 11:33:28.198547877 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 4]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank5]:[W909 11:33:28.198805375 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 5]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank12]:[W909 11:33:28.728259512 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 12]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank15]:[W909 11:33:28.728311142 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 15]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank9]:[W909 11:33:28.061881782 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 9]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank13]:[W909 11:33:28.728493614 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 13]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank8]:[W909 11:33:28.062051988 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 8]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank14]:[W909 11:33:28.729117649 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 14]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank21]:[W909 11:33:28.721411607 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 21]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank20]:[W909 11:33:28.721409322 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 20]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank27]:[W909 11:33:28.535480491 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 27]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank10]:[W909 11:33:28.063690073 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 10]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank23]:[W909 11:33:28.722395423 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 23]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank25]:[W909 11:33:28.536079231 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 25]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank7]:[W909 11:33:28.201269111 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 7]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank24]:[W909 11:33:28.536297835 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 24]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank22]:[W909 11:33:28.722882126 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 22]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank35]:[W909 11:33:28.705638617 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 35]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank33]:[W909 11:33:28.706116549 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 33]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank34]:[W909 11:33:28.708999590 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 34]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank32]:[W909 11:33:28.709841093 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 32]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[Gloo] Rank 52 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 54 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 53 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 55 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank26]:[W909 11:33:28.544607584 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 26]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[Gloo] Rank 40 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 44 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 45 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 46 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 47 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 56 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 57 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 58 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 59 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 41 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 61 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 42 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 60 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 63 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+[Gloo] Rank 62 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank39]:[W909 11:33:28.244204775 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 39]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank38]:[W909 11:33:28.244238931 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 38]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank36]:[W909 11:33:28.244433648 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 36]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank37]:[W909 11:33:28.244459227 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 37]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[Gloo] Rank 43 is connected to 63 peer ranks. Expected number of connected peer ranks is : 63
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank42]:[W909 11:33:28.856954294 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 42]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank46]:[W909 11:33:28.366271943 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 46]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank40]:[W909 11:33:28.857632966 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 40]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank41]:[W909 11:33:28.859861426 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 41]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank43]:[W909 11:33:28.862307456 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 43]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank54]:[W909 11:33:28.511604035 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 54]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank55]:[W909 11:33:28.512614872 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 55]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank53]:[W909 11:33:28.513151601 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 53]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank44]:[W909 11:33:28.374895005 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 44]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank45]:[W909 11:33:28.375277073 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 45]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank47]:[W909 11:33:28.375897200 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 47]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank57]:[W909 11:33:28.332052266 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 57]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank56]:[W909 11:33:28.332052416 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 56]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank52]:[W909 11:33:28.514769123 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 52]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank59]:[W909 11:33:28.332402383 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 59]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank58]:[W909 11:33:28.332428674 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 58]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank62]:[W909 11:33:28.119027606 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 62]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank63]:[W909 11:33:28.119596768 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 63]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+[rank60]:[W909 11:33:28.119663909 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 60]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank61]:[W909 11:33:28.121899007 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 61]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+make: Entering directory '/pscratch/sd/s/syfan/Megatron-LM/megatron/core/datasets'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/pscratch/sd/s/syfan/Megatron-LM/megatron/core/datasets'
+>>> done with dataset index builder. Compilation time: 0.364 seconds
+> compiling and loading fused kernels ...
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank0]:[W909 11:33:28.584019305 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+>>> done with compiling and loading fused kernels. Compilation time: 3.415 seconds
+time to initialize megatron (seconds): 69.486
+[after megatron is initialized] datetime: 2025-09-09 11:33:50 
+building GPT model ...
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 354871296
+INFO:megatron.core.distributed.distributed_data_parallel:Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=True, overlap_grad_reduce=False, overlap_param_gather=False, align_param_gather=False, use_distributed_optimizer=False, num_distributed_optimizer_instances=1, check_for_nan_in_grad=True, check_for_large_grads=False, bucket_size=None, pad_buckets_for_high_nccl_busbw=False, average_in_collective=False, fp8_param_gather=False, use_custom_fsdp=False, data_parallel_sharding_strategy='no_shard', gradient_reduce_div_fusion=True, suggested_communication_unit_size=None, preserve_fp32_weights=True, keep_fp8_transpose_cache_when_using_custom_fsdp=False)
+INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
+Params for bucket 1 (354871296 elements, 354871296 padded size):
+	module.language_model.encoder.layers.7.input_norm.bias
+	module.language_model.encoder.layers.4.input_norm.bias
+	module.language_model.encoder.layers.5.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.8.post_attention_norm.weight
+	module.language_model.encoder.layers.12.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.18.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.23.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.22.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.21.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.20.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.19.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.16.post_attention_norm.weight
+	module.language_model.encoder.layers.15.post_attention_norm.weight
+	module.language_model.encoder.layers.14.post_attention_norm.weight
+	module.language_model.encoder.layers.13.post_attention_norm.weight
+	module.language_model.encoder.layers.11.input_norm.weight
+	module.language_model.encoder.layers.5.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.5.post_attention_norm.weight
+	module.language_model.encoder.layers.2.post_attention_norm.bias
+	module.language_model.encoder.layers.0.self_attention.dense.bias
+	module.language_model.encoder.layers.6.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.3.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.0.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.0.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.12.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.17.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.20.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.23.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.22.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.21.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.18.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.19.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.9.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.9.post_attention_norm.bias
+	module.language_model.encoder.layers.9.self_attention.dense.bias
+	module.language_model.encoder.layers.2.self_attention.dense.weight
+	module.language_model.embedding.position_embeddings.weight
+	module.language_model.encoder.layers.7.self_attention.dense.bias
+	module.language_model.encoder.layers.13.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.10.self_attention.dense.bias
+	module.language_model.encoder.layers.5.self_attention.dense.bias
+	module.language_model.encoder.layers.0.input_norm.weight
+	module.language_model.encoder.layers.6.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.12.input_norm.weight
+	module.language_model.encoder.layers.20.post_attention_norm.weight
+	module.language_model.encoder.layers.18.post_attention_norm.weight
+	module.language_model.encoder.layers.23.post_attention_norm.weight
+	module.language_model.encoder.layers.22.post_attention_norm.weight
+	module.language_model.encoder.layers.21.post_attention_norm.weight
+	module.language_model.encoder.layers.19.post_attention_norm.weight
+	module.language_model.encoder.layers.17.post_attention_norm.weight
+	module.language_model.encoder.layers.10.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.10.post_attention_norm.bias
+	module.language_model.encoder.layers.9.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.7.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.7.input_norm.weight
+	module.language_model.encoder.layers.4.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.1.post_attention_norm.weight
+	module.language_model.encoder.layers.1.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.3.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.12.self_attention.dense.bias
+	module.language_model.encoder.layers.7.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.6.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.5.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.16.post_attention_norm.bias
+	module.language_model.encoder.layers.15.post_attention_norm.bias
+	module.language_model.encoder.layers.14.post_attention_norm.bias
+	module.language_model.encoder.layers.13.post_attention_norm.bias
+	module.language_model.encoder.layers.12.post_attention_norm.bias
+	module.language_model.encoder.layers.11.post_attention_norm.bias
+	module.language_model.encoder.layers.11.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.10.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.10.input_norm.weight
+	module.language_model.encoder.layers.13.input_norm.weight
+	module.language_model.encoder.layers.5.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.3.self_attention.dense.bias
+	module.language_model.encoder.layers.2.input_norm.weight
+	module.language_model.encoder.layers.1.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.16.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.15.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.14.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.13.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.12.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.11.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.13.self_attention.dense.bias
+	module.language_model.encoder.layers.10.self_attention.dense.weight
+	module.language_model.encoder.layers.10.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.9.post_attention_norm.weight
+	module.language_model.encoder.layers.4.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.0.post_attention_norm.bias
+	module.language_model.encoder.layers.5.input_norm.bias
+	module.language_model.encoder.layers.11.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.8.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.7.self_attention.dense.weight
+	module.language_model.encoder.layers.6.self_attention.dense.weight
+	module.language_model.encoder.layers.0.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.0.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.14.input_norm.weight
+	module.language_model.encoder.layers.1.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.20.post_attention_norm.bias
+	module.language_model.encoder.layers.18.post_attention_norm.bias
+	module.language_model.encoder.layers.22.post_attention_norm.bias
+	module.language_model.encoder.layers.23.post_attention_norm.bias
+	module.language_model.encoder.layers.21.post_attention_norm.bias
+	module.language_model.encoder.layers.19.post_attention_norm.bias
+	module.language_model.encoder.layers.17.post_attention_norm.bias
+	module.language_model.encoder.layers.17.self_attention.dense.bias
+	module.language_model.encoder.layers.16.self_attention.dense.bias
+	module.language_model.encoder.layers.15.self_attention.dense.bias
+	module.language_model.encoder.layers.4.post_attention_norm.weight
+	module.language_model.encoder.layers.0.input_norm.bias
+	module.language_model.encoder.layers.6.self_attention.dense.bias
+	module.language_model.encoder.layers.14.self_attention.dense.bias
+	module.language_model.encoder.layers.8.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.11.self_attention.dense.bias
+	module.language_model.encoder.layers.7.post_attention_norm.bias
+	module.language_model.encoder.layers.1.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.4.self_attention.dense.bias
+	module.language_model.encoder.layers.20.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.18.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.22.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.23.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.21.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.19.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.16.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.15.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.14.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.13.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.3.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.9.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.1.self_attention.dense.bias
+	module.language_model.encoder.layers.4.post_attention_norm.bias
+	module.language_model.encoder.layers.0.post_attention_norm.weight
+	module.language_model.encoder.layers.9.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.19.self_attention.dense.bias
+	module.language_model.encoder.layers.18.self_attention.dense.bias
+	module.language_model.encoder.layers.23.self_attention.dense.bias
+	module.language_model.encoder.layers.22.self_attention.dense.bias
+	module.language_model.encoder.layers.21.self_attention.dense.bias
+	module.language_model.encoder.layers.20.self_attention.dense.bias
+	module.language_model.encoder.layers.17.self_attention.dense.weight
+	module.language_model.encoder.layers.16.self_attention.dense.weight
+	module.language_model.encoder.layers.15.self_attention.dense.weight
+	module.language_model.encoder.layers.14.self_attention.dense.weight
+	module.language_model.encoder.layers.11.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.2.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.7.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.7.post_attention_norm.weight
+	module.language_model.encoder.layers.4.input_norm.weight
+	module.language_model.encoder.layers.1.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.1.input_norm.bias
+	module.language_model.encoder.layers.0.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.0.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.18.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.22.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.23.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.21.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.20.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.19.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.17.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.17.input_norm.weight
+	module.language_model.encoder.layers.16.input_norm.weight
+	module.language_model.encoder.layers.15.input_norm.weight
+	module.language_model.encoder.layers.2.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.5.post_attention_norm.bias
+	module.language_model.encoder.layers.4.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.12.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.18.self_attention.dense.weight
+	module.language_model.encoder.layers.21.self_attention.dense.weight
+	module.language_model.encoder.layers.23.self_attention.dense.weight
+	module.language_model.encoder.layers.22.self_attention.dense.weight
+	module.language_model.encoder.layers.19.self_attention.dense.weight
+	module.language_model.encoder.layers.20.self_attention.dense.weight
+	module.language_model.encoder.layers.11.post_attention_norm.weight
+	module.language_model.encoder.layers.8.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.8.self_attention.dense.bias
+	module.language_model.encoder.layers.8.input_norm.bias
+	module.language_model.encoder.layers.7.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.1.post_attention_norm.bias
+	module.language_model.encoder.layers.4.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.2.post_attention_norm.weight
+	module.language_model.embedding.word_embeddings.weight
+	module.language_model.encoder.layers.2.self_attention.dense.bias
+	module.language_model.encoder.layers.11.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.9.self_attention.dense.weight
+	module.language_model.encoder.layers.20.input_norm.weight
+	module.language_model.encoder.layers.18.input_norm.weight
+	module.language_model.encoder.layers.21.input_norm.weight
+	module.language_model.encoder.final_norm.weight
+	module.language_model.encoder.layers.23.input_norm.weight
+	module.language_model.encoder.layers.22.input_norm.weight
+	module.language_model.encoder.layers.19.input_norm.weight
+	module.language_model.encoder.layers.10.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.9.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.9.input_norm.bias
+	module.language_model.encoder.layers.8.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.6.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.3.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.2.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.12.post_attention_norm.weight
+	module.language_model.encoder.layers.6.post_attention_norm.weight
+	module.language_model.encoder.layers.3.post_attention_norm.bias
+	module.language_model.encoder.layers.17.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.17.input_norm.bias
+	module.language_model.encoder.layers.16.input_norm.bias
+	module.language_model.encoder.layers.15.input_norm.bias
+	module.language_model.encoder.layers.14.input_norm.bias
+	module.language_model.encoder.layers.13.input_norm.bias
+	module.language_model.encoder.layers.12.input_norm.bias
+	module.language_model.encoder.layers.11.input_norm.bias
+	module.language_model.encoder.layers.8.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.8.input_norm.weight
+	module.language_model.encoder.layers.6.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.1.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.1.input_norm.weight
+	module.language_model.encoder.layers.4.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.12.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.6.post_attention_norm.bias
+	module.language_model.encoder.layers.3.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.5.self_attention.dense.weight
+	module.language_model.encoder.layers.11.self_attention.dense.weight
+	module.language_model.encoder.layers.10.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.8.post_attention_norm.bias
+	module.language_model.encoder.layers.5.input_norm.weight
+	module.language_model.encoder.layers.17.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.16.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.15.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.14.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.13.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.12.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.10.input_norm.bias
+	module.language_model.encoder.layers.9.input_norm.weight
+	module.language_model.encoder.layers.8.self_attention.dense.weight
+	module.language_model.encoder.layers.7.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.5.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.2.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.2.input_norm.bias
+	module.language_model.encoder.layers.7.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.6.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.10.post_attention_norm.weight
+	module.language_model.encoder.layers.3.input_norm.weight
+	module.language_model.encoder.layers.3.post_attention_norm.weight
+	module.language_model.encoder.layers.4.self_attention.dense.weight
+	module.language_model.encoder.layers.13.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.9.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.18.input_norm.bias
+	module.language_model.encoder.layers.21.input_norm.bias
+	module.language_model.encoder.final_norm.bias
+	module.language_model.encoder.layers.23.input_norm.bias
+	module.language_model.encoder.layers.22.input_norm.bias
+	module.language_model.encoder.layers.19.input_norm.bias
+	module.language_model.encoder.layers.20.input_norm.bias
+	module.language_model.encoder.layers.17.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.16.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.15.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.12.self_attention.dense.weight
+	module.language_model.encoder.layers.4.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.0.self_attention.dense.weight
+	module.language_model.encoder.layers.5.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.18.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.21.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.19.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.23.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.22.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.20.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.17.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.16.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.15.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.14.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.8.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.6.input_norm.bias
+	module.language_model.encoder.layers.3.self_attention.dense.weight
+	module.language_model.encoder.layers.14.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.11.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.2.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.3.input_norm.bias
+	module.language_model.encoder.layers.13.self_attention.dense.weight
+	module.language_model.encoder.layers.10.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.2.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.18.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.22.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.23.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.21.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.20.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.19.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.16.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.15.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.14.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.13.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.6.input_norm.weight
+	module.language_model.encoder.layers.3.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.1.self_attention.dense.weight
+INFO:megatron.core.optimizer:Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.0004, min_lr=4e-05, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.1, fp16=False, bf16=True, params_dtype=torch.bfloat16, use_precision_aware_optimizer=False, main_grads_dtype=torch.float32, main_params_dtype=torch.float32, exp_avg_dtype=torch.float32, exp_avg_sq_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.999, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=False, overlap_param_gather_with_optimizer_step=False, optimizer_cpu_offload=False, optimizer_offload_fraction=1.0, use_torch_optimizer_for_cpu_offload=False, overlap_cpu_optimizer_d2h_h2d=False, pin_cpu_grads=True, pin_cpu_params=True, clip_grad=1.0, log_num_zeros_in_grad=False, barrier_with_L1_time=True, timers=<megatron.core.timers.Timers object at 0x7f306165b610>, config_logger_dir='')
+INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
+[after model, optimizer, and learning rate scheduler are built] datetime: 2025-09-09 11:33:50 
+> building train, validation, and test datasets ...
+ > datasets target sizes (minimum size):
+    train:      1024000
+    validation: 5120
+    test:       5120
+INFO:megatron.core.datasets.blended_megatron_dataset_config:Let split_matrix = [(0, 0.949), (0.949, 0.999), (0.999, 1.0)]
+> building train, validation, and test datasets for GPT ...
+INFO:megatron.core.datasets.blended_megatron_dataset_builder:Building GPTDataset splits with sizes=(1024000, 5120, 5120) and config=GPTDatasetConfig(random_seed=1234, sequence_length=1024, blend=(['/pscratch/sd/s/syfan/Diloco/data/my-gpt2_text_document'], None), blend_per_split=None, split='949,50,1', split_matrix=[(0, 0.949), (0.949, 0.999), (0.999, 1.0)], num_dataset_builder_threads=1, path_to_cache=None, mmap_bin_files=True, mock=False, tokenizer=<megatron.training.tokenizer.tokenizer._GPT2BPETokenizer object at 0x7f3061699bd0>, mid_level_dataset_surplus=0.005, reset_position_ids=False, reset_attention_mask=False, eod_mask_loss=False, create_attention_mask=True, drop_last_partial_validation_sequence=True, add_extra_token_to_sequence=True, object_storage_cache_path=None)
+INFO:megatron.core.datasets.indexed_dataset:Load the _IndexReader from /pscratch/sd/s/syfan/Diloco/data/my-gpt2_text_document.idx
+INFO:megatron.core.datasets.indexed_dataset:	Extract the sequence lengths
+INFO:megatron.core.datasets.indexed_dataset:	Extract the sequence pointers
+INFO:megatron.core.datasets.indexed_dataset:	Extract the document indices
+INFO:megatron.core.datasets.indexed_dataset:> total number of sequences: 8013769
+INFO:megatron.core.datasets.indexed_dataset:> total number of documents: 8013769
+INFO:megatron.core.datasets.gpt_dataset:Load the GPTDataset train indices
+INFO:megatron.core.datasets.gpt_dataset:	Load the document index from 0b8f3a48172525008ee3ecc7f52af683-GPTDataset-train-document_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the sample index from 0b8f3a48172525008ee3ecc7f52af683-GPTDataset-train-sample_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the shuffle index from 0b8f3a48172525008ee3ecc7f52af683-GPTDataset-train-shuffle_index.npy
+INFO:megatron.core.datasets.gpt_dataset:> total number of samples: 8377389
+INFO:megatron.core.datasets.gpt_dataset:Load the GPTDataset valid indices
+INFO:megatron.core.datasets.gpt_dataset:	Load the document index from 3eadc3f13f250c54b46a5dbf07e57f48-GPTDataset-valid-document_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the sample index from 3eadc3f13f250c54b46a5dbf07e57f48-GPTDataset-valid-sample_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the shuffle index from 3eadc3f13f250c54b46a5dbf07e57f48-GPTDataset-valid-shuffle_index.npy
+INFO:megatron.core.datasets.gpt_dataset:> total number of samples: 441950
+INFO:megatron.core.datasets.gpt_dataset:Load the GPTDataset test indices
+INFO:megatron.core.datasets.gpt_dataset:	Load the document index from eb5bfd04d8271ae683384ad93d2d5b6b-GPTDataset-test-document_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the sample index from eb5bfd04d8271ae683384ad93d2d5b6b-GPTDataset-test-sample_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the shuffle index from eb5bfd04d8271ae683384ad93d2d5b6b-GPTDataset-test-shuffle_index.npy
+INFO:megatron.core.datasets.gpt_dataset:> total number of samples: 8801
+> finished creating GPT datasets ...
+[after dataloaders are built] datetime: 2025-09-09 11:33:51 
+done with setup ...
+training ...
+Setting rerun_state_machine.current_iteration to 0...
+(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (135.80, 633.66)
+    train/valid/test-data-iterators-setup ..........: (292.11, 321.27)
+[before the start of training step] datetime: 2025-09-09 11:33:51 
+Number of parameters in transformer block in billions:  0.30
+Number of parameters in embedding layers in billions: 0.05
+Total number of parameters in billions: 0.35
+Number of parameters in most loaded shard in billions: 0.3536
+Theoretical memory footprints: weight and optimizer=6069.97 MB
+ [2025-09-09 11:34:13] iteration       10/    2000 | consumed samples:         5120 | elapsed time per iteration (ms): 2143.0 | learning rate: 2.000000E-06 | global batch size:   512 | lm loss: 1.080875E+01 | loss scale: 1.0 | grad norm: 17.549 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+[Rank 0] (after 10 iterations) memory (MB) | allocated: 6109.2958984375 | max allocated: 10777.10498046875 | reserved: 10832.0 | max reserved: 10832.0
+ [2025-09-09 11:34:21] iteration       20/    2000 | consumed samples:        10240 | elapsed time per iteration (ms): 838.4 | learning rate: 4.000000E-06 | global batch size:   512 | lm loss: 9.744286E+00 | loss scale: 1.0 | grad norm: 3.547 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:34:29] iteration       30/    2000 | consumed samples:        15360 | elapsed time per iteration (ms): 836.1 | learning rate: 6.000000E-06 | global batch size:   512 | lm loss: 9.286491E+00 | loss scale: 1.0 | grad norm: 2.121 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:34:38] iteration       40/    2000 | consumed samples:        20480 | elapsed time per iteration (ms): 824.8 | learning rate: 8.000000E-06 | global batch size:   512 | lm loss: 9.066150E+00 | loss scale: 1.0 | grad norm: 1.944 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:34:46] iteration       50/    2000 | consumed samples:        25600 | elapsed time per iteration (ms): 826.2 | learning rate: 1.000000E-05 | global batch size:   512 | lm loss: 8.828416E+00 | loss scale: 1.0 | grad norm: 2.064 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:34:54] iteration       60/    2000 | consumed samples:        30720 | elapsed time per iteration (ms): 838.4 | learning rate: 1.200000E-05 | global batch size:   512 | lm loss: 8.618729E+00 | loss scale: 1.0 | grad norm: 1.697 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:02] iteration       70/    2000 | consumed samples:        35840 | elapsed time per iteration (ms): 806.8 | learning rate: 1.400000E-05 | global batch size:   512 | lm loss: 8.427130E+00 | loss scale: 1.0 | grad norm: 1.693 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:10] iteration       80/    2000 | consumed samples:        40960 | elapsed time per iteration (ms): 803.8 | learning rate: 1.600000E-05 | global batch size:   512 | lm loss: 8.249388E+00 | loss scale: 1.0 | grad norm: 1.613 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:19] iteration       90/    2000 | consumed samples:        46080 | elapsed time per iteration (ms): 840.1 | learning rate: 1.800000E-05 | global batch size:   512 | lm loss: 8.025051E+00 | loss scale: 1.0 | grad norm: 1.568 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:27] iteration      100/    2000 | consumed samples:        51200 | elapsed time per iteration (ms): 844.6 | learning rate: 2.000000E-05 | global batch size:   512 | lm loss: 7.825194E+00 | loss scale: 1.0 | grad norm: 2.571 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:35] iteration      110/    2000 | consumed samples:        56320 | elapsed time per iteration (ms): 807.0 | learning rate: 2.200000E-05 | global batch size:   512 | lm loss: 7.627352E+00 | loss scale: 1.0 | grad norm: 1.871 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:44] iteration      120/    2000 | consumed samples:        61440 | elapsed time per iteration (ms): 846.2 | learning rate: 2.400000E-05 | global batch size:   512 | lm loss: 7.438911E+00 | loss scale: 1.0 | grad norm: 1.172 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:35:53] iteration      130/    2000 | consumed samples:        66560 | elapsed time per iteration (ms): 891.3 | learning rate: 2.600000E-05 | global batch size:   512 | lm loss: 7.297291E+00 | loss scale: 1.0 | grad norm: 1.418 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:01] iteration      140/    2000 | consumed samples:        71680 | elapsed time per iteration (ms): 870.7 | learning rate: 2.800000E-05 | global batch size:   512 | lm loss: 7.141698E+00 | loss scale: 1.0 | grad norm: 1.443 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:10] iteration      150/    2000 | consumed samples:        76800 | elapsed time per iteration (ms): 877.3 | learning rate: 3.000000E-05 | global batch size:   512 | lm loss: 7.036575E+00 | loss scale: 1.0 | grad norm: 1.487 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:18] iteration      160/    2000 | consumed samples:        81920 | elapsed time per iteration (ms): 792.7 | learning rate: 3.200000E-05 | global batch size:   512 | lm loss: 6.926108E+00 | loss scale: 1.0 | grad norm: 1.479 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:26] iteration      170/    2000 | consumed samples:        87040 | elapsed time per iteration (ms): 841.5 | learning rate: 3.400000E-05 | global batch size:   512 | lm loss: 6.840396E+00 | loss scale: 1.0 | grad norm: 1.332 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:35] iteration      180/    2000 | consumed samples:        92160 | elapsed time per iteration (ms): 819.5 | learning rate: 3.600000E-05 | global batch size:   512 | lm loss: 6.763647E+00 | loss scale: 1.0 | grad norm: 1.473 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:43] iteration      190/    2000 | consumed samples:        97280 | elapsed time per iteration (ms): 845.9 | learning rate: 3.800000E-05 | global batch size:   512 | lm loss: 6.701873E+00 | loss scale: 1.0 | grad norm: 1.494 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:36:51] iteration      200/    2000 | consumed samples:       102400 | elapsed time per iteration (ms): 825.0 | learning rate: 4.000000E-05 | global batch size:   512 | lm loss: 6.628242E+00 | loss scale: 1.0 | grad norm: 1.101 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:00] iteration      210/    2000 | consumed samples:       107520 | elapsed time per iteration (ms): 822.8 | learning rate: 4.200000E-05 | global batch size:   512 | lm loss: 6.581499E+00 | loss scale: 1.0 | grad norm: 1.704 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:08] iteration      220/    2000 | consumed samples:       112640 | elapsed time per iteration (ms): 821.5 | learning rate: 4.400000E-05 | global batch size:   512 | lm loss: 6.529854E+00 | loss scale: 1.0 | grad norm: 1.793 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:16] iteration      230/    2000 | consumed samples:       117760 | elapsed time per iteration (ms): 812.6 | learning rate: 4.600000E-05 | global batch size:   512 | lm loss: 6.492287E+00 | loss scale: 1.0 | grad norm: 0.883 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:24] iteration      240/    2000 | consumed samples:       122880 | elapsed time per iteration (ms): 819.5 | learning rate: 4.800000E-05 | global batch size:   512 | lm loss: 6.446253E+00 | loss scale: 1.0 | grad norm: 1.747 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:32] iteration      250/    2000 | consumed samples:       128000 | elapsed time per iteration (ms): 817.8 | learning rate: 5.000000E-05 | global batch size:   512 | lm loss: 6.408087E+00 | loss scale: 1.0 | grad norm: 1.626 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:41] iteration      260/    2000 | consumed samples:       133120 | elapsed time per iteration (ms): 825.5 | learning rate: 5.200000E-05 | global batch size:   512 | lm loss: 6.364034E+00 | loss scale: 1.0 | grad norm: 1.833 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:49] iteration      270/    2000 | consumed samples:       138240 | elapsed time per iteration (ms): 839.6 | learning rate: 5.400000E-05 | global batch size:   512 | lm loss: 6.328708E+00 | loss scale: 1.0 | grad norm: 1.605 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:37:57] iteration      280/    2000 | consumed samples:       143360 | elapsed time per iteration (ms): 820.8 | learning rate: 5.600000E-05 | global batch size:   512 | lm loss: 6.293497E+00 | loss scale: 1.0 | grad norm: 1.319 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:05] iteration      290/    2000 | consumed samples:       148480 | elapsed time per iteration (ms): 820.0 | learning rate: 5.800000E-05 | global batch size:   512 | lm loss: 6.253931E+00 | loss scale: 1.0 | grad norm: 1.412 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:14] iteration      300/    2000 | consumed samples:       153600 | elapsed time per iteration (ms): 837.7 | learning rate: 6.000000E-05 | global batch size:   512 | lm loss: 6.241631E+00 | loss scale: 1.0 | grad norm: 1.367 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:22] iteration      310/    2000 | consumed samples:       158720 | elapsed time per iteration (ms): 838.3 | learning rate: 6.200000E-05 | global batch size:   512 | lm loss: 6.204908E+00 | loss scale: 1.0 | grad norm: 2.361 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:30] iteration      320/    2000 | consumed samples:       163840 | elapsed time per iteration (ms): 821.8 | learning rate: 6.400000E-05 | global batch size:   512 | lm loss: 6.190999E+00 | loss scale: 1.0 | grad norm: 1.396 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:39] iteration      330/    2000 | consumed samples:       168960 | elapsed time per iteration (ms): 818.9 | learning rate: 6.600000E-05 | global batch size:   512 | lm loss: 6.154130E+00 | loss scale: 1.0 | grad norm: 1.409 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:47] iteration      340/    2000 | consumed samples:       174080 | elapsed time per iteration (ms): 823.0 | learning rate: 6.800000E-05 | global batch size:   512 | lm loss: 6.134771E+00 | loss scale: 1.0 | grad norm: 1.138 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:38:55] iteration      350/    2000 | consumed samples:       179200 | elapsed time per iteration (ms): 819.5 | learning rate: 7.000000E-05 | global batch size:   512 | lm loss: 6.109712E+00 | loss scale: 1.0 | grad norm: 1.712 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:39:03] iteration      360/    2000 | consumed samples:       184320 | elapsed time per iteration (ms): 820.4 | learning rate: 7.200000E-05 | global batch size:   512 | lm loss: 6.076853E+00 | loss scale: 1.0 | grad norm: 1.110 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:39:11] iteration      370/    2000 | consumed samples:       189440 | elapsed time per iteration (ms): 822.8 | learning rate: 7.400000E-05 | global batch size:   512 | lm loss: 6.064124E+00 | loss scale: 1.0 | grad norm: 1.508 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:39:20] iteration      380/    2000 | consumed samples:       194560 | elapsed time per iteration (ms): 823.1 | learning rate: 7.600000E-05 | global batch size:   512 | lm loss: 6.033882E+00 | loss scale: 1.0 | grad norm: 1.621 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:39:28] iteration      390/    2000 | consumed samples:       199680 | elapsed time per iteration (ms): 832.7 | learning rate: 7.800000E-05 | global batch size:   512 | lm loss: 6.005783E+00 | loss scale: 1.0 | grad norm: 1.252 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:39:36] iteration      400/    2000 | consumed samples:       204800 | elapsed time per iteration (ms): 822.9 | learning rate: 8.000000E-05 | global batch size:   512 | lm loss: 5.987948E+00 | loss scale: 1.0 | grad norm: 1.584 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+W0909 11:39:42.148000 1902898 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003916-hsn0_1902898_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:44.143000 1989051 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003405-hsn0_1989051_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:44.269000 1746245 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001396-hsn0_1746245_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:44.677000 1787621 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001448-hsn0_1787621_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+ [2025-09-09 11:39:44] iteration      410/    2000 | consumed samples:       209920 | elapsed time per iteration (ms): 823.2 | learning rate: 8.200000E-05 | global batch size:   512 | lm loss: 5.962039E+00 | loss scale: 1.0 | grad norm: 1.746 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+W0909 11:39:48.170000 1389144 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001445-hsn0_1389144_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:51.240000 1348277 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001316-hsn0_1348277_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+ [2025-09-09 11:39:53] iteration      420/    2000 | consumed samples:       215040 | elapsed time per iteration (ms): 827.2 | learning rate: 8.400000E-05 | global batch size:   512 | lm loss: 5.938767E+00 | loss scale: 1.0 | grad norm: 1.328 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+W0909 11:39:55.500000 1796983 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001317-hsn0_1796983_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:55.474000 1052113 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003408-hsn0_1052113_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:57.812000 213674 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003409-hsn0_213674_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:58.474000 241240 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001393-hsn0_241240_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+W0909 11:39:59.081000 1774526 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003913-hsn0_1774526_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+ [2025-09-09 11:40:01] iteration      430/    2000 | consumed samples:       220160 | elapsed time per iteration (ms): 828.0 | learning rate: 8.600000E-05 | global batch size:   512 | lm loss: 5.914301E+00 | loss scale: 1.0 | grad norm: 1.316 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+W0909 11:40:06.961000 760268 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003909-hsn0_760268_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+ [2025-09-09 11:40:09] iteration      440/    2000 | consumed samples:       225280 | elapsed time per iteration (ms): 826.9 | learning rate: 8.800000E-05 | global batch size:   512 | lm loss: 5.895684E+00 | loss scale: 1.0 | grad norm: 1.794 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:40:17] iteration      450/    2000 | consumed samples:       230400 | elapsed time per iteration (ms): 821.5 | learning rate: 9.000000E-05 | global batch size:   512 | lm loss: 5.868021E+00 | loss scale: 1.0 | grad norm: 1.206 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:40:26] iteration      460/    2000 | consumed samples:       235520 | elapsed time per iteration (ms): 887.1 | learning rate: 9.200000E-05 | global batch size:   512 | lm loss: 5.844415E+00 | loss scale: 1.0 | grad norm: 1.336 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:40:35] iteration      470/    2000 | consumed samples:       240640 | elapsed time per iteration (ms): 876.7 | learning rate: 9.400000E-05 | global batch size:   512 | lm loss: 5.811078E+00 | loss scale: 1.0 | grad norm: 1.910 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:40:44] iteration      480/    2000 | consumed samples:       245760 | elapsed time per iteration (ms): 864.3 | learning rate: 9.600000E-05 | global batch size:   512 | lm loss: 5.794822E+00 | loss scale: 1.0 | grad norm: 1.386 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:40:52] iteration      490/    2000 | consumed samples:       250880 | elapsed time per iteration (ms): 820.8 | learning rate: 9.800000E-05 | global batch size:   512 | lm loss: 5.746053E+00 | loss scale: 1.0 | grad norm: 1.186 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:00] iteration      500/    2000 | consumed samples:       256000 | elapsed time per iteration (ms): 812.5 | learning rate: 1.000000E-04 | global batch size:   512 | lm loss: 5.726151E+00 | loss scale: 1.0 | grad norm: 1.140 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:08] iteration      510/    2000 | consumed samples:       261120 | elapsed time per iteration (ms): 814.2 | learning rate: 1.020000E-04 | global batch size:   512 | lm loss: 5.705457E+00 | loss scale: 1.0 | grad norm: 0.982 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:16] iteration      520/    2000 | consumed samples:       266240 | elapsed time per iteration (ms): 825.2 | learning rate: 1.040000E-04 | global batch size:   512 | lm loss: 5.686035E+00 | loss scale: 1.0 | grad norm: 1.282 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:25] iteration      530/    2000 | consumed samples:       271360 | elapsed time per iteration (ms): 834.8 | learning rate: 1.060000E-04 | global batch size:   512 | lm loss: 5.664638E+00 | loss scale: 1.0 | grad norm: 1.437 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:33] iteration      540/    2000 | consumed samples:       276480 | elapsed time per iteration (ms): 828.6 | learning rate: 1.080000E-04 | global batch size:   512 | lm loss: 5.630245E+00 | loss scale: 1.0 | grad norm: 1.584 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:41] iteration      550/    2000 | consumed samples:       281600 | elapsed time per iteration (ms): 825.9 | learning rate: 1.100000E-04 | global batch size:   512 | lm loss: 5.610851E+00 | loss scale: 1.0 | grad norm: 1.127 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:49] iteration      560/    2000 | consumed samples:       286720 | elapsed time per iteration (ms): 810.0 | learning rate: 1.120000E-04 | global batch size:   512 | lm loss: 5.574387E+00 | loss scale: 1.0 | grad norm: 1.524 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:41:57] iteration      570/    2000 | consumed samples:       291840 | elapsed time per iteration (ms): 794.4 | learning rate: 1.140000E-04 | global batch size:   512 | lm loss: 5.549080E+00 | loss scale: 1.0 | grad norm: 1.534 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:05] iteration      580/    2000 | consumed samples:       296960 | elapsed time per iteration (ms): 803.8 | learning rate: 1.160000E-04 | global batch size:   512 | lm loss: 5.524610E+00 | loss scale: 1.0 | grad norm: 1.394 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:14] iteration      590/    2000 | consumed samples:       302080 | elapsed time per iteration (ms): 809.5 | learning rate: 1.180000E-04 | global batch size:   512 | lm loss: 5.495028E+00 | loss scale: 1.0 | grad norm: 1.051 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:22] iteration      600/    2000 | consumed samples:       307200 | elapsed time per iteration (ms): 806.0 | learning rate: 1.200000E-04 | global batch size:   512 | lm loss: 5.458665E+00 | loss scale: 1.0 | grad norm: 1.585 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:30] iteration      610/    2000 | consumed samples:       312320 | elapsed time per iteration (ms): 802.3 | learning rate: 1.220000E-04 | global batch size:   512 | lm loss: 5.424688E+00 | loss scale: 1.0 | grad norm: 1.359 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:38] iteration      620/    2000 | consumed samples:       317440 | elapsed time per iteration (ms): 799.1 | learning rate: 1.240000E-04 | global batch size:   512 | lm loss: 5.406739E+00 | loss scale: 1.0 | grad norm: 1.032 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:46] iteration      630/    2000 | consumed samples:       322560 | elapsed time per iteration (ms): 799.2 | learning rate: 1.260000E-04 | global batch size:   512 | lm loss: 5.388845E+00 | loss scale: 1.0 | grad norm: 1.119 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:42:54] iteration      640/    2000 | consumed samples:       327680 | elapsed time per iteration (ms): 814.8 | learning rate: 1.280000E-04 | global batch size:   512 | lm loss: 5.352848E+00 | loss scale: 1.0 | grad norm: 1.070 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:02] iteration      650/    2000 | consumed samples:       332800 | elapsed time per iteration (ms): 800.4 | learning rate: 1.300000E-04 | global batch size:   512 | lm loss: 5.317979E+00 | loss scale: 1.0 | grad norm: 0.870 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:10] iteration      660/    2000 | consumed samples:       337920 | elapsed time per iteration (ms): 800.1 | learning rate: 1.320000E-04 | global batch size:   512 | lm loss: 5.300110E+00 | loss scale: 1.0 | grad norm: 1.015 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:18] iteration      670/    2000 | consumed samples:       343040 | elapsed time per iteration (ms): 802.3 | learning rate: 1.340000E-04 | global batch size:   512 | lm loss: 5.279480E+00 | loss scale: 1.0 | grad norm: 1.361 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:26] iteration      680/    2000 | consumed samples:       348160 | elapsed time per iteration (ms): 804.8 | learning rate: 1.360000E-04 | global batch size:   512 | lm loss: 5.254392E+00 | loss scale: 1.0 | grad norm: 1.082 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:34] iteration      690/    2000 | consumed samples:       353280 | elapsed time per iteration (ms): 804.4 | learning rate: 1.380000E-04 | global batch size:   512 | lm loss: 5.229698E+00 | loss scale: 1.0 | grad norm: 1.132 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:42] iteration      700/    2000 | consumed samples:       358400 | elapsed time per iteration (ms): 796.9 | learning rate: 1.400000E-04 | global batch size:   512 | lm loss: 5.188556E+00 | loss scale: 1.0 | grad norm: 1.130 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:50] iteration      710/    2000 | consumed samples:       363520 | elapsed time per iteration (ms): 818.3 | learning rate: 1.420000E-04 | global batch size:   512 | lm loss: 5.159486E+00 | loss scale: 1.0 | grad norm: 1.094 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:43:58] iteration      720/    2000 | consumed samples:       368640 | elapsed time per iteration (ms): 807.1 | learning rate: 1.440000E-04 | global batch size:   512 | lm loss: 5.146635E+00 | loss scale: 1.0 | grad norm: 1.182 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:06] iteration      730/    2000 | consumed samples:       373760 | elapsed time per iteration (ms): 789.1 | learning rate: 1.460000E-04 | global batch size:   512 | lm loss: 5.111625E+00 | loss scale: 1.0 | grad norm: 0.999 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:14] iteration      740/    2000 | consumed samples:       378880 | elapsed time per iteration (ms): 800.8 | learning rate: 1.480000E-04 | global batch size:   512 | lm loss: 5.093708E+00 | loss scale: 1.0 | grad norm: 0.948 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:22] iteration      750/    2000 | consumed samples:       384000 | elapsed time per iteration (ms): 839.2 | learning rate: 1.500000E-04 | global batch size:   512 | lm loss: 5.056203E+00 | loss scale: 1.0 | grad norm: 0.886 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:31] iteration      760/    2000 | consumed samples:       389120 | elapsed time per iteration (ms): 841.9 | learning rate: 1.520000E-04 | global batch size:   512 | lm loss: 5.047449E+00 | loss scale: 1.0 | grad norm: 0.994 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:39] iteration      770/    2000 | consumed samples:       394240 | elapsed time per iteration (ms): 824.1 | learning rate: 1.540000E-04 | global batch size:   512 | lm loss: 5.014574E+00 | loss scale: 1.0 | grad norm: 1.023 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:47] iteration      780/    2000 | consumed samples:       399360 | elapsed time per iteration (ms): 811.4 | learning rate: 1.560000E-04 | global batch size:   512 | lm loss: 4.995546E+00 | loss scale: 1.0 | grad norm: 0.827 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:44:56] iteration      790/    2000 | consumed samples:       404480 | elapsed time per iteration (ms): 837.1 | learning rate: 1.580000E-04 | global batch size:   512 | lm loss: 4.971584E+00 | loss scale: 1.0 | grad norm: 0.975 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:05] iteration      800/    2000 | consumed samples:       409600 | elapsed time per iteration (ms): 900.4 | learning rate: 1.600000E-04 | global batch size:   512 | lm loss: 4.937265E+00 | loss scale: 1.0 | grad norm: 0.858 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:13] iteration      810/    2000 | consumed samples:       414720 | elapsed time per iteration (ms): 834.7 | learning rate: 1.620000E-04 | global batch size:   512 | lm loss: 4.915737E+00 | loss scale: 1.0 | grad norm: 0.914 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:21] iteration      820/    2000 | consumed samples:       419840 | elapsed time per iteration (ms): 847.4 | learning rate: 1.640000E-04 | global batch size:   512 | lm loss: 4.892061E+00 | loss scale: 1.0 | grad norm: 1.053 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:30] iteration      830/    2000 | consumed samples:       424960 | elapsed time per iteration (ms): 812.4 | learning rate: 1.660000E-04 | global batch size:   512 | lm loss: 4.869588E+00 | loss scale: 1.0 | grad norm: 0.931 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:38] iteration      840/    2000 | consumed samples:       430080 | elapsed time per iteration (ms): 806.9 | learning rate: 1.680000E-04 | global batch size:   512 | lm loss: 4.845703E+00 | loss scale: 1.0 | grad norm: 1.119 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:46] iteration      850/    2000 | consumed samples:       435200 | elapsed time per iteration (ms): 808.3 | learning rate: 1.700000E-04 | global batch size:   512 | lm loss: 4.817924E+00 | loss scale: 1.0 | grad norm: 1.231 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:45:54] iteration      860/    2000 | consumed samples:       440320 | elapsed time per iteration (ms): 814.6 | learning rate: 1.720000E-04 | global batch size:   512 | lm loss: 4.779636E+00 | loss scale: 1.0 | grad norm: 0.888 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:02] iteration      870/    2000 | consumed samples:       445440 | elapsed time per iteration (ms): 807.8 | learning rate: 1.740000E-04 | global batch size:   512 | lm loss: 4.764188E+00 | loss scale: 1.0 | grad norm: 1.002 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:10] iteration      880/    2000 | consumed samples:       450560 | elapsed time per iteration (ms): 811.6 | learning rate: 1.760000E-04 | global batch size:   512 | lm loss: 4.743419E+00 | loss scale: 1.0 | grad norm: 1.055 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:18] iteration      890/    2000 | consumed samples:       455680 | elapsed time per iteration (ms): 809.7 | learning rate: 1.780000E-04 | global batch size:   512 | lm loss: 4.709431E+00 | loss scale: 1.0 | grad norm: 1.017 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:26] iteration      900/    2000 | consumed samples:       460800 | elapsed time per iteration (ms): 798.3 | learning rate: 1.800000E-04 | global batch size:   512 | lm loss: 4.698682E+00 | loss scale: 1.0 | grad norm: 1.010 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+W0909 11:46:30.109000 364966 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid001320-hsn0_364966_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+ [2025-09-09 11:46:34] iteration      910/    2000 | consumed samples:       465920 | elapsed time per iteration (ms): 799.1 | learning rate: 1.820000E-04 | global batch size:   512 | lm loss: 4.657180E+00 | loss scale: 1.0 | grad norm: 0.769 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:42] iteration      920/    2000 | consumed samples:       471040 | elapsed time per iteration (ms): 792.9 | learning rate: 1.840000E-04 | global batch size:   512 | lm loss: 4.634936E+00 | loss scale: 1.0 | grad norm: 1.035 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:50] iteration      930/    2000 | consumed samples:       476160 | elapsed time per iteration (ms): 795.5 | learning rate: 1.860000E-04 | global batch size:   512 | lm loss: 4.613179E+00 | loss scale: 1.0 | grad norm: 0.842 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:46:58] iteration      940/    2000 | consumed samples:       481280 | elapsed time per iteration (ms): 794.8 | learning rate: 1.880000E-04 | global batch size:   512 | lm loss: 4.590623E+00 | loss scale: 1.0 | grad norm: 1.041 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:06] iteration      950/    2000 | consumed samples:       486400 | elapsed time per iteration (ms): 806.0 | learning rate: 1.900000E-04 | global batch size:   512 | lm loss: 4.568498E+00 | loss scale: 1.0 | grad norm: 0.857 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:14] iteration      960/    2000 | consumed samples:       491520 | elapsed time per iteration (ms): 808.0 | learning rate: 1.920000E-04 | global batch size:   512 | lm loss: 4.523431E+00 | loss scale: 1.0 | grad norm: 0.708 | num zeros: 11.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:22] iteration      970/    2000 | consumed samples:       496640 | elapsed time per iteration (ms): 800.7 | learning rate: 1.940000E-04 | global batch size:   512 | lm loss: 4.519710E+00 | loss scale: 1.0 | grad norm: 0.964 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:30] iteration      980/    2000 | consumed samples:       501760 | elapsed time per iteration (ms): 807.2 | learning rate: 1.960000E-04 | global batch size:   512 | lm loss: 4.512409E+00 | loss scale: 1.0 | grad norm: 1.057 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:38] iteration      990/    2000 | consumed samples:       506880 | elapsed time per iteration (ms): 806.0 | learning rate: 1.980000E-04 | global batch size:   512 | lm loss: 4.480447E+00 | loss scale: 1.0 | grad norm: 0.737 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:46] iteration     1000/    2000 | consumed samples:       512000 | elapsed time per iteration (ms): 797.5 | learning rate: 2.000000E-04 | global batch size:   512 | lm loss: 4.466376E+00 | loss scale: 1.0 | grad norm: 1.065 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:47:54] iteration     1010/    2000 | consumed samples:       517120 | elapsed time per iteration (ms): 791.6 | learning rate: 2.020000E-04 | global batch size:   512 | lm loss: 4.458552E+00 | loss scale: 1.0 | grad norm: 0.861 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:02] iteration     1020/    2000 | consumed samples:       522240 | elapsed time per iteration (ms): 790.5 | learning rate: 2.040000E-04 | global batch size:   512 | lm loss: 4.419676E+00 | loss scale: 1.0 | grad norm: 0.805 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:10] iteration     1030/    2000 | consumed samples:       527360 | elapsed time per iteration (ms): 796.0 | learning rate: 2.060000E-04 | global batch size:   512 | lm loss: 4.406341E+00 | loss scale: 1.0 | grad norm: 0.683 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:18] iteration     1040/    2000 | consumed samples:       532480 | elapsed time per iteration (ms): 789.0 | learning rate: 2.080000E-04 | global batch size:   512 | lm loss: 4.392093E+00 | loss scale: 1.0 | grad norm: 0.590 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:26] iteration     1050/    2000 | consumed samples:       537600 | elapsed time per iteration (ms): 793.6 | learning rate: 2.100000E-04 | global batch size:   512 | lm loss: 4.375303E+00 | loss scale: 1.0 | grad norm: 0.903 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:34] iteration     1060/    2000 | consumed samples:       542720 | elapsed time per iteration (ms): 798.5 | learning rate: 2.120000E-04 | global batch size:   512 | lm loss: 4.370797E+00 | loss scale: 1.0 | grad norm: 0.943 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:42] iteration     1070/    2000 | consumed samples:       547840 | elapsed time per iteration (ms): 800.0 | learning rate: 2.140000E-04 | global batch size:   512 | lm loss: 4.373937E+00 | loss scale: 1.0 | grad norm: 0.927 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:50] iteration     1080/    2000 | consumed samples:       552960 | elapsed time per iteration (ms): 809.2 | learning rate: 2.160000E-04 | global batch size:   512 | lm loss: 4.348075E+00 | loss scale: 1.0 | grad norm: 0.804 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:48:58] iteration     1090/    2000 | consumed samples:       558080 | elapsed time per iteration (ms): 807.9 | learning rate: 2.180000E-04 | global batch size:   512 | lm loss: 4.334059E+00 | loss scale: 1.0 | grad norm: 0.863 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+W0909 11:49:05.244000 280854 /global/u2/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid003912-hsn0_280854_0' has failed to send a keep-alive heartbeat to the rendezvous '42647898' due to an error of type RendezvousTimeoutError.
+ [2025-09-09 11:49:06] iteration     1100/    2000 | consumed samples:       563200 | elapsed time per iteration (ms): 799.1 | learning rate: 2.200000E-04 | global batch size:   512 | lm loss: 4.311320E+00 | loss scale: 1.0 | grad norm: 0.620 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:49:14] iteration     1110/    2000 | consumed samples:       568320 | elapsed time per iteration (ms): 801.0 | learning rate: 2.220000E-04 | global batch size:   512 | lm loss: 4.279561E+00 | loss scale: 1.0 | grad norm: 0.735 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:49:22] iteration     1120/    2000 | consumed samples:       573440 | elapsed time per iteration (ms): 804.1 | learning rate: 2.240000E-04 | global batch size:   512 | lm loss: 4.292566E+00 | loss scale: 1.0 | grad norm: 0.730 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:49:30] iteration     1130/    2000 | consumed samples:       578560 | elapsed time per iteration (ms): 840.0 | learning rate: 2.260000E-04 | global batch size:   512 | lm loss: 4.269576E+00 | loss scale: 1.0 | grad norm: 0.568 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:49:39] iteration     1140/    2000 | consumed samples:       583680 | elapsed time per iteration (ms): 855.5 | learning rate: 2.280000E-04 | global batch size:   512 | lm loss: 4.257462E+00 | loss scale: 1.0 | grad norm: 0.563 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:49:47] iteration     1150/    2000 | consumed samples:       588800 | elapsed time per iteration (ms): 856.4 | learning rate: 2.300000E-04 | global batch size:   512 | lm loss: 4.240268E+00 | loss scale: 1.0 | grad norm: 0.620 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:49:55] iteration     1160/    2000 | consumed samples:       593920 | elapsed time per iteration (ms): 796.8 | learning rate: 2.320000E-04 | global batch size:   512 | lm loss: 4.230848E+00 | loss scale: 1.0 | grad norm: 0.726 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:03] iteration     1170/    2000 | consumed samples:       599040 | elapsed time per iteration (ms): 786.4 | learning rate: 2.340000E-04 | global batch size:   512 | lm loss: 4.218094E+00 | loss scale: 1.0 | grad norm: 0.505 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:11] iteration     1180/    2000 | consumed samples:       604160 | elapsed time per iteration (ms): 783.5 | learning rate: 2.360000E-04 | global batch size:   512 | lm loss: 4.210723E+00 | loss scale: 1.0 | grad norm: 0.803 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:19] iteration     1190/    2000 | consumed samples:       609280 | elapsed time per iteration (ms): 790.3 | learning rate: 2.380000E-04 | global batch size:   512 | lm loss: 4.230154E+00 | loss scale: 1.0 | grad norm: 0.673 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:27] iteration     1200/    2000 | consumed samples:       614400 | elapsed time per iteration (ms): 789.8 | learning rate: 2.400000E-04 | global batch size:   512 | lm loss: 4.192157E+00 | loss scale: 1.0 | grad norm: 0.656 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:35] iteration     1210/    2000 | consumed samples:       619520 | elapsed time per iteration (ms): 797.8 | learning rate: 2.420000E-04 | global batch size:   512 | lm loss: 4.189048E+00 | loss scale: 1.0 | grad norm: 0.645 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:43] iteration     1220/    2000 | consumed samples:       624640 | elapsed time per iteration (ms): 807.3 | learning rate: 2.440000E-04 | global batch size:   512 | lm loss: 4.182722E+00 | loss scale: 1.0 | grad norm: 0.659 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:51] iteration     1230/    2000 | consumed samples:       629760 | elapsed time per iteration (ms): 799.7 | learning rate: 2.460000E-04 | global batch size:   512 | lm loss: 4.157343E+00 | loss scale: 1.0 | grad norm: 0.479 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:50:59] iteration     1240/    2000 | consumed samples:       634880 | elapsed time per iteration (ms): 797.9 | learning rate: 2.480000E-04 | global batch size:   512 | lm loss: 4.140494E+00 | loss scale: 1.0 | grad norm: 0.586 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:07] iteration     1250/    2000 | consumed samples:       640000 | elapsed time per iteration (ms): 804.5 | learning rate: 2.500000E-04 | global batch size:   512 | lm loss: 4.147050E+00 | loss scale: 1.0 | grad norm: 0.698 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:15] iteration     1260/    2000 | consumed samples:       645120 | elapsed time per iteration (ms): 805.8 | learning rate: 2.520000E-04 | global batch size:   512 | lm loss: 4.129301E+00 | loss scale: 1.0 | grad norm: 0.605 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:23] iteration     1270/    2000 | consumed samples:       650240 | elapsed time per iteration (ms): 805.5 | learning rate: 2.540000E-04 | global batch size:   512 | lm loss: 4.113262E+00 | loss scale: 1.0 | grad norm: 0.716 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:31] iteration     1280/    2000 | consumed samples:       655360 | elapsed time per iteration (ms): 799.1 | learning rate: 2.560000E-04 | global batch size:   512 | lm loss: 4.106628E+00 | loss scale: 1.0 | grad norm: 0.581 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:39] iteration     1290/    2000 | consumed samples:       660480 | elapsed time per iteration (ms): 807.3 | learning rate: 2.580000E-04 | global batch size:   512 | lm loss: 4.107597E+00 | loss scale: 1.0 | grad norm: 0.571 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:47] iteration     1300/    2000 | consumed samples:       665600 | elapsed time per iteration (ms): 812.7 | learning rate: 2.600000E-04 | global batch size:   512 | lm loss: 4.096746E+00 | loss scale: 1.0 | grad norm: 0.582 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:51:56] iteration     1310/    2000 | consumed samples:       670720 | elapsed time per iteration (ms): 817.3 | learning rate: 2.620000E-04 | global batch size:   512 | lm loss: 4.094424E+00 | loss scale: 1.0 | grad norm: 0.878 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:04] iteration     1320/    2000 | consumed samples:       675840 | elapsed time per iteration (ms): 817.3 | learning rate: 2.640000E-04 | global batch size:   512 | lm loss: 4.085386E+00 | loss scale: 1.0 | grad norm: 0.471 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:12] iteration     1330/    2000 | consumed samples:       680960 | elapsed time per iteration (ms): 818.8 | learning rate: 2.660000E-04 | global batch size:   512 | lm loss: 4.064595E+00 | loss scale: 1.0 | grad norm: 0.743 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:20] iteration     1340/    2000 | consumed samples:       686080 | elapsed time per iteration (ms): 811.9 | learning rate: 2.680000E-04 | global batch size:   512 | lm loss: 4.073508E+00 | loss scale: 1.0 | grad norm: 0.509 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:28] iteration     1350/    2000 | consumed samples:       691200 | elapsed time per iteration (ms): 812.6 | learning rate: 2.700000E-04 | global batch size:   512 | lm loss: 4.057260E+00 | loss scale: 1.0 | grad norm: 0.745 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:36] iteration     1360/    2000 | consumed samples:       696320 | elapsed time per iteration (ms): 814.3 | learning rate: 2.720000E-04 | global batch size:   512 | lm loss: 4.057408E+00 | loss scale: 1.0 | grad norm: 0.679 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:44] iteration     1370/    2000 | consumed samples:       701440 | elapsed time per iteration (ms): 820.8 | learning rate: 2.740000E-04 | global batch size:   512 | lm loss: 4.035368E+00 | loss scale: 1.0 | grad norm: 0.507 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:52:53] iteration     1380/    2000 | consumed samples:       706560 | elapsed time per iteration (ms): 827.1 | learning rate: 2.760000E-04 | global batch size:   512 | lm loss: 4.026023E+00 | loss scale: 1.0 | grad norm: 0.773 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:01] iteration     1390/    2000 | consumed samples:       711680 | elapsed time per iteration (ms): 833.3 | learning rate: 2.780000E-04 | global batch size:   512 | lm loss: 4.033928E+00 | loss scale: 1.0 | grad norm: 0.479 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:09] iteration     1400/    2000 | consumed samples:       716800 | elapsed time per iteration (ms): 829.0 | learning rate: 2.800000E-04 | global batch size:   512 | lm loss: 4.012423E+00 | loss scale: 1.0 | grad norm: 0.727 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:18] iteration     1410/    2000 | consumed samples:       721920 | elapsed time per iteration (ms): 824.4 | learning rate: 2.820000E-04 | global batch size:   512 | lm loss: 4.012546E+00 | loss scale: 1.0 | grad norm: 0.492 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:26] iteration     1420/    2000 | consumed samples:       727040 | elapsed time per iteration (ms): 824.5 | learning rate: 2.840000E-04 | global batch size:   512 | lm loss: 3.996508E+00 | loss scale: 1.0 | grad norm: 0.594 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:34] iteration     1430/    2000 | consumed samples:       732160 | elapsed time per iteration (ms): 830.4 | learning rate: 2.860000E-04 | global batch size:   512 | lm loss: 3.997716E+00 | loss scale: 1.0 | grad norm: 0.631 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:42] iteration     1440/    2000 | consumed samples:       737280 | elapsed time per iteration (ms): 790.8 | learning rate: 2.880000E-04 | global batch size:   512 | lm loss: 4.009873E+00 | loss scale: 1.0 | grad norm: 0.763 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:50] iteration     1450/    2000 | consumed samples:       742400 | elapsed time per iteration (ms): 796.7 | learning rate: 2.900000E-04 | global batch size:   512 | lm loss: 3.998733E+00 | loss scale: 1.0 | grad norm: 0.443 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:53:58] iteration     1460/    2000 | consumed samples:       747520 | elapsed time per iteration (ms): 837.5 | learning rate: 2.920000E-04 | global batch size:   512 | lm loss: 3.976702E+00 | loss scale: 1.0 | grad norm: 0.594 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:07] iteration     1470/    2000 | consumed samples:       752640 | elapsed time per iteration (ms): 858.7 | learning rate: 2.940000E-04 | global batch size:   512 | lm loss: 3.971972E+00 | loss scale: 1.0 | grad norm: 0.470 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:16] iteration     1480/    2000 | consumed samples:       757760 | elapsed time per iteration (ms): 889.2 | learning rate: 2.960000E-04 | global batch size:   512 | lm loss: 3.971689E+00 | loss scale: 1.0 | grad norm: 0.466 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:24] iteration     1490/    2000 | consumed samples:       762880 | elapsed time per iteration (ms): 844.1 | learning rate: 2.980000E-04 | global batch size:   512 | lm loss: 3.942900E+00 | loss scale: 1.0 | grad norm: 0.523 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:33] iteration     1500/    2000 | consumed samples:       768000 | elapsed time per iteration (ms): 818.4 | learning rate: 3.000000E-04 | global batch size:   512 | lm loss: 3.951879E+00 | loss scale: 1.0 | grad norm: 0.508 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:41] iteration     1510/    2000 | consumed samples:       773120 | elapsed time per iteration (ms): 827.5 | learning rate: 3.020000E-04 | global batch size:   512 | lm loss: 3.939392E+00 | loss scale: 1.0 | grad norm: 0.470 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:49] iteration     1520/    2000 | consumed samples:       778240 | elapsed time per iteration (ms): 797.5 | learning rate: 3.040000E-04 | global batch size:   512 | lm loss: 3.938140E+00 | loss scale: 1.0 | grad norm: 0.512 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:54:57] iteration     1530/    2000 | consumed samples:       783360 | elapsed time per iteration (ms): 804.4 | learning rate: 3.060000E-04 | global batch size:   512 | lm loss: 3.939264E+00 | loss scale: 1.0 | grad norm: 0.619 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:05] iteration     1540/    2000 | consumed samples:       788480 | elapsed time per iteration (ms): 798.2 | learning rate: 3.080000E-04 | global batch size:   512 | lm loss: 3.938982E+00 | loss scale: 1.0 | grad norm: 0.614 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:13] iteration     1550/    2000 | consumed samples:       793600 | elapsed time per iteration (ms): 797.7 | learning rate: 3.100000E-04 | global batch size:   512 | lm loss: 3.925063E+00 | loss scale: 1.0 | grad norm: 0.532 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:21] iteration     1560/    2000 | consumed samples:       798720 | elapsed time per iteration (ms): 794.0 | learning rate: 3.120000E-04 | global batch size:   512 | lm loss: 3.915849E+00 | loss scale: 1.0 | grad norm: 0.448 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:29] iteration     1570/    2000 | consumed samples:       803840 | elapsed time per iteration (ms): 796.5 | learning rate: 3.140000E-04 | global batch size:   512 | lm loss: 3.900536E+00 | loss scale: 1.0 | grad norm: 0.471 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:37] iteration     1580/    2000 | consumed samples:       808960 | elapsed time per iteration (ms): 798.1 | learning rate: 3.160000E-04 | global batch size:   512 | lm loss: 3.889378E+00 | loss scale: 1.0 | grad norm: 0.575 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:45] iteration     1590/    2000 | consumed samples:       814080 | elapsed time per iteration (ms): 805.4 | learning rate: 3.180000E-04 | global batch size:   512 | lm loss: 3.890386E+00 | loss scale: 1.0 | grad norm: 0.470 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:55:53] iteration     1600/    2000 | consumed samples:       819200 | elapsed time per iteration (ms): 807.3 | learning rate: 3.200000E-04 | global batch size:   512 | lm loss: 3.876432E+00 | loss scale: 1.0 | grad norm: 0.443 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:01] iteration     1610/    2000 | consumed samples:       824320 | elapsed time per iteration (ms): 793.9 | learning rate: 3.220000E-04 | global batch size:   512 | lm loss: 3.881947E+00 | loss scale: 1.0 | grad norm: 0.525 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:09] iteration     1620/    2000 | consumed samples:       829440 | elapsed time per iteration (ms): 797.2 | learning rate: 3.240000E-04 | global batch size:   512 | lm loss: 3.886140E+00 | loss scale: 1.0 | grad norm: 0.602 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:17] iteration     1630/    2000 | consumed samples:       834560 | elapsed time per iteration (ms): 808.2 | learning rate: 3.260000E-04 | global batch size:   512 | lm loss: 3.877644E+00 | loss scale: 1.0 | grad norm: 0.445 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:25] iteration     1640/    2000 | consumed samples:       839680 | elapsed time per iteration (ms): 823.7 | learning rate: 3.280000E-04 | global batch size:   512 | lm loss: 3.875494E+00 | loss scale: 1.0 | grad norm: 0.527 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:33] iteration     1650/    2000 | consumed samples:       844800 | elapsed time per iteration (ms): 824.7 | learning rate: 3.300000E-04 | global batch size:   512 | lm loss: 3.868619E+00 | loss scale: 1.0 | grad norm: 0.562 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:41] iteration     1660/    2000 | consumed samples:       849920 | elapsed time per iteration (ms): 812.7 | learning rate: 3.320000E-04 | global batch size:   512 | lm loss: 3.859722E+00 | loss scale: 1.0 | grad norm: 0.551 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:49] iteration     1670/    2000 | consumed samples:       855040 | elapsed time per iteration (ms): 799.5 | learning rate: 3.340000E-04 | global batch size:   512 | lm loss: 3.853199E+00 | loss scale: 1.0 | grad norm: 0.370 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:56:57] iteration     1680/    2000 | consumed samples:       860160 | elapsed time per iteration (ms): 791.1 | learning rate: 3.360000E-04 | global batch size:   512 | lm loss: 3.851330E+00 | loss scale: 1.0 | grad norm: 0.612 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:57:05] iteration     1690/    2000 | consumed samples:       865280 | elapsed time per iteration (ms): 796.3 | learning rate: 3.380000E-04 | global batch size:   512 | lm loss: 3.845831E+00 | loss scale: 1.0 | grad norm: 0.468 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-09 11:57:13] iteration     1700/    2000 | consumed samples:       870400 | elapsed time per iteration (ms): 793.9 | learning rate: 3.400000E-04 | global batch size:   512 | lm loss: 3.830734E+00 | loss scale: 1.0 | grad norm: 0.377 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+slurmstepd: error: *** STEP 42647898.0 ON nid001316 CANCELLED AT 2025-09-09T18:57:17 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 42647898 ON nid001316 CANCELLED AT 2025-09-09T18:57:17 DUE TO TIME LIMIT ***
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---
+--- Logging error ---

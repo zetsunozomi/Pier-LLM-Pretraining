@@ -1,0 +1,1092 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+using world size: 2, data-parallel size: 2, context-parallel size: 1, hierarchical context-parallel sizes: Nonetensor-model-parallel size: 1, encoder-tensor-model-parallel size: 0, pipeline-model-parallel size: 1, encoder-pipeline-model-parallel size: 0
+Number of virtual stages per pipeline stage: None
+accumulate and all-reduce gradients in fp32 for bfloat16 data type.
+using torch.bfloat16 for parameters ...
+------------------------ arguments ------------------------
+  account_for_embedding_in_pipeline_split ......... False
+  account_for_loss_in_pipeline_split .............. False
+  accumulate_allreduce_grads_in_fp32 .............. True
+  adam_beta1 ...................................... 0.9
+  adam_beta2 ...................................... 0.999
+  adam_eps ........................................ 1e-08
+  add_bias_linear ................................. True
+  add_position_embedding .......................... True
+  add_qkv_bias .................................... True
+  adlr_autoresume ................................. False
+  adlr_autoresume_interval ........................ 1000
+  align_grad_reduce ............................... True
+  align_param_gather .............................. False
+  app_tag_run_name ................................ None
+  app_tag_run_version ............................. 0.0.0
+  apply_layernorm_1p .............................. False
+  apply_query_key_layer_scaling ................... False
+  apply_residual_connection_post_layernorm ........ False
+  apply_rope_fusion ............................... False
+  async_save ...................................... None
+  async_tensor_model_parallel_allreduce ........... True
+  attention_backend ............................... AttnBackend.auto
+  attention_dropout ............................... 0.1
+  attention_softmax_in_fp32 ....................... False
+  auto_detect_ckpt_format ......................... False
+  barrier_with_L1_time ............................ True
+  bert_binary_head ................................ True
+  bert_embedder_type .............................. megatron
+  bert_load ....................................... None
+  bf16 ............................................ True
+  bias_dropout_fusion ............................. True
+  bias_gelu_fusion ................................ True
+  bias_swiglu_fusion .............................. True
+  biencoder_projection_dim ........................ 0
+  biencoder_shared_query_context_model ............ False
+  block_data_path ................................. None
+  calc_ft_timeouts ................................ False
+  calculate_per_token_loss ........................ False
+  check_for_large_grads ........................... False
+  check_for_nan_in_loss_and_grad .................. True
+  check_for_spiky_loss ............................ False
+  check_weight_hash_across_dp_replicas_interval ... None
+  ckpt_assume_constant_structure .................. False
+  ckpt_convert_format ............................. None
+  ckpt_convert_save ............................... None
+  ckpt_convert_update_legacy_dist_opt_format ...... False
+  ckpt_format ..................................... torch
+  ckpt_fully_parallel_load ........................ False
+  ckpt_fully_parallel_save ........................ True
+  ckpt_fully_parallel_save_deprecated ............. False
+  ckpt_step ....................................... None
+  classes_fraction ................................ 1.0
+  clip_grad ....................................... 1.0
+  clone_scatter_output_in_embedding ............... True
+  config_logger_dir ............................... 
+  consumed_train_samples .......................... 0
+  consumed_valid_samples .......................... 0
+  context_parallel_size ........................... 1
+  cp_comm_type .................................... ['p2p']
+  create_attention_mask_in_dataloader ............. True
+  cross_entropy_fusion_impl ....................... native
+  cross_entropy_loss_fusion ....................... False
+  cuda_graph_scope ................................ full
+  cuda_graph_warmup_steps ......................... 3
+  data_args_path .................................. None
+  data_cache_path ................................. None
+  data_parallel_random_init ....................... False
+  data_parallel_sharding_strategy ................. no_shard
+  data_parallel_size .............................. 2
+  data_path ....................................... ['/pscratch/sd/s/syfan/Diloco/data/my-gpt2_text_document']
+  data_per_class_fraction ......................... 1.0
+  data_sharding ................................... True
+  dataloader_type ................................. single
+  ddp_average_in_collective ....................... False
+  ddp_bucket_size ................................. None
+  ddp_num_buckets ................................. None
+  ddp_pad_buckets_for_high_nccl_busbw ............. False
+  decoder_first_pipeline_num_layers ............... None
+  decoder_last_pipeline_num_layers ................ None
+  decoder_num_layers .............................. None
+  decoder_seq_length .............................. None
+  decoupled_lr .................................... None
+  decoupled_min_lr ................................ None
+  decrease_batch_size_if_needed ................... False
+  defer_embedding_wgrad_compute ................... False
+  deprecated_use_mcore_models ..................... False
+  deterministic_mode .............................. False
+  dino_bottleneck_size ............................ 256
+  dino_freeze_last_layer .......................... 1
+  dino_head_hidden_size ........................... 2048
+  dino_local_crops_number ......................... 10
+  dino_local_img_size ............................. 96
+  dino_norm_last_layer ............................ False
+  dino_teacher_temp ............................... 0.07
+  dino_warmup_teacher_temp ........................ 0.04
+  dino_warmup_teacher_temp_epochs ................. 30
+  disable_bf16_reduced_precision_matmul ........... False
+  disable_mamba_mem_eff_path ...................... False
+  disable_straggler_on_startup .................... False
+  dist_ckpt_format_deprecated ..................... None
+  dist_ckpt_strictness ............................ assume_ok_unexpected
+  distribute_saved_activations .................... False
+  distributed_backend ............................. nccl
+  distributed_timeout_minutes ..................... 10
+  embedding_path .................................. None
+  empty_unused_memory_level ....................... 0
+  enable_cuda_graph ............................... False
+  enable_ft_package ............................... False
+  enable_gloo_process_groups ...................... True
+  enable_msc ...................................... True
+  enable_one_logger ............................... True
+  encoder_num_layers .............................. 24
+  encoder_pipeline_model_parallel_size ............ 0
+  encoder_seq_length .............................. 1024
+  encoder_tensor_model_parallel_size .............. 0
+  end_weight_decay ................................ 0.1
+  eod_mask_loss ................................... False
+  error_injection_rate ............................ 0
+  error_injection_type ............................ transient_error
+  eval_interval ................................... 10000
+  eval_iters ...................................... 10
+  evidence_data_path .............................. None
+  exit_duration_in_mins ........................... None
+  exit_interval ................................... None
+  exit_on_missing_checkpoint ...................... False
+  exit_signal_handler ............................. False
+  exp_avg_dtype ................................... torch.float32
+  exp_avg_sq_dtype ................................ torch.float32
+  expert_model_parallel_size ...................... 1
+  expert_tensor_parallel_size ..................... 1
+  external_cuda_graph ............................. False
+  ffn_hidden_size ................................. 4096
+  finetune ........................................ False
+  first_last_layers_bf16 .......................... False
+  flash_decode .................................... False
+  fp16 ............................................ False
+  fp16_lm_cross_entropy ........................... False
+  fp32_residual_connection ........................ False
+  fp8 ............................................. None
+  fp8_amax_compute_algo ........................... most_recent
+  fp8_amax_history_len ............................ 1
+  fp8_interval .................................... 1
+  fp8_margin ...................................... 0
+  fp8_param_gather ................................ False
+  fp8_recipe ...................................... delayed
+  fp8_wgrad ....................................... True
+  global_batch_size ............................... 512
+  grad_reduce_in_bf16 ............................. False
+  gradient_accumulation_fusion .................... True
+  gradient_reduce_div_fusion ...................... True
+  group_query_attention ........................... False
+  head_lr_mult .................................... 1.0
+  heterogeneous_layers_config_encoded_json ........ None
+  heterogeneous_layers_config_path ................ None
+  hidden_dropout .................................. 0.1
+  hidden_size ..................................... 1024
+  hierarchical_context_parallel_sizes ............. None
+  hybrid_attention_ratio .......................... 0.0
+  hybrid_mlp_ratio ................................ 0.0
+  hybrid_override_pattern ......................... None
+  hysteresis ...................................... 2
+  ict_head_size ................................... None
+  ict_load ........................................ None
+  img_h ........................................... 224
+  img_w ........................................... 224
+  indexer_batch_size .............................. 128
+  indexer_log_interval ............................ 1000
+  inference_batch_times_seqlen_threshold .......... -1
+  inference_dynamic_batching ...................... False
+  inference_dynamic_batching_buffer_guaranteed_fraction  0.2
+  inference_dynamic_batching_buffer_overflow_factor  None
+  inference_dynamic_batching_buffer_size_gb ....... 40.0
+  inference_dynamic_batching_chunk_size ........... 256
+  inference_dynamic_batching_max_requests_override  None
+  inference_dynamic_batching_max_tokens_override .. None
+  inference_max_batch_size ........................ 8
+  inference_max_seq_length ........................ 2560
+  inference_rng_tracker ........................... False
+  init_method_std ................................. 0.02
+  init_method_xavier_uniform ...................... False
+  init_model_with_meta_device ..................... False
+  initial_loss_scale .............................. 4294967296
+  is_hybrid_model ................................. False
+  iter_per_epoch .................................. 1250
+  iterations_to_skip .............................. []
+  keep_fp8_transpose_cache_when_using_custom_fsdp . False
+  kv_channels ..................................... 64
+  kv_lora_rank .................................... 32
+  lazy_mpu_init ................................... None
+  load ............................................ None
+  local_rank ...................................... 0
+  log_interval .................................... 10
+  log_loss_scale_to_tensorboard ................... True
+  log_memory_to_tensorboard ....................... False
+  log_num_zeros_in_grad ........................... False
+  log_params_norm ................................. False
+  log_progress .................................... False
+  log_straggler ................................... False
+  log_throughput .................................. False
+  log_timers_to_tensorboard ....................... False
+  log_validation_ppl_to_tensorboard ............... False
+  log_world_size_to_tensorboard ................... False
+  logging_level ................................... None
+  loss_scale ...................................... None
+  loss_scale_window ............................... 1000
+  lr .............................................. 0.0004
+  lr_decay_iters .................................. 100000
+  lr_decay_samples ................................ None
+  lr_decay_style .................................. cosine
+  lr_warmup_fraction .............................. None
+  lr_warmup_init .................................. 0.0
+  lr_warmup_iters ................................. 2000
+  lr_warmup_samples ............................... 0
+  lr_wsd_decay_iters .............................. None
+  lr_wsd_decay_samples ............................ None
+  lr_wsd_decay_style .............................. exponential
+  main_grads_dtype ................................ torch.float32
+  main_params_dtype ............................... torch.float32
+  make_vocab_size_divisible_by .................... 128
+  mamba_head_dim .................................. 64
+  mamba_num_groups ................................ 8
+  mamba_num_heads ................................. None
+  mamba_state_dim ................................. 128
+  manual_gc ....................................... False
+  manual_gc_eval .................................. True
+  manual_gc_interval .............................. 0
+  mask_factor ..................................... 1.0
+  mask_prob ....................................... 0.15
+  mask_type ....................................... random
+  masked_softmax_fusion ........................... True
+  max_position_embeddings ......................... 1024
+  max_tokens_to_oom ............................... 12000
+  memory_snapshot_path ............................ snapshot.pickle
+  merge_file ...................................... /pscratch/sd/s/syfan/Diloco/data/gpt2-merges.txt
+  micro_batch_size ................................ 4
+  microbatch_group_size_per_vp_stage .............. None
+  mid_level_dataset_surplus ....................... 0.005
+  min_loss_scale .................................. 1.0
+  min_lr .......................................... 4e-05
+  mlp_chunks_for_prefill .......................... 1
+  mmap_bin_files .................................. True
+  mock_data ....................................... False
+  moe_aux_loss_coeff .............................. 0.0
+  moe_enable_deepep ............................... False
+  moe_expert_capacity_factor ...................... None
+  moe_extended_tp ................................. False
+  moe_ffn_hidden_size ............................. None
+  moe_grouped_gemm ................................ False
+  moe_input_jitter_eps ............................ None
+  moe_layer_freq .................................. 1
+  moe_layer_recompute ............................. False
+  moe_pad_expert_input_to_capacity ................ False
+  moe_per_layer_logging ........................... False
+  moe_permute_fusion .............................. False
+  moe_router_bias_update_rate ..................... 0.001
+  moe_router_dtype ................................ None
+  moe_router_enable_expert_bias ................... False
+  moe_router_group_topk ........................... None
+  moe_router_load_balancing_type .................. aux_loss
+  moe_router_num_groups ........................... None
+  moe_router_pre_softmax .......................... False
+  moe_router_score_function ....................... softmax
+  moe_router_topk ................................. 2
+  moe_router_topk_scaling_factor .................. None
+  moe_shared_expert_intermediate_size ............. None
+  moe_shared_expert_overlap ....................... False
+  moe_token_dispatcher_type ....................... allgather
+  moe_token_drop_policy ........................... probs
+  moe_use_legacy_grouped_gemm ..................... False
+  moe_use_upcycling ............................... False
+  moe_z_loss_coeff ................................ None
+  mrope_section ................................... None
+  mscale .......................................... 1.0
+  mscale_all_dim .................................. 1.0
+  mtp_loss_scaling_factor ......................... 0.1
+  mtp_num_layers .................................. None
+  multi_latent_attention .......................... False
+  nccl_communicator_config_path ................... None
+  no_load_optim ................................... None
+  no_load_rng ..................................... None
+  no_persist_layer_norm ........................... False
+  no_save_optim ................................... None
+  no_save_rng ..................................... None
+  non_persistent_ckpt_type ........................ None
+  non_persistent_global_ckpt_dir .................. None
+  non_persistent_local_ckpt_algo .................. fully_parallel
+  non_persistent_local_ckpt_dir ................... None
+  non_persistent_save_interval .................... None
+  norm_epsilon .................................... 1e-05
+  normalization ................................... LayerNorm
+  num_attention_heads ............................. 16
+  num_channels .................................... 3
+  num_classes ..................................... 1000
+  num_dataset_builder_threads ..................... 1
+  num_distributed_optimizer_instances ............. 1
+  num_experts ..................................... None
+  num_layers ...................................... 24
+  num_layers_at_end_in_bf16 ....................... 1
+  num_layers_at_start_in_bf16 ..................... 1
+  num_layers_per_virtual_pipeline_stage ........... None
+  num_query_groups ................................ 1
+  num_virtual_stages_per_pipeline_rank ............ None
+  num_workers ..................................... 2
+  object_storage_cache_path ....................... None
+  one_logger_async ................................ False
+  one_logger_project .............................. megatron-lm
+  one_logger_run_name ............................. None
+  onnx_safe ....................................... None
+  openai_gelu ..................................... False
+  optimizer ....................................... adam
+  optimizer_cpu_offload ........................... False
+  optimizer_offload_fraction ...................... 1.0
+  output_bert_embeddings .......................... False
+  overlap_cpu_optimizer_d2h_h2d ................... False
+  overlap_grad_reduce ............................. False
+  overlap_p2p_comm ................................ False
+  overlap_p2p_comm_warmup_flush ................... False
+  overlap_param_gather ............................ False
+  overlap_param_gather_with_optimizer_step ........ False
+  override_opt_param_scheduler .................... False
+  params_dtype .................................... torch.bfloat16
+  patch_dim ....................................... 16
+  per_split_data_args_path ........................ None
+  perform_initialization .......................... True
+  pin_cpu_grads ................................... True
+  pin_cpu_params .................................. True
+  pipeline_model_parallel_comm_backend ............ None
+  pipeline_model_parallel_size .................... 1
+  pipeline_model_parallel_split_rank .............. None
+  position_embedding_type ......................... learned_absolute
+  pretrained_checkpoint ........................... None
+  profile ......................................... False
+  profile_ranks ................................... [0]
+  profile_step_end ................................ 12
+  profile_step_start .............................. 10
+  q_lora_rank ..................................... None
+  qk_head_dim ..................................... 128
+  qk_layernorm .................................... False
+  qk_pos_emb_head_dim ............................. 64
+  query_in_block_prob ............................. 0.1
+  rampup_batch_size ............................... None
+  rank ............................................ 0
+  recompute_granularity ........................... None
+  recompute_method ................................ None
+  recompute_modules ............................... None
+  recompute_num_layers ............................ None
+  record_memory_history ........................... False
+  relative_attention_max_distance ................. 128
+  relative_attention_num_buckets .................. 32
+  replication ..................................... False
+  replication_factor .............................. 2
+  replication_jump ................................ None
+  rerun_mode ...................................... disabled
+  reset_attention_mask ............................ False
+  reset_position_ids .............................. False
+  result_rejected_tracker_filename ................ None
+  retriever_report_topk_accuracies ................ []
+  retriever_score_scaling ......................... False
+  retriever_seq_length ............................ 256
+  retro_add_retriever ............................. False
+  retro_attention_gate ............................ 1
+  retro_cyclic_train_iters ........................ None
+  retro_encoder_attention_dropout ................. 0.1
+  retro_encoder_hidden_dropout .................... 0.1
+  retro_encoder_layers ............................ 2
+  retro_num_neighbors ............................. 2
+  retro_num_retrieved_chunks ...................... 2
+  retro_project_dir ............................... None
+  retro_verify_neighbor_count ..................... True
+  rope_scaling_factor ............................. 8.0
+  rotary_base ..................................... 10000
+  rotary_interleaved .............................. False
+  rotary_percent .................................. 1.0
+  rotary_scaling_factor ........................... 1.0
+  rotary_seq_len_interpolation_factor ............. None
+  run_workload_inspector_server ................... False
+  sample_rate ..................................... 1.0
+  save ............................................ None
+  save_interval ................................... 10000
+  scatter_gather_tensors_in_pipeline .............. True
+  seed ............................................ 1234
+  seq_length ...................................... 1024
+  sequence_parallel ............................... False
+  sgd_momentum .................................... 0.9
+  short_seq_prob .................................. 0.1
+  skip_train ...................................... False
+  skipped_train_samples ........................... 0
+  spec ............................................ None
+  split ........................................... 949,50,1
+  squared_relu .................................... False
+  start_weight_decay .............................. 0.1
+  straggler_ctrlr_port ............................ 65535
+  straggler_minmax_count .......................... 1
+  suggested_communication_unit_size ............... None
+  swiglu .......................................... False
+  swin_backbone_type .............................. tiny
+  te_rng_tracker .................................. False
+  tensor_model_parallel_size ...................... 1
+  tensorboard_dir ................................. /pscratch/sd/s/syfan/Megatron-LM/logs
+  tensorboard_log_interval ........................ 1
+  tensorboard_queue_size .......................... 1000
+  test_data_path .................................. None
+  test_mode ....................................... False
+  tiktoken_num_special_tokens ..................... 1000
+  tiktoken_pattern ................................ None
+  tiktoken_special_tokens ......................... None
+  timing_log_level ................................ 0
+  timing_log_option ............................... minmax
+  titles_data_path ................................ None
+  tokenizer_model ................................. None
+  tokenizer_type .................................. GPT2BPETokenizer
+  tp_comm_bootstrap_backend ....................... nccl
+  tp_comm_bulk_dgrad .............................. True
+  tp_comm_bulk_wgrad .............................. True
+  tp_comm_overlap ................................. False
+  tp_comm_overlap_ag .............................. True
+  tp_comm_overlap_cfg ............................. None
+  tp_comm_overlap_rs .............................. True
+  tp_comm_overlap_rs_dgrad ........................ False
+  tp_comm_split_ag ................................ True
+  tp_comm_split_rs ................................ True
+  train_data_path ................................. None
+  train_iters ..................................... 2000
+  train_samples ................................... None
+  train_sync_interval ............................. None
+  transformer_impl ................................ local
+  transformer_pipeline_model_parallel_size ........ 1
+  untie_embeddings_and_output_weights ............. False
+  use_checkpoint_args ............................. False
+  use_checkpoint_opt_param_scheduler .............. False
+  use_cpu_initialization .......................... None
+  use_custom_fsdp ................................. False
+  use_dist_ckpt ................................... False
+  use_dist_ckpt_deprecated ........................ False
+  use_distributed_optimizer ....................... False
+  use_flash_attn .................................. True
+  use_legacy_models ............................... True
+  use_mp_args_from_checkpoint_args ................ False
+  use_one_sent_docs ............................... False
+  use_persistent_ckpt_worker ...................... False
+  use_precision_aware_optimizer ................... False
+  use_pytorch_profiler ............................ False
+  use_ring_exchange_p2p ........................... False
+  use_rope_scaling ................................ False
+  use_rotary_position_embeddings .................. False
+  use_tokenizer_model_from_checkpoint_args ........ True
+  use_torch_fsdp2 ................................. False
+  use_torch_optimizer_for_cpu_offload ............. False
+  use_tp_pp_dp_mapping ............................ False
+  v_head_dim ...................................... 128
+  valid_data_path ................................. None
+  variable_seq_lengths ............................ False
+  virtual_pipeline_model_parallel_size ............ None
+  vision_backbone_type ............................ vit
+  vision_pretraining .............................. False
+  vision_pretraining_type ......................... classify
+  vocab_extra_ids ................................. 0
+  vocab_file ...................................... /pscratch/sd/s/syfan/Diloco/data/gpt2-vocab.json
+  vocab_size ...................................... None
+  wandb_exp_name .................................. 
+  wandb_project ................................... 
+  wandb_save_dir .................................. 
+  weight_decay .................................... 0.1
+  weight_decay_incr_style ......................... constant
+  wgrad_deferral_limit ............................ 0
+  world_size ...................................... 2
+  yaml_cfg ........................................ None
+-------------------- end of arguments ---------------------
+> building GPT2BPETokenizer tokenizer ...
+ > padded vocab (size: 50257) with 47 dummy tokens (new size: 50304)
+WARNING:megatron.core.rerun_state_machine:RerunStateMachine initialized in mode RerunMode.DISABLED
+WARNING: TensorBoard writing requested but is not available (are you using PyTorch 1.1.0 or later?), no TensorBoard logs will be written.
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+> initializing torch distributed ...
+[Gloo] Rank 0 is connected to 1 peer ranks. Expected number of connected peer ranks is : 1
+[Gloo] Rank 1 is connected to 1 peer ranks. Expected number of connected peer ranks is : 1
+[Gloo] Rank [Gloo] Rank 10 is connected to  is connected to 11 peer ranks.  peer ranks. Expected number of connected peer ranks is : Expected number of connected peer ranks is : 11
+
+[Gloo] Rank [Gloo] Rank 01 is connected to  is connected to 11 peer ranks.  peer ranks. Expected number of connected peer ranks is : Expected number of connected peer ranks is : 11
+
+> initialized tensor model parallel with size 1
+> initialized pipeline model parallel with size 1
+> setting random seeds to 1234 ...
+> compiling dataset index builder ...
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank1]:[W917 20:49:48.775381943 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 1]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+make: Entering directory '/pscratch/sd/s/syfan/Megatron-LM/megatron/core/datasets'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/pscratch/sd/s/syfan/Megatron-LM/megatron/core/datasets'
+>>> done with dataset index builder. Compilation time: 0.119 seconds
+> compiling and loading fused kernels ...
+/global/homes/s/syfan/.conda/envs/megatron/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank0]:[W917 20:49:48.915960267 ProcessGroupNCCL.cpp:5023] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can specify device_id in init_process_group() to force use of a particular device.
+>>> done with compiling and loading fused kernels. Compilation time: 0.665 seconds
+time to initialize megatron (seconds): 4.789
+[after megatron is initialized] datetime: 2025-09-17 20:49:52 
+building GPT model ...
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 354871296
+INFO:megatron.core.distributed.distributed_data_parallel:Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=True, overlap_grad_reduce=False, overlap_param_gather=False, align_param_gather=False, use_distributed_optimizer=False, num_distributed_optimizer_instances=1, check_for_nan_in_grad=True, check_for_large_grads=False, bucket_size=None, pad_buckets_for_high_nccl_busbw=False, average_in_collective=False, fp8_param_gather=False, use_custom_fsdp=False, data_parallel_sharding_strategy='no_shard', gradient_reduce_div_fusion=True, suggested_communication_unit_size=None, preserve_fp32_weights=True, keep_fp8_transpose_cache_when_using_custom_fsdp=False)
+INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
+Params for bucket 1 (354871296 elements, 354871296 padded size):
+	module.language_model.encoder.layers.3.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.8.self_attention.dense.weight
+	module.language_model.encoder.layers.17.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.22.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.23.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.21.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.20.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.18.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.19.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.16.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.15.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.14.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.7.input_norm.weight
+	module.language_model.encoder.layers.12.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.8.post_attention_norm.weight
+	module.language_model.encoder.layers.3.input_norm.weight
+	module.language_model.encoder.layers.0.post_attention_norm.bias
+	module.language_model.encoder.layers.11.post_attention_norm.weight
+	module.language_model.encoder.layers.23.self_attention.dense.bias
+	module.language_model.encoder.layers.22.self_attention.dense.bias
+	module.language_model.encoder.layers.21.self_attention.dense.bias
+	module.language_model.encoder.layers.20.self_attention.dense.bias
+	module.language_model.encoder.layers.18.self_attention.dense.bias
+	module.language_model.encoder.layers.19.self_attention.dense.bias
+	module.language_model.encoder.layers.17.self_attention.dense.bias
+	module.language_model.encoder.layers.16.self_attention.dense.bias
+	module.language_model.encoder.layers.15.self_attention.dense.bias
+	module.language_model.encoder.layers.14.self_attention.dense.bias
+	module.language_model.encoder.layers.1.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.0.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.9.self_attention.dense.weight
+	module.language_model.encoder.layers.11.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.5.input_norm.weight
+	module.language_model.encoder.layers.7.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.4.input_norm.bias
+	module.language_model.encoder.layers.18.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.22.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.23.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.21.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.20.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.19.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.17.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.16.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.15.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.14.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.10.self_attention.dense.weight
+	module.language_model.encoder.layers.12.post_attention_norm.weight
+	module.language_model.encoder.layers.7.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.5.post_attention_norm.bias
+	module.language_model.encoder.layers.3.input_norm.bias
+	module.language_model.encoder.layers.1.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.6.post_attention_norm.weight
+	module.language_model.encoder.layers.6.input_norm.weight
+	module.language_model.encoder.layers.4.self_attention.dense.weight
+	module.language_model.encoder.layers.0.self_attention.dense.bias
+	module.language_model.embedding.word_embeddings.weight
+	module.language_model.encoder.layers.18.self_attention.dense.weight
+	module.language_model.encoder.layers.21.self_attention.dense.weight
+	module.language_model.encoder.layers.19.self_attention.dense.weight
+	module.language_model.encoder.layers.23.self_attention.dense.weight
+	module.language_model.encoder.layers.22.self_attention.dense.weight
+	module.language_model.encoder.layers.20.self_attention.dense.weight
+	module.language_model.encoder.layers.17.self_attention.dense.weight
+	module.language_model.encoder.layers.16.self_attention.dense.weight
+	module.language_model.encoder.layers.15.self_attention.dense.weight
+	module.language_model.encoder.layers.14.self_attention.dense.weight
+	module.language_model.encoder.layers.12.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.3.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.0.input_norm.weight
+	module.language_model.encoder.layers.11.self_attention.dense.weight
+	module.language_model.encoder.layers.7.self_attention.dense.weight
+	module.language_model.encoder.layers.10.input_norm.weight
+	module.language_model.encoder.layers.4.self_attention.dense.bias
+	module.language_model.encoder.layers.13.post_attention_norm.weight
+	module.language_model.encoder.layers.10.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.3.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.20.input_norm.weight
+	module.language_model.encoder.final_norm.weight
+	module.language_model.encoder.layers.23.input_norm.weight
+	module.language_model.encoder.layers.22.input_norm.weight
+	module.language_model.encoder.layers.18.input_norm.weight
+	module.language_model.encoder.layers.21.input_norm.weight
+	module.language_model.encoder.layers.19.input_norm.weight
+	module.language_model.encoder.layers.17.input_norm.weight
+	module.language_model.encoder.layers.16.input_norm.weight
+	module.language_model.encoder.layers.15.input_norm.weight
+	module.language_model.encoder.layers.5.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.2.input_norm.weight
+	module.language_model.encoder.layers.10.post_attention_norm.bias
+	module.language_model.encoder.layers.13.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.7.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.11.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.6.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.2.post_attention_norm.weight
+	module.language_model.encoder.layers.2.self_attention.dense.weight
+	module.language_model.encoder.layers.13.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.13.input_norm.bias
+	module.language_model.encoder.layers.12.self_attention.dense.weight
+	module.language_model.encoder.layers.12.input_norm.bias
+	module.language_model.encoder.layers.11.input_norm.bias
+	module.language_model.encoder.layers.9.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.8.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.4.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.4.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.2.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.1.post_attention_norm.bias
+	module.language_model.encoder.layers.0.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.1.input_norm.weight
+	module.language_model.encoder.layers.14.input_norm.bias
+	module.language_model.encoder.layers.6.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.0.self_attention.dense.weight
+	module.language_model.encoder.layers.13.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.12.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.10.self_attention.dense.bias
+	module.language_model.encoder.layers.8.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.6.input_norm.bias
+	module.language_model.encoder.layers.5.self_attention.dense.weight
+	module.language_model.encoder.layers.4.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.4.post_attention_norm.bias
+	module.language_model.encoder.layers.4.input_norm.weight
+	module.language_model.encoder.layers.11.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.9.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.4.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.0.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.13.self_attention.dense.weight
+	module.language_model.encoder.layers.7.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.0.post_attention_norm.weight
+	module.language_model.encoder.layers.14.input_norm.weight
+	module.language_model.encoder.layers.7.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.2.post_attention_norm.bias
+	module.language_model.encoder.layers.6.self_attention.dense.bias
+	module.language_model.encoder.layers.13.self_attention.dense.bias
+	module.language_model.encoder.layers.18.input_norm.bias
+	module.language_model.encoder.layers.21.input_norm.bias
+	module.language_model.encoder.layers.19.input_norm.bias
+	module.language_model.encoder.layers.20.input_norm.bias
+	module.language_model.encoder.layers.23.input_norm.bias
+	module.language_model.encoder.final_norm.bias
+	module.language_model.encoder.layers.22.input_norm.bias
+	module.language_model.encoder.layers.17.input_norm.bias
+	module.language_model.encoder.layers.16.input_norm.bias
+	module.language_model.encoder.layers.15.input_norm.bias
+	module.language_model.encoder.layers.8.self_attention.dense.bias
+	module.language_model.encoder.layers.1.self_attention.dense.bias
+	module.language_model.encoder.layers.10.post_attention_norm.weight
+	module.language_model.encoder.layers.12.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.5.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.0.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.11.self_attention.dense.bias
+	module.language_model.encoder.layers.7.post_attention_norm.weight
+	module.language_model.encoder.layers.6.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.23.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.22.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.18.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.20.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.21.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.19.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.17.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.16.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.15.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.14.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.11.input_norm.weight
+	module.language_model.encoder.layers.5.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.8.input_norm.weight
+	module.language_model.encoder.layers.1.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.0.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.2.mlp.dense_h_to_4h.weight
+	module.language_model.embedding.position_embeddings.weight
+	module.language_model.encoder.layers.1.self_attention.dense.weight
+	module.language_model.encoder.layers.19.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.17.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.22.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.23.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.21.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.20.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.18.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.16.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.15.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.14.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.13.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.8.input_norm.bias
+	module.language_model.encoder.layers.13.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.10.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.6.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.6.post_attention_norm.bias
+	module.language_model.encoder.layers.6.self_attention.dense.weight
+	module.language_model.encoder.layers.3.post_attention_norm.weight
+	module.language_model.encoder.layers.1.post_attention_norm.weight
+	module.language_model.encoder.layers.12.input_norm.weight
+	module.language_model.encoder.layers.9.post_attention_norm.weight
+	module.language_model.encoder.layers.3.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.19.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.23.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.22.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.21.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.20.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.18.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.17.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.16.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.15.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.14.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.7.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.2.self_attention.dense.bias
+	module.language_model.encoder.layers.12.self_attention.dense.bias
+	module.language_model.encoder.layers.6.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.5.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.10.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.2.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.5.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.20.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.18.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.19.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.22.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.23.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.21.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.17.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.16.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.15.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.14.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.13.input_norm.weight
+	module.language_model.encoder.layers.8.post_attention_norm.bias
+	module.language_model.encoder.layers.2.input_norm.bias
+	module.language_model.encoder.layers.7.self_attention.dense.bias
+	module.language_model.encoder.layers.5.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.23.post_attention_norm.weight
+	module.language_model.encoder.layers.22.post_attention_norm.weight
+	module.language_model.encoder.layers.20.post_attention_norm.weight
+	module.language_model.encoder.layers.18.post_attention_norm.weight
+	module.language_model.encoder.layers.21.post_attention_norm.weight
+	module.language_model.encoder.layers.19.post_attention_norm.weight
+	module.language_model.encoder.layers.17.post_attention_norm.weight
+	module.language_model.encoder.layers.16.post_attention_norm.weight
+	module.language_model.encoder.layers.15.post_attention_norm.weight
+	module.language_model.encoder.layers.14.post_attention_norm.weight
+	module.language_model.encoder.layers.13.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.11.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.9.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.8.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.5.self_attention.dense.bias
+	module.language_model.encoder.layers.0.input_norm.bias
+	module.language_model.encoder.layers.9.input_norm.bias
+	module.language_model.encoder.layers.1.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.3.self_attention.dense.weight
+	module.language_model.encoder.layers.1.input_norm.bias
+	module.language_model.encoder.layers.13.post_attention_norm.bias
+	module.language_model.encoder.layers.12.post_attention_norm.bias
+	module.language_model.encoder.layers.11.post_attention_norm.bias
+	module.language_model.encoder.layers.10.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.10.input_norm.bias
+	module.language_model.encoder.layers.9.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.7.input_norm.bias
+	module.language_model.encoder.layers.5.post_attention_norm.weight
+	module.language_model.encoder.layers.4.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.3.post_attention_norm.bias
+	module.language_model.encoder.layers.3.self_attention.dense.bias
+	module.language_model.encoder.layers.3.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.9.self_attention.dense.bias
+	module.language_model.encoder.layers.7.post_attention_norm.bias
+	module.language_model.encoder.layers.2.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.12.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.2.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.2.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.12.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.11.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.10.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.9.post_attention_norm.bias
+	module.language_model.encoder.layers.9.input_norm.weight
+	module.language_model.encoder.layers.8.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.6.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.4.post_attention_norm.weight
+	module.language_model.encoder.layers.3.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.1.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.0.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.4.mlp.dense_4h_to_h.weight
+	module.language_model.encoder.layers.8.self_attention.query_key_value.bias
+	module.language_model.encoder.layers.8.mlp.dense_4h_to_h.bias
+	module.language_model.encoder.layers.9.mlp.dense_h_to_4h.bias
+	module.language_model.encoder.layers.1.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.20.post_attention_norm.bias
+	module.language_model.encoder.layers.18.post_attention_norm.bias
+	module.language_model.encoder.layers.21.post_attention_norm.bias
+	module.language_model.encoder.layers.19.post_attention_norm.bias
+	module.language_model.encoder.layers.22.post_attention_norm.bias
+	module.language_model.encoder.layers.23.post_attention_norm.bias
+	module.language_model.encoder.layers.17.post_attention_norm.bias
+	module.language_model.encoder.layers.16.post_attention_norm.bias
+	module.language_model.encoder.layers.15.post_attention_norm.bias
+	module.language_model.encoder.layers.14.post_attention_norm.bias
+	module.language_model.encoder.layers.11.mlp.dense_h_to_4h.weight
+	module.language_model.encoder.layers.5.input_norm.bias
+	module.language_model.encoder.layers.9.self_attention.query_key_value.weight
+	module.language_model.encoder.layers.10.self_attention.query_key_value.weight
+INFO:megatron.core.optimizer:Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.0004, min_lr=4e-05, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.1, fp16=False, bf16=True, params_dtype=torch.bfloat16, use_precision_aware_optimizer=False, main_grads_dtype=torch.float32, main_params_dtype=torch.float32, exp_avg_dtype=torch.float32, exp_avg_sq_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.999, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=False, overlap_param_gather_with_optimizer_step=False, optimizer_cpu_offload=False, optimizer_offload_fraction=1.0, use_torch_optimizer_for_cpu_offload=False, overlap_cpu_optimizer_d2h_h2d=False, pin_cpu_grads=True, pin_cpu_params=True, clip_grad=1.0, log_num_zeros_in_grad=False, barrier_with_L1_time=True, timers=<megatron.core.timers.Timers object at 0x7f757e113f10>, config_logger_dir='')
+INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
+[after model, optimizer, and learning rate scheduler are built] datetime: 2025-09-17 20:49:52 
+> building train, validation, and test datasets ...
+ > datasets target sizes (minimum size):
+    train:      1024000
+    validation: 5120
+    test:       5120
+INFO:megatron.core.datasets.blended_megatron_dataset_config:Let split_matrix = [(0, 0.949), (0.949, 0.999), (0.999, 1.0)]
+> building train, validation, and test datasets for GPT ...
+INFO:megatron.core.datasets.blended_megatron_dataset_builder:Building GPTDataset splits with sizes=(1024000, 5120, 5120) and config=GPTDatasetConfig(random_seed=1234, sequence_length=1024, blend=(['/pscratch/sd/s/syfan/Diloco/data/my-gpt2_text_document'], None), blend_per_split=None, split='949,50,1', split_matrix=[(0, 0.949), (0.949, 0.999), (0.999, 1.0)], num_dataset_builder_threads=1, path_to_cache=None, mmap_bin_files=True, mock=False, tokenizer=<megatron.training.tokenizer.tokenizer._GPT2BPETokenizer object at 0x7f75848036d0>, mid_level_dataset_surplus=0.005, reset_position_ids=False, reset_attention_mask=False, eod_mask_loss=False, create_attention_mask=True, drop_last_partial_validation_sequence=True, add_extra_token_to_sequence=True, object_storage_cache_path=None)
+INFO:megatron.core.datasets.indexed_dataset:Load the _IndexReader from /pscratch/sd/s/syfan/Diloco/data/my-gpt2_text_document.idx
+INFO:megatron.core.datasets.indexed_dataset:	Extract the sequence lengths
+INFO:megatron.core.datasets.indexed_dataset:	Extract the sequence pointers
+INFO:megatron.core.datasets.indexed_dataset:	Extract the document indices
+INFO:megatron.core.datasets.indexed_dataset:> total number of sequences: 8013769
+INFO:megatron.core.datasets.indexed_dataset:> total number of documents: 8013769
+INFO:megatron.core.datasets.gpt_dataset:Load the GPTDataset train indices
+INFO:megatron.core.datasets.gpt_dataset:	Load the document index from 0b8f3a48172525008ee3ecc7f52af683-GPTDataset-train-document_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the sample index from 0b8f3a48172525008ee3ecc7f52af683-GPTDataset-train-sample_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the shuffle index from 0b8f3a48172525008ee3ecc7f52af683-GPTDataset-train-shuffle_index.npy
+INFO:megatron.core.datasets.gpt_dataset:> total number of samples: 8377389
+INFO:megatron.core.datasets.gpt_dataset:Load the GPTDataset valid indices
+INFO:megatron.core.datasets.gpt_dataset:	Load the document index from 3eadc3f13f250c54b46a5dbf07e57f48-GPTDataset-valid-document_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the sample index from 3eadc3f13f250c54b46a5dbf07e57f48-GPTDataset-valid-sample_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the shuffle index from 3eadc3f13f250c54b46a5dbf07e57f48-GPTDataset-valid-shuffle_index.npy
+INFO:megatron.core.datasets.gpt_dataset:> total number of samples: 441950
+INFO:megatron.core.datasets.gpt_dataset:Load the GPTDataset test indices
+INFO:megatron.core.datasets.gpt_dataset:	Load the document index from eb5bfd04d8271ae683384ad93d2d5b6b-GPTDataset-test-document_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the sample index from eb5bfd04d8271ae683384ad93d2d5b6b-GPTDataset-test-sample_index.npy
+INFO:megatron.core.datasets.gpt_dataset:	Load the shuffle index from eb5bfd04d8271ae683384ad93d2d5b6b-GPTDataset-test-shuffle_index.npy
+INFO:megatron.core.datasets.gpt_dataset:> total number of samples: 8801
+> finished creating GPT datasets ...
+[after dataloaders are built] datetime: 2025-09-17 20:49:53 
+done with setup ...
+(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (127.46, 127.71)
+    train/valid/test-data-iterators-setup ..........: (165.52, 168.36)
+training ...
+Setting rerun_state_machine.current_iteration to 0...
+[before the start of training step] datetime: 2025-09-17 20:49:53 
+ [2025-09-17 20:50:55] iteration       10/    2000 | consumed samples:         5120 | elapsed time per iteration (ms): 6232.1 | learning rate: 2.000000E-06 | global batch size:   512 | lm loss: 1.080853E+01 | loss scale: 1.0 | grad norm: 17.525 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |Number of parameters in transformer block in billions:  0.30
+
+Number of parameters in embedding layers in billions: 0.05
+Total number of parameters in billions: 0.35
+Number of parameters in most loaded shard in billions: 0.3536
+Theoretical memory footprints: weight and optimizer=6069.97 MB
+[Rank 0] (after 10 iterations) memory (MB) | allocated: 6109.2958984375 | max allocated: 10777.10498046875 | reserved: 10832.0 | max reserved: 10832.0
+ [2025-09-17 20:51:55] iteration       20/    2000 | consumed samples:        10240 | elapsed time per iteration (ms): 5947.9 | learning rate: 4.000000E-06 | global batch size:   512 | lm loss: 9.743560E+00 | loss scale: 1.0 | grad norm: 3.539 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:52:53] iteration       30/    2000 | consumed samples:        15360 | elapsed time per iteration (ms): 5887.9 | learning rate: 6.000000E-06 | global batch size:   512 | lm loss: 9.285800E+00 | loss scale: 1.0 | grad norm: 2.121 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:53:52] iteration       40/    2000 | consumed samples:        20480 | elapsed time per iteration (ms): 5896.3 | learning rate: 8.000000E-06 | global batch size:   512 | lm loss: 9.065266E+00 | loss scale: 1.0 | grad norm: 1.925 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:54:51] iteration       50/    2000 | consumed samples:        25600 | elapsed time per iteration (ms): 5862.6 | learning rate: 1.000000E-05 | global batch size:   512 | lm loss: 8.827089E+00 | loss scale: 1.0 | grad norm: 2.230 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:55:50] iteration       60/    2000 | consumed samples:        30720 | elapsed time per iteration (ms): 5919.5 | learning rate: 1.200000E-05 | global batch size:   512 | lm loss: 8.616983E+00 | loss scale: 1.0 | grad norm: 1.624 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:56:49] iteration       70/    2000 | consumed samples:        35840 | elapsed time per iteration (ms): 5896.9 | learning rate: 1.400000E-05 | global batch size:   512 | lm loss: 8.422113E+00 | loss scale: 1.0 | grad norm: 1.580 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:57:48] iteration       80/    2000 | consumed samples:        40960 | elapsed time per iteration (ms): 5919.8 | learning rate: 1.600000E-05 | global batch size:   512 | lm loss: 8.236407E+00 | loss scale: 1.0 | grad norm: 1.809 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:58:47] iteration       90/    2000 | consumed samples:        46080 | elapsed time per iteration (ms): 5874.7 | learning rate: 1.800000E-05 | global batch size:   512 | lm loss: 8.014582E+00 | loss scale: 1.0 | grad norm: 2.043 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 20:59:46] iteration      100/    2000 | consumed samples:        51200 | elapsed time per iteration (ms): 5913.2 | learning rate: 2.000000E-05 | global batch size:   512 | lm loss: 7.818386E+00 | loss scale: 1.0 | grad norm: 1.542 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:00:44] iteration      110/    2000 | consumed samples:        56320 | elapsed time per iteration (ms): 5824.1 | learning rate: 2.200000E-05 | global batch size:   512 | lm loss: 7.623297E+00 | loss scale: 1.0 | grad norm: 1.412 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:01:43] iteration      120/    2000 | consumed samples:        61440 | elapsed time per iteration (ms): 5864.2 | learning rate: 2.400000E-05 | global batch size:   512 | lm loss: 7.438987E+00 | loss scale: 1.0 | grad norm: 1.740 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:02:42] iteration      130/    2000 | consumed samples:        66560 | elapsed time per iteration (ms): 5838.1 | learning rate: 2.600000E-05 | global batch size:   512 | lm loss: 7.300790E+00 | loss scale: 1.0 | grad norm: 1.685 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:03:40] iteration      140/    2000 | consumed samples:        71680 | elapsed time per iteration (ms): 5843.0 | learning rate: 2.800000E-05 | global batch size:   512 | lm loss: 7.149763E+00 | loss scale: 1.0 | grad norm: 1.625 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:04:39] iteration      150/    2000 | consumed samples:        76800 | elapsed time per iteration (ms): 5883.0 | learning rate: 3.000000E-05 | global batch size:   512 | lm loss: 7.048201E+00 | loss scale: 1.0 | grad norm: 1.302 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:05:37] iteration      160/    2000 | consumed samples:        81920 | elapsed time per iteration (ms): 5847.6 | learning rate: 3.200000E-05 | global batch size:   512 | lm loss: 6.934588E+00 | loss scale: 1.0 | grad norm: 1.297 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:06:36] iteration      170/    2000 | consumed samples:        87040 | elapsed time per iteration (ms): 5858.5 | learning rate: 3.400000E-05 | global batch size:   512 | lm loss: 6.843468E+00 | loss scale: 1.0 | grad norm: 1.819 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:07:34] iteration      180/    2000 | consumed samples:        92160 | elapsed time per iteration (ms): 5847.3 | learning rate: 3.600000E-05 | global batch size:   512 | lm loss: 6.769959E+00 | loss scale: 1.0 | grad norm: 1.717 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:08:33] iteration      190/    2000 | consumed samples:        97280 | elapsed time per iteration (ms): 5824.5 | learning rate: 3.800000E-05 | global batch size:   512 | lm loss: 6.706406E+00 | loss scale: 1.0 | grad norm: 1.485 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:09:32] iteration      200/    2000 | consumed samples:       102400 | elapsed time per iteration (ms): 5910.5 | learning rate: 4.000000E-05 | global batch size:   512 | lm loss: 6.634263E+00 | loss scale: 1.0 | grad norm: 1.184 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:10:31] iteration      210/    2000 | consumed samples:       107520 | elapsed time per iteration (ms): 5909.0 | learning rate: 4.200000E-05 | global batch size:   512 | lm loss: 6.588523E+00 | loss scale: 1.0 | grad norm: 1.011 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:11:30] iteration      220/    2000 | consumed samples:       112640 | elapsed time per iteration (ms): 5892.1 | learning rate: 4.400000E-05 | global batch size:   512 | lm loss: 6.533847E+00 | loss scale: 1.0 | grad norm: 1.970 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:12:28] iteration      230/    2000 | consumed samples:       117760 | elapsed time per iteration (ms): 5877.5 | learning rate: 4.600000E-05 | global batch size:   512 | lm loss: 6.492622E+00 | loss scale: 1.0 | grad norm: 1.413 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:13:27] iteration      240/    2000 | consumed samples:       122880 | elapsed time per iteration (ms): 5895.6 | learning rate: 4.800000E-05 | global batch size:   512 | lm loss: 6.445943E+00 | loss scale: 1.0 | grad norm: 1.256 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:14:26] iteration      250/    2000 | consumed samples:       128000 | elapsed time per iteration (ms): 5899.3 | learning rate: 5.000000E-05 | global batch size:   512 | lm loss: 6.403963E+00 | loss scale: 1.0 | grad norm: 1.104 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:15:25] iteration      260/    2000 | consumed samples:       133120 | elapsed time per iteration (ms): 5831.3 | learning rate: 5.200000E-05 | global batch size:   512 | lm loss: 6.363749E+00 | loss scale: 1.0 | grad norm: 1.103 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:16:24] iteration      270/    2000 | consumed samples:       138240 | elapsed time per iteration (ms): 5901.4 | learning rate: 5.400000E-05 | global batch size:   512 | lm loss: 6.324026E+00 | loss scale: 1.0 | grad norm: 1.051 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:17:23] iteration      280/    2000 | consumed samples:       143360 | elapsed time per iteration (ms): 5897.9 | learning rate: 5.600000E-05 | global batch size:   512 | lm loss: 6.289367E+00 | loss scale: 1.0 | grad norm: 1.624 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:18:21] iteration      290/    2000 | consumed samples:       148480 | elapsed time per iteration (ms): 5853.9 | learning rate: 5.800000E-05 | global batch size:   512 | lm loss: 6.248352E+00 | loss scale: 1.0 | grad norm: 1.522 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:19:20] iteration      300/    2000 | consumed samples:       153600 | elapsed time per iteration (ms): 5877.8 | learning rate: 6.000000E-05 | global batch size:   512 | lm loss: 6.237391E+00 | loss scale: 1.0 | grad norm: 1.356 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:20:19] iteration      310/    2000 | consumed samples:       158720 | elapsed time per iteration (ms): 5872.9 | learning rate: 6.200000E-05 | global batch size:   512 | lm loss: 6.197392E+00 | loss scale: 1.0 | grad norm: 1.313 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:21:17] iteration      320/    2000 | consumed samples:       163840 | elapsed time per iteration (ms): 5851.7 | learning rate: 6.400000E-05 | global batch size:   512 | lm loss: 6.186933E+00 | loss scale: 1.0 | grad norm: 1.451 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:22:16] iteration      330/    2000 | consumed samples:       168960 | elapsed time per iteration (ms): 5876.7 | learning rate: 6.600000E-05 | global batch size:   512 | lm loss: 6.149726E+00 | loss scale: 1.0 | grad norm: 1.081 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:23:15] iteration      340/    2000 | consumed samples:       174080 | elapsed time per iteration (ms): 5879.1 | learning rate: 6.800000E-05 | global batch size:   512 | lm loss: 6.134932E+00 | loss scale: 1.0 | grad norm: 1.682 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:24:14] iteration      350/    2000 | consumed samples:       179200 | elapsed time per iteration (ms): 5944.0 | learning rate: 7.000000E-05 | global batch size:   512 | lm loss: 6.108013E+00 | loss scale: 1.0 | grad norm: 1.207 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:25:14] iteration      360/    2000 | consumed samples:       184320 | elapsed time per iteration (ms): 5938.4 | learning rate: 7.200000E-05 | global batch size:   512 | lm loss: 6.076260E+00 | loss scale: 1.0 | grad norm: 1.092 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:26:12] iteration      370/    2000 | consumed samples:       189440 | elapsed time per iteration (ms): 5825.5 | learning rate: 7.400000E-05 | global batch size:   512 | lm loss: 6.060149E+00 | loss scale: 1.0 | grad norm: 0.997 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:27:11] iteration      380/    2000 | consumed samples:       194560 | elapsed time per iteration (ms): 5903.0 | learning rate: 7.600000E-05 | global batch size:   512 | lm loss: 6.035741E+00 | loss scale: 1.0 | grad norm: 1.519 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:28:11] iteration      390/    2000 | consumed samples:       199680 | elapsed time per iteration (ms): 5961.8 | learning rate: 7.800000E-05 | global batch size:   512 | lm loss: 6.007281E+00 | loss scale: 1.0 | grad norm: 1.398 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:29:10] iteration      400/    2000 | consumed samples:       204800 | elapsed time per iteration (ms): 5960.0 | learning rate: 8.000000E-05 | global batch size:   512 | lm loss: 5.985016E+00 | loss scale: 1.0 | grad norm: 1.292 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:30:10] iteration      410/    2000 | consumed samples:       209920 | elapsed time per iteration (ms): 5937.9 | learning rate: 8.200000E-05 | global batch size:   512 | lm loss: 5.954925E+00 | loss scale: 1.0 | grad norm: 1.268 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:31:08] iteration      420/    2000 | consumed samples:       215040 | elapsed time per iteration (ms): 5819.5 | learning rate: 8.400000E-05 | global batch size:   512 | lm loss: 5.928647E+00 | loss scale: 1.0 | grad norm: 1.594 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:32:06] iteration      430/    2000 | consumed samples:       220160 | elapsed time per iteration (ms): 5784.7 | learning rate: 8.600000E-05 | global batch size:   512 | lm loss: 5.907990E+00 | loss scale: 1.0 | grad norm: 1.446 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:33:04] iteration      440/    2000 | consumed samples:       225280 | elapsed time per iteration (ms): 5855.5 | learning rate: 8.800000E-05 | global batch size:   512 | lm loss: 5.888503E+00 | loss scale: 1.0 | grad norm: 1.459 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:34:03] iteration      450/    2000 | consumed samples:       230400 | elapsed time per iteration (ms): 5872.6 | learning rate: 9.000000E-05 | global batch size:   512 | lm loss: 5.868193E+00 | loss scale: 1.0 | grad norm: 1.245 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:35:02] iteration      460/    2000 | consumed samples:       235520 | elapsed time per iteration (ms): 5922.3 | learning rate: 9.200000E-05 | global batch size:   512 | lm loss: 5.847022E+00 | loss scale: 1.0 | grad norm: 1.544 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:36:02] iteration      470/    2000 | consumed samples:       240640 | elapsed time per iteration (ms): 5951.3 | learning rate: 9.400000E-05 | global batch size:   512 | lm loss: 5.811024E+00 | loss scale: 1.0 | grad norm: 1.113 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:37:01] iteration      480/    2000 | consumed samples:       245760 | elapsed time per iteration (ms): 5927.4 | learning rate: 9.600000E-05 | global batch size:   512 | lm loss: 5.787593E+00 | loss scale: 1.0 | grad norm: 0.993 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:38:00] iteration      490/    2000 | consumed samples:       250880 | elapsed time per iteration (ms): 5928.8 | learning rate: 9.800000E-05 | global batch size:   512 | lm loss: 5.744588E+00 | loss scale: 1.0 | grad norm: 1.719 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:38:59] iteration      500/    2000 | consumed samples:       256000 | elapsed time per iteration (ms): 5930.8 | learning rate: 1.000000E-04 | global batch size:   512 | lm loss: 5.731495E+00 | loss scale: 1.0 | grad norm: 1.429 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:39:58] iteration      510/    2000 | consumed samples:       261120 | elapsed time per iteration (ms): 5878.2 | learning rate: 1.020000E-04 | global batch size:   512 | lm loss: 5.711295E+00 | loss scale: 1.0 | grad norm: 1.155 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:40:57] iteration      520/    2000 | consumed samples:       266240 | elapsed time per iteration (ms): 5877.1 | learning rate: 1.040000E-04 | global batch size:   512 | lm loss: 5.677908E+00 | loss scale: 1.0 | grad norm: 1.191 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:41:56] iteration      530/    2000 | consumed samples:       271360 | elapsed time per iteration (ms): 5894.5 | learning rate: 1.060000E-04 | global batch size:   512 | lm loss: 5.652667E+00 | loss scale: 1.0 | grad norm: 1.271 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:42:54] iteration      540/    2000 | consumed samples:       276480 | elapsed time per iteration (ms): 5838.3 | learning rate: 1.080000E-04 | global batch size:   512 | lm loss: 5.623915E+00 | loss scale: 1.0 | grad norm: 1.525 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:43:53] iteration      550/    2000 | consumed samples:       281600 | elapsed time per iteration (ms): 5913.4 | learning rate: 1.100000E-04 | global batch size:   512 | lm loss: 5.618470E+00 | loss scale: 1.0 | grad norm: 1.178 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:44:52] iteration      560/    2000 | consumed samples:       286720 | elapsed time per iteration (ms): 5882.0 | learning rate: 1.120000E-04 | global batch size:   512 | lm loss: 5.582260E+00 | loss scale: 1.0 | grad norm: 1.226 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:45:51] iteration      570/    2000 | consumed samples:       291840 | elapsed time per iteration (ms): 5912.9 | learning rate: 1.140000E-04 | global batch size:   512 | lm loss: 5.553076E+00 | loss scale: 1.0 | grad norm: 1.289 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:46:51] iteration      580/    2000 | consumed samples:       296960 | elapsed time per iteration (ms): 5912.5 | learning rate: 1.160000E-04 | global batch size:   512 | lm loss: 5.519956E+00 | loss scale: 1.0 | grad norm: 1.504 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:47:49] iteration      590/    2000 | consumed samples:       302080 | elapsed time per iteration (ms): 5872.0 | learning rate: 1.180000E-04 | global batch size:   512 | lm loss: 5.488397E+00 | loss scale: 1.0 | grad norm: 0.920 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:48:48] iteration      600/    2000 | consumed samples:       307200 | elapsed time per iteration (ms): 5886.2 | learning rate: 1.200000E-04 | global batch size:   512 | lm loss: 5.455596E+00 | loss scale: 1.0 | grad norm: 1.316 | num zeros: 10.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:49:47] iteration      610/    2000 | consumed samples:       312320 | elapsed time per iteration (ms): 5891.2 | learning rate: 1.220000E-04 | global batch size:   512 | lm loss: 5.419920E+00 | loss scale: 1.0 | grad norm: 1.189 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:50:46] iteration      620/    2000 | consumed samples:       317440 | elapsed time per iteration (ms): 5846.8 | learning rate: 1.240000E-04 | global batch size:   512 | lm loss: 5.406396E+00 | loss scale: 1.0 | grad norm: 1.174 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:51:44] iteration      630/    2000 | consumed samples:       322560 | elapsed time per iteration (ms): 5877.9 | learning rate: 1.260000E-04 | global batch size:   512 | lm loss: 5.390067E+00 | loss scale: 1.0 | grad norm: 1.054 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:52:44] iteration      640/    2000 | consumed samples:       327680 | elapsed time per iteration (ms): 5932.8 | learning rate: 1.280000E-04 | global batch size:   512 | lm loss: 5.349358E+00 | loss scale: 1.0 | grad norm: 1.055 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:53:43] iteration      650/    2000 | consumed samples:       332800 | elapsed time per iteration (ms): 5888.9 | learning rate: 1.300000E-04 | global batch size:   512 | lm loss: 5.315381E+00 | loss scale: 1.0 | grad norm: 1.217 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:54:42] iteration      660/    2000 | consumed samples:       337920 | elapsed time per iteration (ms): 5912.1 | learning rate: 1.320000E-04 | global batch size:   512 | lm loss: 5.298003E+00 | loss scale: 1.0 | grad norm: 1.136 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:55:41] iteration      670/    2000 | consumed samples:       343040 | elapsed time per iteration (ms): 5923.0 | learning rate: 1.340000E-04 | global batch size:   512 | lm loss: 5.272879E+00 | loss scale: 1.0 | grad norm: 1.214 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:56:40] iteration      680/    2000 | consumed samples:       348160 | elapsed time per iteration (ms): 5933.7 | learning rate: 1.360000E-04 | global batch size:   512 | lm loss: 5.245218E+00 | loss scale: 1.0 | grad norm: 0.939 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:57:40] iteration      690/    2000 | consumed samples:       353280 | elapsed time per iteration (ms): 5939.1 | learning rate: 1.380000E-04 | global batch size:   512 | lm loss: 5.217395E+00 | loss scale: 1.0 | grad norm: 1.186 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:58:38] iteration      700/    2000 | consumed samples:       358400 | elapsed time per iteration (ms): 5885.1 | learning rate: 1.400000E-04 | global batch size:   512 | lm loss: 5.187058E+00 | loss scale: 1.0 | grad norm: 1.113 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 21:59:38] iteration      710/    2000 | consumed samples:       363520 | elapsed time per iteration (ms): 5918.2 | learning rate: 1.420000E-04 | global batch size:   512 | lm loss: 5.155503E+00 | loss scale: 1.0 | grad norm: 1.034 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:00:37] iteration      720/    2000 | consumed samples:       368640 | elapsed time per iteration (ms): 5936.0 | learning rate: 1.440000E-04 | global batch size:   512 | lm loss: 5.147215E+00 | loss scale: 1.0 | grad norm: 0.861 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:01:36] iteration      730/    2000 | consumed samples:       373760 | elapsed time per iteration (ms): 5903.0 | learning rate: 1.460000E-04 | global batch size:   512 | lm loss: 5.104813E+00 | loss scale: 1.0 | grad norm: 1.031 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:02:35] iteration      740/    2000 | consumed samples:       378880 | elapsed time per iteration (ms): 5913.0 | learning rate: 1.480000E-04 | global batch size:   512 | lm loss: 5.091299E+00 | loss scale: 1.0 | grad norm: 1.139 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:03:33] iteration      750/    2000 | consumed samples:       384000 | elapsed time per iteration (ms): 5832.7 | learning rate: 1.500000E-04 | global batch size:   512 | lm loss: 5.052935E+00 | loss scale: 1.0 | grad norm: 1.076 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:04:33] iteration      760/    2000 | consumed samples:       389120 | elapsed time per iteration (ms): 5943.9 | learning rate: 1.520000E-04 | global batch size:   512 | lm loss: 5.045607E+00 | loss scale: 1.0 | grad norm: 1.026 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:05:32] iteration      770/    2000 | consumed samples:       394240 | elapsed time per iteration (ms): 5932.8 | learning rate: 1.540000E-04 | global batch size:   512 | lm loss: 5.019156E+00 | loss scale: 1.0 | grad norm: 1.030 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:06:31] iteration      780/    2000 | consumed samples:       399360 | elapsed time per iteration (ms): 5919.5 | learning rate: 1.560000E-04 | global batch size:   512 | lm loss: 4.999466E+00 | loss scale: 1.0 | grad norm: 1.095 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:07:30] iteration      790/    2000 | consumed samples:       404480 | elapsed time per iteration (ms): 5904.5 | learning rate: 1.580000E-04 | global batch size:   512 | lm loss: 4.970285E+00 | loss scale: 1.0 | grad norm: 0.960 | num zeros: 11.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:08:30] iteration      800/    2000 | consumed samples:       409600 | elapsed time per iteration (ms): 5936.7 | learning rate: 1.600000E-04 | global batch size:   512 | lm loss: 4.936631E+00 | loss scale: 1.0 | grad norm: 0.990 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:09:29] iteration      810/    2000 | consumed samples:       414720 | elapsed time per iteration (ms): 5914.5 | learning rate: 1.620000E-04 | global batch size:   512 | lm loss: 4.917861E+00 | loss scale: 1.0 | grad norm: 0.914 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:10:28] iteration      820/    2000 | consumed samples:       419840 | elapsed time per iteration (ms): 5944.3 | learning rate: 1.640000E-04 | global batch size:   512 | lm loss: 4.889085E+00 | loss scale: 1.0 | grad norm: 1.177 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:11:28] iteration      830/    2000 | consumed samples:       424960 | elapsed time per iteration (ms): 5966.8 | learning rate: 1.660000E-04 | global batch size:   512 | lm loss: 4.867217E+00 | loss scale: 1.0 | grad norm: 1.174 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:12:27] iteration      840/    2000 | consumed samples:       430080 | elapsed time per iteration (ms): 5917.8 | learning rate: 1.680000E-04 | global batch size:   512 | lm loss: 4.843517E+00 | loss scale: 1.0 | grad norm: 1.238 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:13:27] iteration      850/    2000 | consumed samples:       435200 | elapsed time per iteration (ms): 5951.4 | learning rate: 1.700000E-04 | global batch size:   512 | lm loss: 4.814679E+00 | loss scale: 1.0 | grad norm: 1.033 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:14:27] iteration      860/    2000 | consumed samples:       440320 | elapsed time per iteration (ms): 5980.1 | learning rate: 1.720000E-04 | global batch size:   512 | lm loss: 4.774195E+00 | loss scale: 1.0 | grad norm: 0.773 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:15:26] iteration      870/    2000 | consumed samples:       445440 | elapsed time per iteration (ms): 5936.5 | learning rate: 1.740000E-04 | global batch size:   512 | lm loss: 4.758253E+00 | loss scale: 1.0 | grad norm: 1.224 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:16:26] iteration      880/    2000 | consumed samples:       450560 | elapsed time per iteration (ms): 5964.0 | learning rate: 1.760000E-04 | global batch size:   512 | lm loss: 4.734885E+00 | loss scale: 1.0 | grad norm: 1.126 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:17:25] iteration      890/    2000 | consumed samples:       455680 | elapsed time per iteration (ms): 5891.7 | learning rate: 1.780000E-04 | global batch size:   512 | lm loss: 4.706329E+00 | loss scale: 1.0 | grad norm: 1.198 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:18:23] iteration      900/    2000 | consumed samples:       460800 | elapsed time per iteration (ms): 5893.5 | learning rate: 1.800000E-04 | global batch size:   512 | lm loss: 4.697897E+00 | loss scale: 1.0 | grad norm: 1.175 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:19:23] iteration      910/    2000 | consumed samples:       465920 | elapsed time per iteration (ms): 5949.3 | learning rate: 1.820000E-04 | global batch size:   512 | lm loss: 4.666721E+00 | loss scale: 1.0 | grad norm: 0.934 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:20:23] iteration      920/    2000 | consumed samples:       471040 | elapsed time per iteration (ms): 5958.3 | learning rate: 1.840000E-04 | global batch size:   512 | lm loss: 4.633995E+00 | loss scale: 1.0 | grad norm: 0.890 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:21:22] iteration      930/    2000 | consumed samples:       476160 | elapsed time per iteration (ms): 5976.5 | learning rate: 1.860000E-04 | global batch size:   512 | lm loss: 4.604133E+00 | loss scale: 1.0 | grad norm: 0.908 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:22:22] iteration      940/    2000 | consumed samples:       481280 | elapsed time per iteration (ms): 5935.6 | learning rate: 1.880000E-04 | global batch size:   512 | lm loss: 4.589897E+00 | loss scale: 1.0 | grad norm: 0.948 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:23:21] iteration      950/    2000 | consumed samples:       486400 | elapsed time per iteration (ms): 5891.5 | learning rate: 1.900000E-04 | global batch size:   512 | lm loss: 4.569643E+00 | loss scale: 1.0 | grad norm: 0.867 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:24:20] iteration      960/    2000 | consumed samples:       491520 | elapsed time per iteration (ms): 5914.3 | learning rate: 1.920000E-04 | global batch size:   512 | lm loss: 4.533433E+00 | loss scale: 1.0 | grad norm: 0.973 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:25:18] iteration      970/    2000 | consumed samples:       496640 | elapsed time per iteration (ms): 5876.6 | learning rate: 1.940000E-04 | global batch size:   512 | lm loss: 4.526963E+00 | loss scale: 1.0 | grad norm: 0.834 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:26:17] iteration      980/    2000 | consumed samples:       501760 | elapsed time per iteration (ms): 5898.6 | learning rate: 1.960000E-04 | global batch size:   512 | lm loss: 4.506708E+00 | loss scale: 1.0 | grad norm: 0.780 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:27:17] iteration      990/    2000 | consumed samples:       506880 | elapsed time per iteration (ms): 5906.8 | learning rate: 1.980000E-04 | global batch size:   512 | lm loss: 4.483572E+00 | loss scale: 1.0 | grad norm: 0.858 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:28:15] iteration     1000/    2000 | consumed samples:       512000 | elapsed time per iteration (ms): 5843.8 | learning rate: 2.000000E-04 | global batch size:   512 | lm loss: 4.457692E+00 | loss scale: 1.0 | grad norm: 0.874 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:29:13] iteration     1010/    2000 | consumed samples:       517120 | elapsed time per iteration (ms): 5833.3 | learning rate: 2.020000E-04 | global batch size:   512 | lm loss: 4.451334E+00 | loss scale: 1.0 | grad norm: 0.764 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:30:12] iteration     1020/    2000 | consumed samples:       522240 | elapsed time per iteration (ms): 5876.1 | learning rate: 2.040000E-04 | global batch size:   512 | lm loss: 4.419305E+00 | loss scale: 1.0 | grad norm: 1.011 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:31:12] iteration     1030/    2000 | consumed samples:       527360 | elapsed time per iteration (ms): 5991.8 | learning rate: 2.060000E-04 | global batch size:   512 | lm loss: 4.404773E+00 | loss scale: 1.0 | grad norm: 0.975 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:32:12] iteration     1040/    2000 | consumed samples:       532480 | elapsed time per iteration (ms): 5993.1 | learning rate: 2.080000E-04 | global batch size:   512 | lm loss: 4.398324E+00 | loss scale: 1.0 | grad norm: 0.848 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:33:10] iteration     1050/    2000 | consumed samples:       537600 | elapsed time per iteration (ms): 5853.8 | learning rate: 2.100000E-04 | global batch size:   512 | lm loss: 4.393096E+00 | loss scale: 1.0 | grad norm: 0.935 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:34:09] iteration     1060/    2000 | consumed samples:       542720 | elapsed time per iteration (ms): 5867.5 | learning rate: 2.120000E-04 | global batch size:   512 | lm loss: 4.371480E+00 | loss scale: 1.0 | grad norm: 0.663 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:35:08] iteration     1070/    2000 | consumed samples:       547840 | elapsed time per iteration (ms): 5920.8 | learning rate: 2.140000E-04 | global batch size:   512 | lm loss: 4.345272E+00 | loss scale: 1.0 | grad norm: 0.742 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:36:08] iteration     1080/    2000 | consumed samples:       552960 | elapsed time per iteration (ms): 5962.7 | learning rate: 2.160000E-04 | global batch size:   512 | lm loss: 4.326766E+00 | loss scale: 1.0 | grad norm: 0.678 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:37:07] iteration     1090/    2000 | consumed samples:       558080 | elapsed time per iteration (ms): 5899.2 | learning rate: 2.180000E-04 | global batch size:   512 | lm loss: 4.333218E+00 | loss scale: 1.0 | grad norm: 0.846 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:38:06] iteration     1100/    2000 | consumed samples:       563200 | elapsed time per iteration (ms): 5936.0 | learning rate: 2.200000E-04 | global batch size:   512 | lm loss: 4.310289E+00 | loss scale: 1.0 | grad norm: 0.528 | num zeros: 12.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:39:05] iteration     1110/    2000 | consumed samples:       568320 | elapsed time per iteration (ms): 5860.3 | learning rate: 2.220000E-04 | global batch size:   512 | lm loss: 4.284635E+00 | loss scale: 1.0 | grad norm: 0.761 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:40:04] iteration     1120/    2000 | consumed samples:       573440 | elapsed time per iteration (ms): 5903.0 | learning rate: 2.240000E-04 | global batch size:   512 | lm loss: 4.278803E+00 | loss scale: 1.0 | grad norm: 0.807 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:41:03] iteration     1130/    2000 | consumed samples:       578560 | elapsed time per iteration (ms): 5926.8 | learning rate: 2.260000E-04 | global batch size:   512 | lm loss: 4.277182E+00 | loss scale: 1.0 | grad norm: 0.700 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:42:02] iteration     1140/    2000 | consumed samples:       583680 | elapsed time per iteration (ms): 5884.9 | learning rate: 2.280000E-04 | global batch size:   512 | lm loss: 4.270152E+00 | loss scale: 1.0 | grad norm: 0.698 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:43:01] iteration     1150/    2000 | consumed samples:       588800 | elapsed time per iteration (ms): 5912.9 | learning rate: 2.300000E-04 | global batch size:   512 | lm loss: 4.243267E+00 | loss scale: 1.0 | grad norm: 0.532 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:44:00] iteration     1160/    2000 | consumed samples:       593920 | elapsed time per iteration (ms): 5852.6 | learning rate: 2.320000E-04 | global batch size:   512 | lm loss: 4.222387E+00 | loss scale: 1.0 | grad norm: 0.535 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:44:59] iteration     1170/    2000 | consumed samples:       599040 | elapsed time per iteration (ms): 5931.1 | learning rate: 2.340000E-04 | global batch size:   512 | lm loss: 4.208341E+00 | loss scale: 1.0 | grad norm: 0.914 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:45:58] iteration     1180/    2000 | consumed samples:       604160 | elapsed time per iteration (ms): 5899.3 | learning rate: 2.360000E-04 | global batch size:   512 | lm loss: 4.225945E+00 | loss scale: 1.0 | grad norm: 0.756 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:46:57] iteration     1190/    2000 | consumed samples:       609280 | elapsed time per iteration (ms): 5895.4 | learning rate: 2.380000E-04 | global batch size:   512 | lm loss: 4.215617E+00 | loss scale: 1.0 | grad norm: 0.625 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:47:57] iteration     1200/    2000 | consumed samples:       614400 | elapsed time per iteration (ms): 5977.5 | learning rate: 2.400000E-04 | global batch size:   512 | lm loss: 4.200351E+00 | loss scale: 1.0 | grad norm: 0.963 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:48:56] iteration     1210/    2000 | consumed samples:       619520 | elapsed time per iteration (ms): 5936.3 | learning rate: 2.420000E-04 | global batch size:   512 | lm loss: 4.223613E+00 | loss scale: 1.0 | grad norm: 1.100 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:49:55] iteration     1220/    2000 | consumed samples:       624640 | elapsed time per iteration (ms): 5928.6 | learning rate: 2.440000E-04 | global batch size:   512 | lm loss: 4.230670E+00 | loss scale: 1.0 | grad norm: 0.879 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:50:55] iteration     1230/    2000 | consumed samples:       629760 | elapsed time per iteration (ms): 5932.2 | learning rate: 2.460000E-04 | global batch size:   512 | lm loss: 4.179328E+00 | loss scale: 1.0 | grad norm: 0.453 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:51:54] iteration     1240/    2000 | consumed samples:       634880 | elapsed time per iteration (ms): 5927.7 | learning rate: 2.480000E-04 | global batch size:   512 | lm loss: 4.152243E+00 | loss scale: 1.0 | grad norm: 0.549 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:52:53] iteration     1250/    2000 | consumed samples:       640000 | elapsed time per iteration (ms): 5909.0 | learning rate: 2.500000E-04 | global batch size:   512 | lm loss: 4.143555E+00 | loss scale: 1.0 | grad norm: 0.507 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:53:53] iteration     1260/    2000 | consumed samples:       645120 | elapsed time per iteration (ms): 5966.6 | learning rate: 2.520000E-04 | global batch size:   512 | lm loss: 4.126428E+00 | loss scale: 1.0 | grad norm: 0.464 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:54:52] iteration     1270/    2000 | consumed samples:       650240 | elapsed time per iteration (ms): 5956.7 | learning rate: 2.540000E-04 | global batch size:   512 | lm loss: 4.105397E+00 | loss scale: 1.0 | grad norm: 0.620 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:55:52] iteration     1280/    2000 | consumed samples:       655360 | elapsed time per iteration (ms): 5932.0 | learning rate: 2.560000E-04 | global batch size:   512 | lm loss: 4.102628E+00 | loss scale: 1.0 | grad norm: 0.592 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:56:51] iteration     1290/    2000 | consumed samples:       660480 | elapsed time per iteration (ms): 5899.2 | learning rate: 2.580000E-04 | global batch size:   512 | lm loss: 4.095735E+00 | loss scale: 1.0 | grad norm: 0.588 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:57:49] iteration     1300/    2000 | consumed samples:       665600 | elapsed time per iteration (ms): 5876.3 | learning rate: 2.600000E-04 | global batch size:   512 | lm loss: 4.097787E+00 | loss scale: 1.0 | grad norm: 0.532 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:58:49] iteration     1310/    2000 | consumed samples:       670720 | elapsed time per iteration (ms): 5931.9 | learning rate: 2.620000E-04 | global batch size:   512 | lm loss: 4.089211E+00 | loss scale: 1.0 | grad norm: 0.696 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 22:59:48] iteration     1320/    2000 | consumed samples:       675840 | elapsed time per iteration (ms): 5881.8 | learning rate: 2.640000E-04 | global batch size:   512 | lm loss: 4.083668E+00 | loss scale: 1.0 | grad norm: 0.554 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:00:46] iteration     1330/    2000 | consumed samples:       680960 | elapsed time per iteration (ms): 5858.3 | learning rate: 2.660000E-04 | global batch size:   512 | lm loss: 4.058118E+00 | loss scale: 1.0 | grad norm: 0.542 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:01:45] iteration     1340/    2000 | consumed samples:       686080 | elapsed time per iteration (ms): 5910.8 | learning rate: 2.680000E-04 | global batch size:   512 | lm loss: 4.062889E+00 | loss scale: 1.0 | grad norm: 0.807 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:02:44] iteration     1350/    2000 | consumed samples:       691200 | elapsed time per iteration (ms): 5890.0 | learning rate: 2.700000E-04 | global batch size:   512 | lm loss: 4.056997E+00 | loss scale: 1.0 | grad norm: 0.661 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:03:44] iteration     1360/    2000 | consumed samples:       696320 | elapsed time per iteration (ms): 5945.0 | learning rate: 2.720000E-04 | global batch size:   512 | lm loss: 4.048016E+00 | loss scale: 1.0 | grad norm: 0.542 | num zeros: 10.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:04:43] iteration     1370/    2000 | consumed samples:       701440 | elapsed time per iteration (ms): 5979.4 | learning rate: 2.740000E-04 | global batch size:   512 | lm loss: 4.024839E+00 | loss scale: 1.0 | grad norm: 0.787 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:05:42] iteration     1380/    2000 | consumed samples:       706560 | elapsed time per iteration (ms): 5908.4 | learning rate: 2.760000E-04 | global batch size:   512 | lm loss: 4.025608E+00 | loss scale: 1.0 | grad norm: 0.558 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:06:41] iteration     1390/    2000 | consumed samples:       711680 | elapsed time per iteration (ms): 5852.1 | learning rate: 2.780000E-04 | global batch size:   512 | lm loss: 4.037609E+00 | loss scale: 1.0 | grad norm: 0.746 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:07:40] iteration     1400/    2000 | consumed samples:       716800 | elapsed time per iteration (ms): 5928.6 | learning rate: 2.800000E-04 | global batch size:   512 | lm loss: 4.012502E+00 | loss scale: 1.0 | grad norm: 0.434 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:08:39] iteration     1410/    2000 | consumed samples:       721920 | elapsed time per iteration (ms): 5907.0 | learning rate: 2.820000E-04 | global batch size:   512 | lm loss: 4.003756E+00 | loss scale: 1.0 | grad norm: 0.525 | num zeros: 11.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:09:38] iteration     1420/    2000 | consumed samples:       727040 | elapsed time per iteration (ms): 5911.1 | learning rate: 2.840000E-04 | global batch size:   512 | lm loss: 4.003912E+00 | loss scale: 1.0 | grad norm: 0.599 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:10:37] iteration     1430/    2000 | consumed samples:       732160 | elapsed time per iteration (ms): 5885.3 | learning rate: 2.860000E-04 | global batch size:   512 | lm loss: 3.997966E+00 | loss scale: 1.0 | grad norm: 0.616 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:11:36] iteration     1440/    2000 | consumed samples:       737280 | elapsed time per iteration (ms): 5895.7 | learning rate: 2.880000E-04 | global batch size:   512 | lm loss: 3.991736E+00 | loss scale: 1.0 | grad norm: 0.407 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:12:35] iteration     1450/    2000 | consumed samples:       742400 | elapsed time per iteration (ms): 5889.8 | learning rate: 2.900000E-04 | global batch size:   512 | lm loss: 3.980083E+00 | loss scale: 1.0 | grad norm: 0.640 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:13:34] iteration     1460/    2000 | consumed samples:       747520 | elapsed time per iteration (ms): 5930.4 | learning rate: 2.920000E-04 | global batch size:   512 | lm loss: 3.978073E+00 | loss scale: 1.0 | grad norm: 0.455 | num zeros: 11.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:14:34] iteration     1470/    2000 | consumed samples:       752640 | elapsed time per iteration (ms): 5997.2 | learning rate: 2.940000E-04 | global batch size:   512 | lm loss: 3.969148E+00 | loss scale: 1.0 | grad norm: 0.564 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:15:34] iteration     1480/    2000 | consumed samples:       757760 | elapsed time per iteration (ms): 5925.6 | learning rate: 2.960000E-04 | global batch size:   512 | lm loss: 3.972007E+00 | loss scale: 1.0 | grad norm: 0.508 | num zeros: 12.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:16:33] iteration     1490/    2000 | consumed samples:       762880 | elapsed time per iteration (ms): 5913.8 | learning rate: 2.980000E-04 | global batch size:   512 | lm loss: 3.944135E+00 | loss scale: 1.0 | grad norm: 0.418 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:17:32] iteration     1500/    2000 | consumed samples:       768000 | elapsed time per iteration (ms): 5915.4 | learning rate: 3.000000E-04 | global batch size:   512 | lm loss: 3.954897E+00 | loss scale: 1.0 | grad norm: 0.590 | num zeros: 2.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:18:31] iteration     1510/    2000 | consumed samples:       773120 | elapsed time per iteration (ms): 5917.7 | learning rate: 3.020000E-04 | global batch size:   512 | lm loss: 3.942902E+00 | loss scale: 1.0 | grad norm: 0.467 | num zeros: 14.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:19:30] iteration     1520/    2000 | consumed samples:       778240 | elapsed time per iteration (ms): 5896.0 | learning rate: 3.040000E-04 | global batch size:   512 | lm loss: 3.948532E+00 | loss scale: 1.0 | grad norm: 0.576 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:20:29] iteration     1530/    2000 | consumed samples:       783360 | elapsed time per iteration (ms): 5922.9 | learning rate: 3.060000E-04 | global batch size:   512 | lm loss: 3.928537E+00 | loss scale: 1.0 | grad norm: 0.436 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:21:29] iteration     1540/    2000 | consumed samples:       788480 | elapsed time per iteration (ms): 5984.6 | learning rate: 3.080000E-04 | global batch size:   512 | lm loss: 3.925006E+00 | loss scale: 1.0 | grad norm: 0.587 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:22:29] iteration     1550/    2000 | consumed samples:       793600 | elapsed time per iteration (ms): 5935.5 | learning rate: 3.100000E-04 | global batch size:   512 | lm loss: 3.913611E+00 | loss scale: 1.0 | grad norm: 0.514 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:23:28] iteration     1560/    2000 | consumed samples:       798720 | elapsed time per iteration (ms): 5969.0 | learning rate: 3.120000E-04 | global batch size:   512 | lm loss: 3.909905E+00 | loss scale: 1.0 | grad norm: 0.502 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:24:28] iteration     1570/    2000 | consumed samples:       803840 | elapsed time per iteration (ms): 5942.4 | learning rate: 3.140000E-04 | global batch size:   512 | lm loss: 3.914823E+00 | loss scale: 1.0 | grad norm: 0.788 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:25:27] iteration     1580/    2000 | consumed samples:       808960 | elapsed time per iteration (ms): 5939.5 | learning rate: 3.160000E-04 | global batch size:   512 | lm loss: 4.112671E+00 | loss scale: 1.0 | grad norm: 3.350 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:26:26] iteration     1590/    2000 | consumed samples:       814080 | elapsed time per iteration (ms): 5904.0 | learning rate: 3.180000E-04 | global batch size:   512 | lm loss: 4.554979E+00 | loss scale: 1.0 | grad norm: 2.169 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:27:25] iteration     1600/    2000 | consumed samples:       819200 | elapsed time per iteration (ms): 5901.2 | learning rate: 3.200000E-04 | global batch size:   512 | lm loss: 4.352309E+00 | loss scale: 1.0 | grad norm: 1.506 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:28:24] iteration     1610/    2000 | consumed samples:       824320 | elapsed time per iteration (ms): 5907.3 | learning rate: 3.220000E-04 | global batch size:   512 | lm loss: 4.205408E+00 | loss scale: 1.0 | grad norm: 1.409 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:29:23] iteration     1620/    2000 | consumed samples:       829440 | elapsed time per iteration (ms): 5914.8 | learning rate: 3.240000E-04 | global batch size:   512 | lm loss: 4.123163E+00 | loss scale: 1.0 | grad norm: 0.873 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:30:23] iteration     1630/    2000 | consumed samples:       834560 | elapsed time per iteration (ms): 5924.3 | learning rate: 3.260000E-04 | global batch size:   512 | lm loss: 4.021147E+00 | loss scale: 1.0 | grad norm: 0.404 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:31:21] iteration     1640/    2000 | consumed samples:       839680 | elapsed time per iteration (ms): 5878.6 | learning rate: 3.280000E-04 | global batch size:   512 | lm loss: 3.966440E+00 | loss scale: 1.0 | grad norm: 0.386 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:32:20] iteration     1650/    2000 | consumed samples:       844800 | elapsed time per iteration (ms): 5909.6 | learning rate: 3.300000E-04 | global batch size:   512 | lm loss: 3.926720E+00 | loss scale: 1.0 | grad norm: 0.369 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:33:19] iteration     1660/    2000 | consumed samples:       849920 | elapsed time per iteration (ms): 5897.6 | learning rate: 3.320000E-04 | global batch size:   512 | lm loss: 3.895565E+00 | loss scale: 1.0 | grad norm: 0.347 | num zeros: 10.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:34:18] iteration     1670/    2000 | consumed samples:       855040 | elapsed time per iteration (ms): 5895.6 | learning rate: 3.340000E-04 | global batch size:   512 | lm loss: 3.880511E+00 | loss scale: 1.0 | grad norm: 0.446 | num zeros: 11.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:35:18] iteration     1680/    2000 | consumed samples:       860160 | elapsed time per iteration (ms): 5938.9 | learning rate: 3.360000E-04 | global batch size:   512 | lm loss: 3.882345E+00 | loss scale: 1.0 | grad norm: 0.373 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:36:18] iteration     1690/    2000 | consumed samples:       865280 | elapsed time per iteration (ms): 5989.7 | learning rate: 3.380000E-04 | global batch size:   512 | lm loss: 3.868352E+00 | loss scale: 1.0 | grad norm: 0.434 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:37:18] iteration     1700/    2000 | consumed samples:       870400 | elapsed time per iteration (ms): 6016.7 | learning rate: 3.400000E-04 | global batch size:   512 | lm loss: 3.858006E+00 | loss scale: 1.0 | grad norm: 0.396 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:38:17] iteration     1710/    2000 | consumed samples:       875520 | elapsed time per iteration (ms): 5955.7 | learning rate: 3.420000E-04 | global batch size:   512 | lm loss: 3.849953E+00 | loss scale: 1.0 | grad norm: 0.408 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:39:16] iteration     1720/    2000 | consumed samples:       880640 | elapsed time per iteration (ms): 5907.2 | learning rate: 3.440000E-04 | global batch size:   512 | lm loss: 3.839655E+00 | loss scale: 1.0 | grad norm: 0.447 | num zeros: 12.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:40:16] iteration     1730/    2000 | consumed samples:       885760 | elapsed time per iteration (ms): 5953.3 | learning rate: 3.460000E-04 | global batch size:   512 | lm loss: 3.841619E+00 | loss scale: 1.0 | grad norm: 0.417 | num zeros: 17.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:41:17] iteration     1740/    2000 | consumed samples:       890880 | elapsed time per iteration (ms): 6086.8 | learning rate: 3.480000E-04 | global batch size:   512 | lm loss: 3.832455E+00 | loss scale: 1.0 | grad norm: 0.561 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:42:17] iteration     1750/    2000 | consumed samples:       896000 | elapsed time per iteration (ms): 5990.1 | learning rate: 3.500000E-04 | global batch size:   512 | lm loss: 3.842878E+00 | loss scale: 1.0 | grad norm: 0.362 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:43:16] iteration     1760/    2000 | consumed samples:       901120 | elapsed time per iteration (ms): 5957.3 | learning rate: 3.520000E-04 | global batch size:   512 | lm loss: 3.819093E+00 | loss scale: 1.0 | grad norm: 0.321 | num zeros: 16.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:44:16] iteration     1770/    2000 | consumed samples:       906240 | elapsed time per iteration (ms): 5959.1 | learning rate: 3.540000E-04 | global batch size:   512 | lm loss: 3.819339E+00 | loss scale: 1.0 | grad norm: 0.398 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:45:15] iteration     1780/    2000 | consumed samples:       911360 | elapsed time per iteration (ms): 5917.5 | learning rate: 3.560000E-04 | global batch size:   512 | lm loss: 3.815907E+00 | loss scale: 1.0 | grad norm: 0.402 | num zeros: 14.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:46:15] iteration     1790/    2000 | consumed samples:       916480 | elapsed time per iteration (ms): 5966.7 | learning rate: 3.580000E-04 | global batch size:   512 | lm loss: 3.805865E+00 | loss scale: 1.0 | grad norm: 0.479 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:47:14] iteration     1800/    2000 | consumed samples:       921600 | elapsed time per iteration (ms): 5961.4 | learning rate: 3.600000E-04 | global batch size:   512 | lm loss: 3.805221E+00 | loss scale: 1.0 | grad norm: 0.383 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:48:14] iteration     1810/    2000 | consumed samples:       926720 | elapsed time per iteration (ms): 5944.9 | learning rate: 3.620000E-04 | global batch size:   512 | lm loss: 3.804465E+00 | loss scale: 1.0 | grad norm: 0.434 | num zeros: 9.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:49:13] iteration     1820/    2000 | consumed samples:       931840 | elapsed time per iteration (ms): 5933.5 | learning rate: 3.640000E-04 | global batch size:   512 | lm loss: 3.791842E+00 | loss scale: 1.0 | grad norm: 0.386 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:50:13] iteration     1830/    2000 | consumed samples:       936960 | elapsed time per iteration (ms): 5958.1 | learning rate: 3.660000E-04 | global batch size:   512 | lm loss: 3.787673E+00 | loss scale: 1.0 | grad norm: 0.349 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:51:12] iteration     1840/    2000 | consumed samples:       942080 | elapsed time per iteration (ms): 5972.4 | learning rate: 3.680000E-04 | global batch size:   512 | lm loss: 3.780127E+00 | loss scale: 1.0 | grad norm: 0.368 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:52:12] iteration     1850/    2000 | consumed samples:       947200 | elapsed time per iteration (ms): 5959.2 | learning rate: 3.700000E-04 | global batch size:   512 | lm loss: 3.771260E+00 | loss scale: 1.0 | grad norm: 0.392 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:53:11] iteration     1860/    2000 | consumed samples:       952320 | elapsed time per iteration (ms): 5858.8 | learning rate: 3.720000E-04 | global batch size:   512 | lm loss: 3.784623E+00 | loss scale: 1.0 | grad norm: 0.396 | num zeros: 10.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:54:09] iteration     1870/    2000 | consumed samples:       957440 | elapsed time per iteration (ms): 5853.9 | learning rate: 3.740000E-04 | global batch size:   512 | lm loss: 3.765166E+00 | loss scale: 1.0 | grad norm: 0.503 | num zeros: 5.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:55:08] iteration     1880/    2000 | consumed samples:       962560 | elapsed time per iteration (ms): 5888.7 | learning rate: 3.760000E-04 | global batch size:   512 | lm loss: 3.763952E+00 | loss scale: 1.0 | grad norm: 0.430 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:56:07] iteration     1890/    2000 | consumed samples:       967680 | elapsed time per iteration (ms): 5872.0 | learning rate: 3.780000E-04 | global batch size:   512 | lm loss: 3.771420E+00 | loss scale: 1.0 | grad norm: 0.508 | num zeros: 8.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:57:05] iteration     1900/    2000 | consumed samples:       972800 | elapsed time per iteration (ms): 5848.0 | learning rate: 3.800000E-04 | global batch size:   512 | lm loss: 3.801838E+00 | loss scale: 1.0 | grad norm: 2.162 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:58:04] iteration     1910/    2000 | consumed samples:       977920 | elapsed time per iteration (ms): 5896.1 | learning rate: 3.820000E-04 | global batch size:   512 | lm loss: 4.072345E+00 | loss scale: 1.0 | grad norm: 2.368 | num zeros: 3.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-17 23:59:04] iteration     1920/    2000 | consumed samples:       983040 | elapsed time per iteration (ms): 5928.8 | learning rate: 3.840000E-04 | global batch size:   512 | lm loss: 4.024583E+00 | loss scale: 1.0 | grad norm: 1.366 | num zeros: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:00:03] iteration     1930/    2000 | consumed samples:       988160 | elapsed time per iteration (ms): 5942.4 | learning rate: 3.860000E-04 | global batch size:   512 | lm loss: 3.994117E+00 | loss scale: 1.0 | grad norm: 1.056 | num zeros: 7.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:01:02] iteration     1940/    2000 | consumed samples:       993280 | elapsed time per iteration (ms): 5942.0 | learning rate: 3.880000E-04 | global batch size:   512 | lm loss: 3.984112E+00 | loss scale: 1.0 | grad norm: 0.879 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:02:01] iteration     1950/    2000 | consumed samples:       998400 | elapsed time per iteration (ms): 5905.7 | learning rate: 3.900000E-04 | global batch size:   512 | lm loss: 3.935681E+00 | loss scale: 1.0 | grad norm: 0.491 | num zeros: 14.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:03:01] iteration     1960/    2000 | consumed samples:      1003520 | elapsed time per iteration (ms): 5910.6 | learning rate: 3.920000E-04 | global batch size:   512 | lm loss: 3.847850E+00 | loss scale: 1.0 | grad norm: 0.281 | num zeros: 10.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:04:00] iteration     1970/    2000 | consumed samples:      1008640 | elapsed time per iteration (ms): 5913.1 | learning rate: 3.940000E-04 | global batch size:   512 | lm loss: 3.794373E+00 | loss scale: 1.0 | grad norm: 0.304 | num zeros: 4.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:04:59] iteration     1980/    2000 | consumed samples:      1013760 | elapsed time per iteration (ms): 5917.3 | learning rate: 3.960000E-04 | global batch size:   512 | lm loss: 3.779078E+00 | loss scale: 1.0 | grad norm: 0.308 | num zeros: 12.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:05:58] iteration     1990/    2000 | consumed samples:      1018880 | elapsed time per iteration (ms): 5874.7 | learning rate: 3.980000E-04 | global batch size:   512 | lm loss: 3.779987E+00 | loss scale: 1.0 | grad norm: 0.305 | num zeros: 12.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+ [2025-09-18 00:06:58] iteration     2000/    2000 | consumed samples:      1024000 | elapsed time per iteration (ms): 6048.1 | learning rate: 4.000000E-04 | global batch size:   512 | lm loss: 3.755611E+00 | loss scale: 1.0 | grad norm: 0.274 | num zeros: 6.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+[after training is done] datetime: 2025-09-18 00:06:58 
+WARNING:megatron.core.rerun_state_machine:Setting RerunStateMachine mode RerunMode.DISABLED
+Evaluating on 5120 samples
+Evaluating iter 1/10
+Evaluating iter 2/10
+Evaluating iter 3/10
+Evaluating iter 4/10
+Evaluating iter 5/10
+Evaluating iter 6/10
+Evaluating iter 7/10
+Evaluating iter 8/10
+Evaluating iter 9/10
+Evaluating iter 10/10
+(min, max) time across ranks (ms):
+    evaluate .......................................: (32882.37, 32884.78)
+------------------------------------------------------------------------------------------------------------------
+ validation loss at iteration 2000 on validation set | lm loss value: 3.694783E+00 | lm loss PPL: 4.023684E+01 | 
+------------------------------------------------------------------------------------------------------------------
+WARNING:megatron.core.rerun_state_machine:Setting RerunStateMachine mode RerunMode.DISABLED
+WARNING:megatron.core.rerun_state_machine:Setting RerunStateMachine mode RerunMode.DISABLED
+WARNING:megatron.core.rerun_state_machine:Setting RerunStateMachine mode RerunMode.DISABLED
+Evaluating on 5120 samples
+Evaluating iter 1/10
+Evaluating iter 2/10
+Evaluating iter 3/10
+Evaluating iter 4/10
+Evaluating iter 5/10
+Evaluating iter 6/10
+Evaluating iter 7/10
+Evaluating iter 8/10
+Evaluating iter 9/10
+Evaluating iter 10/10
+(min, max) time across ranks (ms):
+    evaluate .......................................: (26363.66, 26365.85)
+------------------------------------------------------------------------------------------------------------
+ validation loss at iteration 2000 on test set | lm loss value: 3.691400E+00 | lm loss PPL: 4.010094E+01 | 
+------------------------------------------------------------------------------------------------------------
+WARNING:megatron.core.rerun_state_machine:Setting RerunStateMachine mode RerunMode.DISABLED
+WARNING:megatron.core.rerun_state_machine:Setting RerunStateMachine mode RerunMode.DISABLED
+[rank0]:[W918 00:08:07.626624551 ProcessGroupNCCL.cpp:1538] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+[rank1]:[W918 00:08:07.161474863 ProcessGroupNCCL.cpp:1538] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

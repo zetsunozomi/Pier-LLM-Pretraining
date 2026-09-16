@@ -1,0 +1,118 @@
+Starting megatron-dp1
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[Rank 1] belongs to subgroup 1, ranks: [1]
+[Rank 3] belongs to subgroup 3, ranks: [3]
+Subgroup creation: dp_size=4, num_subgroups=4
+We have 4 subgroups in total.
+[Rank 0] belongs to subgroup 0, ranks: [0]
+[Rank 2] belongs to subgroup 2, ranks: [2]
+I'm rank 3 in global group
+I'm rank 1 in global group
+I'm rank 2 in global group
+I'm rank 0 in global group
+I'm rank 0 in global group
+I'm rank 2 in global group
+I'm rank 3 in global group
+I'm rank 1 in global group
+I'm rank 2 in global group
+I'm rank 0 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 0 in global group
+I'm rank 2 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 0 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 2 in global group
+I'm rank 3 in global group
+I'm rank 0 in global group
+I'm rank 2 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 2 in global group
+I'm rank 1 in global group
+I'm rank 0 in global group
+I'm rank 3 in global group
+I'm rank 1 in global group
+I'm rank 2 in global group
+I'm rank 0 in global group
+Starting megatron-dp2
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Subgroup creation: dp_size=4, num_subgroups=2
+We have 2 subgroups in total.
+[Rank 0] belongs to subgroup 0, ranks: [0, 1]
+I'm rank 0 in global group
+[Rank 1] belongs to subgroup 0, ranks: [0, 1]
+I'm rank 1 in global group
+[Rank 3] belongs to subgroup 1, ranks: [2, 3]
+I'm rank 3 in global group
+[Rank 2] belongs to subgroup 1, ranks: [2, 3]
+I'm rank 2 in global group
+I'm rank 2 in global groupI'm rank 3 in global group
+
+I'm rank 1 in global group
+I'm rank 0 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 2 in global group
+I'm rank 0 in global group
+I'm rank 1 in global group
+I'm rank 0 in global group
+I'm rank 3 in global group
+I'm rank 2 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 2 in global group
+I'm rank 0 in global group
+I'm rank 0 in global group
+I'm rank 3 in global group
+I'm rank 1 in global group
+I'm rank 2 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 0 in global group
+I'm rank 2 in global group
+I'm rank 1 in global group
+I'm rank 3 in global group
+I'm rank 0 in global group
+I'm rank 2 in global group
+Starting protocol
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+{
+  "status": "passed",
+  "device": "cuda",
+  "ranks": 4,
+  "operator_configurations": 48,
+  "training_configurations": 3,
+  "performance_result": false
+}
+{
+  "status": "passed",
+  "stage": "E0a",
+  "GPU_executed": true,
+  "performance_result": false,
+  "world_size": 4,
+  "errors": [],
+  "next_step": "Review evidence before production coordinate adapter and performance work.",
+  "not_validated": [
+    "Qwen conversion/training",
+    "full pretrain_gpt loop",
+    "successful-step outer schedule and skip/restore integration",
+    "production per-learner checkpoint",
+    "distributed optimizer",
+    "multi-slot CUDA pipeline",
+    "GPU performance or wire traffic"
+  ]
+}
+E0 artifacts: /pscratch/sd/s/syfan/Pier/local/centered_outer/e0-58425240

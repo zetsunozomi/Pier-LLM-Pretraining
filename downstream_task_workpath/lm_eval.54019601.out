@@ -1,0 +1,7 @@
+Run script: /pscratch/sd/s/syfan/Pier/downstream_task_workpath/run_single.sh
+Results root: /pscratch/sd/s/syfan/Pier/downstream_task_workpath/results/batch_54019601
+Log root: /pscratch/sd/s/syfan/Pier/downstream_task_workpath/logs/batch_54019601
+Number of checkpoints: 7
+Starting /pscratch/sd/s/syfan/Pier/replace_exps/new_miu_exp/exp1_rerun/checkpoints_exp1_50_new/iter_0100000_hf
+  output: /pscratch/sd/s/syfan/Pier/downstream_task_workpath/results/batch_54019601/checkpoints_exp1_50_new_iter_0100000_hf
+  log: /pscratch/sd/s/syfan/Pier/downstream_task_workpath/logs/batch_54019601/checkpoints_exp1_50_new_iter_0100000_hf.txt

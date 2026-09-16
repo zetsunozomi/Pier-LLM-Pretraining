@@ -26,7 +26,6 @@ checkpoints_at_20000
 launch*
 launch_debug.sh
 checkpoints_*
-*.out
 *.pt
 *.png
 new_result/
