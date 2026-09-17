@@ -36,6 +36,7 @@ def fixture(rank, cohort, directory):
                            outer_verify=True, outer_trace_dir=None,
                            outer_momentum=.9, outer_learning_rate=.7,
                            outer_inject_skip_at=[3], outer_inject_skip_rank=1,
+                           group_query_attention=False, num_attention_heads=4, num_query_groups=1,
                            train_iters=11, save=str(directory), consumed_train_samples=0,
                            consumed_valid_samples=0, skipped_train_samples=0)
     runtime = CenteredRuntime(args, [model], optimizer, group=dist.group.WORLD)
@@ -83,8 +84,20 @@ def worker(rank, rendezvous, directory):
         runtime, model, optimizer, scheduler = fixture(rank, 2, Path(directory) / 'resume')
         advance(runtime, model, optimizer, scheduler, 5)
         assert runtime.clock.successful == 4  # Checkpoint inside an outer cycle.
+        # Match the CLI-versus-reporting values seen in the real GPU split run.
+        runtime.args.num_query_groups = runtime.args.num_attention_heads
         save(runtime, 5, scheduler, 123.)
         runtime, model, optimizer, scheduler = fixture(rank, 2, Path(directory) / 'resume')
+        runtime.args.group_query_attention = True
+        runtime.args.num_query_groups = 2
+        try:
+            load(runtime, str(Path(directory) / 'resume'), scheduler)
+        except ValueError as error:
+            assert 'num_query_groups' in str(error)
+        else:
+            raise AssertionError('a changed GQA architecture must not restore')
+        runtime.args.group_query_attention = False
+        runtime.args.num_query_groups = 1
         # This getter has no effect on tensor copies; initialize only its scalar
         # return for Megatron's legacy-compatible optimizer loading method.
         with patch('megatron.core.optimizer.optimizer.parallel_state.get_pipeline_model_parallel_world_size', return_value=1):

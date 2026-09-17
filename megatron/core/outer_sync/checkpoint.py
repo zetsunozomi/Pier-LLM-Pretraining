@@ -35,7 +35,13 @@ RECIPE_FIELDS = (
 
 
 def recipe(args):
-    return {key: getattr(args, key, None) for key in RECIPE_FIELDS}
+    result = {key: getattr(args, key, None) for key in RECIPE_FIELDS}
+    # Match core_transformer_config_from_args: without GQA, the CLI group count
+    # is ignored and the model uses one KV group per attention head. FLOP/memory
+    # reporting overwrites that CLI value during training, before a save.
+    if not getattr(args, 'group_query_attention', False):
+        result['num_query_groups'] = result['num_attention_heads']
+    return result
 
 
 def rng_state():
@@ -147,7 +153,8 @@ def load(runtime, load_dir, scheduler):
             or state['coordinate_schema'] != runtime.coordinates.schema):
         raise ValueError('checkpoint ownership or parameter coordinates differ')
     expected_recipe = recipe(runtime.args)
-    differences = [key for key in expected_recipe if expected_recipe[key] != state['recipe'].get(key)]
+    differences = {key: {'saved': state['recipe'].get(key), 'current': expected_recipe[key]}
+                   for key in expected_recipe if expected_recipe[key] != state['recipe'].get(key)}
     if differences:
         raise ValueError(f'checkpoint recipe differs: {differences}')
     for key in ('reference', 'momentum'):

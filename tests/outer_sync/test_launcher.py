@@ -51,6 +51,11 @@ sys.exit(subprocess.call([sys.executable, *sys.argv[1:]]))
                     self.assertTrue(any('exit code 23' in e for e in summary['errors']))
                     self.assertIn('injected worker failure', (output / f'{first_phase}.log').read_text())
                     self.assertFalse((output / 'protocol.json').exists())
+                    if stage == 'e0b':
+                        self.assertIn('[E0b 1/8] START tp1-s1', result.stdout)
+                        self.assertIn('[E0b 1/8] FAILED tp1-s1 (exit=23)', result.stderr)
+                        self.assertNotIn('[E0b 1/8] DONE', result.stdout)
+                        self.assertNotIn('[E0b 2/8] START', result.stdout)
 
 
 if __name__ == '__main__':

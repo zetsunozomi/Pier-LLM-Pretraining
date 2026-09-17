@@ -19,6 +19,35 @@ from manifest import source_hashes
 
 
 class E0bTests(unittest.TestCase):
+    def test_checkpoint_recipe_uses_effective_attention_config(self):
+        from megatron.training.arguments import parse_args, validate_args, core_transformer_config_from_args
+        from megatron.training.theoretical_memory_usage import compute_weight_and_optimizer_memory
+        from megatron.training.training import num_floating_point_operations
+        from megatron.core.outer_sync.checkpoint import recipe
+        with patch.dict(os.environ, WORLD_SIZE='4', RANK='0', NCCL_ALGO='Ring',
+                        CUDA_DEVICE_MAX_CONNECTIONS='1'):
+            with patch.object(sys, 'argv', ['pretrain_gpt.py', *training_args('split', Path('/tmp/e0b'))]):
+                with contextlib.redirect_stdout(io.StringIO()):
+                    args = validate_args(parse_args())
+            args.padded_vocab_size = 4224
+            original = recipe(args)
+            config = core_transformer_config_from_args(args)
+            self.assertEqual(original['num_query_groups'], config.num_query_groups)
+            # The real reporting helpers mutate the ignored CLI default 1 to 4.
+            for estimator in (compute_weight_and_optimizer_memory,
+                              lambda a: num_floating_point_operations(a, a.global_batch_size)):
+                measured = copy.deepcopy(args)
+                self.assertGreater(estimator(measured), 0)
+                self.assertEqual(recipe(measured), original)
+            # Explicit GQA groups are architecture, so they must remain distinct.
+            gqa = copy.deepcopy(args)
+            gqa.group_query_attention = True
+            for groups in (1, 2):
+                gqa.num_query_groups = groups
+                self.assertEqual(recipe(gqa)['num_query_groups'],
+                                 core_transformer_config_from_args(gqa).num_query_groups)
+                self.assertNotEqual(recipe(gqa), original)
+
     def test_real_parser_and_mock_token_bounds(self):
         from megatron.training.arguments import parse_args, validate_args
         from megatron.core.outer_sync.runtime import validate_args as validate_outer

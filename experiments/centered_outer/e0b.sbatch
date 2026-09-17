@@ -28,10 +28,16 @@ export OMP_NUM_THREADS=1
 export MASTER_ADDR
 MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 export MASTER_PORT=$((15000 + SLURM_JOB_ID % 40000))
+phases=(tp1-s1 tp1-s2 tp1-s4 tp1-host split resume tp2-s2 dp2-s2)
+phase=preflight
+phase_number=0
 finish() {
     local run_status=$?
     trap - EXIT
     set +e
+    if (( run_status != 0 )); then
+        echo "[E0b $phase_number/${#phases[@]}] FAILED $phase (exit=$run_status); stopping remaining stages." >&2
+    fi
     "$PIER_PYTHON" experiments/centered_outer/e0b_summarize.py \
       --output-dir "$PIER_E0B_RUN_DIR" --launcher-exit "$run_status"
     local summary_status=$?
@@ -43,9 +49,12 @@ trap finish EXIT
 "$PIER_PYTHON" experiments/centered_outer/manifest.py --stage E0b --output-dir "$PIER_E0B_RUN_DIR"
 srun --ntasks=1 --ntasks-per-node=1 --kill-on-bad-exit=1 \
   "$PIER_PYTHON" experiments/centered_outer/manifest.py --node-only --output-dir "$PIER_E0B_RUN_DIR"
-for phase in tp1-s1 tp1-s2 tp1-s4 tp1-host split resume tp2-s2 dp2-s2; do
-    echo "Starting E0b $phase"
+echo 'E0b runs 8 separate short training processes; split intentionally saves and exits at step 5.'
+for phase in "${phases[@]}"; do
+    phase_number=$((phase_number + 1))
+    echo "[E0b $phase_number/${#phases[@]}] START $phase"
     srun --ntasks=1 --ntasks-per-node=1 --kill-on-bad-exit=1 \
       bash experiments/centered_outer/e0b_node.sh "$phase" \
       2>&1 | tee "$PIER_E0B_RUN_DIR/$phase.log"
+    echo "[E0b $phase_number/${#phases[@]}] DONE $phase (exit=0); evidence checked in final summary."
 done

@@ -1,10 +1,12 @@
 # E0b：真实 pretrain_gpt 接入验证
 
-状态：首轮 GPU 运行已到 `split` 第 5 步，保存 checkpoint 时因旧版
-`Float16Module.state_dict` 缺少 `destination` 参数而失败；接口已修复，
-**等待修复后的完整 GPU 重跑**。
-用户回传的 `e0b-58457867-20260917-015035` 终端汇总显示，s2/s4/host
-与 s1 的四 rank 轨迹均完全一致；resume、TP2、inner-DP2 尚未执行。
+状态：`e0b-58457867-20260917-020105` 已通过原先的保存接口错误，
+进入第 6 阶段 `resume`，在配置比较处报 `num_query_groups` 不一致。
+原因是 FLOP/显存估算会把未启用 GQA 时被模型忽略的 CLI 默认值 1 改成 4，
+而新进程加载时尚未做估算。checkpoint 现在按实际模型配置比较有效分组数，
+真正的 GQA 架构变化仍拒绝恢复；**等待修复后的完整 GPU 重跑**。
+该次用户回传的终端汇总显示，s2/s4/host 与 s1 的四 rank 轨迹均完全一致；
+split 已完成，resume 未完成，TP2、inner-DP2 尚未执行。
 这不是 E0b 全部通过，完整 JSON/log 归档仍待回传。
 本轮目标是验证生产训练接入；不会产生可用于论文性能比较的数据。
 
@@ -66,6 +68,9 @@ outer 位于 attempted 4/7/10，第 11 步验证最后一次提交的真实 cons
 | dp2-s2 | 1 / 2 | 2 | device | inner DP2 复制式普通 optimizer |
 
 split 的成功状态标记为 partial（符合预定提前退出），其余必须 passed。
+八阶段分别启动新训练进程，因此会多次打印模型/分布式初始化。
+日志的 `[E0b n/8] START/DONE/FAILED` 标出阶段切换；DONE 仅表示进程正常退出，
+最终仍以 summary 验收为准。任一阶段非零退出立即停止，torchrun 不自动重试。
 resume 读取 split 的完整 checkpoint，不能只加载 model weights；
 调度器总训练长度在两阶段都固定为 11，恢复时不重置学习率曲线。
 TP2、inner-DP2 各自在对应坐标组内对照固定图 oracle，不强求它们与 TP1

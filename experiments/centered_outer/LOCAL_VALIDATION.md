@@ -184,3 +184,35 @@ loopback access (7.995 s). Logs are
 `/private/tmp/pier-e0b-wrapper-fix-gloo-tests.log`.
 `git diff --check` passed. A fresh complete GPU run is still required after
 the user's normal Git update; earlier source manifests/results stay unchanged.
+
+## E0b resume recipe normalization — 2026-09-17
+
+User-provided output from `e0b-58457867-20260917-020105` reaches the resume
+phase and fails at `checkpoint recipe differs: ['num_query_groups']`. The
+summary contains no split failure and retains all twelve successful
+s2/s4/host-versus-s1 comparisons. This supports progress past serialization;
+it does not establish successful resume or TP2/inner-DP2 execution.
+
+The real argument parser leaves `num_query_groups=1` when GQA is disabled,
+while `core_transformer_config_from_args` builds ordinary attention with
+four groups (one per head). Both FLOP and memory estimation overwrite the
+argument to four during training. Saving then compares four to the freshly
+parsed one on restart. The new recipe records the effective group count,
+without dropping the field or disabling mismatch checks. Mismatch errors
+now show both saved and current values.
+
+A regression using the actual parser, TransformerConfig builder and both
+estimators fails before the fix (`1 != 4`) and passes afterward. Explicit
+GQA counts remain distinct. The four-process runtime checkpoint regression
+now saves with the post-reporting count four, reloads with the initial CLI
+count one, and matches the uninterrupted trajectory; it also rejects a
+changed GQA count. Five argument/report/launcher tests passed (10.654 s),
+and two runtime tests passed with local Gloo loopback access (3.989 s).
+Logs: `/private/tmp/pier-e0b-recipe-tests.log` and
+`/private/tmp/pier-e0b-recipe-runtime-tests.log`.
+
+The launcher now labels stage index and START/DONE/FAILED, explains the
+intentional split exit, and retains immediate stop on nonzero exit. Its
+failure regression confirms no DONE marker or next-stage launch after a
+worker exits 23. Shell syntax and `git diff --check` pass. GPU validation
+remains pending; rerun with a fresh directory and preserve previous evidence.
