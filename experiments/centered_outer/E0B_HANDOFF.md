@@ -1,6 +1,11 @@
 # E0b：真实 pretrain_gpt 接入验证
 
-状态：实现及本地回归完成，**尚未执行本轮 GPU gate**。
+状态：首轮 GPU 运行已到 `split` 第 5 步，保存 checkpoint 时因旧版
+`Float16Module.state_dict` 缺少 `destination` 参数而失败；接口已修复，
+**等待修复后的完整 GPU 重跑**。
+用户回传的 `e0b-58457867-20260917-015035` 终端汇总显示，s2/s4/host
+与 s1 的四 rank 轨迹均完全一致；resume、TP2、inner-DP2 尚未执行。
+这不是 E0b 全部通过，完整 JSON/log 归档仍待回传。
 本轮目标是验证生产训练接入；不会产生可用于论文性能比较的数据。
 
 ## 提交
@@ -11,6 +16,22 @@
 ```bash
 sbatch experiments/centered_outer/e0b.sbatch
 ```
+
+已有 1 节点 4 GPU 的 Slurm 交互式分配时，在集群仓库根目录运行：
+
+```bash
+conda activate /pscratch/sd/s/syfan/conda/envs/diloco
+export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+PIER_ROOT="$PWD" \
+SLURM_OVERLAP=1 \
+PIER_E0B_RUN_DIR="$PWD/local/centered_outer/e0b-${SLURM_JOB_ID}-$(date +%Y%m%d-%H%M%S)" \
+bash experiments/centered_outer/e0b.sbatch
+```
+
+`bash` 不处理 `#SBATCH` 资源申请，使用现有分配和剩余时间；
+`SLURM_OVERLAP=1` 允许内部 srun 与交互式 shell 的 step 共享分配。
+该 Python 路径来自已通过的 E0a manifest；默认 `nersc-python` 本次没有 torch。
+修复后必须使用新输出目录重跑整套，避免混用不同源码的阶段证据。
 
 - NERSC account `m4431`、qos `regular`、constraint `gpu`。
 - 1 节点，1 Slurm task，4 GPU；task 内 torchrun 启动 4 ranks。

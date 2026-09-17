@@ -192,8 +192,10 @@ class Float16Module(MegatronModule):
         return outputs
 
 
-    def state_dict(self, prefix='', keep_vars=False):
-        return self.module.state_dict(prefix=prefix, keep_vars=keep_vars)
+    def state_dict(self, prefix='', keep_vars=False, destination=None):
+        # DDP and torch.nn.Module traversal pass a shared destination dictionary.
+        return self.module.state_dict(prefix=prefix, keep_vars=keep_vars,
+                                      destination=destination)
 
 
     def state_dict_for_save_checkpoint(self, prefix='', keep_vars=False):

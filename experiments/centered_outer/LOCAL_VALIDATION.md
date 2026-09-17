@@ -152,3 +152,35 @@ state, and compares complete model/loss/inner-state trajectories across cohorts
 and process restart. Real training, CUDA transfers and full Megatron startup
 have not been validated by the CPU tests above. No throughput, GPU peak memory,
 physical wire traffic or Qwen result is claimed.
+
+## E0b first GPU feedback and checkpoint wrapper fix — 2026-09-17
+
+User-provided terminal output from `e0b-58457867-20260917-015035` reports
+`GPU_executed: true` and all twelve s2/s4/host-versus-s1 rank comparisons as
+bitwise equal. The split phase reaches attempt 5 (40 consumed samples, one
+injected skipped step), then fails in checkpoint serialization:
+`Float16Module.state_dict() got an unexpected keyword argument 'destination'`.
+Resume, TP2 and inner-DP2 have not run. The complete artifact archive has not
+yet been received locally; this is a partial result from the pasted output,
+not a passed E0b gate or performance evidence.
+
+Root cause: `training.py` imports the **legacy** Float16Module, while DDP's
+base `state_dict` forwards `destination`. The similarly named core wrapper
+already accepted it. Added the missing keyword and forwarding to the legacy
+wrapper, preserving its existing positional prefix/keep_vars arguments.
+
+Added two CPU regressions using the actual legacy BF16 wrapper and DDP base
+serialization methods. Both reproduce the exact reported TypeError before
+the fix and pass afterward. They cover BF16 parameters and persistent
+buffers, integer buffers, strict save/clear/load bitwise restoration,
+destination identity, prefix, keep_vars and parent-module traversal.
+They do not exercise CUDA gradient buffers or claim GPU checkpoint recovery.
+
+All 20 `tests/outer_sync` checks passed across the initial run and a targeted
+rerun: 18 passed directly, while two four-process Gloo checks initially hit
+the sandbox's `uv_bind: operation not permitted`; those two passed with local
+loopback access (7.995 s). Logs are
+`/private/tmp/pier-e0b-wrapper-fix-tests.log` and
+`/private/tmp/pier-e0b-wrapper-fix-gloo-tests.log`.
+`git diff --check` passed. A fresh complete GPU run is still required after
+the user's normal Git update; earlier source manifests/results stay unchanged.
