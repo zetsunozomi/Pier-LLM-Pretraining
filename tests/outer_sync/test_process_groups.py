@@ -14,6 +14,7 @@ import torch.multiprocessing as mp
 REFERENCE = Path(__file__).resolve().parents[2] / 'experiments/centered_outer/reference'
 sys.path.insert(0, str(REFERENCE))
 from executor import CenteredExecutor
+from megatron.core.outer_sync.runtime import make_outer_group
 
 
 def exercise_group(group, peers):
@@ -64,6 +65,23 @@ def worker(rank, init_method):
                       for peers in ([0, 2], [1, 3])]
             peers = [0, 2] if rank % 2 == 0 else [1, 3]
             exercise_group(groups[rank % 2], peers)
+        # Real groups with the production mapping routine, including TP2 and
+        # replicated inner DP2; only the Megatron group getters are supplied.
+        for tp, inner_size in ((1, 1), (1, 2), (2, 1)):
+            dp_lists = [list(range(offset, 4, tp)) for offset in range(tp)]
+            dp_groups = [dist.new_group(ranks) for ranks in dp_lists]
+            inner_lists = [ranks[start:start + inner_size] for ranks in dp_lists
+                           for start in range(0, len(ranks), inner_size)]
+            inner_groups = [dist.new_group(ranks) for ranks in inner_lists]
+            dp_index = next(i for i, ranks in enumerate(dp_lists) if rank in ranks)
+            inner_index = next(i for i, ranks in enumerate(inner_lists) if rank in ranks)
+            with patch('megatron.core.parallel_state.get_data_parallel_group', return_value=dp_groups[dp_index]), \
+                    patch('megatron.core.parallel_state.get_data_parallel_sub_group', return_value=inner_groups[inner_index]):
+                outer, actual_dp, actual_inner = make_outer_group()
+            assert actual_dp == dp_lists[dp_index] and actual_inner == inner_lists[inner_index]
+            expected = actual_dp[actual_inner.index(rank)::inner_size]
+            assert dist.get_process_group_ranks(outer) == expected
+            exercise_group(outer, expected)
         dist.barrier()
     finally:
         dist.destroy_process_group()

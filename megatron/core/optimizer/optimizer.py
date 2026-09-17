@@ -130,6 +130,14 @@ class MegatronOptimizer(ABC):
         """Make externally updated FP32 masters visible to the next forward."""
         self.validate_outer_update_support()
 
+    def outer_parameter_pairs(self):
+        """Return (master, model) pairs with explicit ownership, never infer by shape."""
+        raise NotImplementedError(f'{type(self).__name__} has no outer coordinate adapter')
+
+    def outer_skip_consensus(self, found_inf):
+        runtime = getattr(self, 'centered_runtime', None)
+        return runtime.skip_consensus(found_inf) if runtime is not None else found_inf
+
     def get_parameters(self) -> List[torch.nn.Parameter]:
         """
         Get list of parameters wrapped in optimizer.
@@ -483,6 +491,7 @@ class MixedPrecisionOptimizer(MegatronOptimizer):
         timers = self.config.timers
 
         found_inf_flag = self.prepare_grads()
+        found_inf_flag = self.outer_skip_consensus(found_inf_flag)
         if found_inf_flag:
             return False, None, None
 
@@ -684,6 +693,14 @@ class Float16OptimizerWithFloat16Params(MixedPrecisionOptimizer):
             this=model_data, that=main_data, overflow_buf=self._dummy_overflow_buf
         )
 
+    def outer_parameter_pairs(self):
+        self.validate_outer_update_support()
+        pairs = [(master, model)
+                 for masters, models in zip(self.fp32_from_float16_groups, self.float16_groups)
+                 for master, model in zip(masters, models)]
+        pairs.extend((param, param) for group in self.fp32_from_fp32_groups for param in group)
+        return pairs
+
     def state_dict(self, is_loading: bool = False):
         if is_loading:
             self.init_state_fn(self.optimizer, self.config)
@@ -855,6 +872,7 @@ class FP32Optimizer(MegatronOptimizer):
         timers = self.config.timers
 
         found_inf_flag = self.prepare_grads()
+        found_inf_flag = self.outer_skip_consensus(found_inf_flag)
         if found_inf_flag:
             return False, None, None
 
@@ -890,6 +908,10 @@ class FP32Optimizer(MegatronOptimizer):
     def commit_outer_update(self):
         # FP32 optimizer parameters are the forward parameters themselves.
         self.validate_outer_update_support()
+
+    def outer_parameter_pairs(self):
+        self.validate_outer_update_support()
+        return [(param, param) for param in self.get_parameters()]
 
     def reload_model_params(self):
         pass
@@ -983,6 +1005,11 @@ class ChainedOptimizer(MegatronOptimizer):
         self.validate_outer_update_support()
         for optimizer in self.chained_optimizers:
             optimizer.commit_outer_update()
+
+    def outer_parameter_pairs(self):
+        self.validate_outer_update_support()
+        return [pair for optimizer in self.chained_optimizers
+                for pair in optimizer.outer_parameter_pairs()]
 
     def __init__(self, chained_optimizers: List[MegatronOptimizer]):
         self.model_chunks = []
@@ -1085,6 +1112,7 @@ class ChainedOptimizer(MegatronOptimizer):
         if self.is_stub_optimizer:
             return True, 0.0, 0
         found_inf_flag = self.prepare_grads()
+        found_inf_flag = self.outer_skip_consensus(found_inf_flag)
         if found_inf_flag:
             return False, None, None
 

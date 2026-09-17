@@ -13,7 +13,7 @@ local/
 wandb/
 onelogger.log
 onelogger.err
-data/
+/data/
 checkpoints/
 gpt-2-small-baseline-checkpoints/
 gpt2-small-logs/
@@ -41,3 +41,29 @@ downstream_task_workpath/hf_cache
 downstream_task_workpath/hf_cache
 replace_exps
 samples_record*
+
+# Version only E0 text evidence; keep other local scratch and snapshots ignored.
+!/local/
+/local/*
+!/local/centered_outer/
+/local/centered_outer/*
+!/local/centered_outer/e0-*/
+/local/centered_outer/e0-*/*
+!/local/centered_outer/e0-*/manifest.json
+!/local/centered_outer/e0-*/summary.json
+!/local/centered_outer/e0-*/protocol.json
+!/local/centered_outer/e0-*/node-*.json
+!/local/centered_outer/e0-*/*.log
+!/local/centered_outer/e0-*/megatron-dp[12]/
+/local/centered_outer/e0-*/megatron-dp[12]/*
+!/local/centered_outer/e0-*/megatron-dp[12]/rank-*.json
+
+# E0b real training reports; checkpoints remain local, including partial writes.
+!/local/centered_outer/e0b-*/
+/local/centered_outer/e0b-*/*
+!/local/centered_outer/e0b-*/*.json
+!/local/centered_outer/e0b-*/*.log
+!/local/centered_outer/e0b-*/case-*/
+/local/centered_outer/e0b-*/case-*/*
+!/local/centered_outer/e0b-*/case-*/*.json
+!/local/centered_outer/e0b-*/case-*/*.log

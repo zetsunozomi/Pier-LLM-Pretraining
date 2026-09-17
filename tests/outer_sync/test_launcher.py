@@ -38,14 +38,19 @@ sys.exit(subprocess.call([sys.executable, *sys.argv[1:]]))
                        PIER_GPUS_PER_NODE='4', PIER_E0_RUN_DIR=str(tmp / 'output'),
                        SLURM_SUBMIT_DIR=str(ROOT), SLURM_JOB_NUM_NODES='1',
                        SLURM_NODEID='0', SLURM_JOB_ID='123456', SLURM_JOB_NODELIST='fake')
-            result = subprocess.run(['bash', 'experiments/centered_outer/e0.sbatch'],
-                                    cwd=ROOT, env=env, text=True, capture_output=True, timeout=60)
-            self.assertEqual(result.returncode, 23, result.stdout + result.stderr)
-            summary = json.loads((tmp / 'output/summary.json').read_text())
-            self.assertEqual(summary['status'], 'failed')
-            self.assertTrue(any('exit code 23' in e for e in summary['errors']))
-            self.assertIn('injected worker failure', (tmp / 'output/megatron-dp1.log').read_text())
-            self.assertFalse((tmp / 'output/protocol.json').exists())
+            for stage, first_phase in (('e0', 'megatron-dp1'), ('e0b', 'tp1-s1')):
+                with self.subTest(stage=stage):
+                    output = tmp / stage
+                    env[f'PIER_{stage.upper()}_RUN_DIR'] = str(output)
+                    result = subprocess.run(['bash', f'experiments/centered_outer/{stage}.sbatch'],
+                                            cwd=ROOT, env=env, text=True, capture_output=True, timeout=60)
+                    self.assertEqual(result.returncode, 23, result.stdout + result.stderr)
+                    summary = json.loads((output / 'summary.json').read_text())
+                    self.assertEqual(summary['status'], 'failed')
+                    self.assertFalse(summary['GPU_executed'])
+                    self.assertTrue(any('exit code 23' in e for e in summary['errors']))
+                    self.assertIn('injected worker failure', (output / f'{first_phase}.log').read_text())
+                    self.assertFalse((output / 'protocol.json').exists())
 
 
 if __name__ == '__main__':

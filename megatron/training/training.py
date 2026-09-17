@@ -1058,6 +1058,8 @@ def setup_model_and_optimizer(model_provider_func,
     timers = get_timers()
     one_logger = get_one_logger()
 
+    from megatron.core.outer_sync.runtime import validate_args as validate_outer_args
+    validate_outer_args(args)
     model = get_model(model_provider_func, model_type)
     unwrapped_model = unwrap_model(model)
 
@@ -1071,6 +1073,8 @@ def setup_model_and_optimizer(model_provider_func,
                                        scale_lr_cond, lr_mult,
                                        use_gloo_process_groups=args.enable_gloo_process_groups)
     opt_param_scheduler = get_optimizer_param_scheduler(optimizer)
+    from megatron.core.outer_sync.runtime import build_runtime
+    build_runtime(args, model, optimizer)
 
     if args.moe_use_upcycling:
         torch.distributed.barrier()
@@ -1896,156 +1900,163 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
             "Parameter hashes not matching across DP replicas"
         torch.distributed.barrier()
         print_rank_0(f">>> Weight hashes match after {iteration} iterations...")
-    dp_rank = get_data_parallel_rank()
-    tp_rank = get_tensor_model_parallel_rank()
-    pp_rank = get_pipeline_model_parallel_rank()
-    dp_group = get_data_parallel_group()
-    dp_world_size = torch.distributed.get_world_size(dp_group)
-    if args.outer_sync_interval > 0:
-        optimizer.validate_outer_update_support()
-    outer_shard = args.outer_shard
-    outer_offload_to_cpu = args.outer_cpu_offload
+    centered_runtime = getattr(optimizer, 'centered_runtime', None)
+    if centered_runtime is None:
+        dp_rank = get_data_parallel_rank()
+        tp_rank = get_tensor_model_parallel_rank()
+        pp_rank = get_pipeline_model_parallel_rank()
+        dp_group = get_data_parallel_group()
+        dp_world_size = torch.distributed.get_world_size(dp_group)
+        if args.outer_sync_interval > 0:
+            optimizer.validate_outer_update_support()
+        outer_shard = args.outer_shard
+        outer_offload_to_cpu = args.outer_cpu_offload
 
-    def get_outer_state_for_param(state, param):
-        if outer_shard:
-            state = state.to(param.device, non_blocking=True)
-            gathered = [torch.empty_like(state) for _ in range(dp_world_size)]
-            torch.distributed.all_gather(gathered, state, group=dp_group)
-            return torch.cat(gathered)[: param.numel()].view_as(param)
-        if state.device == param.device:
-            return state
-        return state.to(param.device, non_blocking=True)
+        def get_outer_state_for_param(state, param):
+            if outer_shard:
+                state = state.to(param.device, non_blocking=True)
+                gathered = [torch.empty_like(state) for _ in range(dp_world_size)]
+                torch.distributed.all_gather(gathered, state, group=dp_group)
+                return torch.cat(gathered)[: param.numel()].view_as(param)
+            if state.device == param.device:
+                return state
+            return state.to(param.device, non_blocking=True)
 
-    def get_outer_shard_size(param):
-        return (param.numel() + dp_world_size - 1) // dp_world_size
+        def get_outer_shard_size(param):
+            return (param.numel() + dp_world_size - 1) // dp_world_size
 
-    def shard_outer_state(state, param):
-        flat = state.contiguous().view(-1)
-        shard_size = get_outer_shard_size(param)
-        start = dp_rank * shard_size
-        end = min(start + shard_size, param.numel())
-        shard = torch.empty(shard_size, dtype=flat.dtype, device=flat.device)
-        valid_numel = max(end - start, 0)
-        if valid_numel > 0:
-            shard[:valid_numel].copy_(flat[start:end])
-        if valid_numel < shard_size:
-            shard[valid_numel:].zero_()
-        return shard
-
-    def store_outer_state(state, param):
-        if outer_shard:
-            shard = shard_outer_state(state, param)
-            if outer_offload_to_cpu:
-                return shard.cpu()
+        def shard_outer_state(state, param):
+            flat = state.contiguous().view(-1)
+            shard_size = get_outer_shard_size(param)
+            start = dp_rank * shard_size
+            end = min(start + shard_size, param.numel())
+            shard = torch.empty(shard_size, dtype=flat.dtype, device=flat.device)
+            valid_numel = max(end - start, 0)
+            if valid_numel > 0:
+                shard[:valid_numel].copy_(flat[start:end])
+            if valid_numel < shard_size:
+                shard[valid_numel:].zero_()
             return shard
-        if outer_offload_to_cpu:
-            return state.cpu()
-        return state
 
-    def checkpoint_outer_states(states):
-        return states
+        def store_outer_state(state, param):
+            if outer_shard:
+                shard = shard_outer_state(state, param)
+                if outer_offload_to_cpu:
+                    return shard.cpu()
+                return shard
+            if outer_offload_to_cpu:
+                return state.cpu()
+            return state
 
-    def get_outer_reference_for_param(reference, key, param):
-        if outer_shard:
-            return get_outer_state_for_param(reference[key], param)
-        if dp_rank == 0:
-            reference_gpu = get_outer_state_for_param(reference[key], param)
-        else:
-            reference_gpu = torch.empty_like(param)
-        torch.distributed.broadcast(
-            reference_gpu,
-            src=get_data_parallel_src_rank(),
-            group=dp_group,
-        )
-        return reference_gpu
+        def checkpoint_outer_states(states):
+            return states
 
-    def get_master_weights(optimizer):
-        return{
-            id(p): store_outer_state(p.detach().clone(), p)
-            for group in optimizer.param_groups 
-            for p in group['params']
-        }
-
-    needs_look_ahead_point = args.outer_optimizer not in (
-        "pytorch_nesterov",
-        "pytorch_nesterov_without_pier",
-    )
-    # Save model parameters for the outer optimizer reference.
-    if outer_shard or dp_rank == 0:
-        reference = get_master_weights(optimizer)
-        look_ahead_point = get_master_weights(optimizer) if needs_look_ahead_point else None
-    else:
-        reference = None
-        look_ahead_point = None
-    # Run training iterations till done.
-    def get_optimizer_checksum(optimizer):
-        os.environ["OMP_NUM_THREADS"] = "1"
-        os.environ["MKL_NUM_THREADS"] = "1"
-        os.environ["OPENBLAS_NUM_THREADS"] = "1"
-        m = hashlib.sha256()
-        for group in optimizer.param_groups:
-            for p in group['params']:
-                p_data = p.detach().to(dtype=torch.float32, device='cpu')
-                m.update(p_data.numpy().tobytes())
-        return m.hexdigest()
-    # train loop starts here
-    similarity_log = "similarity.log"
-    # parameter id to name map
-    param_id_to_name = {(p.shape, p.data_ptr()): name for name, p in model[0].module.named_parameters()}
-    momentum_buffer = []
-    if args.save:
-        if outer_shard:
-            momentum_checkpoint_path = os.path.join(
-                args.save,
-                f"momentum_buffer_tp{tp_rank}_pp{pp_rank}_dp{dp_rank}.pt",
+        def get_outer_reference_for_param(reference, key, param):
+            if outer_shard:
+                return get_outer_state_for_param(reference[key], param)
+            if dp_rank == 0:
+                reference_gpu = get_outer_state_for_param(reference[key], param)
+            else:
+                reference_gpu = torch.empty_like(param)
+            torch.distributed.broadcast(
+                reference_gpu,
+                src=get_data_parallel_src_rank(),
+                group=dp_group,
             )
+            return reference_gpu
+
+        def get_master_weights(optimizer):
+            return{
+                id(p): store_outer_state(p.detach().clone(), p)
+                for group in optimizer.param_groups
+                for p in group['params']
+            }
+
+        needs_look_ahead_point = args.outer_optimizer not in (
+            "pytorch_nesterov",
+            "pytorch_nesterov_without_pier",
+        )
+        # Save model parameters for the outer optimizer reference.
+        if outer_shard or dp_rank == 0:
+            reference = get_master_weights(optimizer)
+            look_ahead_point = get_master_weights(optimizer) if needs_look_ahead_point else None
         else:
-            momentum_checkpoint_path = os.path.join(args.save, f"momentum_buffer_tp{tp_rank}_pp{pp_rank}.pt")
-    else:
-        momentum_checkpoint_path = None
-    # initialize momentum buffer.
-    # All ranks load momentum, but different tp_rank find different file.
-    if momentum_checkpoint_path is not None and os.path.exists(momentum_checkpoint_path):
-        loaded_state = torch.load(momentum_checkpoint_path, map_location="cpu")
-        print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} has found a momentum:{momentum_checkpoint_path}")
-    else:
-        loaded_state = []
-        print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} couldn't find a momentum checkpoint, initializing from 0.")
-    # Use the order of optim_params to load.
-    optim_params = []
-    for group in optimizer.param_groups:
-        optim_params.extend(group['params'])
-    print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank}, loaded_state length {len(loaded_state)}, optim_params length {len(optim_params)}")
-    for i, p in enumerate(optim_params):
-        if i < len(loaded_state):
-            momentum_state = loaded_state[i]
+            reference = None
+            look_ahead_point = None
+        # Run training iterations till done.
+        def get_optimizer_checksum(optimizer):
+            os.environ["OMP_NUM_THREADS"] = "1"
+            os.environ["MKL_NUM_THREADS"] = "1"
+            os.environ["OPENBLAS_NUM_THREADS"] = "1"
+            m = hashlib.sha256()
+            for group in optimizer.param_groups:
+                for p in group['params']:
+                    p_data = p.detach().to(dtype=torch.float32, device='cpu')
+                    m.update(p_data.numpy().tobytes())
+            return m.hexdigest()
+        # train loop starts here
+        similarity_log = "similarity.log"
+        # parameter id to name map
+        param_id_to_name = {(p.shape, p.data_ptr()): name for name, p in model[0].module.named_parameters()}
+        momentum_buffer = []
+        if args.save:
             if outer_shard:
-                if momentum_state.numel() != get_outer_shard_size(p):
-                    momentum_state = momentum_state.to(p.device, non_blocking=True)
-                    momentum_state = shard_outer_state(momentum_state.view_as(p), p)
-                    if outer_offload_to_cpu:
-                        momentum_state = momentum_state.cpu()
-                elif not outer_offload_to_cpu:
-                    momentum_state = momentum_state.to(p.device, non_blocking=True)
-        else:
-            if outer_shard:
-                momentum_state = torch.zeros(
-                    get_outer_shard_size(p),
-                    dtype=p.dtype,
-                    device='cpu' if outer_offload_to_cpu else p.device,
+                momentum_checkpoint_path = os.path.join(
+                    args.save,
+                    f"momentum_buffer_tp{tp_rank}_pp{pp_rank}_dp{dp_rank}.pt",
                 )
             else:
-                momentum_state = torch.zeros_like(
-                    p,
-                    device='cpu' if outer_offload_to_cpu else p.device,
-                )
-        if outer_offload_to_cpu:
-            momentum_state = momentum_state.cpu()
-        elif not outer_shard:
-            momentum_state = get_outer_state_for_param(momentum_state, p)
-        momentum_buffer.append(momentum_state)
+                momentum_checkpoint_path = os.path.join(args.save, f"momentum_buffer_tp{tp_rank}_pp{pp_rank}.pt")
+        else:
+            momentum_checkpoint_path = None
+        # initialize momentum buffer.
+        # All ranks load momentum, but different tp_rank find different file.
+        if momentum_checkpoint_path is not None and os.path.exists(momentum_checkpoint_path):
+            loaded_state = torch.load(momentum_checkpoint_path, map_location="cpu")
+            print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} has found a momentum:{momentum_checkpoint_path}")
+        else:
+            loaded_state = []
+            print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank} couldn't find a momentum checkpoint, initializing from 0.")
+        # Use the order of optim_params to load.
+        optim_params = []
+        for group in optimizer.param_groups:
+            optim_params.extend(group['params'])
+        print(f"global rank {rank}, dp{dp_rank},tp{tp_rank}, pp{pp_rank}, loaded_state length {len(loaded_state)}, optim_params length {len(optim_params)}")
+        for i, p in enumerate(optim_params):
+            if i < len(loaded_state):
+                momentum_state = loaded_state[i]
+                if outer_shard:
+                    if momentum_state.numel() != get_outer_shard_size(p):
+                        momentum_state = momentum_state.to(p.device, non_blocking=True)
+                        momentum_state = shard_outer_state(momentum_state.view_as(p), p)
+                        if outer_offload_to_cpu:
+                            momentum_state = momentum_state.cpu()
+                    elif not outer_offload_to_cpu:
+                        momentum_state = momentum_state.to(p.device, non_blocking=True)
+            else:
+                if outer_shard:
+                    momentum_state = torch.zeros(
+                        get_outer_shard_size(p),
+                        dtype=p.dtype,
+                        device='cpu' if outer_offload_to_cpu else p.device,
+                    )
+                else:
+                    momentum_state = torch.zeros_like(
+                        p,
+                        device='cpu' if outer_offload_to_cpu else p.device,
+                    )
+            if outer_offload_to_cpu:
+                momentum_state = momentum_state.cpu()
+            elif not outer_shard:
+                momentum_state = get_outer_state_for_param(momentum_state, p)
+            momentum_buffer.append(momentum_state)
 
         
+    elif centered_runtime.pending_rng is not None:
+        from megatron.core.outer_sync.checkpoint import restore_rng
+        restore_rng(centered_runtime.pending_rng)
+        centered_runtime.pending_rng = None
+
     starting_iteration = iteration
     while iteration < args.train_iters:
         # Before this iteration begun, check the checksum of optimzier model.
@@ -2105,8 +2116,11 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
         if iteration == args.momentum_warmup_steps:
             if rank == 0:
                 print(f"Switching from Momentum Produce to DiLoCo mode. Loss oscillation may occur.")
-        # momentum produce
-        if iteration < args.momentum_warmup_steps:
+        # The centered runtime counts completed successful optimizer updates.
+        if centered_runtime is not None:
+            centered_runtime.after_attempt(not skipped_iter, iteration + 1, loss_dict)
+        # momentum produce (historical runtime only)
+        elif iteration < args.momentum_warmup_steps:
             if iteration % args.outer_sync_interval == 0 and iteration != starting_iteration:
                 miu = 0.9
                 # Load reference onto the parameter device, then calculate delta.
@@ -2356,6 +2370,9 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     ft_integration.on_checkpointing_end(is_async_finalization=True)
     if args.enable_ft_package and ft_integration.get_rank_monitor_client() is not None:
         ft_integration.get_rank_monitor_client().shutdown_workload_monitoring()
+
+    if centered_runtime is not None:
+        centered_runtime.finish(iteration)
 
     # If any exit conditions (signal handler, duration, iterations) have been reached, exit.
     if should_exit:

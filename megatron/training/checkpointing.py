@@ -321,6 +321,12 @@ def save_checkpoint(iteration, model, optimizer, opt_param_scheduler, num_floati
     """
     start_ckpt = time()
     args = get_args()
+    runtime = getattr(optimizer, 'centered_runtime', None)
+    if runtime is not None:
+        if non_persistent_ckpt:
+            raise ValueError('centered runtime requires persistent per-rank checkpoints')
+        from megatron.core.outer_sync.checkpoint import save as save_centered
+        return save_centered(runtime, iteration, opt_param_scheduler, num_floating_point_operations_so_far)
 
     if args.async_save and not is_empty_async_queue():
         print_rank_0('WARNING: Starting a checkpoint save before previous has finished. Consider increasing the checkpoint interval.')
@@ -1168,6 +1174,10 @@ def load_checkpoint(ddp_model, optimizer, opt_param_scheduler, load_arg='load', 
     """
     args = get_args()
     load_dir = getattr(args, load_arg)
+    runtime = getattr(optimizer, 'centered_runtime', None)
+    if runtime is not None:
+        from megatron.core.outer_sync.checkpoint import load as load_centered
+        return load_centered(runtime, load_dir, opt_param_scheduler)
 
     # Finetuning directories
     pretrained_dir = getattr(args, 'pretrained_checkpoint', None)

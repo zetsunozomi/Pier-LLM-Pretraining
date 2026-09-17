@@ -2097,6 +2097,19 @@ def _add_distributed_args(parser):
     group.add_argument('--local-sgd-inner-average', action='store_true',
                        help="Normalize inner gradients by the learner's inner DP size. "
                             "Required by the new centered-outer recipe; changes historical scaling.")
+    group.add_argument('--outer-runtime', choices=('legacy', 'centered'), default='legacy',
+                       help='Select the production tiled centered runtime explicitly.')
+    group.add_argument('--outer-cohort-size', type=int, default=1)
+    group.add_argument('--outer-tile-elements', type=int, default=8192,
+                       help='Coordinates per momentum owner per tile; one shared workspace.')
+    group.add_argument('--outer-momentum', type=float, default=0.9)
+    group.add_argument('--outer-learning-rate', type=float, default=1.0)
+    group.add_argument('--outer-verify', action='store_true',
+                       help='Enable expensive fixed-graph oracle and full per-attempt hashes; no performance claim.')
+    group.add_argument('--outer-trace-dir', type=str)
+    group.add_argument('--outer-inject-skip-at', nargs='*', type=int, default=[],
+                       help='One-based attempted steps with a labeled synthetic nonfinite vote.')
+    group.add_argument('--outer-inject-skip-rank', type=int, default=0)
     return parser
 
 

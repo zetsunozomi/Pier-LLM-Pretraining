@@ -191,6 +191,16 @@ def _compile_dependencies():
     # Load fused kernels
     # ==================
 
+    # An unfused core model uses none of the legacy extension kernels. Keep
+    # dataset helper compilation above (MockGPTDataset needs it too), but do
+    # not require a CUDA toolkit just to probe nvcc for unused fused kernels.
+    if (not args.use_legacy_models
+            and not any((args.masked_softmax_fusion, args.bias_gelu_fusion,
+                         args.bias_dropout_fusion, args.apply_rope_fusion,
+                         args.gradient_accumulation_fusion))):
+        torch.distributed.barrier()
+        return
+
     # Custom kernel constraints check.
     seq_len = args.seq_length
     attn_batch_size = (

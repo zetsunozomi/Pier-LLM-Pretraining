@@ -28,19 +28,24 @@ def source_hashes():
     paths = [*ROOT.glob('megatron/**/*.py'), *ROOT.glob('experiments/centered_outer/**/*.py'),
              *ROOT.glob('experiments/centered_outer/*.sh'),
              *ROOT.glob('experiments/centered_outer/*.sbatch')]
+    paths.append(ROOT / 'pretrain_gpt.py')
+    paths.extend(p for p in ROOT.glob('megatron/**/*')
+                 if p.is_file() and (p.suffix in ('.cpp', '.cu', '.cuh', '.h') or p.name == 'Makefile'))
     return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in sorted(paths)}
+            for p in sorted(paths) if p != ROOT / 'megatron/training/training_legacy.py'}
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output-dir', required=True, type=Path)
     parser.add_argument('--node-only', action='store_true')
+    parser.add_argument('--stage', choices=('E0a', 'E0b'), default='E0a')
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     if not args.node_only:
         manifest = {'schema_version': 1, 'created_utc': datetime.now(timezone.utc).isoformat(),
-                    'purpose': 'E0a correctness gate; no performance measurements',
+                    'purpose': f'{args.stage} correctness gate; no performance measurements',
+                    'source_scope': 'pretrain_gpt, megatron Python/extension sources and experiment code; unused training_legacy.py recorded separately',
                     'repo': str(ROOT), 'python': sys.executable,
                     'git_head': command(['git', 'rev-parse', 'HEAD']),
                     'git_status': command(['git', 'status', '--porcelain']),
@@ -52,6 +57,14 @@ def main():
                                       'successful-step outer schedule and skip/restore integration',
                                       'production per-learner checkpoint', 'distributed optimizer',
                                       'multi-slot CUDA pipeline', 'GPU performance or wire traffic']}
+        legacy = ROOT / 'megatron/training/training_legacy.py'
+        manifest['unused_legacy_source_sha256'] = (
+            {str(legacy.relative_to(ROOT)): hashlib.sha256(legacy.read_bytes()).hexdigest()}
+            if legacy.exists() else {})
+        if args.stage == 'E0b':
+            manifest['not_validated'] = ['Qwen conversion and real-data recipe', 'distributed optimizer',
+                                        'multi-slot CUDA pipeline', 'PP/CP/MoE', 'topology-changing recovery',
+                                        'strong baseline performance', 'GPU peak memory or physical wire traffic']
         (args.output_dir / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     info = {'hostname': socket.gethostname(), 'platform': platform.platform(),
             'python': sys.version, 'node_id': os.environ.get('SLURM_NODEID', '0'),
