@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "rank": 3,
+  "hostname": "nid002700",
+  "inner_dp_size": 2,
+  "GPU_executed": true,
+  "performance_result": false,
+  "torch_version": "2.6.0+cu124",
+  "cuda_version": "12.4",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "world_size": 4,
+  "outer_ranks": [
+    1,
+    3
+  ],
+  "normalization": [
+    {
+      "inner_average": false,
+      "collective_average": false,
+      "inner_ranks": [
+        2,
+        3
+      ],
+      "expected_gradient": 3.5,
+      "inner_and_warmup_gradient_bits_match": true
+    },
+    {
+      "inner_average": false,
+      "collective_average": true,
+      "inner_ranks": [
+        2,
+        3
+      ],
+      "expected_gradient": 3.5,
+      "inner_and_warmup_gradient_bits_match": true
+    },
+    {
+      "inner_average": true,
+      "collective_average": false,
+      "inner_ranks": [
+        2,
+        3
+      ],
+      "expected_gradient": 7.0,
+      "inner_and_warmup_gradient_bits_match": true
+    },
+    {
+      "inner_average": true,
+      "collective_average": true,
+      "inner_ranks": [
+        2,
+        3
+      ],
+      "expected_gradient": 7.0,
+      "inner_and_warmup_gradient_bits_match": true
+    }
+  ],
+  "outer_update": [
+    {
+      "outer_shard": false,
+      "outer_cpu_offload": false,
+      "missing_copy_negative_control_observed": true,
+      "master_model_next_forward_bits_match": true,
+      "inner_moments_retained": true,
+      "local_optimizer_restore": true
+    },
+    {
+      "outer_shard": false,
+      "outer_cpu_offload": true,
+      "missing_copy_negative_control_observed": true,
+      "master_model_next_forward_bits_match": true,
+      "inner_moments_retained": true,
+      "local_optimizer_restore": true
+    },
+    {
+      "outer_shard": true,
+      "outer_cpu_offload": false,
+      "missing_copy_negative_control_observed": true,
+      "master_model_next_forward_bits_match": true,
+      "inner_moments_retained": true,
+      "local_optimizer_restore": true
+    },
+    {
+      "outer_shard": true,
+      "outer_cpu_offload": true,
+      "missing_copy_negative_control_observed": true,
+      "master_model_next_forward_bits_match": true,
+      "inner_moments_retained": true,
+      "local_optimizer_restore": true
+    }
+  ]
+}

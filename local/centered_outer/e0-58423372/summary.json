@@ -1,0 +1,26 @@
+{
+  "status": "failed",
+  "stage": "E0a",
+  "GPU_executed": false,
+  "performance_result": false,
+  "world_size": 4,
+  "errors": [
+    "launcher failed with exit code 1; inspect phase logs",
+    "protocol.json: [Errno 2] No such file or directory: '/pscratch/sd/s/syfan/Pier/local/centered_outer/e0-58423372/protocol.json'",
+    "ordered protocol: no complete CUDA/NCCL evidence",
+    "ordered protocol: incomplete operator/training matrix",
+    "ordered protocol: missing cases or state/storage verification",
+    "ordered protocol: missing training/consumer/restore verification",
+    "ordered protocol source hashes missing"
+  ],
+  "next_step": "Review evidence before production coordinate adapter and performance work.",
+  "not_validated": [
+    "Qwen conversion/training",
+    "full pretrain_gpt loop",
+    "successful-step outer schedule and skip/restore integration",
+    "production per-learner checkpoint",
+    "distributed optimizer",
+    "multi-slot CUDA pipeline",
+    "GPU performance or wire traffic"
+  ]
+}

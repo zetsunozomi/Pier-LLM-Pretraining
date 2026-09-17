@@ -1,0 +1,63 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[rank1]:[W916 00:43:12.157251857 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 1]  using GPU 1 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank0]:[W916 00:43:12.203667749 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank2]:[W916 00:43:12.206283695 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 2]  using GPU 2 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank3]:[W916 00:43:12.208804157 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 3]  using GPU 3 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/centered_outer/reference/verify_executor.py", line 281, in <module>
+[rank0]:     worker(int(os.environ['RANK']), k, 'env://', args.device, str(output))
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/centered_outer/reference/verify_executor.py", line 248, in worker
+[rank0]:     local = {'operator': operator_checks(rank, k, device),
+[rank0]:                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/centered_outer/reference/verify_executor.py", line 113, in operator_checks
+[rank0]:     engine = CenteredExecutor(master, ref, mom, cohort=s, tile_elements=capacity, model=model)
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/centered_outer/reference/executor.py", line 42, in __init__
+[rank0]:     self.peers = dist.get_process_group_ranks(group)
+[rank0]:                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py", line 1090, in get_process_group_ranks
+[rank0]:     return list(_world.pg_group_ranks[group].keys())
+[rank0]:                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+[rank0]: KeyError: None
+W0916 00:43:14.250000 271850 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 271928 closing signal SIGTERM
+W0916 00:43:14.250000 271850 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 271929 closing signal SIGTERM
+W0916 00:43:14.251000 271850 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 271930 closing signal SIGTERM
+E0916 00:43:15.294000 271850 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 271927) of binary: /pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+experiments/centered_outer/reference/verify_executor.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-09-16_00:43:14
+  host      : nid002700-hsn0
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 271927)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: nid002700: task 0: Exited with exit code 1
+srun: Terminating StepId=58423372.2

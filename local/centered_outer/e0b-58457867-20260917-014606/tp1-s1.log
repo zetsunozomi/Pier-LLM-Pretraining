@@ -1,0 +1,3 @@
+/global/common/software/nersc/pe/conda-envs/24.1.0/python-3.11/nersc-python/bin/python: Error while finding module specification for 'torch.distributed.run' (ModuleNotFoundError: No module named 'torch')
+srun: error: nid001160: task 0: Exited with exit code 1
+srun: Terminating StepId=58457867.2

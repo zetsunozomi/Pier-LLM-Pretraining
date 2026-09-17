@@ -1,0 +1,143 @@
+{
+  "status": "partial",
+  "rank": 0,
+  "world_size": 4,
+  "GPU_executed": true,
+  "backend": "nccl",
+  "torch_version": "2.6.0+cu124",
+  "clock": {
+    "interval": 3,
+    "attempted": 5,
+    "successful": 4,
+    "boundaries": 1
+  },
+  "outer_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "inner_ranks": [
+    0
+  ],
+  "coordinate_fingerprint": "fc4f639536dcc49ed1968c725ccfbd132e8432290ae1255c89144fd34ee84963",
+  "coordinate_numel": 341504,
+  "cohort": 2,
+  "state_tier": "device",
+  "allocation": {
+    "workspace_tensor_bytes": 15420,
+    "reference_bytes": 683008,
+    "momentum_bytes": 341504,
+    "C_bytes": 2056,
+    "slot_count": 1,
+    "formula_bytes": 15420,
+    "excluded": [
+      "master/model",
+      "inner optimizer",
+      "allocator/library storage",
+      "Python and process metadata"
+    ]
+  },
+  "restored": false,
+  "consumer_checks": 1,
+  "restore_evidence": null,
+  "pending_consumer": false,
+  "events": [
+    {
+      "attempted": 1,
+      "successful": 1,
+      "boundaries": 0,
+      "skipped": false,
+      "outer_boundary": false,
+      "payload": null,
+      "oracle_states_bitwise": null,
+      "outer_retained_inner_state": null,
+      "skip_retained_optimizer": null,
+      "master_sha256": "63f201b34aad3b104a46a4e08a4e8235b9f0643b0616e82cf84a434d42089b85",
+      "model_sha256": "deeaeaedf7e7db22996c92a494450da44decabb5adefe8dd69219d51936f5c8d",
+      "inner_sha256": "17eebcc28300c0b49dd2d5e842f8622431e7b02ff97bb8f7c665c9c59113ec6b",
+      "loss": {
+        "lm loss": 8.362411499023438
+      }
+    },
+    {
+      "attempted": 2,
+      "successful": 2,
+      "boundaries": 0,
+      "skipped": false,
+      "outer_boundary": false,
+      "payload": null,
+      "oracle_states_bitwise": null,
+      "outer_retained_inner_state": null,
+      "skip_retained_optimizer": null,
+      "master_sha256": "c7e865a27b680cdb60808ff42b4e6efb8b13e9a72a9614513295c5d6f958891a",
+      "model_sha256": "6dc180f614eac4e94517cd4b6e5dcd0e7150f28fc2cc828be1edcbc50ed33bf2",
+      "inner_sha256": "324796f495b48545c7a932819d55510bf78b23ab29cd07af600bdcfb6bd71da6",
+      "loss": {
+        "lm loss": 8.367647171020508
+      }
+    },
+    {
+      "attempted": 3,
+      "successful": 2,
+      "boundaries": 0,
+      "skipped": true,
+      "outer_boundary": false,
+      "payload": null,
+      "oracle_states_bitwise": null,
+      "outer_retained_inner_state": null,
+      "skip_retained_optimizer": true,
+      "master_sha256": "c7e865a27b680cdb60808ff42b4e6efb8b13e9a72a9614513295c5d6f958891a",
+      "model_sha256": "6dc180f614eac4e94517cd4b6e5dcd0e7150f28fc2cc828be1edcbc50ed33bf2",
+      "inner_sha256": "324796f495b48545c7a932819d55510bf78b23ab29cd07af600bdcfb6bd71da6",
+      "loss": {
+        "lm loss": 8.31884479522705
+      }
+    },
+    {
+      "attempted": 4,
+      "successful": 3,
+      "boundaries": 1,
+      "skipped": false,
+      "outer_boundary": true,
+      "payload": {
+        "sent_tensor_bytes_by_phase": [
+          683008,
+          341504,
+          341504,
+          683008
+        ],
+        "sent_tensor_bytes": 2049024,
+        "padded_master_bytes": 1366016
+      },
+      "oracle_states_bitwise": true,
+      "outer_retained_inner_state": true,
+      "skip_retained_optimizer": null,
+      "master_sha256": "c093d738b03818f98d5dd96109ac4745efa04e26f45eac12f7c679dfa9b93211",
+      "model_sha256": "bf7a3058773fa07f25176fde15d82a98a967c3189e206d41c9af45512073f63a",
+      "inner_sha256": "ae892a958647609a3679d6c3744d807137ca550b1848f9649f15fb7aba8bdfec",
+      "loss": {
+        "lm loss": 8.350714683532715
+      }
+    },
+    {
+      "attempted": 5,
+      "successful": 4,
+      "boundaries": 1,
+      "skipped": false,
+      "outer_boundary": false,
+      "payload": null,
+      "oracle_states_bitwise": null,
+      "outer_retained_inner_state": null,
+      "skip_retained_optimizer": null,
+      "master_sha256": "786a27d09bf17bc13d4286da1c316f0a7e7714a95f7d54f7b2a67ae4d0b38ebf",
+      "model_sha256": "c7ba63262c7e866404e662cf81953569347cbec8a59172a62f008d9b35e170d5",
+      "inner_sha256": "ba5c85fb7cb49ad1daeec15205bc30726f28d1fdf7b0b8ec0f5217512378ad7f",
+      "loss": {
+        "lm loss": 8.332731246948242
+      }
+    }
+  ],
+  "performance_result": false,
+  "error": null
+}

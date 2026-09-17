@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "stage": "E0b",
+  "GPU_executed": true,
+  "performance_result": false,
+  "entrypoint": "pretrain_gpt.py",
+  "world_size": 4,
+  "cases": [
+    "tp1-s1",
+    "tp1-s2",
+    "tp1-s4",
+    "tp1-host",
+    "split",
+    "resume",
+    "tp2-s2",
+    "dp2-s2"
+  ],
+  "comparisons": [
+    {
+      "case": "tp1-s2",
+      "rank": 0,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s2",
+      "rank": 1,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s2",
+      "rank": 2,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s2",
+      "rank": 3,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s4",
+      "rank": 0,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s4",
+      "rank": 1,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s4",
+      "rank": 2,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-s4",
+      "rank": 3,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-host",
+      "rank": 0,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-host",
+      "rank": 1,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-host",
+      "rank": 2,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "tp1-host",
+      "rank": 3,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "resume",
+      "rank": 0,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "resume",
+      "rank": 1,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "resume",
+      "rank": 2,
+      "bitwise_trajectory_equal": true
+    },
+    {
+      "case": "resume",
+      "rank": 3,
+      "bitwise_trajectory_equal": true
+    }
+  ],
+  "errors": [],
+  "finished_utc": "2026-09-17T09:15:21.770642+00:00",
+  "not_validated": [
+    "Qwen conversion and real-data recipe",
+    "distributed optimizer",
+    "multi-slot CUDA pipeline",
+    "PP/CP/MoE",
+    "topology-changing recovery",
+    "strong baseline performance",
+    "GPU peak memory or physical wire traffic"
+  ]
+}

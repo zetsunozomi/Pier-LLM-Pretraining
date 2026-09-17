@@ -1,0 +1,7 @@
+{
+  "case": "resume",
+  "rank": 3,
+  "status": "failed",
+  "error": "ValueError(\"checkpoint recipe differs: ['num_query_groups']\")",
+  "traceback": "Traceback (most recent call last):\n  File \"/pscratch/sd/s/syfan/Pier/experiments/centered_outer/e0b_train.py\", line 40, in main\n    runpy.run_path(str(root / 'pretrain_gpt.py'), run_name='__main__')\n  File \"<frozen runpy>\", line 291, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/pscratch/sd/s/syfan/Pier/pretrain_gpt.py\", line 329, in <module>\n    pretrain(\n  File \"/pscratch/sd/s/syfan/Pier/megatron/training/training.py\", line 684, in pretrain\n    model, optimizer, opt_param_scheduler = setup_model_and_optimizer(\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/pscratch/sd/s/syfan/Pier/megatron/training/training.py\", line 1114, in setup_model_and_optimizer\n    args.iteration, args.num_floating_point_operations_so_far = load_checkpoint(\n                                                                ^^^^^^^^^^^^^^^^\n  File \"/pscratch/sd/s/syfan/Pier/megatron/training/checkpointing.py\", line 1180, in load_checkpoint\n    return load_centered(runtime, load_dir, opt_param_scheduler)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/pscratch/sd/s/syfan/Pier/megatron/core/outer_sync/checkpoint.py\", line 152, in load\n    raise ValueError(f'checkpoint recipe differs: {differences}')\nValueError: checkpoint recipe differs: ['num_query_groups']\n"
+}
