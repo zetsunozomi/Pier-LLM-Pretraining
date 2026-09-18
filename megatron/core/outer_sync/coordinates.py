@@ -63,10 +63,11 @@ class ParameterCoordinates:
 
     def assert_model_committed(self):
         for name, master, model in self.pairs:
-            expected = master.detach().to(model.dtype)
-            if not torch.equal(model.detach().reshape(-1).view(torch.uint8),
-                               expected.reshape(-1).view(torch.uint8)):
-                raise AssertionError(f'next forward sees stale model parameter: {name}')
+            source, target = master.detach().view(-1), model.detach().view(-1)
+            for start in range(0, source.numel(), 262144):
+                expected = source[start:start + 262144].to(model.dtype)
+                if not torch.equal(target[start:start + 262144].view(torch.uint8), expected.view(torch.uint8)):
+                    raise AssertionError(f'next forward sees stale model parameter: {name} at {start}')
 
     def cpu_flat(self):
         # Validation only: explicitly outside the executor workspace accounting.

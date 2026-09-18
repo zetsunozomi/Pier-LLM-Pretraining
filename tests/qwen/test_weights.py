@@ -10,6 +10,7 @@ import contextlib
 from datetime import timedelta
 import json
 from pathlib import Path
+from types import SimpleNamespace
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -22,6 +23,7 @@ from transformers import Qwen2Config, Qwen2ForCausalLM
 from megatron.core import parallel_state as ps
 from megatron.core.models.qwen.config import QwenArchitecture
 from megatron.core.models.qwen.model import QwenRMSNorm, build_model
+from megatron.core.models.qwen.training import initialize_training_model, training_defaults
 from megatron.core.models.qwen.weights import (
     SafeTensorSource, TensorSource, load_weights, parameter_mappings, validate_source,
 )
@@ -95,6 +97,20 @@ def worker(rank, rendezvous, directory):
                                     logits_max_abs=float((output - expected).detach().abs().max()),
                                     gradients_max_abs=grad_error,
                                     loss_abs=abs(float(actual_loss.detach() - reference_loss.detach()))))
+                if heads == 16 and tp == 2:
+                    args = SimpleNamespace(**training_defaults(arch),
+                        tensor_model_parallel_size=tp, pipeline_model_parallel_size=1,
+                        context_parallel_size=1, expert_model_parallel_size=1, num_experts=None,
+                        seq_length=6, train_iters=11, outer_runtime='centered', local_sgd_inner_average=True,
+                        tokenizer_type='HuggingFaceTokenizer', use_cpu_initialization=True,
+                        deterministic_mode=False)
+                    initialized, receipt = initialize_training_model(args, arch, TensorSource(hf.state_dict()))
+                    assert receipt['loaded_before_optimizer_construction']
+                    assert not receipt['optimizer_state_restored']
+                    parameters = dict(initialized.named_parameters())
+                    for mapping in parameter_mappings(arch, tp, tp_rank):
+                        expected_parameter = mapping.materialize(TensorSource(hf.state_dict())).bfloat16()
+                        assert torch.equal(parameters[mapping.target], expected_parameter)
                 ps.destroy_model_parallel()
         Path(directory, f'rank-{rank}.json').write_text(json.dumps(records, indent=2))
         dist.barrier()

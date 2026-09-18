@@ -20,7 +20,7 @@ from megatron.core.outer_sync.checkpoint import load, restore_rng, save
 from megatron.core.outer_sync.runtime import CenteredRuntime, StepClock, digest
 
 
-def fixture(rank, cohort, directory):
+def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_dir=None):
     torch.manual_seed(7)
     model = torch.nn.Sequential(torch.nn.Linear(3, 4), torch.nn.Dropout(.2), torch.nn.Linear(4, 2))
     inner = torch.optim.AdamW(model.parameters(), lr=.01, foreach=False)
@@ -33,10 +33,12 @@ def fixture(rank, cohort, directory):
     scheduler = torch.optim.lr_scheduler.StepLR(inner, step_size=3, gamma=.9)
     args = SimpleNamespace(outer_cohort_size=cohort, outer_sync_interval=3,
                            outer_tile_elements=2, outer_cpu_offload=False,
-                           outer_verify=True, outer_trace_dir=None,
+                           outer_verify=arm is None, outer_trace_dir=str(trace_dir) if trace_dir else None,
+                           outer_arm=arm, outer_verify_storage=oracle_storage, outer_verify_tile_elements=7,
                            outer_momentum=.9, outer_learning_rate=.7,
                            outer_inject_skip_at=[3], outer_inject_skip_rank=1,
                            group_query_attention=False, num_attention_heads=4, num_query_groups=1,
+                           qwen_recipe={'snapshot_sha256': 'test-snapshot', 'data_sha256': 'test-data'},
                            train_iters=11, save=str(directory), consumed_train_samples=0,
                            consumed_valid_samples=0, skipped_train_samples=0)
     runtime = CenteredRuntime(args, [model], optimizer, group=dist.group.WORLD)
@@ -48,6 +50,7 @@ def fixture(rank, cohort, directory):
 
 def advance(runtime, model, optimizer, scheduler, end):
     for attempt in range(runtime.clock.attempted + 1, end + 1):
+        runtime.before_attempt()
         optimizer.optimizer.zero_grad(set_to_none=True)
         x = torch.randn(2, 3) + random.random() + float(np.random.random())
         loss = model(x).square().mean()
@@ -57,6 +60,9 @@ def advance(runtime, model, optimizer, scheduler, end):
         success, _, _ = optimizer.step()
         if success:
             scheduler.step()
+        if runtime.meter is not None:
+            # Synthetic measurement fixture: eight global loss tokens per attempt.
+            runtime.meter.record_tokens(torch.tensor(8.))
         runtime.after_attempt(success, attempt, {'loss': loss.detach()})
         runtime.args.consumed_train_samples += 8
 
@@ -98,6 +104,27 @@ def worker(rank, rendezvous, directory):
             raise AssertionError('a changed GQA architecture must not restore')
         runtime.args.group_query_attention = False
         runtime.args.num_query_groups = 1
+        runtime.args.qwen_recipe['data_sha256'] = 'different-test-data'
+        try:
+            load(runtime, str(Path(directory) / 'resume'), scheduler)
+        except ValueError as error:
+            assert 'qwen_recipe' in str(error)
+        else:
+            raise AssertionError('changed Qwen data must not restore the old training state')
+        runtime.args.qwen_recipe['data_sha256'] = 'test-data'
+        runtime.args.recompute_granularity = 'full'
+        runtime.args.recompute_method = 'uniform'
+        runtime.args.recompute_num_layers = 1
+        try:
+            load(runtime, str(Path(directory) / 'resume'), scheduler)
+        except ValueError as error:
+            assert 'recompute_granularity' in str(error)
+        else:
+            raise AssertionError('changed activation recompute schedule must not restore silently')
+        runtime.args.recompute_granularity = None
+        runtime.args.recompute_method = None
+        runtime.args.recompute_num_layers = None
+        runtime.args.distribute_saved_activations = False
         # This getter has no effect on tensor copies; initialize only its scalar
         # return for Megatron's legacy-compatible optimizer loading method.
         with patch('megatron.core.optimizer.optimizer.parallel_state.get_pipeline_model_parallel_world_size', return_value=1):
@@ -130,6 +157,56 @@ def worker(rank, rendezvous, directory):
         dist.destroy_process_group()
 
 
+def native_worker(rank, rendezvous, directory):
+    torch.set_num_threads(1)
+    dist.init_process_group('gloo', init_method=rendezvous, rank=rank, world_size=4,
+                            timeout=timedelta(seconds=90))
+    try:
+        for arm in ('gather', 'resident', 'recenter'):
+            path = Path(directory) / arm
+            runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm)
+            advance(runtime, model, optimizer, scheduler, 11)
+            runtime.coordinates.assert_model_committed()
+            expected = digest([optimizer.state_dict(), model.state_dict(), scheduler.state_dict(),
+                               runtime.executor.reference, runtime.executor.momentum, runtime.clock.state_dict()])
+            runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm)
+            advance(runtime, model, optimizer, scheduler, 5)
+            save(runtime, 5, scheduler, 123.)
+            runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm)
+            original = runtime.args.outer_arm
+            runtime.args.outer_arm = 'recenter' if arm != 'recenter' else 'gather'
+            try:
+                load(runtime, str(path), scheduler)
+            except ValueError as exc:
+                assert 'outer_arm' in str(exc)
+            else:
+                raise AssertionError('cross-arm checkpoint restore accepted')
+            runtime.args.outer_arm = original
+            with patch('megatron.core.optimizer.optimizer.parallel_state.get_pipeline_model_parallel_world_size', return_value=1):
+                load(runtime, str(path), scheduler)
+            restore_rng(runtime.pending_rng)
+            runtime.pending_rng = None
+            advance(runtime, model, optimizer, scheduler, 11)
+            runtime.coordinates.assert_model_committed()
+            assert digest([optimizer.state_dict(), model.state_dict(), scheduler.state_dict(),
+                           runtime.executor.reference, runtime.executor.momentum, runtime.clock.state_dict()]) == expected
+            assert runtime.clock.state_dict() == dict(interval=3, attempted=11, successful=10, boundaries=3)
+            from megatron.core.outer_sync.cycle_metrics import CycleMeter
+            runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm)
+            runtime.meter = CycleMeter('cpu', path / 'cycles', warmup_cycles=1,
+                                      metadata={'fixture': 'CPU test only', 'arm': arm})
+            advance(runtime, model, optimizer, scheduler, 11)
+            runtime.finish(11)
+            assert runtime.meter.complete_count == 3
+            assert [r['eligible'] for r in runtime.meter.records] == [False, True, True, False]
+            assert runtime.meter.records[0]['processed_loss_tokens_global'] == 32
+            assert runtime.meter.records[0]['successful_loss_tokens_global'] == 24
+            assert runtime.meter.records[0]['skipped_loss_tokens_global'] == 8
+        dist.barrier()
+    finally:
+        dist.destroy_process_group()
+
+
 class RuntimeTests(unittest.TestCase):
     def test_success_clock(self):
         clock = StepClock(2)
@@ -142,6 +219,10 @@ class RuntimeTests(unittest.TestCase):
     def test_production_coordinates_skip_and_exact_midcycle_resume(self):
         with tempfile.TemporaryDirectory(prefix='pier-runtime-') as name:
             mp.spawn(worker, args=(f'file://{name}/rendezvous', name), nprocs=4, join=True)
+
+    def test_native_arms_use_same_optimizer_skip_and_checkpoint_path(self):
+        with tempfile.TemporaryDirectory(prefix='pier-native-runtime-') as name:
+            mp.spawn(native_worker, args=(f'file://{name}/rendezvous', name), nprocs=4, join=True)
 
 
 if __name__ == '__main__':

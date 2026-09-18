@@ -26,7 +26,39 @@ class QwenRMSNorm(torch.nn.Module):
         return normalized * self.weight
 
 
-def build_model(arch, *, dtype=torch.bfloat16, use_cpu_initialization=False, parallel_output=True):
+def recompute_config(arch, tp, *, recompute_granularity=None, recompute_method=None,
+                     recompute_num_layers=None, distribute_saved_activations=False):
+    """Validate the existing PP1 Megatron activation-recompute implementation.
+
+    In this checkout uniform chunks do not clamp the final layer index, so
+    their size must divide the layer count. Reject ignored or unsafe options
+    before model allocation, including direct builder calls outside the CLI.
+    """
+    if recompute_granularity is None:
+        if recompute_method is not None or recompute_num_layers is not None or distribute_saved_activations:
+            raise ValueError('recompute options require a recompute granularity')
+    elif recompute_granularity == 'selective':
+        if recompute_method is not None or recompute_num_layers is not None or distribute_saved_activations:
+            raise ValueError('selective attention recompute takes no layer method/count or distributed activations')
+    elif recompute_granularity == 'full':
+        if recompute_method not in ('uniform', 'block'):
+            raise ValueError('full recompute requires uniform or block method')
+        if (type(recompute_num_layers) is not int or not 1 <= recompute_num_layers <= arch.layers):
+            raise ValueError('recompute layer count must be an integer within the PP1 layer count')
+        if recompute_method == 'uniform' and arch.layers % recompute_num_layers:
+            raise ValueError('uniform recompute chunk size must divide the model layer count')
+        if distribute_saved_activations and tp <= 1:
+            raise ValueError('distributed saved activations require TP greater than one')
+    else:
+        raise ValueError('Qwen recompute granularity must be full, selective or unset')
+    return dict(recompute_granularity=recompute_granularity, recompute_method=recompute_method,
+                recompute_num_layers=recompute_num_layers,
+                distribute_saved_activations=bool(distribute_saved_activations))
+
+
+def build_model(arch, *, dtype=torch.bfloat16, use_cpu_initialization=False, parallel_output=True,
+                recompute_granularity=None, recompute_method=None, recompute_num_layers=None,
+                distribute_saved_activations=False):
     from megatron.core import parallel_state as ps
     from megatron.core.models.gpt.gpt_layer_specs import get_gpt_layer_local_spec
     from megatron.core.models.gpt.gpt_model import GPTModel
@@ -40,6 +72,10 @@ def build_model(arch, *, dtype=torch.bfloat16, use_cpu_initialization=False, par
         raise ValueError('Qwen builder currently requires dense PP1/CP1/EP1')
     if dtype not in (torch.float32, torch.bfloat16):
         raise ValueError('Qwen builder supports FP32 or BF16')
+    recompute = recompute_config(arch, tp, recompute_granularity=recompute_granularity,
+                                recompute_method=recompute_method,
+                                recompute_num_layers=recompute_num_layers,
+                                distribute_saved_activations=distribute_saved_activations)
     config = TransformerConfig(num_layers=arch.layers, hidden_size=arch.hidden,
         ffn_hidden_size=arch.intermediate, num_attention_heads=arch.heads,
         num_query_groups=arch.kv_heads, kv_channels=arch.head_dim, normalization='RMSNorm',
@@ -49,7 +85,7 @@ def build_model(arch, *, dtype=torch.bfloat16, use_cpu_initialization=False, par
         tensor_model_parallel_size=tp, pipeline_model_parallel_size=1, init_method_std=arch.init_std,
         persist_layer_norm=False, masked_softmax_fusion=False, bias_activation_fusion=False,
         bias_dropout_fusion=False, apply_rope_fusion=False, gradient_accumulation_fusion=False,
-        attention_softmax_in_fp32=True, apply_query_key_layer_scaling=False)
+        attention_softmax_in_fp32=True, apply_query_key_layer_scaling=False, **recompute)
     layer = get_gpt_layer_local_spec()
     layer.submodules.input_layernorm = QwenRMSNorm
     layer.submodules.pre_mlp_layernorm = QwenRMSNorm

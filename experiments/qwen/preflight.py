@@ -30,18 +30,19 @@ def pinned_architecture(size):
 
 
 def verify_file(path, expected):
-    """Check LFS content SHA256 or regular Git blob identity and retain SHA256."""
+    """Check pinned content SHA256 or regular Git blob identity and retain SHA256."""
     size = path.stat().st_size
     if size != expected['bytes']:
         raise ValueError(f'file size mismatch: {path.name}')
     sha256 = hashlib.sha256()
+    content_sha = expected.get('lfs_sha256') or expected.get('sha256')
     blob = hashlib.sha1(f'blob {size}\0'.encode())
     with path.open('rb') as stream:
         for block in iter(lambda: stream.read(1024 * 1024), b''):
             sha256.update(block)
-            if not expected.get('lfs_sha256'):
+            if not content_sha:
                 blob.update(block)
-    matches = (sha256.hexdigest() == expected['lfs_sha256'] if expected.get('lfs_sha256')
+    matches = (sha256.hexdigest() == content_sha if content_sha
                else blob.hexdigest() == expected['git_blob_id'])
     if not matches:
         raise ValueError(f'file contents differ from pinned revision: {path.name}')
@@ -65,7 +66,8 @@ def preflight(size, tp, checkpoint=None):
               'GPU_conversion_validated': False, 'performance_result': False,
               'ready_for_training': False,
               'remaining': ['GPU conversion/logits/gradient check', 'tokenizer behavior and real-data recipe',
-                            'training entry-point integration', 'strong baselines and measured cycles']}
+                            'real-checkpoint training entry-point GPU validation',
+                            'strong baselines and measured cycles']}
     if checkpoint is not None:
         checkpoint = Path(checkpoint)
         # Pin the real bytes, not just a folder name or a matching config.json.

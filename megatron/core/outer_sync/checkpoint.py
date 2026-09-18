@@ -31,6 +31,9 @@ RECIPE_FIELDS = (
     'weight_decay', 'clip_grad', 'optimizer', 'bf16', 'local_sgd_inner_average',
     'outer_sync_interval', 'outer_momentum', 'outer_learning_rate', 'outer_cohort_size',
     'outer_cpu_offload', 'outer_verify', 'outer_inject_skip_at', 'outer_inject_skip_rank',
+    'qwen_recipe', 'outer_arm', 'outer_verify_storage',
+    'recompute_granularity', 'recompute_method', 'recompute_num_layers',
+    'distribute_saved_activations',
 )
 
 
@@ -41,6 +44,23 @@ def recipe(args):
     # reporting overwrites that CLI value during training, before a save.
     if not getattr(args, 'group_query_attention', False):
         result['num_query_groups'] = result['num_attention_heads']
+    # Old v1 checkpoints omitted this field and use the Pier executor. Preserve
+    # that meaning while rejecting cross-arm restores, even if R/M shapes match.
+    if result['outer_arm'] in (None, 'pier'):
+        result['outer_arm'] = None
+    else:
+        # Native SUM can select a different arithmetic schedule at another tile
+        # size. Unlike Pier's fixed graph, it has no tile-invariance promise.
+        result['native_collective_tile'] = {
+            'tile_elements': getattr(args, 'outer_tile_elements', None),
+            'workspace_mib': getattr(args, 'outer_workspace_mib', None)}
+    if result['outer_verify_storage'] in (None, 'memory'):
+        result['outer_verify_storage'] = None
+    # Historical recipes omit recompute fields. Disabled recomputation retains
+    # that meaning; changing an enabled activation/RNG schedule cannot restore
+    # silently under the exact-trajectory checkpoint contract.
+    if not result['distribute_saved_activations']:
+        result['distribute_saved_activations'] = None
     return result
 
 
@@ -105,6 +125,10 @@ def save(runtime, iteration, scheduler, flops):
              'pending_consumer': runtime.pending_consumer,
              'events': runtime.events,
              'oracle_reference': runtime.oracle_reference, 'oracle_momentum': runtime.oracle_momentum}
+    if runtime.streamed_oracle is not None:
+        # The complete training R/M is already stored above. Keep only identity
+        # of the independent oracle; rebuild its disposable files from owners.
+        state['streamed_oracle'] = runtime.streamed_oracle.checkpoint_receipt()
     if runtime.verify:
         state['optimizer_digest'] = digest(state['optimizer'])
         state['model_digest'] = digest(state['model'])
@@ -161,6 +185,10 @@ def load(runtime, load_dir, scheduler):
         expected = getattr(runtime.executor, key)
         if state[key].dtype != expected.dtype or state[key].shape != expected.shape:
             raise ValueError(f'checkpoint {key} dtype/shape differs')
+    if (runtime.streamed_oracle is not None) != ('streamed_oracle' in state):
+        raise ValueError('checkpoint oracle storage differs')
+    if runtime.streamed_oracle is not None and state['streamed_oracle']['boundaries_checked'] != state['clock']['boundaries']:
+        raise ValueError('checkpoint oracle coverage differs from its successful-step clock')
     runtime.clock.load_state_dict(state['clock'])
     if runtime.clock.attempted != state['iteration']:
         raise ValueError('checkpoint iteration and clock differ')
@@ -182,6 +210,8 @@ def load(runtime, load_dir, scheduler):
         setattr(runtime.args, name, state[name])
     runtime.oracle_reference = state['oracle_reference']
     runtime.oracle_momentum = state['oracle_momentum']
+    if runtime.streamed_oracle is not None:
+        runtime.streamed_oracle.restore_from_owners(state['streamed_oracle'])
     runtime.events = state['events']
     runtime.consumer_checks = state['consumer_checks']
     runtime.pending_consumer = True

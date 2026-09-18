@@ -1,6 +1,6 @@
 """Centered Local-SGD integration, successful-step clock and validation evidence.
 
-The production path stores only owned R/M and the executor's bounded workspace.
+The production path stores the selected arm's R/M and bounded executor workspace.
 Full CPU/GPU oracle copies and per-step hashes are enabled only by --outer-verify.
 """
 
@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from datetime import timedelta
 import hashlib
 import json
+import math
 from pathlib import Path
 
 import torch
@@ -15,6 +16,7 @@ import torch.distributed as dist
 
 from .coordinates import optimizer_coordinates
 from .executor import CenteredExecutor, power2
+from .collectives import ARMS, CollectiveExecutor, tile_for_budget
 
 
 def enabled(args):
@@ -77,6 +79,10 @@ class StepClock:
 def validate_args(args):
     """Reject unsupported ownership/restore semantics before model allocation."""
     if not enabled(args):
+        if (getattr(args, 'outer_arm', None) is not None or getattr(args, 'outer_measure_dir', None)
+                or getattr(args, 'outer_workspace_mib', None) is not None
+                or getattr(args, 'outer_verify_storage', 'memory') != 'memory'):
+            raise ValueError('outer arm, workspace and cycle measurement options require --outer-runtime centered')
         return
     if not args.local_sgd_inner_average or args.outer_sync_interval < 1:
         raise ValueError('centered runtime requires inner averaging and positive outer interval')
@@ -104,13 +110,36 @@ def validate_args(args):
         raise ValueError('rerun state-machine recovery has no centered-runtime contract yet')
     if not power2(args.outer_cohort_size) or args.outer_tile_elements < 1:
         raise ValueError('positive tile and power-of-two cohort required')
+    arm = getattr(args, 'outer_arm', None) or 'pier'
+    if arm not in ('pier', 'dtensor', *ARMS):
+        raise ValueError('unknown outer arm')
+    if arm in ARMS and args.outer_cohort_size != 1:
+        raise ValueError('G/R/W native collective arms require cohort=1')
+    if arm != 'pier' and args.outer_verify:
+        raise ValueError('native SUM arms have a separate numerical contract; '
+                         '--outer-verify is the Pier fixed-tree oracle only')
+    budget = getattr(args, 'outer_workspace_mib', None)
+    if budget is not None and (not math.isfinite(budget) or budget <= 0):
+        raise ValueError('workspace MiB must be finite and positive')
     if not 0 <= args.outer_momentum < 1 or args.outer_learning_rate <= 0:
         raise ValueError('outer momentum must be in [0,1), with positive learning rate')
     if args.outer_verify and (args.outer_trace_dir is None or args.train_iters is None
                               or not 1 <= args.train_iters <= 500):
         raise ValueError('verification requires an output directory and at most 500 attempted steps')
+    storage = getattr(args, 'outer_verify_storage', 'memory')
+    if storage not in ('memory', 'streamed') or getattr(args, 'outer_verify_tile_elements', 65536) < 1:
+        raise ValueError('valid oracle storage and a positive oracle tile required')
+    if storage == 'streamed' and not args.outer_verify:
+        raise ValueError('streamed oracle storage requires --outer-verify')
     if args.outer_inject_skip_at and not args.outer_verify:
         raise ValueError('skip injection is a labeled correctness experiment requiring --outer-verify')
+    if getattr(args, 'outer_measure_dir', None):
+        if args.outer_verify or args.train_iters is None or not 1 <= args.train_iters <= 500:
+            raise ValueError('cycle measurement excludes the correctness oracle and requires 1..500 attempts')
+        if getattr(args, 'outer_warmup_cycles', 2) < 0:
+            raise ValueError('cycle warmup must be nonnegative')
+        if args.save or args.eval_iters or args.profile or getattr(args, 'manual_gc', False):
+            raise ValueError('initial cycle measurement disables checkpoint saves, evaluation, profilers and manual GC')
 
 
 def make_outer_group():
@@ -154,6 +183,13 @@ class CenteredRuntime:
         self.peers = dist.get_process_group_ranks(self.group)
         self.k, self.outer_rank = len(self.peers), dist.get_rank(self.group)
         self.s = args.outer_cohort_size
+        self.arm = getattr(args, 'outer_arm', None) or 'pier'
+        if self.arm not in ('pier', 'dtensor', *ARMS):
+            raise ValueError('unknown outer arm')
+        if self.arm in ARMS and self.s != 1:
+            raise ValueError('G/R/W native collective arms require cohort=1')
+        if self.arm != 'pier' and args.outer_verify:
+            raise ValueError('the fixed-tree oracle applies only to Pier')
         if not power2(self.k) or self.s > self.k or self.k % self.s:
             raise ValueError('outer learner count and cohort must be nested powers of two')
         optimizer.validate_outer_update_support()
@@ -168,26 +204,44 @@ class CenteredRuntime:
             raise ValueError('different parameter coordinates within an outer group')
         self.clock = StepClock(args.outer_sync_interval)
         self.verify = args.outer_verify
-        if self.verify and self.coordinates.numel > 1_000_000:
-            raise ValueError('full-state correctness oracle is limited to 1M parameters per TP coordinate')
+        self.oracle_storage = getattr(args, 'outer_verify_storage', 'memory')
+        if self.oracle_storage not in ('memory', 'streamed'):
+            raise ValueError('unknown oracle storage')
+        if self.verify and self.oracle_storage == 'memory' and self.coordinates.numel > 1_000_000:
+            raise ValueError('in-memory full-state oracle is limited to 1M parameters; use explicit streamed validation')
         width = (self.coordinates.numel + self.k - 1) // self.k
         g, b = self.k // self.s, self.outer_rank % self.s
         state_device = torch.device('cpu') if args.outer_cpu_offload else self.device
         pinned = state_device.type == 'cpu' and self.device.type == 'cuda'
-        reference = torch.zeros(g * width, dtype=torch.float32, device=state_device, pin_memory=pinned)
+        if self.arm in ('pier', 'dtensor'):
+            reference_size, start = g * width, b * g * width
+        elif self.arm == 'resident':
+            reference_size, start = self.k * width, 0
+        else:
+            reference_size, start = width, self.outer_rank * width
+        reference = torch.zeros(reference_size, dtype=torch.float32, device=state_device, pin_memory=pinned)
         momentum = torch.zeros(width, dtype=torch.float32, device=state_device, pin_memory=pinned)
         # Initialize only this owner's reference interval; no full flat master.
-        start = b * g * width
-        valid = max(0, min(g * width, self.coordinates.numel - start))
+        valid = max(0, min(reference_size, self.coordinates.numel - start))
         if valid:
             self.coordinates.read_into(start, reference[:valid])
         initial = digest([p for _, p, _ in self.coordinates.pairs])
         dist.all_gather_object(fingerprints, initial, group=self.group)
         if len(set(fingerprints)) != 1:
             raise ValueError('initial FP32 reference differs across learners')
-        self.executor = CenteredExecutor(None, reference, momentum, cohort=self.s,
-                                         tile_elements=args.outer_tile_elements,
-                                         coordinates=self.coordinates, group=self.group)
+        budget = getattr(args, 'outer_workspace_mib', None)
+        capacity = (tile_for_budget(self.k, self.arm, self.s, width, int(budget * 2**20))
+                    if budget is not None else args.outer_tile_elements)
+        if self.arm == 'pier':
+            self.executor = CenteredExecutor(None, reference, momentum, cohort=self.s,
+                                            tile_elements=capacity, coordinates=self.coordinates, group=self.group)
+        elif self.arm == 'dtensor':
+            from .dtensor import DTensorExecutor
+            self.executor = DTensorExecutor(None, reference, momentum, cohort=self.s,
+                                           tile_elements=capacity, coordinates=self.coordinates, group=self.group)
+        else:
+            self.executor = CollectiveExecutor(None, reference, momentum, arm=self.arm,
+                                              tile_elements=capacity, coordinates=self.coordinates, group=self.group)
         self.nonfinite = torch.zeros(1, device=self.device, dtype=torch.float32)
         self.unity = torch.ones(1, device=self.device, dtype=torch.float32)
         self.pending_consumer = False
@@ -197,8 +251,31 @@ class CenteredRuntime:
         self.pending_rng = None
         self.events = []
         self.last_optimizer_before = None
-        self.oracle_reference = self.coordinates.cpu_flat().numpy().copy() if self.verify else None
-        self.oracle_momentum = (self.oracle_reference * 0) if self.verify else None
+        self.meter = None
+        if getattr(args, 'outer_measure_dir', None):
+            from .cycle_metrics import CycleMeter
+            self.meter = CycleMeter(self.device, args.outer_measure_dir,
+                                    warmup_cycles=getattr(args, 'outer_warmup_cycles', 2),
+                                    planned_attempts=args.train_iters,
+                                    metadata={'arm': self.arm, 'cohort': self.s, 'outer_ranks': self.peers,
+                                              'inner_ranks': self.inner_ranks,
+                                              'coordinate_fingerprint': self.coordinates.fingerprint,
+                                              'allocation': self.executor.allocation_bytes(),
+                                              'tile_elements': self.executor.capacity})
+        self.streamed_oracle = None
+        if self.verify and self.oracle_storage == 'streamed':
+            if not args.outer_trace_dir:
+                raise ValueError('streamed oracle requires a fresh trace directory')
+            from .streamed_oracle import StreamedOracle
+            self.streamed_oracle = StreamedOracle(
+                self.coordinates, self.executor, Path(args.outer_trace_dir) / '.oracle' / f'rank-{self.rank}',
+                tile_elements=getattr(args, 'outer_verify_tile_elements', 65536))
+        self.oracle_reference = (self.coordinates.cpu_flat().numpy().copy()
+                                 if self.verify and self.streamed_oracle is None else None)
+        self.oracle_momentum = self.oracle_reference.copy() if self.oracle_reference is not None else None
+        if self.oracle_momentum is not None:
+            # Match torch.zeros initialization, including the sign of exact zero.
+            self.oracle_momentum.fill(0)
         self.report_path = None
         if args.outer_trace_dir:
             directory = Path(args.outer_trace_dir)
@@ -208,6 +285,10 @@ class CenteredRuntime:
             for module in model:
                 module.register_forward_pre_hook(self.before_forward)
         optimizer.centered_runtime = self
+
+    def before_attempt(self):
+        if self.meter is not None:
+            self.meter.before_attempt(self.clock)
 
     def before_forward(self, module, inputs):
         if self.pending_consumer:
@@ -234,6 +315,9 @@ class CenteredRuntime:
 
     def _oracle(self):
         # Full reference and gather are validation-only; never enter a perf run.
+        if self.streamed_oracle is not None:
+            self.streamed_oracle.prepare(self.args.outer_momentum, self.args.outer_learning_rate)
+            return None
         import numpy as np
         from .spec import resident_reference
         local = self.coordinates.cpu_flat().to(self.device)
@@ -254,6 +338,8 @@ class CenteredRuntime:
         oracle = self._oracle() if self.verify and boundary else None
         if boundary:
             moments = self._moment_digest() if self.verify else None
+            if self.meter is not None:
+                self.meter.before_outer()
             payload = self.executor.step(mu=self.args.outer_momentum, eta=self.args.outer_learning_rate)
             self.optimizer.commit_outer_update()
             self.pending_consumer = True
@@ -261,10 +347,13 @@ class CenteredRuntime:
                 self._check_oracle(oracle)
                 if moments != self._moment_digest():
                     raise AssertionError('outer update modified inner optimizer moments')
-                self.oracle_reference = oracle['reference'].copy()
-                self.oracle_momentum = oracle['momentum'].copy()
+                if self.streamed_oracle is None:
+                    self.oracle_reference = oracle['reference'].copy()
+                    self.oracle_momentum = oracle['momentum'].copy()
         else:
             payload = None
+        if self.meter is not None:
+            self.meter.after_attempt(success, boundary, self.clock, payload)
         if self.verify:
             self.coordinates.assert_model_committed()
             self.events.append({'attempted': self.clock.attempted, 'successful': self.clock.successful,
@@ -284,6 +373,9 @@ class CenteredRuntime:
         return digest([child.optimizer.state_dict() for child in children])
 
     def _check_oracle(self, expected):
+        if self.streamed_oracle is not None:
+            self.streamed_oracle.check()
+            return
         import numpy as np
         from .verification import same
         same(self.coordinates.cpu_flat(), torch.from_numpy(expected['reference']), 'production master vs oracle')
@@ -304,10 +396,17 @@ class CenteredRuntime:
                   'outer_ranks': self.peers, 'inner_ranks': self.inner_ranks,
                   'coordinate_fingerprint': self.coordinates.fingerprint,
                   'coordinate_numel': self.coordinates.numel, 'cohort': self.s,
+                  'arm': self.arm, 'tile_elements': self.executor.capacity,
+                  'workspace_budget_mib': getattr(self.args, 'outer_workspace_mib', None),
                   'state_tier': 'host' if self.args.outer_cpu_offload else 'device',
                   'allocation': self.executor.allocation_bytes(),
+                  'oracle_storage': self.oracle_storage if self.verify else None,
+                  'oracle_allocation': self.streamed_oracle.allocation_bytes() if self.streamed_oracle else None,
                   'restored': self.restored, 'consumer_checks': self.consumer_checks,
                   'restore_evidence': self.restore_evidence,
+                  'consumed_train_samples': getattr(self.args, 'consumed_train_samples', None),
+                  'consumed_valid_samples': getattr(self.args, 'consumed_valid_samples', None),
+                  'skipped_train_samples': getattr(self.args, 'skipped_train_samples', None),
                   'pending_consumer': self.pending_consumer, 'events': self.events,
                   'performance_result': False, 'error': error}
         self.report_path.write_text(json.dumps(report, indent=2) + '\n')
@@ -318,6 +417,8 @@ class CenteredRuntime:
         if self.verify and iteration == self.args.train_iters and self.pending_consumer:
             raise AssertionError('verification window must include the consumer after the last outer boundary')
         self.write_report('passed' if iteration == self.args.train_iters else 'partial')
+        if self.meter is not None:
+            self.meter.finish(self.clock)
 
 
 def build_runtime(args, model, optimizer):

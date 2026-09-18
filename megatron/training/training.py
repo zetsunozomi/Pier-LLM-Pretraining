@@ -1289,6 +1289,11 @@ def train_step(forward_step_func, data_iterator,
                     numerator += val
                     denominator += 1
             loss_reduced[key] = numerator / denominator
+            centered = getattr(optimizer, 'centered_runtime', None)
+            if key == 'lm loss' and centered is not None and centered.meter is not None:
+                if not all(isinstance(x[key], (tuple, list)) for x in losses_reduced):
+                    raise ValueError('cycle measurement requires GPT loss/token reporting, not legacy scalar loss')
+                centered.meter.record_tokens(denominator)
         return loss_reduced, skipped_iter, should_checkpoint, should_exit, exit_code, grad_norm, num_zeros_in_grad
     return {}, skipped_iter, should_checkpoint, should_exit, exit_code, grad_norm, num_zeros_in_grad
 
@@ -2103,6 +2108,8 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
             continue
 
         # Run training step.
+        if centered_runtime is not None:
+            centered_runtime.before_attempt()
         args.curr_iteration = iteration
         ft_integration.on_training_step_start()
         loss_dict, skipped_iter, should_checkpoint, should_exit, exit_code, grad_norm, num_zeros_in_grad = \

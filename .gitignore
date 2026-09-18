@@ -67,3 +67,27 @@ samples_record*
 /local/centered_outer/e0b-*/case-*/*
 !/local/centered_outer/e0b-*/case-*/*.json
 !/local/centered_outer/e0b-*/case-*/*.log
+
+# E0c Qwen conversion evidence; 6 GB weights and ~19 GB reference gradients stay local.
+!/local/qwen/
+/local/qwen/*
+!/local/qwen/e0c-*/
+/local/qwen/e0c-*/*
+!/local/qwen/e0c-*/*.json
+!/local/qwen/e0c-*/*.log
+
+# Disposable full-coordinate validation vectors, wherever the trace directory lives.
+.oracle/
+
+# E0d full-Qwen training evidence; large checkpoint/oracle/cache files stay local.
+!/local/qwen/e0d-*/
+/local/qwen/e0d-*/*
+!/local/qwen/e0d-*/*.json
+!/local/qwen/e0d-*/*.log
+!/local/qwen/e0d-*/case-*/
+/local/qwen/e0d-*/case-*/*
+!/local/qwen/e0d-*/case-*/*.json
+!/local/qwen/e0d-*/case-*/*.log
+!/local/qwen/e0d-*/prerequisite-e0c/
+/local/qwen/e0d-*/prerequisite-e0c/*
+!/local/qwen/e0d-*/prerequisite-e0c/*.json

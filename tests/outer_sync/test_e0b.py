@@ -75,6 +75,64 @@ class E0bTests(unittest.TestCase):
                     with self.assertRaises(ValueError):
                         validate_outer(bad)
 
+    def test_native_arm_and_cycle_measurement_argument_contract(self):
+        from megatron.training.arguments import parse_args, validate_args
+        from megatron.core.outer_sync.runtime import validate_args as validate_outer
+        from megatron.core.outer_sync.checkpoint import recipe
+        argv = training_args('tp1-s1', Path('/tmp/e0b'))
+        index = argv.index('--outer-tile-elements')
+        del argv[index:index + 2]
+        argv += ['--outer-workspace-mib', '64']
+        with patch.dict(os.environ, WORLD_SIZE='4', RANK='0', NCCL_ALGO='Ring', CUDA_DEVICE_MAX_CONNECTIONS='1'):
+            with patch.object(sys, 'argv', ['pretrain_gpt.py', *argv]), contextlib.redirect_stdout(io.StringIO()):
+                args = validate_args(parse_args())
+        args.outer_verify = False
+        args.outer_inject_skip_at = []
+        args.outer_measure_dir = '/tmp/synthetic-cycle-test'
+        args.eval_iters = 0
+        args.save = None
+        original = recipe(args)
+        args.outer_arm = 'pier'
+        self.assertEqual(recipe(args), original)
+        streamed = copy.copy(args)
+        streamed.outer_verify_storage = 'streamed'
+        with self.assertRaises(ValueError):
+            validate_outer(streamed)
+        streamed.outer_verify = True
+        streamed.outer_measure_dir = None
+        validate_outer(streamed)
+        self.assertEqual(recipe(streamed)['outer_verify_storage'], 'streamed')
+        streamed.outer_verify_tile_elements = 0
+        with self.assertRaises(ValueError):
+            validate_outer(streamed)
+        for arm in ('gather', 'resident', 'recenter'):
+            args.outer_arm = arm
+            validate_outer(args)
+            self.assertEqual(recipe(args)['outer_arm'], arm)
+            self.assertEqual(recipe(args)['native_collective_tile']['workspace_mib'], 64)
+            for key, value in (('outer_verify', True), ('outer_cohort_size', 2),
+                               ('outer_runtime', 'legacy'),
+                               ('eval_iters', 1), ('save', '/tmp/save'), ('profile', True),
+                               ('outer_warmup_cycles', -1), ('train_iters', 501),
+                               ('outer_workspace_mib', float('nan'))):
+                changed = copy.copy(args)
+                setattr(changed, key, value)
+                with self.assertRaises(ValueError, msg=f'{arm}: {key}'):
+                    validate_outer(changed)
+        # T uses the whole cohort family, but retains the native-SUM contract.
+        with patch.dict(os.environ, WORLD_SIZE='4', RANK='0', NCCL_ALGO='Ring', CUDA_DEVICE_MAX_CONNECTIONS='1'):
+            with patch.object(sys, 'argv', ['pretrain_gpt.py', *argv, '--outer-arm', 'dtensor']), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                dtensor_args = validate_args(parse_args())
+        dtensor_args.outer_verify = False
+        dtensor_args.outer_inject_skip_at = []
+        for cohort in (1, 2, 4):
+            dtensor_args.outer_cohort_size = cohort
+            validate_outer(dtensor_args)
+        dtensor_args.outer_verify = True
+        with self.assertRaisesRegex(ValueError, 'Pier fixed-tree'):
+            validate_outer(dtensor_args)
+
     def test_complete_archive_then_corrupt_evidence(self):
         # Only schema fixtures, under a temporary directory removed at exit.
         # Different archive/run paths exercise auditing a cluster Git pull.

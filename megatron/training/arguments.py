@@ -2099,14 +2099,27 @@ def _add_distributed_args(parser):
                             "Required by the new centered-outer recipe; changes historical scaling.")
     group.add_argument('--outer-runtime', choices=('legacy', 'centered'), default='legacy',
                        help='Select the production tiled centered runtime explicitly.')
+    group.add_argument('--outer-arm', choices=('pier', 'gather', 'resident', 'recenter', 'dtensor'), default=None,
+                       help='Shared training adapter: Pier, native G/R/W or explicit-layout DTensor; default Pier.')
     group.add_argument('--outer-cohort-size', type=int, default=1)
-    group.add_argument('--outer-tile-elements', type=int, default=8192,
+    workspace = group.add_mutually_exclusive_group()
+    workspace.add_argument('--outer-tile-elements', type=int, default=8192,
                        help='Coordinates per momentum owner per tile; one shared workspace.')
+    workspace.add_argument('--outer-workspace-mib', type=float, default=None,
+                       help='Derive tile size from an explicit tensor cap (DTensor also reserves exposed outputs); library temporaries excluded.')
     group.add_argument('--outer-momentum', type=float, default=0.9)
     group.add_argument('--outer-learning-rate', type=float, default=1.0)
     group.add_argument('--outer-verify', action='store_true',
                        help='Enable expensive fixed-graph oracle and full per-attempt hashes; no performance claim.')
+    group.add_argument('--outer-verify-storage', choices=('memory', 'streamed'), default='memory',
+                       help='Small in-memory oracle, or file-backed complete-coordinate validation for large models.')
+    group.add_argument('--outer-verify-tile-elements', type=int, default=65536,
+                       help='Per-rank gather tile of the streamed oracle; validation-only scratch, not executor workspace.')
     group.add_argument('--outer-trace-dir', type=str)
+    group.add_argument('--outer-measure-dir', type=str, default=None,
+                       help='Record drained complete-cycle samples and actual successful loss-token counts.')
+    group.add_argument('--outer-warmup-cycles', type=int, default=2,
+                       help='Complete cycles retained as labeled warmup, excluded from throughput samples.')
     group.add_argument('--outer-inject-skip-at', nargs='*', type=int, default=[],
                        help='One-based attempted steps with a labeled synthetic nonfinite vote.')
     group.add_argument('--outer-inject-skip-rank', type=int, default=0)
