@@ -191,6 +191,9 @@ def native(args, manifest):
                 raise ValueError(f'missing native gradient: {entry.target}')
             gradients[entry.target] = compare_tensor(
                 gradient, entry.materialize(reference_gradients), args.dtype, 'gradient')
+            if not gradients[entry.target]['passed']:
+                print(f'[E0c] rank{rank} gradient mismatch {entry.target}: '
+                      + json.dumps(gradients[entry.target], sort_keys=True, allow_nan=False), flush=True)
         passed = logits_check['passed'] and loss_check['passed'] and all(x['passed'] for x in gradients.values())
         report = {'status': 'passed' if passed else 'failed', 'phase': 'native',
                   'dtype': args.dtype, 'tp': args.tp, 'tp_rank': tp_rank, 'rank': rank, 'world_size': 4,

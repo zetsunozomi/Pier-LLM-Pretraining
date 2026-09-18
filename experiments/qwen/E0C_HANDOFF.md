@@ -1,7 +1,19 @@
 # E0c: real Qwen2.5-3B CUDA conversion gate
 
-Status: launcher and local CPU regressions are ready; **no E0c GPU result exists**.
+Status: the first real 3B GPU run completed its HF FP32 reference and stopped
+at native FP32/TP1 under the original numerical contract. **E0c is not accepted.**
 E0b is already accepted and does not need to be rerun for this gate.
+
+The user-returned log for `e0c-58511509-20260918-012718` reports the same failing
+parameter on all four TP1 ranks: `decoder.layers.2.mlp.linear_fc2.weight`
+(HF layer 2 `mlp.down_proj.weight`, zero-based layer numbering). Its returned
+rank-0 statistics show 2 violations among 22,544,384 elements, relative L2
+error 5.76894e-6 and maximum absolute error 4.95017e-5. Logits and loss pass.
+This is a small overall discrepancy; the cause is not yet established, and
+neither TP2 nor BF16 ran. The full cluster JSON/log artifacts should be retained
+and returned through Git; the local analysis so far uses the pasted evidence.
+A fresh E0c run with the diagnostic fields below is needed to identify the
+violating coordinates. Tolerances and the failed run's outcome remain unchanged.
 
 ## Run after the normal Git update
 
@@ -108,6 +120,17 @@ exact zero native gradient; any nonfinite value fails. BF16 gradients are
 checked **per parameter**, so a large embedding cannot hide a wrong smaller
 projection. Thresholds cannot be overridden through the launcher. A failed
 comparison must be investigated before changing any numerical contract.
+
+Elementwise comparisons also retain the logical tensor `shape`, `tolerance`,
+`worst_element` (largest absolute-error/tolerance ratio), and the first eight
+`outside_tolerance_samples` in logical flattening order. Each point contains
+its flat index, tensor coordinates, actual/reference values, absolute error,
+allowed tolerance and ratio. The full violation count is retained even when
+there are more than eight samples; nonfinite elements still fail and are
+counted separately. BF16 gradient/logit acceptance remains aggregate-based.
+Failed gradient statistics are printed to the phase log as well as rank JSON.
+These are diagnostic fields only; they do not change contract version 1,
+acceptance, model arithmetic or the source-bound evidence requirements.
 
 Final acceptance requires both HF references and all **16 native rank/layout/
 dtype reports**, correct complete parameter coverage, unchanged source/input

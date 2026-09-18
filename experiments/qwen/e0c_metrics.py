@@ -7,6 +7,8 @@ Thresholds are versioned here, not adjusted by a launcher or after observing a r
 
 import math
 
+OUTLIER_SAMPLE_LIMIT = 8
+
 CONTRACT = {
     'version': 1,
     'fp32': {'logits': {'atol': 2e-4, 'rtol': 2e-4},
@@ -39,18 +41,26 @@ def compare_tensor(actual, expected, dtype, kind, chunk_elements=1 << 20):
     import torch
     if actual.shape != expected.shape:
         raise ValueError(f'shape mismatch: {actual.shape} != {expected.shape}')
+    shape = list(actual.shape)
     actual, expected = actual.detach().reshape(-1), expected.detach().reshape(-1)
     result = dict(elements=actual.numel(), nonfinite=0, changed=0, outside_tolerance=0,
                   error_sq=0., reference_sq=0., actual_sq=0., dot=0., max_abs=0.)
     limits = CONTRACT[dtype][kind]
+    result['shape'] = shape
+    if 'atol' in limits:
+        # Diagnostic records never change the whole-tensor acceptance rule.
+        result.update(tolerance=dict(limits), worst_element=None,
+                      outside_tolerance_samples=[], outside_tolerance_sample_limit=OUTLIER_SAMPLE_LIMIT)
     for start in range(0, actual.numel(), chunk_elements):
         a = actual[start:start + chunk_elements].to(device='cpu', dtype=torch.float64)
         b = expected[start:start + chunk_elements].to(device='cpu', dtype=torch.float64)
         finite = torch.isfinite(a) & torch.isfinite(b)
         result['nonfinite'] += int((~finite).sum())
         result['changed'] += int((a != b).sum())
+        finite_offsets = None
         if not bool(finite.all()):
             # Preserve valid JSON rather than NaN/Infinity on a failed run.
+            finite_offsets = finite.nonzero(as_tuple=True)[0]
             a, b = a[finite], b[finite]
         if a.numel() == 0:
             continue
@@ -61,7 +71,34 @@ def compare_tensor(actual, expected, dtype, kind, chunk_elements=1 << 20):
         result['dot'] += float(a.dot(b))
         result['max_abs'] = max(result['max_abs'], float(delta.abs().max()))
         if 'atol' in limits:
-            result['outside_tolerance'] += int((delta.abs() > limits['atol'] + limits['rtol'] * b.abs()).sum())
+            tolerance = limits['atol'] + limits['rtol'] * b.abs()
+            absolute_error = delta.abs()
+            outside = absolute_error > tolerance
+            result['outside_tolerance'] += int(outside.sum())
+            ratios = absolute_error / tolerance
+
+            def point(index):
+                offset = index if finite_offsets is None else int(finite_offsets[index])
+                flat_index = start + offset
+                remaining, coordinate = flat_index, []
+                for size in reversed(shape):
+                    remaining, component = divmod(remaining, size)
+                    coordinate.append(component)
+                return dict(flat_index=flat_index, index=list(reversed(coordinate)),
+                            actual=float(a[index]), reference=float(b[index]),
+                            absolute_error=float(absolute_error[index]),
+                            tolerance=float(tolerance[index]), ratio=float(ratios[index]))
+
+            worst_index = int(ratios.argmax())
+            previous = result['worst_element']
+            if previous is None or float(ratios[worst_index]) > previous['ratio']:
+                result['worst_element'] = point(worst_index)
+            # Retain the first few violations in logical tensor order, plus the
+            # worst point above even when it is outside this bounded sample.
+            available = OUTLIER_SAMPLE_LIMIT - len(result['outside_tolerance_samples'])
+            if available:
+                indices = outside.nonzero(as_tuple=True)[0][:available].tolist()
+                result['outside_tolerance_samples'].extend(point(index) for index in indices)
     result['relative_l2'] = (math.sqrt(result['error_sq'] / result['reference_sq'])
                              if result['reference_sq'] else None)
     denominator = math.sqrt(result['actual_sq'] * result['reference_sq'])
