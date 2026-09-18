@@ -1,6 +1,6 @@
 # E0c: real Qwen2.5-3B CUDA conversion gate
 
-Status: the first real 3B GPU run completed its HF FP32 reference and stopped
+Status: two real 3B GPU runs completed their HF FP32 reference and stopped
 at native FP32/TP1 under the original numerical contract. **E0c is not accepted.**
 E0b is already accepted and does not need to be rerun for this gate.
 
@@ -12,8 +12,18 @@ error 5.76894e-6 and maximum absolute error 4.95017e-5. Logits and loss pass.
 This is a small overall discrepancy; the cause is not yet established, and
 neither TP2 nor BF16 ran. The full cluster JSON/log artifacts should be retained
 and returned through Git; the local analysis so far uses the pasted evidence.
-A fresh E0c run with the diagnostic fields below is needed to identify the
-violating coordinates. Tolerances and the failed run's outcome remain unchanged.
+The second run, `e0c-58511509-20260918-014121`, reproduced the same aggregate
+gradient statistics and identified the same two coordinates on all four ranks:
+
+| Weight coordinate | Native | HF | Absolute error / permitted error |
+|---|---|---|---|
+| `[325, 3189]` | 0.00942956004 | 0.00940536521 | 1.10574235 |
+| `[1843, 3189]` | -0.02219339833 | -0.02216718532 | 1.07283331 |
+
+Both use input channel 3189. This does not establish the cause: local gradient
+summation and different forward/backward operands must be separated. A fresh
+E0c run now records those operands and the decomposition described below.
+Tolerances and both failed runs' outcomes remain unchanged.
 
 ## Run after the normal Git update
 
@@ -132,6 +142,34 @@ Failed gradient statistics are printed to the phase log as well as rank JSON.
 These are diagnostic fields only; they do not change contract version 1,
 acceptance, model arithmetic or the source-bound evidence requirements.
 
+### Targeted FP32 gradient diagnostic
+
+HF FP32 and native FP32/TP1 capture the input activation and incoming output
+gradient of layer 2's down projection (zero-based). Hooks copy the operands to
+CPU in the same `[batch, sequence, channel]` order and return no replacements.
+TP2 and BF16 arithmetic and acceptance are unchanged. For tiny CPU fixtures,
+the probe selects the last layer when layer 2 does not exist.
+
+For each sampled violation (or the worst element when the tensor passes),
+`e0c_linear_probe.py` recomputes the weight-gradient dot product using FP64
+products and `math.fsum` over the captured FP32 operands. The report separates:
+
+- Each implementation's actual gradient minus its recomputed dot product.
+- The difference between the two recomputed dot products, further decomposed
+  as `sum((native_x - hf_x) * hf_g) + sum(native_x * (native_g - hf_g))`.
+- Cancellation within each sum, operand-vector errors and the four token
+  positions with the largest product differences.
+
+These are diagnostics of **FP32 operands**, not a whole-model FP64 reference
+and not an alternate pass criterion. They locate whether the observed delta
+arises locally or in the operands; upstream differences still need their own
+investigation. A failing gradient keeps E0c failed and stops subsequent phases.
+
+Every rank writes `linear-probe-fp32-tp1-rankN.json` and prints its points with
+the prefix `[E0c linear probe]`. The JSON binds the input/manifest, HF/native
+reports and both raw operand files by SHA-256. Return these small JSON files
+and logs via Git after running the same launcher; no new packages are needed.
+
 Final acceptance requires both HF references and all **16 native rank/layout/
 dtype reports**, correct complete parameter coverage, unchanged source/input
 identities, no worker failure record and a zero launcher exit. NCCL groups are
@@ -145,7 +183,9 @@ Top-level `*.json` and `*.log` are allowed by `.gitignore`, so use the same
 Git commit/push and local pull workflow as E0b. **No Git LFS is needed for the
 normal report return.**
 
-Downloaded weights and `reference-fp32/`, `reference-bf16/` remain ignored.
+Downloaded weights, `reference-fp32/`, `reference-bf16/` and `linear-traces/`
+remain ignored. The targeted probe adds about 6.68 MB per trace (one HF plus
+four native traces, about 33.42 MB total), retained only on cluster scratch.
 Together the full gradient references need **18,515,632,128 bytes (~18.52 GB)**
 plus outputs/metadata; the preflight requires another 2 GiB of free scratch.
 Keep them on the cluster for mismatch diagnosis. Neither weights nor reference
@@ -160,7 +200,16 @@ followed by equally tuned baselines and complete-cycle measurements.
 
 ## Local verification
 
-All 14 Qwen tests passed in 29.978 s on CPU. The new integration regression
+For the targeted linear diagnostic, all 15 E0c tests passed in 25.872 s on CPU
+(`test_e0c`, `test_e0c_linear_probe`, `test_e0c_metrics_diagnostics`). They cover
+unchanged linear outputs/input gradients/weight gradients with capture enabled,
+canonical sequence/batch layout, controlled cancellation and operand changes,
+and actual tiny HF/native FP32/BF16 TP1/TP2 runs. The integration also verifies
+diagnostic hashes and that JSON is included but trace tensors remain ignored.
+Log: `/private/tmp/pier-e0c-linear-probe-tests.log`. These tests do not establish
+the cause of the real 3B GPU mismatch.
+
+The initial E0c implementation passed all 14 Qwen tests in 29.978 s on CPU. Its integration regression
 executes these exact reference/native routines using a tiny saved HF checkpoint,
 both dtypes and real four-process Gloo TP1/TP2 groups, with test-only CPU device
 adapters. Its temporary reports explicitly set `GPU_executed: false`, so they

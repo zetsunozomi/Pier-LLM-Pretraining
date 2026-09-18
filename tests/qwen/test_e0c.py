@@ -113,6 +113,11 @@ class E0cTests(unittest.TestCase):
                 self.assertFalse(reference['environment']['GPU_executed'])
                 self.assertEqual(reference['gradient_elements'], arch.unique_parameters())
                 e0c.check_files(directory / f'reference-{dtype}', reference['files'])
+                if dtype == 'fp32':
+                    self.assertEqual(reference['linear_probe']['layer'], arch.layers - 1)
+                    self.assertIn('linear-trace.safetensors', reference['files'])
+                else:
+                    self.assertNotIn('linear_probe', reference)
                 for tp in (1, 2):
                     mp.spawn(cpu_native, args=(name, dtype, tp, f'file://{name}/rendezvous-{dtype}-{tp}'),
                              nprocs=4, join=True)
@@ -121,6 +126,22 @@ class E0cTests(unittest.TestCase):
                         self.assertEqual(record['status'], 'passed')
                         self.assertFalse(record['environment']['GPU_executed'])
                         self.assertTrue(all(x['passed'] for x in record['gradients'].values()))
+                        if dtype == 'fp32' and tp == 1:
+                            diagnostic = json.loads((directory / f'linear-probe-fp32-tp1-rank{rank}.json').read_text())
+                            self.assertFalse(diagnostic['environment']['GPU_executed'])
+                            self.assertFalse(diagnostic['acceptance_override'])
+                            self.assertEqual(diagnostic['native_report_sha256'],
+                                             sha256_file(directory / f'native-{dtype}-tp{tp}-rank{rank}.json'))
+                            self.assertEqual(diagnostic['reference_report_sha256'], sha256_file(directory / f'hf-{dtype}.json'))
+                            self.assertEqual(diagnostic['manifest_sha256'], record['manifest_sha256'])
+                            self.assertEqual(diagnostic['inputs_sha256'], record['inputs_sha256'])
+                            self.assertEqual(diagnostic['rank'], rank)
+                            for path, metadata in diagnostic['trace_files'].items():
+                                self.assertEqual(metadata, e0c.file_record(directory / path))
+                            self.assertEqual(len(diagnostic['points']), 1)
+                            point = diagnostic['points'][0]
+                            self.assertLess(abs(point['decomposition_residual']), 1e-12)
+                            self.assertLess(abs(point['operand_split_residual']), 1e-12)
             changed = directory / 'reference-fp32/outputs.safetensors'
             changed.write_bytes(b'corrupt fixture')
             reference = json.loads((directory / 'hf-fp32.json').read_text())
@@ -222,10 +243,14 @@ class E0cTests(unittest.TestCase):
     def test_sources_and_git_evidence_scope(self):
         files = source_hashes()
         for path in ('pretrain_qwen.py', 'experiments/qwen/e0c.py', 'experiments/qwen/e0c.sbatch',
+                     'experiments/qwen/e0c_linear_probe.py',
                      'experiments/qwen/pins.json', 'megatron/core/models/qwen/model.py', 'requirements.txt'):
             self.assertEqual(files[path], sha256_file(ROOT / path))
         for path, ignored in [('local/qwen/e0c-fixture/summary.json', False),
                               ('local/qwen/e0c-fixture/hf-fp32.log', False),
+                              ('local/qwen/e0c-fixture/linear-probe-fp32-tp1-rank0.json', False),
+                              ('local/qwen/e0c-fixture/linear-traces/fp32-tp1-rank0.safetensors', True),
+                              ('local/qwen/e0c-fixture/reference-fp32/linear-trace.safetensors', True),
                               ('local/qwen/e0c-fixture/reference-fp32/gradient-0000.safetensors', True),
                               ('local/qwen/models/Qwen2.5-3B/weights.safetensors', True)]:
             result = subprocess.run(['git', 'check-ignore', '--no-index', '-q', path], cwd=ROOT)

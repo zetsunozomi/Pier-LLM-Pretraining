@@ -6,6 +6,7 @@ TP ranks run in separate processes so two full models never share GPU memory.
 """
 
 import argparse
+from contextlib import nullcontext
 from datetime import timedelta
 import json
 import os
@@ -21,6 +22,7 @@ import torch.distributed as dist
 from safetensors.torch import load_file, save_file
 
 from experiments.qwen.e0c_metrics import compare_tensor, exact_tensor
+from experiments.qwen.e0c_linear_probe import LinearTrace, analyze_linear, probe_layer
 from megatron.core.models.qwen.config import QwenArchitecture
 from megatron.core.models.qwen.weights import SafeTensorSource, load_weights, parameter_mappings, sha256_file
 
@@ -100,14 +102,20 @@ def reference(args, manifest):
     if not all(record['bitwise_equal'] for record in weights.values()):
         raise ValueError('HF parameters differ from pinned source weights')
     print(f'[E0c] HF {args.dtype}: full logits and backward', flush=True)
-    logits = model(tokens, position_ids=positions, use_cache=False).logits
-    loss = cross_entropy(logits, tokens)
-    loss.backward()
+    layer = probe_layer(arch)
+    trace = LinearTrace(model.model.layers[layer].mlp.down_proj) if args.dtype == 'fp32' else None
+    with trace if trace is not None else nullcontext():
+        logits = model(tokens, position_ids=positions, use_cache=False).logits
+        loss = cross_entropy(logits, tokens)
+        loss.backward()
     if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
         raise ValueError('HF reference contains nonfinite logits/loss')
     save_file({'logits': logits.detach().cpu().contiguous(), 'loss': loss.detach().cpu().reshape(1)},
               str(directory / 'outputs.safetensors'))
     weight_map, gradients, files = {}, {}, {}
+    if trace is not None:
+        save_file(trace.complete(), str(directory / 'linear-trace.safetensors'))
+        files['linear-trace.safetensors'] = file_record(directory / 'linear-trace.safetensors')
     # One tensor per file bounds CPU serialization memory by the largest tensor.
     for index, (name, parameter) in enumerate(parameters.items()):
         if parameter.grad is None or not bool(torch.isfinite(parameter.grad).all()):
@@ -127,6 +135,9 @@ def reference(args, manifest):
               'gradient_elements': sum(p.numel() for p in parameters.values()),
               'files': files, 'loading_info': loading, 'loss': float(loss.detach()),
               'performance_result': False, 'optimizer_steps': 0}
+    if trace is not None:
+        result['linear_probe'] = {'layer': layer, 'file': 'linear-trace.safetensors',
+                                  'tensor_order': 'batch,sequence,channel', 'diagnostic_only': True}
     write_json(args.output_dir / f'hf-{args.dtype}.json', result)
     print(f'[E0c] HF {args.dtype}: reference written ({len(gradients)} gradients)', flush=True)
 
@@ -177,9 +188,13 @@ def native(args, manifest):
         length = tokens.shape[1]
         causal = torch.ones(1, 1, length, length, dtype=torch.bool, device='cuda').triu(1)
         print(f'[E0c] rank{rank} native {args.dtype}/TP{args.tp}: forward/backward', flush=True)
-        logits = model(tokens, positions, causal)
-        loss = cross_entropy(logits, tokens)
-        loss.backward()
+        layer = probe_layer(arch)
+        trace = (LinearTrace(model.decoder.layers[layer].mlp.linear_fc2, sequence_first=True)
+                 if args.dtype == 'fp32' and args.tp == 1 else None)
+        with trace if trace is not None else nullcontext():
+            logits = model(tokens, positions, causal)
+            loss = cross_entropy(logits, tokens)
+            loss.backward()
         outputs = load_file(str(directory / 'outputs.safetensors'))
         logits_check = compare_tensor(logits, outputs['logits'], args.dtype, 'logits')
         loss_check = compare_tensor(loss.reshape(1), outputs['loss'], args.dtype, 'loss')
@@ -204,7 +219,31 @@ def native(args, manifest):
                   'logits': logits_check, 'loss': loss_check, 'gradients': gradients,
                   'gradient_elements': sum(p.numel() for p in parameters.values()),
                   'performance_result': False, 'optimizer_steps': 0}
-        write_json(args.output_dir / f'native-{args.dtype}-tp{args.tp}-rank{rank}.json', report)
+        report_path = args.output_dir / f'native-{args.dtype}-tp{args.tp}-rank{rank}.json'
+        write_json(report_path, report)
+        if trace is not None:
+            # Keep raw operands on scratch and hash-bind the small JSON diagnostic.
+            trace_directory = args.output_dir / 'linear-traces'
+            trace_directory.mkdir(exist_ok=True)
+            trace_path = trace_directory / f'fp32-tp1-rank{rank}.safetensors'
+            save_file(trace.complete(), str(trace_path))
+            reference_trace = directory / 'linear-trace.safetensors'
+            if (reference_report.get('linear_probe', {}).get('layer') != layer
+                    or file_record(reference_trace) != reference_report['files'].get(reference_trace.name)):
+                raise ValueError('linear probe reference identity differs')
+            parameter = f'decoder.layers.{layer}.mlp.linear_fc2.weight'
+            diagnostic = analyze_linear(load_file(str(reference_trace)), trace.complete(), gradients[parameter])
+            diagnostic.update(layer=layer, parameter=parameter, rank=rank, dtype=args.dtype, tp=args.tp,
+                              environment=environment, manifest_sha256=report['manifest_sha256'],
+                              inputs_sha256=report['inputs_sha256'],
+                              reference_report_sha256=report['reference_report_sha256'],
+                              native_report_sha256=sha256_file(report_path),
+                              trace_files={str(p.relative_to(args.output_dir)): file_record(p)
+                                           for p in (reference_trace, trace_path)})
+            write_json(args.output_dir / f'linear-probe-fp32-tp1-rank{rank}.json', diagnostic)
+            for point in diagnostic['points']:
+                print(f'[E0c linear probe] rank{rank} {parameter}: '
+                      + json.dumps(point, sort_keys=True, allow_nan=False), flush=True)
         # All ranks persist diagnostics before a numerical failure terminates the phase.
         success = torch.tensor(int(passed), device='cuda')
         dist.all_reduce(success, op=dist.ReduceOp.MIN)
