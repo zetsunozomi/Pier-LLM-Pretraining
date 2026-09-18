@@ -1,6 +1,6 @@
 # E0c: real Qwen2.5-3B CUDA conversion gate
 
-Status: two real 3B GPU runs completed their HF FP32 reference and stopped
+Status: three real 3B GPU runs completed their HF FP32 reference and stopped
 at native FP32/TP1 under the original numerical contract. **E0c is not accepted.**
 E0b is already accepted and does not need to be rerun for this gate.
 
@@ -20,10 +20,39 @@ gradient statistics and identified the same two coordinates on all four ranks:
 | `[325, 3189]` | 0.00942956004 | 0.00940536521 | 1.10574235 |
 | `[1843, 3189]` | -0.02219339833 | -0.02216718532 | 1.07283331 |
 
-Both use input channel 3189. This does not establish the cause: local gradient
-summation and different forward/backward operands must be separated. A fresh
-E0c run now records those operands and the decomposition described below.
-Tolerances and both failed runs' outcomes remain unchanged.
+Both use input channel 3189. The third run, `e0c-58515954-20260918-021901`,
+reproduced these same statistics and produced identical decompositions on all
+four ranks:
+
+| Coordinate | Observed native minus HF | Incoming-gradient contribution | Activation contribution | Difference of local summation residuals |
+|---|---|---|---|---|
+| `[325, 3189]` | +2.41948e-5 | +2.42368e-5 | -3.95364e-8 | -2.45067e-9 |
+| `[1843, 3189]` | -2.62130e-5 | -2.62752e-5 | +4.24127e-8 | +1.98117e-8 |
+
+The incoming-gradient difference dominates; local summation residual differences
+are only about 0.01% and 0.08% of the observed errors in magnitude. Two tokens
+(batch 0 / position 1 and batch 1 / position 0) have channel-3189 activations
+around 3396 and 3659. Their products amplify small incoming-gradient differences;
+signed terms also cancel strongly in the final gradient sum. This identifies
+where the discrepancy enters this projection, not its original upstream cause.
+
+### Pending attention operation-order correction
+
+The source audit found a concrete difference from the pinned HF eager reference:
+generic Megatron uses `baddbmm(..., alpha=scale)`, while HF first computes QK
+matmul and then multiplies by scale. Their backward operation order differs as
+well. `megatron/core/models/qwen/attention.py` now gives the native Qwen builder
+a dedicated eager core matching HF's batch/head layout, GQA expansion,
+matmul-then-scale, additive mask before FP32 softmax, and context matmul.
+It uses the existing Megatron TP interfaces and dropout RNG handling; the
+parameter layout and checkpoint conversion are unchanged.
+
+This corrects a known operation-order difference and is a candidate remedy,
+**not yet proof that attention caused the observed outliers or that E0c passes**.
+The generic Megatron attention implementation is unchanged. Rerun the same
+E0c launcher with a fresh output directory to evaluate FP32/TP1 first and,
+if it passes, continue through TP2 and BF16. The linear probe remains enabled.
+Tolerances and all three failed runs' outcomes remain unchanged.
 
 ## Run after the normal Git update
 
@@ -199,6 +228,16 @@ the next stage: real-data Qwen training with full optimizer/outer-state checks,
 followed by equally tuned baselines and complete-cycle measurements.
 
 ## Local verification
+
+For the Qwen attention correction, all 22 focused tests passed in 41.100 s on
+CPU (`test_attention`, `test_weights`, `test_recompute`, and the three E0c test
+modules listed below). Direct FP32/BF16 attention outputs and Q/K/V gradients
+match the pinned HF eager implementation bitwise for TP1/TP2 local head groups.
+Whole-model TP1/TP2/TP4 checks produced 28 parity records; 152 recomputation
+records preserve logits, loss and all parameter gradients bitwise relative to
+the same model without recomputation. The tiny-model E0c I/O tests also passed.
+Log: `/private/tmp/pier-qwen-attention-align-tests.log`. These are CPU results;
+the full 3B GPU conversion and performance remain unvalidated.
 
 For the targeted linear diagnostic, all 15 E0c tests passed in 25.872 s on CPU
 (`test_e0c`, `test_e0c_linear_probe`, `test_e0c_metrics_diagnostics`). They cover

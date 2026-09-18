@@ -8,6 +8,7 @@ This builder does not enable the legacy Hugging Face model wrapper or FSDP.
 import torch
 
 from .config import QwenArchitecture
+from .attention import QwenDotProductAttention
 
 
 class QwenRMSNorm(torch.nn.Module):
@@ -89,6 +90,7 @@ def build_model(arch, *, dtype=torch.bfloat16, use_cpu_initialization=False, par
     layer = get_gpt_layer_local_spec()
     layer.submodules.input_layernorm = QwenRMSNorm
     layer.submodules.pre_mlp_layernorm = QwenRMSNorm
+    layer.submodules.self_attention.submodules.core_attention = QwenDotProductAttention
     block = TransformerBlockSubmodules(layer_specs=[layer] * arch.layers, layer_norm=QwenRMSNorm)
     model = GPTModel(config, block, arch.vocab, arch.max_positions,
                      position_embedding_type='rope', rotary_percent=1., rotary_base=arch.rope_base,
