@@ -9,15 +9,19 @@ From the cluster repository root, use the same `diloco` Python that ran E0b:
 
 ```bash
 export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
-"$PIER_PYTHON" experiments/qwen/prepare_snapshot.py --model 3B --download
 sbatch experiments/qwen/e0c.sbatch
 ```
 
-Run the download command on a login/transfer node with network access, before
-requesting the GPU job. It fetches only the pinned public weights/tokenizer
-files (about **6.18 GB**, network speed determines elapsed time), checks every
-file identity, and reuses already verified files. No package is installed or
-upgraded by this command. Required model packages are already pinned in the
+Place the eight pinned files listed below in the snapshot directory before
+launching. Downloads with curl or the Hugging Face CLI are supported; no
+separate preparation command is required for an existing snapshot. E0c
+preflight checks all file identities inside the GPU allocation.
+
+If files are not yet available, `prepare_snapshot.py --model 3B --download`
+is an optional downloader for a login/transfer node with network access
+and a working Hugging Face Python environment. The download is about
+**6.18 GB**; no package is installed or upgraded by this command.
+Required model packages are already pinned in the
 repo: `transformers==4.57.3`, `safetensors==0.7.0`, `huggingface-hub==0.36.0`.
 The `diloco` environment still needs to actually contain them; preflight fails
 clearly if the two model-library versions differ. Do not replace its CUDA Torch
@@ -25,18 +29,22 @@ installation with a CPU wheel.
 
 Default snapshot directory:
 `local/qwen/models/Qwen2.5-3B/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b/`.
-An existing snapshot can be used without downloading:
+The directory must directly contain:
 
-```bash
-export PIER_QWEN_SNAPSHOT=/absolute/path/to/existing/Qwen2.5-3B/snapshot
-"$PIER_PYTHON" experiments/qwen/prepare_snapshot.py --model 3B \
-  --output-dir "$PIER_QWEN_SNAPSHOT"
-sbatch experiments/qwen/e0c.sbatch
+```text
+config.json
+merges.txt
+model-00001-of-00002.safetensors
+model-00002-of-00002.safetensors
+model.safetensors.index.json
+tokenizer.json
+tokenizer_config.json
+vocab.json
 ```
 
-The existing snapshot must match the fixed revision; a matching directory name
-is insufficient. Missing files require explicit `--download`; existing wrong
-bytes cause a failure and are not overwritten.
+For another location, export `PIER_QWEN_SNAPSHOT=/absolute/path/to/snapshot`
+before launching. The existing files must match the fixed revision; a matching
+directory name is insufficient. Preflight does not download or overwrite files.
 
 The Slurm header requests **1 node, 4 GPUs, 1 hour**, `m4431 / regular / gpu`.
 Inside an already allocated **one-node, four-GPU** interactive session, use
@@ -45,6 +53,13 @@ script verifies the allocation and four visible GPUs. Direct `bash` does not
 request GPUs or extend the interactive allocation's remaining time.
 Internal sequential `srun` steps default to `SLURM_OVERLAP=1` so they can share
 the interactive shell's allocation, as in the accepted E0b invocation.
+
+Use `bash`, not `source`. The launcher resolves the repository from an explicit
+`PIER_ROOT`, the actual script location, `SLURM_SUBMIT_DIR`, or the current
+working directory, verifying repository markers before using a candidate.
+This supports Slurm's spool copy and interactive sessions allocated from a
+different directory. Startup prints both the repository and snapshot paths;
+a missing-directory error includes the actual attempted snapshot path.
 
 ## What runs
 

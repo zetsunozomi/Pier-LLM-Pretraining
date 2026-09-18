@@ -12,8 +12,25 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 
 set -euo pipefail
-export PIER_ROOT="${PIER_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+# sbatch runs a spool copy, so its script directory may not be the repository.
+# Direct bash prefers the actual script's repository even when an interactive
+# allocation was requested from some other directory.
+if [[ -z "${PIER_ROOT:-}" ]]; then
+    script_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+    for candidate in "$script_root" "${SLURM_SUBMIT_DIR:-}" "$PWD"; do
+        if [[ -f "$candidate/pretrain_qwen.py" && -f "$candidate/experiments/qwen/e0c_evidence.py" ]]; then
+            PIER_ROOT="$candidate"
+            break
+        fi
+    done
+fi
+if [[ -z "${PIER_ROOT:-}" || ! -f "$PIER_ROOT/pretrain_qwen.py" || ! -f "$PIER_ROOT/experiments/qwen/e0c_evidence.py" ]]; then
+    printf 'Cannot locate Pier repository (PIER_ROOT=%s, SLURM_SUBMIT_DIR=%s). Set PIER_ROOT to the repository root.\n' \
+      "${PIER_ROOT:-unset}" "${SLURM_SUBMIT_DIR:-unset}" >&2
+    exit 2
+fi
 cd "$PIER_ROOT"
+export PIER_ROOT="$PWD"
 [[ "${SLURM_JOB_NUM_NODES:-${SLURM_NNODES:-0}}" == 1 ]] || {
     echo 'E0c requires a Slurm allocation of one node / four GPUs (sbatch or an existing interactive allocation).' >&2
     exit 2
@@ -21,7 +38,12 @@ cd "$PIER_ROOT"
 export PIER_PYTHON="${PIER_PYTHON:-$(command -v python)}"
 export PIER_QWEN_SNAPSHOT="${PIER_QWEN_SNAPSHOT:-$PIER_ROOT/local/qwen/models/Qwen2.5-3B/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b}"
 export PIER_E0C_RUN_DIR="${PIER_E0C_RUN_DIR:-$PIER_ROOT/local/qwen/e0c-${SLURM_JOB_ID:?missing Slurm job id}-$(date +%Y%m%d-%H%M%S)}"
-[[ -d "$PIER_QWEN_SNAPSHOT" ]] || { echo 'Missing snapshot: run experiments/qwen/prepare_snapshot.py --download on a login node first.' >&2; exit 2; }
+printf '[E0c] Repository: %s\n[E0c] Snapshot: %s\n' "$PIER_ROOT" "$PIER_QWEN_SNAPSHOT"
+[[ -d "$PIER_QWEN_SNAPSHOT" ]] || {
+    printf 'Missing snapshot directory: %s\nSet PIER_QWEN_SNAPSHOT to the directory containing the eight pinned files.\n' \
+      "$PIER_QWEN_SNAPSHOT" >&2
+    exit 2
+}
 [[ ! -e "$PIER_E0C_RUN_DIR" ]] || { echo 'Refusing to reuse an E0c output directory' >&2; exit 2; }
 mkdir -p "$PIER_E0C_RUN_DIR"
 export PYTHONPATH="$PIER_ROOT${PYTHONPATH:+:$PYTHONPATH}"

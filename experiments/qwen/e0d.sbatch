@@ -12,8 +12,23 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 
 set -euo pipefail
-export PIER_ROOT="${PIER_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+# sbatch runs a spool copy; direct bash should use the actual script repository.
+if [[ -z "${PIER_ROOT:-}" ]]; then
+    script_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+    for candidate in "$script_root" "${SLURM_SUBMIT_DIR:-}" "$PWD"; do
+        if [[ -f "$candidate/pretrain_qwen.py" && -f "$candidate/experiments/qwen/e0d_evidence.py" ]]; then
+            PIER_ROOT="$candidate"
+            break
+        fi
+    done
+fi
+if [[ -z "${PIER_ROOT:-}" || ! -f "$PIER_ROOT/pretrain_qwen.py" || ! -f "$PIER_ROOT/experiments/qwen/e0d_evidence.py" ]]; then
+    printf 'Cannot locate Pier repository (PIER_ROOT=%s, SLURM_SUBMIT_DIR=%s). Set PIER_ROOT to the repository root.\n' \
+      "${PIER_ROOT:-unset}" "${SLURM_SUBMIT_DIR:-unset}" >&2
+    exit 2
+fi
 cd "$PIER_ROOT"
+export PIER_ROOT="$PWD"
 [[ "${SLURM_JOB_NUM_NODES:-${SLURM_NNODES:-0}}" == 1 ]] || {
     echo 'E0d requires one allocated node with four GPUs.' >&2; exit 2;
 }
@@ -23,8 +38,11 @@ export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 export PIER_QWEN_SNAPSHOT="${PIER_QWEN_SNAPSHOT:-$PIER_ROOT/local/qwen/models/Qwen2.5-3B/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b}"
 export PIER_QWEN_DATA_PREFIX="${PIER_QWEN_DATA_PREFIX:-$("$PIER_PYTHON" experiments/qwen/e0d_config.py)}"
 : "${PIER_E0C_EVIDENCE:?set PIER_E0C_EVIDENCE to the passed E0c artifact directory}"
+printf '[E0d] Repository: %s\n[E0d] Snapshot: %s\n' "$PIER_ROOT" "$PIER_QWEN_SNAPSHOT"
 [[ -d "$PIER_QWEN_SNAPSHOT" && -d "$PIER_E0C_EVIDENCE" ]] || {
-    echo 'Missing Qwen snapshot or E0c evidence directory.' >&2; exit 2;
+    printf 'Missing Qwen snapshot or E0c evidence directory:\n  snapshot: %s\n  E0c: %s\n' \
+      "$PIER_QWEN_SNAPSHOT" "$PIER_E0C_EVIDENCE" >&2
+    exit 2
 }
 for suffix in .bin .idx .manifest.json; do
     [[ -f "$PIER_QWEN_DATA_PREFIX$suffix" ]] || {

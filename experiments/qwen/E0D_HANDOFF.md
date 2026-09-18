@@ -40,6 +40,11 @@ it does not request new resources or extend its remaining time. Sequential
 `srun` steps use `SLURM_OVERLAP=1`, and torchrun uses `--max_restarts=0`.
 Two hours is a requested limit, not a measured execution-time estimate.
 
+Use `bash`, not `source`. As with E0c, the launcher verifies the repository
+selected from explicit `PIER_ROOT`, its script location, `SLURM_SUBMIT_DIR`,
+or the current directory. Slurm's spool copy and an unrelated interactive
+allocation directory are supported. Startup prints repository/snapshot paths.
+
 The preflight checks the full pinned snapshot, E0c raw text reports and source
 hashes, tokenizer/data identities and indexed counts, four visible CUDA GPUs,
 and free scratch. It requires at least 360,449 indexed tokens to cover this
