@@ -1,0 +1,12 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 76a1a3d3..7395b18f 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -91,3 +91,7 @@[m [msamples_record*[m
+ !/local/qwen/e0d-*/prerequisite-e0c/[m
+ /local/qwen/e0d-*/prerequisite-e0c/*[m
+ !/local/qwen/e0d-*/prerequisite-e0c/*.json[m
+[32m+[m
+[32m+[m[32m# Local snapshot downloader, model weights, and interrupted downloads.[m
+[32m+[m[32m/download.sh[m
+[32m+[m[32m/local/qwen/models/[m
