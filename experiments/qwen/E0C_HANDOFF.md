@@ -1,6 +1,6 @@
 # E0c: real Qwen2.5-3B CUDA conversion gate
 
-Status: three real 3B GPU runs completed their HF FP32 reference and stopped
+Status: four real 3B GPU runs completed their HF FP32 reference and stopped
 at native FP32/TP1 under the original numerical contract. **E0c is not accepted.**
 E0b is already accepted and does not need to be rerun for this gate.
 
@@ -36,7 +36,7 @@ around 3396 and 3659. Their products amplify small incoming-gradient differences
 signed terms also cancel strongly in the final gradient sum. This identifies
 where the discrepancy enters this projection, not its original upstream cause.
 
-### Pending attention operation-order correction
+### Attention operation-order correction: GPU result
 
 The source audit found a concrete difference from the pinned HF eager reference:
 generic Megatron uses `baddbmm(..., alpha=scale)`, while HF first computes QK
@@ -47,14 +47,73 @@ matmul-then-scale, additive mask before FP32 softmax, and context matmul.
 It uses the existing Megatron TP interfaces and dropout RNG handling; the
 parameter layout and checkpoint conversion are unchanged.
 
-This corrects a known operation-order difference and is a candidate remedy,
-**not yet proof that attention caused the observed outliers or that E0c passes**.
-The generic Megatron attention implementation is unchanged. Rerun the same
-E0c launcher with a fresh output directory to evaluate FP32/TP1 first and,
-if it passes, continue through TP2 and BF16. The linear probe remains enabled.
-Tolerances and all three failed runs' outcomes remain unchanged.
+Run `e0c-58515954-20260918-024422` tested this correction. It **did not resolve
+the mismatch**. Relative L2 decreased from 5.76894e-6 to 5.71401e-6 (about 0.95%),
+but the number of violating elements increased from two to three, identically
+on all four TP1 ranks:
 
-## Run after the normal Git update
+| Coordinate | Absolute error / permitted error |
+|---|---|
+| `[325, 3189]` | 1.02887370 |
+| `[1843, 3189]` | 1.08236249 |
+| `[1856, 3189]` | 1.03503980 |
+
+All remain in channel 3189, dominated by incoming-gradient differences and
+large activations at the same two tokens. TP2 and BF16 still did not run.
+Attention alignment alone is insufficient; its source difference was not
+established as the root cause. The next diagnostic compares both implementations
+at higher precision. Tolerances and all four failed outcomes remain unchanged.
+
+## Next run: independent FP64 diagnostic
+
+After the usual Git update, run this **new script** in the existing one-node,
+four-GPU interactive allocation:
+
+```bash
+export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+export PIER_E0C_FP32_RUN=/pscratch/sd/s/syfan/Pier/local/qwen/e0c-58515954-20260918-024422
+bash /pscratch/sd/s/syfan/Pier/experiments/qwen/e0c_fp64.sbatch
+```
+
+For a new allocation, replace `bash` with `sbatch`. The header requests
+**one node, four GPUs, one hour**; HF and native TP1 run sequentially, each
+using one GPU. The input run's reports and pinned snapshot must remain present.
+No additional package or model download is required. The launcher supports
+Slurm's spool path and direct interactive bash, stops on execution failure,
+uses no worker restarts, and writes to a fresh `local/qwen/e0c-fp64-*/` directory.
+
+`e0c_fp64.py` verifies the original manifest/input/report identities and snapshot
+bytes. It runs the full model equations in FP64 and computes logits, mean CE,
+and the **entire layer-2 down-projection weight gradient**. Other weights are
+frozen solely to avoid allocating their gradient buffers; this retains the
+target weight's partial derivative through all downstream layers. A local
+test compares the target gradient with all parameters trainable.
+
+`fp64_math.py` supplies diagnostic-instance adapters for RMSNorm and RoPE and
+a scoped FP64 softmax override. This removes the explicit FP32 casts that
+would remain after `model.double()`. CE, weights, intermediate activations and
+the target gradient use FP64. This is a higher-precision evaluation of the
+equations, not an exact mathematical oracle or a production training mode.
+The production builder, attention implementation and E0c contract are unchanged
+by this diagnostic addition.
+
+HF/native FP64 logits, loss and the complete target gradient are compared with
+separate diagnostic limits `atol=1e-9, rtol=1e-8`, fixed before the GPU run.
+The original three FP32 outliers are then compared individually with both FP64
+values. The report distinguishes high-precision agreement from original E0c
+acceptance: **even diagnostic_complete leaves GPU_conversion_validated=false
+and acceptance_override=false**. Other parameter gradients, TP2, BF16, training
+and performance are not validated by this run.
+
+FP64 model weights require about 24.69 GB and this gradient about 0.18 GB;
+activations, temporary tensors and CUDA workspaces are additional, so actual
+40-GB GPU fit remains unverified. The two output tensor files total about
+0.67 GB; preflight requires at least 2 GiB free scratch. Return top-level
+`summary.json`, `hf-fp64.json`, `native-fp64.json` and logs through Git. Raw
+`reference-fp64/` tensors remain ignored on scratch. `[E0c FP64 point]` lines
+also contain the three coordinate comparisons for convenient pasting.
+
+## Normal conversion gate (after diagnosis)
 
 From the cluster repository root, use the same `diloco` Python that ran E0b:
 
@@ -228,6 +287,15 @@ the next stage: real-data Qwen training with full optimizer/outer-state checks,
 followed by equally tuned baselines and complete-cycle measurements.
 
 ## Local verification
+
+For the independent FP64 diagnostic, all 20 focused tests passed in 27.718 s
+(`test_e0c_fp64` plus the three existing E0c test modules). New checks cover
+FP64 norm numerical differentiation, unchanged target gradients when other
+weights are frozen, actual tiny HF/native FP64 execution and tensor I/O,
+original-run identity checks, rejection of CPU/nonfinite/incorrect evidence,
+launcher failure handling and Git text/binary scope. Tiny-model target-gradient
+HF/native maximum absolute difference was 4.55365e-18. This is not a full 3B
+GPU result. Log: `/private/tmp/pier-e0c-fp64-tests.log`.
 
 For the Qwen attention correction, all 22 focused tests passed in 41.100 s on
 CPU (`test_attention`, `test_weights`, `test_recompute`, and the three E0c test
