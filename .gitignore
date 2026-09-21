@@ -91,3 +91,11 @@ samples_record*
 !/local/qwen/e0d-*/prerequisite-e0c/
 /local/qwen/e0d-*/prerequisite-e0c/*
 !/local/qwen/e0d-*/prerequisite-e0c/*.json
+
+# Full launcher output and copied text evidence, one directory per attempt.
+/out/*
+!/out/*/
+/out/*/*
+!/out/*/*.txt
+!/out/*/*.log
+!/out/*/*.json

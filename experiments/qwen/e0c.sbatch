@@ -31,6 +31,8 @@ if [[ -z "${PIER_ROOT:-}" || ! -f "$PIER_ROOT/pretrain_qwen.py" || ! -f "$PIER_R
 fi
 cd "$PIER_ROOT"
 export PIER_ROOT="$PWD"
+source "$PIER_ROOT/experiments/qwen/log_output.sh"
+pier_capture_output e0c
 [[ "${SLURM_JOB_NUM_NODES:-${SLURM_NNODES:-0}}" == 1 ]] || {
     echo 'E0c requires a Slurm allocation of one node / four GPUs (sbatch or an existing interactive allocation).' >&2
     exit 2

@@ -309,6 +309,7 @@ exit 0
                 for path in ('srun', 'fake-python'):
                     (directory / path).chmod(0o755)
                 env = dict(os.environ, PIER_ROOT=str(ROOT), PIER_PYTHON=str(directory / 'fake-python'),
+                           PIER_OUT_ROOT=str(directory / 'out'),
                            PIER_QWEN_SNAPSHOT=str(directory / 'snapshot'), PIER_QWEN_DATA_PREFIX=str(directory / 'data'),
                            PIER_E0C_EVIDENCE=str(directory / 'e0c'), PIER_E0D_RUN_DIR=str(directory / 'run'),
                            SLURM_JOB_NUM_NODES='1', SLURM_JOB_ID='42', CALLS=str(directory / 'calls'), FAIL_PHASE=failed,
@@ -322,7 +323,8 @@ exit 0
                 self.assertEqual(calls.count('--case '), {'preflight': 0, 's2-device': 1, 'none': 5}[failed])
                 if failed != 'none':
                     self.assertNotIn('--case resume', calls)
-                    self.assertIn('FAILED ' + failed, result.stderr)
+                    log = next((directory / 'out').glob('*/out.txt')).read_text()
+                    self.assertIn('FAILED ' + failed, log)
 
     def test_scratch_bound_and_git_return_scope(self):
         estimate = evidence.scratch_estimate([10, 12])

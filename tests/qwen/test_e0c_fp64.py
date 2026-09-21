@@ -173,6 +173,7 @@ class FP64Tests(unittest.TestCase):
             fake.chmod(0o755)
             srun.chmod(0o755)
             env = dict(os.environ, PIER_ROOT=str(ROOT), PIER_PYTHON=str(fake),
+                PIER_OUT_ROOT=str(directory / 'out'),
                 PIER_E0C_FP32_RUN=str(old), PIER_E0C_FP64_RUN_DIR=str(directory / 'new'),
                 SLURM_JOB_NUM_NODES='1', SLURM_JOB_ID='fixture', CALLS=str(directory / 'calls'),
                 PATH=str(directory) + os.pathsep + os.environ['PATH'])
@@ -183,6 +184,9 @@ class FP64Tests(unittest.TestCase):
             self.assertIn('--phase summary', calls)
             self.assertIn('--launcher-exit 23', calls)
             self.assertNotIn('--phase native', calls)
+            log = next((directory / 'out').glob('*/out.txt')).read_text()
+            self.assertIn('FAILED hf (exit=23)', log)
+            self.assertIn('FP64 diagnostic artifacts:', log)
         for path, ignored in [('local/qwen/e0c-fp64-fixture/summary.json', False),
                               ('local/qwen/e0c-fp64-fixture/hf.log', False),
                               ('local/qwen/e0c-fp64-fixture/reference-fp64/hf.safetensors', True)]:

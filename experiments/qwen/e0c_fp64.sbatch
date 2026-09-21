@@ -23,6 +23,9 @@ fi
     echo 'Set PIER_ROOT to the updated Pier repository.' >&2; exit 2;
 }
 cd "$PIER_ROOT"
+export PIER_ROOT="$PWD"
+source "$PIER_ROOT/experiments/qwen/log_output.sh"
+pier_capture_output e0c-fp64
 [[ "${SLURM_JOB_NUM_NODES:-${SLURM_NNODES:-0}}" == 1 ]] || {
     echo 'Requires an existing one-node/four-GPU allocation or sbatch.' >&2; exit 2;
 }

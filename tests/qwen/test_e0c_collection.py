@@ -77,6 +77,7 @@ exit 0
                 srun.chmod(0o755)
                 interpreter.chmod(0o755)
                 env = dict(os.environ, PIER_ROOT=str(ROOT), PIER_PYTHON=str(interpreter),
+                    PIER_OUT_ROOT=str(directory / 'out'),
                     PIER_QWEN_SNAPSHOT=str(directory / 'snapshot'), PIER_E0C_RUN_DIR=str(directory / 'run'),
                     PIER_E0C_COLLECT_ALL='1', SLURM_JOB_NUM_NODES='1', SLURM_JOB_ID='fixture',
                     CALLS=str(directory / 'calls'), SIMULATE_RUNTIME_FAILURE=str(int(runtime_failure)),

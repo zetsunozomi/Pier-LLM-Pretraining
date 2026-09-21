@@ -257,6 +257,7 @@ class E0cTests(unittest.TestCase):
     def test_sources_and_git_evidence_scope(self):
         files = source_hashes()
         for path in ('pretrain_qwen.py', 'experiments/qwen/e0c.py', 'experiments/qwen/e0c.sbatch',
+                     'experiments/qwen/log_output.sh',
                      'experiments/qwen/e0c_linear_probe.py',
                      'experiments/qwen/pins.json', 'megatron/core/models/qwen/model.py', 'requirements.txt'):
             self.assertEqual(files[path], sha256_file(ROOT / path))
@@ -266,7 +267,12 @@ class E0cTests(unittest.TestCase):
                               ('local/qwen/e0c-fixture/linear-traces/fp32-tp1-rank0.safetensors', True),
                               ('local/qwen/e0c-fixture/reference-fp32/linear-trace.safetensors', True),
                               ('local/qwen/e0c-fixture/reference-fp32/gradient-0000.safetensors', True),
-                              ('local/qwen/models/Qwen2.5-3B/weights.safetensors', True)]:
+                              ('local/qwen/models/Qwen2.5-3B/weights.safetensors', True),
+                              ('out/e0c-fixture/out.txt', False),
+                              ('out/e0c-fixture/summary.json', False),
+                              ('out/e0c-fixture/hf-fp32.log', False),
+                              ('out/e0c-fixture/weights.safetensors', True),
+                              ('out/e0c-fixture/reference-fp32/gradient.safetensors', True)]:
             result = subprocess.run(['git', 'check-ignore', '--no-index', '-q', path], cwd=ROOT)
             self.assertEqual(result.returncode == 0, ignored, path)
 
@@ -285,6 +291,7 @@ exit 0
             srun.chmod(0o755)
             interpreter.chmod(0o755)
             env = dict(os.environ, PIER_ROOT=str(ROOT), PIER_PYTHON=str(interpreter),
+                       PIER_OUT_ROOT=str(directory / 'out'),
                        PIER_QWEN_SNAPSHOT=str(directory / 'snapshot'),
                        PIER_E0C_RUN_DIR=str(directory / 'run'), SLURM_JOB_NUM_NODES='1',
                        SLURM_JOB_ID='42', CALLS=str(directory / 'calls'),
@@ -297,8 +304,9 @@ exit 0
             self.assertIn('--launcher-exit 23', calls)
             self.assertEqual(calls.count('--phase reference'), 1)
             self.assertNotIn('--phase native', calls)
-            self.assertNotIn('DONE hf-fp32', result.stdout)
-            self.assertIn('FAILED hf-fp32', result.stderr)
+            log = next((directory / 'out').glob('*/out.txt')).read_text()
+            self.assertNotIn('DONE hf-fp32', log)
+            self.assertIn('FAILED hf-fp32', log)
             self.assertEqual(CONTRACT['version'], 1)
 
 

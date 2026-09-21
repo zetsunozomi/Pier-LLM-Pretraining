@@ -25,6 +25,10 @@ class LaunchPathTests(unittest.TestCase):
         (scripts / f'{stage}_evidence.py').touch()
         script = scripts / f'{stage}.sbatch'
         shutil.copyfile(SCRIPTS / script.name, script)
+        shutil.copyfile(SCRIPTS / 'log_output.sh', scripts / 'log_output.sh')
+        prior_log = repository / 'out/previous-attempt/out.txt'
+        prior_log.parent.mkdir(parents=True)
+        prior_log.write_text('previous output\n')
         snapshot = repository / f'local/qwen/models/Qwen2.5-3B/{REVISION}'
         if not missing_snapshot:
             snapshot.mkdir(parents=True)
@@ -36,6 +40,8 @@ class LaunchPathTests(unittest.TestCase):
         interpreter = directory / 'fake-python'
         interpreter.write_text('''#!/usr/bin/env bash
 printf '%s|%s|%s|%s\\n' "$PIER_ROOT" "$PIER_QWEN_SNAPSHOT" "$SLURM_OVERLAP" "$*" >> "$CALLS"
+echo "worker stdout: $*"
+echo "worker stderr: $*" >&2
 if [[ "$*" == *"--phase reference"* || "$*" == *"--case s2-device"* ]]; then exit 23; fi
 exit 0
 ''')
@@ -85,8 +91,19 @@ exit 0
                 with self.subTest(mode=mode, stage=stage), tempfile.TemporaryDirectory(prefix='pier-launch-') as name:
                     result, calls, repository, snapshot = self.run_launcher(Path(name), stage, mode)
                     self.assertEqual(result.returncode, 23, result.stdout + result.stderr)
-                    self.assertIn(f'Repository: {repository}', result.stdout)
-                    self.assertIn(f'Snapshot: {snapshot}', result.stdout)
+                    logs = list((repository / 'out').glob(f'{stage}-*/out.txt'))
+                    self.assertEqual(len(logs), 1)
+                    log = logs[0].read_text()
+                    self.assertEqual(result.stdout, f'[{stage}] Full stdout/stderr: {logs[0]}\n')
+                    self.assertEqual(result.stderr, '')
+                    self.assertIn(f'Repository: {repository}', log)
+                    self.assertIn(f'Snapshot: {snapshot}', log)
+                    self.assertIn('worker stdout:', log)
+                    self.assertIn('worker stderr:', log)
+                    self.assertIn('--launcher-exit 23', log)
+                    self.assertIn('FAILED', log)
+                    self.assertIn('artifacts:', log)
+                    self.assertEqual((repository / 'out/previous-attempt/out.txt').read_text(), 'previous output\n')
                     self.assertIn(f'{repository}|{snapshot}|1|', calls)
                     self.assertIn('--launcher-exit 23', calls)
                     self.assertNotIn('--phase native', calls)
@@ -95,9 +112,12 @@ exit 0
     def test_missing_snapshot_prints_exact_directory_without_running_workers(self):
         for stage in ('e0c', 'e0d'):
             with self.subTest(stage=stage), tempfile.TemporaryDirectory(prefix='pier-launch-') as name:
-                result, calls, _, snapshot = self.run_launcher(Path(name), stage, 'batch', missing_snapshot=True)
+                result, calls, repository, snapshot = self.run_launcher(Path(name), stage, 'batch', missing_snapshot=True)
                 self.assertEqual(result.returncode, 2)
-                self.assertIn(str(snapshot), result.stderr)
+                log = next((repository / 'out').glob(f'{stage}-*/out.txt')).read_text()
+                self.assertIn(str(snapshot), log)
+                self.assertIn('Missing', log)
+                self.assertEqual(result.stderr, '')
                 self.assertEqual(calls, '')
 
     def test_invalid_explicit_root_is_not_silently_replaced(self):

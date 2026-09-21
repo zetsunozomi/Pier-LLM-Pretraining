@@ -218,6 +218,22 @@ check complete weights, logits, loss and per-parameter gradients against HF.
 It does not run the Qwen training loop or claim performance. Large reference
 tensors stay on scratch; Git includes only top-level JSON/log evidence.
 
+### Complete launcher output
+
+`e0c.sbatch`, `e0c_fp64.sbatch`, and `e0d.sbatch` automatically create a fresh
+`out/<stage>-<job>-<timestamp>.<unique>/out.txt` under the repository. Once the
+repository is located, all stdout and stderr (including preflight errors and
+the final summary) go into that file. The terminal prints its absolute path;
+use `tail -f /absolute/path/to/out.txt` to follow progress. Each attempt gets a
+new directory, including repeated runs within one interactive allocation.
+`PIER_OUT_ROOT` optionally overrides the parent `out/` directory.
+
+This works with both `bash` and `sbatch`. The Slurm `pier-*.out` file contains
+the pointer to `out.txt`; Slurm opens that bootstrap file before the script can
+create directories. Per-phase logs and JSON evidence still reside in the
+reported `local/qwen/` run directory. Git allows `.txt`, `.log`, and `.json`
+files directly inside each `out/` run directory; binaries remain ignored.
+
 ## E0d full-state training gate
 
 [E0D_HANDOFF.md](E0D_HANDOFF.md) provides the next launcher after E0c passes on
