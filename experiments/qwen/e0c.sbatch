@@ -36,6 +36,12 @@ export PIER_ROOT="$PWD"
     exit 2
 }
 export PIER_PYTHON="${PIER_PYTHON:-$(command -v python)}"
+collection_args=()
+case "${PIER_E0C_COLLECT_ALL:-0}" in
+    0) ;;
+    1) collection_args+=(--collect-numerical-mismatches) ;;
+    *) echo 'PIER_E0C_COLLECT_ALL must be 0 or 1' >&2; exit 2 ;;
+esac
 export PIER_QWEN_SNAPSHOT="${PIER_QWEN_SNAPSHOT:-$PIER_ROOT/local/qwen/models/Qwen2.5-3B/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b}"
 export PIER_E0C_RUN_DIR="${PIER_E0C_RUN_DIR:-$PIER_ROOT/local/qwen/e0c-${SLURM_JOB_ID:?missing Slurm job id}-$(date +%Y%m%d-%H%M%S)}"
 printf '[E0c] Repository: %s\n[E0c] Snapshot: %s\n' "$PIER_ROOT" "$PIER_QWEN_SNAPSHOT"
@@ -73,7 +79,7 @@ finish() {
 trap finish EXIT
 srun --ntasks=1 --ntasks-per-node=1 --kill-on-bad-exit=1 \
   "$PIER_PYTHON" experiments/qwen/e0c_evidence.py \
-  --output-dir "$PIER_E0C_RUN_DIR" --snapshot "$PIER_QWEN_SNAPSHOT"
+  --output-dir "$PIER_E0C_RUN_DIR" --snapshot "$PIER_QWEN_SNAPSHOT" ${collection_args[@]+"${collection_args[@]}"}
 srun --ntasks=1 --ntasks-per-node=1 --kill-on-bad-exit=1 \
   "$PIER_PYTHON" experiments/centered_outer/manifest.py --node-only --output-dir "$PIER_E0C_RUN_DIR"
 stage=0
@@ -93,7 +99,8 @@ for precision in fp32 bf16; do
           "$PIER_PYTHON" -m torch.distributed.run --standalone --nnodes=1 \
           --nproc_per_node=4 --max_restarts=0 experiments/qwen/e0c.py \
           --phase native --dtype "$precision" --tp "$tp" --output-dir "$PIER_E0C_RUN_DIR" \
+          ${collection_args[@]+"${collection_args[@]}"} \
           2>&1 | tee "$PIER_E0C_RUN_DIR/$phase.log"
-        echo "[E0c $stage/6] DONE $phase"
+        echo "[E0c $stage/6] FINISHED $phase; numerical verdict is in rank JSON and final summary."
     done
 done

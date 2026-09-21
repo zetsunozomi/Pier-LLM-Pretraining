@@ -4,6 +4,64 @@ Status: four real 3B GPU runs completed their HF FP32 reference and stopped
 at native FP32/TP1 under the original numerical contract. **E0c is not accepted.**
 E0b is already accepted and does not need to be rerun for this gate.
 
+## Current result and next run
+
+The returned run `e0c-fp64-58667706-20260920-194919` completed both full-model
+FP64 forwards and the complete layer-2 down-projection gradients, with no
+nonfinite values or violations of the diagnostic limits:
+
+| Quantity | Elements | HF/native maximum absolute difference | Relative L2 |
+|---|---:|---:|---:|
+| Logits | 19,447,808 | 8.63309e-13 | 5.88882e-15 |
+| CE loss | 1 | 4.44089e-16 | 1.30076e-16 |
+| Layer-2 down-projection gradient | 22,544,384 | 3.84970e-13 | 4.04768e-14 |
+
+For the three original FP32 outliers, both implementations agree in FP64 to
+less than 9e-14. Native FP32 is closer to the HF FP64 value at all three:
+
+| Coordinate | Absolute HF FP32 minus HF FP64 | Absolute native FP32 minus HF FP64 |
+|---|---:|---:|
+| `[325, 3189]` | 8.89642e-5 | 6.64513e-5 |
+| `[1843, 3189]` | 1.66507e-4 | 1.40061e-4 |
+| `[1856, 3189]` | 4.76998e-5 | 2.61513e-5 |
+
+Together with the earlier operand decomposition, this strongly supports
+FP32 sensitivity at these coordinates rather than a structural mismatch in
+the tested forward/target-gradient computation. HF FP32 itself differs more
+from the FP64 evaluation than the original pairwise tolerances. This is not
+a proof of all parameter gradients, TP2, BF16, training or performance; the
+strict E0c v1 outcome remains failed. The full CUDA diagnostic fit and executed
+on the allocated node; peak memory was not measured.
+
+The next run collects the remaining FP32/TP2 and BF16 evidence using the original
+contract. After the normal Git update, in a one-node/four-GPU interactive allocation:
+
+```bash
+export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+PIER_E0C_COLLECT_ALL=1 bash /pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.sbatch
+```
+
+The same script requests **one node, four GPUs, one hour** under `sbatch`.
+No new packages or downloads are needed. The FP64 diagnostic need not be rerun.
+This makes a fresh, source-bound run through all six phases and aims to collect
+all 16 native rank/dtype/TP reports. It changes execution flow only:
+
+- With `PIER_E0C_COLLECT_ALL=1`, a completed numerical comparison may continue
+  only after all four ranks have saved reports and all compared statistics are
+  finite. Every mismatching rank report retains `status=failed`.
+- Nonfinite statistics, empty comparison coverage, load errors, missing gradients,
+  OOM, communication errors and other execution exceptions still stop the run.
+- The manifest and rank reports record the collection mode. The strict summary
+  still applies CONTRACT v1 and returns a nonzero exit when any comparison fails;
+  it also reports `native_reports_collected`. Six completed phases do not mean
+  E0c passed. Default mode remains stop-on-first-failure.
+
+Return the full `summary.json` and all top-level rank JSON/logs through Git.
+These complete results are needed before deciding whether/how to revise the
+numerical acceptance contract; no tolerance or historical verdict is changed here.
+
+## Earlier FP32 diagnosis
+
 The user-returned log for `e0c-58511509-20260918-012718` reports the same failing
 parameter on all four TP1 ranks: `decoder.layers.2.mlp.linear_fc2.weight`
 (HF layer 2 `mlp.down_proj.weight`, zero-based layer numbering). Its returned
@@ -61,10 +119,10 @@ on all four TP1 ranks:
 All remain in channel 3189, dominated by incoming-gradient differences and
 large activations at the same two tokens. TP2 and BF16 still did not run.
 Attention alignment alone is insufficient; its source difference was not
-established as the root cause. The next diagnostic compares both implementations
-at higher precision. Tolerances and all four failed outcomes remain unchanged.
+established as the root cause. The FP64 diagnostic above subsequently compared
+both implementations at higher precision. Tolerances and all four failed outcomes remain unchanged.
 
-## Next run: independent FP64 diagnostic
+## FP64 diagnostic invocation (completed; retained for reproducibility)
 
 After the usual Git update, run this **new script** in the existing one-node,
 four-GPU interactive allocation:
@@ -106,8 +164,8 @@ and acceptance_override=false**. Other parameter gradients, TP2, BF16, training
 and performance are not validated by this run.
 
 FP64 model weights require about 24.69 GB and this gradient about 0.18 GB;
-activations, temporary tensors and CUDA workspaces are additional, so actual
-40-GB GPU fit remains unverified. The two output tensor files total about
+activations, temporary tensors and CUDA workspaces are additional. The returned
+run completed on the allocated node; peak memory was not measured. The two output tensor files total about
 0.67 GB; preflight requires at least 2 GiB free scratch. Return top-level
 `summary.json`, `hf-fp64.json`, `native-fp64.json` and logs through Git. Raw
 `reference-fp64/` tensors remain ignored on scratch. `[E0c FP64 point]` lines
@@ -174,7 +232,7 @@ a missing-directory error includes the actual attempted snapshot path.
 ## What runs
 
 Six phases (two single-process HF references and four four-process native
-launches), with explicit START/DONE/FAILED markers and no automatic retry:
+launches), with explicit phase markers and no automatic retry:
 
 1. HF FP32 reference: pinned BF16 source weights cast to FP32, exact source
    comparison, full logits and all parameter gradients saved to scratch.
@@ -188,8 +246,9 @@ HF and native models run sequentially, in separate processes, so their full
 models/gradients do not coexist on one GPU. FP32 reference/native TP1 each need
 about 24.69 GB just for weights and gradients; activations and CUDA workspaces
 are additional. This is a storage estimate, not a measured GPU peak. The
-intended first machine is the user's four A100-40GB node; actual fit remains a
-GPU validation item. OOM stops the gate and is retained as a failure.
+intended first machine is the user's four A100-40GB node. FP32/TP1 execution
+has completed on the cluster; the other layouts still require actual execution.
+OOM stops the gate and is retained as a failure.
 
 Input is two authored English/Chinese conversion probes, each 64 tokens, with
 positions 0..63, no implicit special tokens, no dropout, no optimizer step.
@@ -251,7 +310,9 @@ products and `math.fsum` over the captured FP32 operands. The report separates:
 These are diagnostics of **FP32 operands**, not a whole-model FP64 reference
 and not an alternate pass criterion. They locate whether the observed delta
 arises locally or in the operands; upstream differences still need their own
-investigation. A failing gradient keeps E0c failed and stops subsequent phases.
+investigation. A failing gradient keeps E0c failed; default mode also stops
+subsequent phases. The explicit collection mode above retains finite mismatches
+and gathers the remaining phases.
 
 Every rank writes `linear-probe-fp32-tp1-rankN.json` and prints its points with
 the prefix `[E0c linear probe]`. The JSON binds the input/manifest, HF/native
@@ -261,8 +322,9 @@ and logs via Git after running the same launcher; no new packages are needed.
 Final acceptance requires both HF references and all **16 native rank/layout/
 dtype reports**, correct complete parameter coverage, unchanged source/input
 identities, no worker failure record and a zero launcher exit. NCCL groups are
-explicitly destroyed by each native process. The script stops on the first
-failed phase; later absent results are not interpreted as passes.
+explicitly destroyed by each native process. Default mode stops on the first
+failed phase; later absent results are not interpreted as passes. Collection
+mode does not relax any acceptance checks.
 
 ## Artifacts and return path
 
@@ -287,6 +349,16 @@ the next stage: real-data Qwen training with full optimizer/outer-state checks,
 followed by equally tuned baselines and complete-cycle measurements.
 
 ## Local verification
+
+For finite-mismatch collection, all 17 focused tests passed in 30.754 s
+(`test_e0c_collection` plus the three existing E0c test modules). Real four-rank
+Gloo checks confirm that one rank's finite mismatch returns on all ranks only
+in collection mode; nonfinite, overflow and empty coverage stop all ranks.
+Launcher tests cover six-phase collection, runtime-error stopping and default
+stop-on-first-failure behavior. A complete synthetic set of 16 reports with
+one failed comparison still produces failed GPU acceptance. Tiny HF/native
+FP32/BF16 TP1/TP2 I/O checks also passed. The original CONTRACT v1 is unchanged.
+Log: `/private/tmp/pier-e0c-collection-tests.log`.
 
 For the independent FP64 diagnostic, all 20 focused tests passed in 27.718 s
 (`test_e0c_fp64` plus the three existing E0c test modules). New checks cover

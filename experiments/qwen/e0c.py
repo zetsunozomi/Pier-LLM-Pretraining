@@ -9,6 +9,7 @@ import argparse
 from contextlib import nullcontext
 from datetime import timedelta
 import json
+import math
 import os
 from pathlib import Path
 import sys
@@ -71,6 +72,31 @@ def cross_entropy(logits, tokens):
     # Match both implementations explicitly: unscaled FP32 mean next-token CE.
     return torch.nn.functional.cross_entropy(logits[:, :-1].float().reshape(-1, logits.shape[-1]),
                                               tokens[:, 1:].reshape(-1))
+
+
+def finish_native_comparison(passed, comparisons, collect_mismatches=False):
+    """Only a completed, finite numerical mismatch may continue collection.
+
+    All rank reports have already been written. The strict summary still
+    rejects their failed comparisons; execution errors never reach this path.
+    """
+    success = torch.tensor(int(passed), device='cuda')
+    dist.all_reduce(success, op=dist.ReduceOp.MIN)
+    dist.barrier()
+    if int(success):
+        return
+    if collect_mismatches:
+        fields = ('error_sq', 'reference_sq', 'actual_sq', 'dot', 'max_abs')
+        finite = bool(comparisons) and all(s['elements'] > 0 and s['nonfinite'] == 0
+                     and all(math.isfinite(s[key]) for key in fields) for s in comparisons)
+        eligible = torch.tensor(int(finite), device='cuda')
+        dist.all_reduce(eligible, op=dist.ReduceOp.MIN)
+        if int(eligible):
+            if dist.get_rank() == 0:
+                print('[E0c] NUMERICAL MISMATCH: complete finite rank reports saved; '
+                      'collecting remaining phases. E0c acceptance remains failed.', flush=True)
+            return
+    raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')
 
 
 def reference(args, manifest):
@@ -147,6 +173,9 @@ def native(args, manifest):
     from megatron.core.models.qwen.model import build_model
     from megatron.core.tensor_parallel.random import model_parallel_cuda_manual_seed
     environment = configure_gpu()
+    collect_mismatches = bool(getattr(args, 'collect_numerical_mismatches', False))
+    if collect_mismatches != manifest.get('collect_numerical_mismatches', False):
+        raise ValueError('numerical collection mode differs from the run manifest')
     dist.init_process_group('nccl', timeout=timedelta(minutes=10))
     try:
         if dist.get_world_size() != 4 or args.tp not in (1, 2):
@@ -219,6 +248,7 @@ def native(args, manifest):
                   'logits': logits_check, 'loss': loss_check, 'gradients': gradients,
                   'gradient_elements': sum(p.numel() for p in parameters.values()),
                   'performance_result': False, 'optimizer_steps': 0}
+        report['collect_numerical_mismatches'] = collect_mismatches
         report_path = args.output_dir / f'native-{args.dtype}-tp{args.tp}-rank{rank}.json'
         write_json(report_path, report)
         if trace is not None:
@@ -244,12 +274,7 @@ def native(args, manifest):
             for point in diagnostic['points']:
                 print(f'[E0c linear probe] rank{rank} {parameter}: '
                       + json.dumps(point, sort_keys=True, allow_nan=False), flush=True)
-        # All ranks persist diagnostics before a numerical failure terminates the phase.
-        success = torch.tensor(int(passed), device='cuda')
-        dist.all_reduce(success, op=dist.ReduceOp.MIN)
-        dist.barrier()
-        if not int(success):
-            raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')
+        finish_native_comparison(passed, [logits_check, loss_check, *gradients.values()], collect_mismatches)
     finally:
         # Destroy distributed groups explicitly on each rank, after communication.
         if dist.is_initialized():
@@ -263,6 +288,8 @@ def main():
     parser.add_argument('--dtype', choices=('fp32', 'bf16'), required=True)
     parser.add_argument('--tp', type=int, choices=(1, 2), default=1)
     parser.add_argument('--output-dir', type=Path, required=True)
+    parser.add_argument('--collect-numerical-mismatches', action='store_true',
+                        help='native only: retain finite numerical failures and collect later phases; summary still fails')
     args = parser.parse_args()
     manifest = json.loads((args.output_dir / 'manifest.json').read_text())
     try:

@@ -40,7 +40,7 @@ def source_hashes():
     return result
 
 
-def make_manifest(directory, snapshot):
+def make_manifest(directory, snapshot, *, collect_numerical_mismatches=False):
     import torch
     import transformers
     from transformers import AutoTokenizer
@@ -67,6 +67,7 @@ def make_manifest(directory, snapshot):
                 'purpose': 'real Qwen2.5-3B numerical conversion check; no training/performance result',
                 'snapshot_path': str(snapshot.resolve()), 'snapshot': report, 'contract': CONTRACT,
                 'world_size': 4, 'layouts': [1, 2], 'dtypes': ['fp32', 'bf16'],
+                'collect_numerical_mismatches': collect_numerical_mismatches,
                 'inputs_sha256': sha256_file(directory / 'inputs.json'),
                 'source_sha256': source_hashes(), 'git_head': command(['git', 'rev-parse', 'HEAD']),
                 'git_status': command(['git', 'status', '--porcelain']), 'python': sys.executable,
@@ -87,6 +88,8 @@ def validate_native(record, manifest, dtype, tp, rank, manifest_sha, input_sha, 
     for key, value in expected.items():
         if record.get(key) != value:
             errors.append(f'{key} differs')
+    if record.get('collect_numerical_mismatches', False) != manifest.get('collect_numerical_mismatches', False):
+        errors.append('numerical collection mode differs')
     if not record.get('environment', {}).get('GPU_executed'):
         errors.append('missing actual GPU execution')
     mapping = parameter_mappings(arch, tp, rank % tp)
@@ -117,9 +120,11 @@ def validate_native(record, manifest, dtype, tp, rank, manifest_sha, input_sha, 
 
 def summarize(directory, launcher_exit=0, *, check_current_source=True):
     errors, comparisons = [], []
+    collect_mismatches = False
     manifest_path, inputs_path = directory / 'manifest.json', directory / 'inputs.json'
     try:
         manifest = json.loads(manifest_path.read_text())
+        collect_mismatches = manifest.get('collect_numerical_mismatches', False)
         manifest_sha, input_sha = sha256_file(manifest_path), sha256_file(inputs_path)
         pin, arch = pinned_architecture('3B')
         if (manifest['stage'] != 'E0c' or manifest['contract'] != CONTRACT
@@ -178,6 +183,8 @@ def summarize(directory, launcher_exit=0, *, check_current_source=True):
     # JSON evidence is portable; large reference arrays intentionally stay on scratch.
     result = {'status': 'passed' if not errors and len(comparisons) == 16 else 'failed',
               'stage': 'E0c', 'errors': errors, 'comparisons': comparisons,
+              'collect_numerical_mismatches': collect_mismatches,
+              'native_reports_collected': len(comparisons),
               'performance_result': False, 'training_validated': False,
               'not_validated': NOT_VALIDATED,
               'finished_utc': datetime.now(timezone.utc).isoformat()}
@@ -191,6 +198,7 @@ def main():
     parser.add_argument('--snapshot', type=Path)
     parser.add_argument('--summarize', action='store_true')
     parser.add_argument('--launcher-exit', type=int, default=0)
+    parser.add_argument('--collect-numerical-mismatches', action='store_true')
     args = parser.parse_args()
     if args.summarize:
         report = summarize(args.output_dir, args.launcher_exit)
@@ -199,7 +207,8 @@ def main():
         raise SystemExit(report['status'] != 'passed')
     if args.snapshot is None:
         parser.error('--snapshot is required for preflight')
-    make_manifest(args.output_dir, args.snapshot)
+    make_manifest(args.output_dir, args.snapshot,
+                  collect_numerical_mismatches=args.collect_numerical_mismatches)
 
 
 if __name__ == '__main__':

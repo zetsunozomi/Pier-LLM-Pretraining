@@ -191,6 +191,7 @@ class E0cTests(unittest.TestCase):
                         'files': {n: {'bytes': x['bytes'], 'sha256': x.get('lfs_sha256') or 'fixture'}
                                   for n, x in pin['files'].items()}}
             manifest = {'stage': 'E0c', 'contract': CONTRACT, 'inputs_sha256': input_sha,
+                        'collect_numerical_mismatches': True,
                         'snapshot': snapshot, 'source_sha256': {'synthetic-source': 'fixture'}}
             e0c.write_json(directory / 'manifest.json', manifest)
             manifest_sha = sha256_file(directory / 'manifest.json')
@@ -209,6 +210,7 @@ class E0cTests(unittest.TestCase):
                     for rank in range(4):
                         counts = {p.target: math.prod(p.shape) for p in parameter_mappings(arch, tp, rank % tp)}
                         record = dict(phase='native', status='passed', dtype=dtype, tp=tp, rank=rank,
+                                      collect_numerical_mismatches=True,
                                       tp_rank=rank % tp, world_size=4, optimizer_steps=0, performance_result=False,
                                       manifest_sha256=manifest_sha, inputs_sha256=input_sha,
                                       reference_report_sha256=sha256_file(ref_path), environment={'GPU_executed': True},
@@ -218,6 +220,18 @@ class E0cTests(unittest.TestCase):
                                       logits=dict(stats, elements=2 * 64 * arch.vocab), loss=copy.deepcopy(stats))
                         e0c.write_json(directory / f'native-{dtype}-tp{tp}-rank{rank}.json', record)
             self.assertEqual(summarize(directory, check_current_source=False)['status'], 'passed')
+            mismatch_path = directory / 'native-fp32-tp1-rank0.json'
+            unchanged = mismatch_path.read_bytes()
+            mismatch = json.loads(unchanged)
+            mismatch['status'] = 'failed'
+            next(iter(mismatch['gradients'].values()))['outside_tolerance'] = 1
+            mismatch_path.write_text(json.dumps(mismatch))
+            collected = summarize(directory, check_current_source=False)
+            self.assertEqual(collected['status'], 'failed')
+            self.assertFalse(collected['GPU_conversion_validated'])
+            self.assertEqual(collected['native_reports_collected'], 16)
+            self.assertTrue(collected['collect_numerical_mismatches'])
+            mismatch_path.write_bytes(unchanged)
             self.assertEqual(summarize(directory)['status'], 'failed')
             self.assertEqual(summarize(directory, launcher_exit=23, check_current_source=False)['status'], 'failed')
             original = (directory / 'native-bf16-tp2-rank3.json').read_bytes()
