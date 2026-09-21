@@ -1,0 +1,7 @@
+Historical N2 allocation; do not pool with the new cohort measurements.
+N2: complete
+case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/G
+run-1-G        measured     20853.64             5.3666    30.16/31.00   1.0000x
+run-1-P        measured     21125.86             3.2971    31.60/32.46   1.0131x
+run-1-R        measured     21112.62             3.3342    34.47/35.31   1.0124x
+run-1-W        measured     21075.89             3.8970    30.16/31.15   1.0107x

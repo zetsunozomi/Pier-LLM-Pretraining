@@ -1,0 +1,16 @@
+{
+  "exit_code": 0,
+  "wall_seconds_including_startup": 346.2995193179813,
+  "command": [
+    "srun",
+    "--nodes=2",
+    "--ntasks=2",
+    "--ntasks-per-node=1",
+    "--kill-on-bad-exit=1",
+    "--gpu-bind=none",
+    "bash",
+    "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+    "/pscratch/sd/s/syfan/Pier/out/n3-58684056-20260921-014323.UmGdL9",
+    "run-1-P-s4"
+  ]
+}

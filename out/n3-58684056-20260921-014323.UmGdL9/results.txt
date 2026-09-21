@@ -1,0 +1,5 @@
+N3: complete
+case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/P(s=2)
+run-1-P-s1     measured     21115.93             3.1973    34.47/35.34   1.0017x
+run-1-P-s2     measured     21079.27             3.3205    31.60/32.45   1.0000x
+run-1-P-s4     measured     20969.59             4.2482    30.16/31.12   0.9948x
