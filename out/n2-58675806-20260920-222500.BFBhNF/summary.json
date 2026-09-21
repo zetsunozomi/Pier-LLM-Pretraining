@@ -1,0 +1,759 @@
+{
+  "stage": "N2",
+  "status": "incomplete",
+  "config": {
+    "repository": "/pscratch/sd/s/syfan/Pier",
+    "profile": "pilot",
+    "nodes": 1,
+    "world_size": 4,
+    "tp": 2,
+    "learners": 2,
+    "arms": [
+      "G",
+      "P",
+      "R",
+      "W"
+    ],
+    "cohort": 2,
+    "workspace_mib": 64,
+    "repeats": 1,
+    "interval": 50,
+    "warmup_cycles": 1,
+    "measured_cycles": 1,
+    "attempts": 100,
+    "sequence": 2048,
+    "microbatch": 1,
+    "accumulation": 8,
+    "global_batch": 16,
+    "snapshot": "/pscratch/sd/s/syfan/Pier/local/qwen/models/Qwen2.5-3B/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b",
+    "data_prefix": null,
+    "data_kind": "synthetic_tokens",
+    "seed": 1234,
+    "order_seed": 421,
+    "model": "Qwen/Qwen2.5-3B",
+    "revision": "3aab1f1954e9cc14eb9509a215f9e5ca08227a9b"
+  },
+  "cases": [
+    {
+      "id": "run-1-G",
+      "repeat": 1,
+      "arm": "G",
+      "backend": "gather",
+      "cohort": 1,
+      "status": "measured",
+      "launcher": {
+        "exit_code": 0,
+        "wall_seconds_including_startup": 343.95531376398867,
+        "command": [
+          "srun",
+          "--nodes=1",
+          "--ntasks=1",
+          "--ntasks-per-node=1",
+          "--kill-on-bad-exit=1",
+          "--gpu-bind=none",
+          "bash",
+          "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+          "/pscratch/sd/s/syfan/Pier/out/n2-58675806-20260920-222500.BFBhNF",
+          "run-1-G"
+        ]
+      },
+      "GPU_executed": true,
+      "run_id": "c6722a4e-dc92-44c7-93d7-6977a431a8cd",
+      "successful_loss_tokens_global": 1638400,
+      "sum_slowest_rank_cycle_seconds": 152.15784922603052,
+      "useful_tokens_per_second": 10767.76524072811,
+      "outer_and_commit_seconds_mean": 0.396228930039797,
+      "outer_and_commit_seconds_median": 0.396228930039797,
+      "outer_and_commit_seconds_min": 0.396228930039797,
+      "outer_and_commit_seconds_max": 0.396228930039797,
+      "eligible_cycles": 1,
+      "peak_allocated_gib": 33.037354469299316,
+      "peak_reserved_gib": 33.896484375,
+      "final_loss_by_rank": [
+        0.011859369464218616,
+        0.011859369464218616,
+        0.011859369464218616,
+        0.011859369464218616
+      ],
+      "recipe": {
+        "snapshot_sha256": "6a010df8a7a9df926c8d6bd4b80557c119477500850fb5d286514fcac0d95562",
+        "architecture": {
+          "layers": 36,
+          "hidden": 2048,
+          "intermediate": 11008,
+          "heads": 16,
+          "kv_heads": 2,
+          "vocab": 151936,
+          "max_positions": 32768,
+          "rms_epsilon": 1e-06,
+          "rope_base": 1000000.0,
+          "tied_embeddings": true,
+          "attention_dropout": 0.0,
+          "init_std": 0.02
+        },
+        "data": {
+          "kind": "synthetic_tokens",
+          "dataset": "Megatron MockGPTDataset",
+          "documents": "ascending token IDs followed by the pinned tokenizer EOD",
+          "document_seed": 0,
+          "training_seed": 1234,
+          "quality_evaluation": false
+        },
+        "eod": 151643,
+        "initialization": "weights-only warm start"
+      },
+      "hardware": [
+        {
+          "hostname": "nid001048",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        }
+      ],
+      "allocations": [
+        {
+          "workspace_tensor_bytes": 67108860,
+          "formula_bytes": 67108860,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "gather",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108860,
+          "formula_bytes": 67108860,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "gather",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108860,
+          "formula_bytes": 67108860,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "gather",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108860,
+          "formula_bytes": 67108860,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "gather",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        }
+      ],
+      "tile_elements": [
+        2396745,
+        2396745,
+        2396745,
+        2396745
+      ],
+      "measurement_contract": {
+        "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+        "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+        "excluded_from_cycle": [
+          "initial model/data/checkpoint loading",
+          "boundary barriers and report I/O",
+          "logging/callbacks between independent cycle windows"
+        ]
+      },
+      "input_reports": [
+        {
+          "name": "cycles-rank-0.json",
+          "bytes": 5314,
+          "sha256": "e06c000dfb52523a0bbdce3502610664e92780332d96b0bd216f2e69895d2ba6"
+        },
+        {
+          "name": "cycles-rank-1.json",
+          "bytes": 5314,
+          "sha256": "d072a846ee47db6ffbe87593171a78eda13efe5c567ce0a5c74fec198963e35e"
+        },
+        {
+          "name": "cycles-rank-2.json",
+          "bytes": 5316,
+          "sha256": "eca9a891bf0283a02e38aafda32cf463e745fb4e0ce79b897b04369d550c5b78"
+        },
+        {
+          "name": "cycles-rank-3.json",
+          "bytes": 5316,
+          "sha256": "9dd889eac1e769475926215ec91a0b7c1c50e6df3ee172add6064afa40de8fd0"
+        }
+      ],
+      "speedup_vs_G": 1.0
+    },
+    {
+      "id": "run-1-P",
+      "repeat": 1,
+      "arm": "P",
+      "backend": "pier",
+      "cohort": 2,
+      "status": "measured",
+      "launcher": {
+        "exit_code": 0,
+        "wall_seconds_including_startup": 336.6817179089994,
+        "command": [
+          "srun",
+          "--nodes=1",
+          "--ntasks=1",
+          "--ntasks-per-node=1",
+          "--kill-on-bad-exit=1",
+          "--gpu-bind=none",
+          "bash",
+          "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+          "/pscratch/sd/s/syfan/Pier/out/n2-58675806-20260920-222500.BFBhNF",
+          "run-1-P"
+        ]
+      },
+      "GPU_executed": true,
+      "run_id": "3fb27118-b9e0-40a2-b85d-a921c3117261",
+      "successful_loss_tokens_global": 1638400,
+      "sum_slowest_rank_cycle_seconds": 152.12470889399992,
+      "useful_tokens_per_second": 10770.110995851652,
+      "outer_and_commit_seconds_mean": 0.24972808599704877,
+      "outer_and_commit_seconds_median": 0.24972808599704877,
+      "outer_and_commit_seconds_min": 0.24972808599704877,
+      "outer_and_commit_seconds_max": 0.24972808599704877,
+      "eligible_cycles": 1,
+      "peak_allocated_gib": 33.037354946136475,
+      "peak_reserved_gib": 33.896484375,
+      "final_loss_by_rank": [
+        0.011859369464218616,
+        0.011859369464218616,
+        0.011859369464218616,
+        0.011859369464218616
+      ],
+      "recipe": {
+        "snapshot_sha256": "6a010df8a7a9df926c8d6bd4b80557c119477500850fb5d286514fcac0d95562",
+        "architecture": {
+          "layers": 36,
+          "hidden": 2048,
+          "intermediate": 11008,
+          "heads": 16,
+          "kv_heads": 2,
+          "vocab": 151936,
+          "max_positions": 32768,
+          "rms_epsilon": 1e-06,
+          "rope_base": 1000000.0,
+          "tied_embeddings": true,
+          "attention_dropout": 0.0,
+          "init_std": 0.02
+        },
+        "data": {
+          "kind": "synthetic_tokens",
+          "dataset": "Megatron MockGPTDataset",
+          "documents": "ascending token IDs followed by the pinned tokenizer EOD",
+          "document_seed": 0,
+          "training_seed": 1234,
+          "quality_evaluation": false
+        },
+        "eod": 151643,
+        "initialization": "weights-only warm start"
+      },
+      "hardware": [
+        {
+          "hostname": "nid001048",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        }
+      ],
+      "allocations": [
+        {
+          "workspace_tensor_bytes": 67108864,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "C_bytes": 8388608,
+          "slot_count": 1,
+          "formula_bytes": 67108864,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108864,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "C_bytes": 8388608,
+          "slot_count": 1,
+          "formula_bytes": 67108864,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108864,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "C_bytes": 8388608,
+          "slot_count": 1,
+          "formula_bytes": 67108864,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108864,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "C_bytes": 8388608,
+          "slot_count": 1,
+          "formula_bytes": 67108864,
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        }
+      ],
+      "tile_elements": [
+        2097152,
+        2097152,
+        2097152,
+        2097152
+      ],
+      "measurement_contract": {
+        "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+        "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+        "excluded_from_cycle": [
+          "initial model/data/checkpoint loading",
+          "boundary barriers and report I/O",
+          "logging/callbacks between independent cycle windows"
+        ]
+      },
+      "input_reports": [
+        {
+          "name": "cycles-rank-0.json",
+          "bytes": 4288,
+          "sha256": "c5b77570b273bf14f1fed5b51edade0fa99da6f2a649a6ca7402bd7f84241ab9"
+        },
+        {
+          "name": "cycles-rank-1.json",
+          "bytes": 4288,
+          "sha256": "b16a0a4714892f5f63121f2ee7a2d3605c4895cb93f7253ebd61b15dd6908b4b"
+        },
+        {
+          "name": "cycles-rank-2.json",
+          "bytes": 4288,
+          "sha256": "26fd45dab461fb54e8b7ba3a2dfbeebad59d7630b3b2365e487e2b10d3b25d11"
+        },
+        {
+          "name": "cycles-rank-3.json",
+          "bytes": 4288,
+          "sha256": "ec4054b12316d35d16f043a0764916c99c1076c75730053a8e34139561edde86"
+        }
+      ],
+      "speedup_vs_G": 1.000217849764654
+    },
+    {
+      "id": "run-1-R",
+      "repeat": 1,
+      "arm": "R",
+      "backend": "resident",
+      "cohort": 1,
+      "status": "failed",
+      "launcher": {
+        "exit_code": 1,
+        "wall_seconds_including_startup": 43.633023698988836,
+        "command": [
+          "srun",
+          "--nodes=1",
+          "--ntasks=1",
+          "--ntasks-per-node=1",
+          "--kill-on-bad-exit=1",
+          "--gpu-bind=none",
+          "bash",
+          "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+          "/pscratch/sd/s/syfan/Pier/out/n2-58675806-20260920-222500.BFBhNF",
+          "run-1-R"
+        ]
+      },
+      "failure_kind": "CUDA OOM",
+      "error": "CUDA OOM, exit=1; see run-1-R.log"
+    },
+    {
+      "id": "run-1-W",
+      "repeat": 1,
+      "arm": "W",
+      "backend": "recenter",
+      "cohort": 1,
+      "status": "measured",
+      "launcher": {
+        "exit_code": 0,
+        "wall_seconds_including_startup": 335.6664956349996,
+        "command": [
+          "srun",
+          "--nodes=1",
+          "--ntasks=1",
+          "--ntasks-per-node=1",
+          "--kill-on-bad-exit=1",
+          "--gpu-bind=none",
+          "bash",
+          "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+          "/pscratch/sd/s/syfan/Pier/out/n2-58675806-20260920-222500.BFBhNF",
+          "run-1-W"
+        ]
+      },
+      "GPU_executed": true,
+      "run_id": "b3072432-2710-4d73-99cb-b66010ce5bb4",
+      "successful_loss_tokens_global": 1638400,
+      "sum_slowest_rank_cycle_seconds": 152.04673414002173,
+      "useful_tokens_per_second": 10775.634276308605,
+      "outer_and_commit_seconds_mean": 0.2675584959797561,
+      "outer_and_commit_seconds_median": 0.2675584959797561,
+      "outer_and_commit_seconds_min": 0.2675584959797561,
+      "outer_and_commit_seconds_max": 0.2675584959797561,
+      "eligible_cycles": 1,
+      "peak_allocated_gib": 33.03637933731079,
+      "peak_reserved_gib": 33.892578125,
+      "final_loss_by_rank": [
+        0.012090086005628109,
+        0.012090086005628109,
+        0.012090086005628109,
+        0.012090086005628109
+      ],
+      "recipe": {
+        "snapshot_sha256": "6a010df8a7a9df926c8d6bd4b80557c119477500850fb5d286514fcac0d95562",
+        "architecture": {
+          "layers": 36,
+          "hidden": 2048,
+          "intermediate": 11008,
+          "heads": 16,
+          "kv_heads": 2,
+          "vocab": 151936,
+          "max_positions": 32768,
+          "rms_epsilon": 1e-06,
+          "rope_base": 1000000.0,
+          "tied_embeddings": true,
+          "attention_dropout": 0.0,
+          "init_std": 0.02
+        },
+        "data": {
+          "kind": "synthetic_tokens",
+          "dataset": "Megatron MockGPTDataset",
+          "documents": "ascending token IDs followed by the pinned tokenizer EOD",
+          "document_seed": 0,
+          "training_seed": 1234,
+          "quality_evaluation": false
+        },
+        "eod": 151643,
+        "initialization": "weights-only warm start"
+      },
+      "hardware": [
+        {
+          "hostname": "nid001048",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001048",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        }
+      ],
+      "allocations": [
+        {
+          "workspace_tensor_bytes": 67108848,
+          "formula_bytes": 67108848,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "recenter",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108848,
+          "formula_bytes": 67108848,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "recenter",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108848,
+          "formula_bytes": 67108848,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "recenter",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        },
+        {
+          "workspace_tensor_bytes": 67108848,
+          "formula_bytes": 67108848,
+          "reference_bytes": 3086088192,
+          "momentum_bytes": 3086088192,
+          "slot_count": 1,
+          "arm": "recenter",
+          "excluded": [
+            "master/model",
+            "inner optimizer",
+            "allocator/library storage",
+            "Python and process metadata"
+          ]
+        }
+      ],
+      "tile_elements": [
+        2796202,
+        2796202,
+        2796202,
+        2796202
+      ],
+      "measurement_contract": {
+        "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+        "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+        "excluded_from_cycle": [
+          "initial model/data/checkpoint loading",
+          "boundary barriers and report I/O",
+          "logging/callbacks between independent cycle windows"
+        ]
+      },
+      "input_reports": [
+        {
+          "name": "cycles-rank-0.json",
+          "bytes": 5297,
+          "sha256": "b468df6925a8866b5b86e02802ef0beb71326c424ba494a079a435394705d4cd"
+        },
+        {
+          "name": "cycles-rank-1.json",
+          "bytes": 5298,
+          "sha256": "97b0fe60d00de095c37bd89cbe4493000940f2ceac90e8bae5c9a119c3fa6331"
+        },
+        {
+          "name": "cycles-rank-2.json",
+          "bytes": 5298,
+          "sha256": "6b08f57ee559441852b6501e199af4605a5cae893a08317673dce660647da595"
+        },
+        {
+          "name": "cycles-rank-3.json",
+          "bytes": 5298,
+          "sha256": "52fa96a7d8581c802f357eec3c09419c467a0745a9d7055216af3ad6f37961a7"
+        }
+      ],
+      "speedup_vs_G": 1.000730795611213
+    }
+  ],
+  "by_arm": [
+    {
+      "arm": "G",
+      "independent_launches": 1,
+      "tokens_per_second_median": 10767.76524072811
+    },
+    {
+      "arm": "P",
+      "independent_launches": 1,
+      "tokens_per_second_median": 10770.110995851652
+    },
+    {
+      "arm": "W",
+      "independent_launches": 1,
+      "tokens_per_second_median": 10775.634276308605
+    }
+  ],
+  "performance_result": true,
+  "paper_ready": false,
+  "cycles_treated_as_independent_runs": false,
+  "remaining_for_main_table": [
+    "32-GPU paired repeats, equal 64/256 MiB tuning and independent baseline S",
+    "short-window numerical comparison for the native reduction arms"
+  ],
+  "memory_scope": "maximum rank PyTorch allocated/reserved peak in measured cycles; not device/NVML",
+  "data_note": "Synthetic-token runs measure Qwen execution, not training quality on a corpus."
+}

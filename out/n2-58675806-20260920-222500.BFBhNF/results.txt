@@ -1,0 +1,6 @@
+N2: incomplete
+case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/G
+run-1-G        measured     10767.77             0.3962    33.04/33.90   1.0000x
+run-1-P        measured     10770.11             0.2497    33.04/33.90   1.0002x
+run-1-R        failed       CUDA OOM, exit=1; see run-1-R.log
+run-1-W        measured     10775.63             0.2676    33.04/33.89   1.0007x
