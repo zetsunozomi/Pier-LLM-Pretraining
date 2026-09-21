@@ -8,6 +8,7 @@
 #SBATCH --gpus-per-node=4
 #SBATCH --time=02:00:00
 #SBATCH --output=pier-n2-%j.out
+#SBATCH --export=ALL
 
 set -euo pipefail
 if [[ -z "${PIER_ROOT:-}" ]]; then
@@ -25,7 +26,11 @@ fi
 cd "$PIER_ROOT"
 export PIER_ROOT="$PWD"
 source "$PIER_ROOT/experiments/qwen/log_output.sh"
-pier_capture_output n2
+if [[ "${PIER_N2_SUITE:-baselines}" == cohorts ]]; then
+    pier_capture_output n3
+else
+    pier_capture_output n2
+fi
 export PIER_PYTHON="${PIER_PYTHON:-$(command -v python)}"
 export PYTHONPATH="$PIER_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
@@ -33,6 +38,7 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
 export CUDA_DEVICE_MAX_CONNECTIONS=1 OMP_NUM_THREADS=1 TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 # Allows nested srun from an interactive, exclusive four-GPU shell.
 export SLURM_OVERLAP="${SLURM_OVERLAP:-1}"
+export SLURM_EXPORT_ENV=ALL
 export PIER_N2_NODES="${SLURM_JOB_NUM_NODES:-${SLURM_NNODES:-1}}"
 if [[ "$PIER_N2_NODES" != 1 ]]; then
     export PIER_N2_MASTER_ADDR="$(scontrol show hostnames "${SLURM_JOB_NODELIST:?missing allocation host list}" | head -n 1)"

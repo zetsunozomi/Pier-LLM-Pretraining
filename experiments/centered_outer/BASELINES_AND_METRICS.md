@@ -1,10 +1,11 @@
 # G/R/W/T baselines and complete-cycle instrumentation
 
 Status (2026-09-21): implemented in the shared training adapter and checked on
-CPU/Gloo. The [N2 launcher](../qwen/N2_HANDOFF.md) now runs Qwen G/P/R/W directly
-and collects complete-cycle throughput, outer time and allocator peaks. Start
-with `bash experiments/qwen/n2.sbatch` in a four-GPU allocation. No N2 GPU timing
-result has been collected yet. E0c/E0d are not performance prerequisites.
+CPU/Gloo. Four/eight-GPU [N2 pilots](../qwen/N2_HANDOFF.md) now contain actual
+Qwen G/P/R/W cycle throughput, outer time and allocator peaks. All four arms
+completed the eight-GPU pilot; the four-GPU resident arm hit OOM. The next run
+is the [N3 cohort comparison](../qwen/N3_HANDOFF.md), one eight-GPU allocation
+for s=1/2/K. E0c/E0d are not performance prerequisites.
 
 ## Actual implementation
 

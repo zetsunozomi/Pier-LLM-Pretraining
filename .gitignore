@@ -104,3 +104,8 @@ samples_record*
 !/out/n2-*/run-*/
 /out/n2-*/run-*/*
 !/out/n2-*/run-*/*.json
+
+# N3 cohort measurements share the same text-only rank receipt layout.
+!/out/n3-*/run-*/
+/out/n3-*/run-*/*
+!/out/n3-*/run-*/*.json

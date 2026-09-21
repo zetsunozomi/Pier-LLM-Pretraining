@@ -1,9 +1,16 @@
 # N2: first Qwen performance comparison
 
+**Progress (2026-09-21):** the four-GPU and eight-GPU pilots have returned.
+The eight-GPU pilot completed G/P/R/W; P reached 21,125.86 tokens/s versus
+20,853.64 for G and 21,112.62 for R, with 31.60 GiB allocated peak versus
+R's 34.47 GiB. This was one measured cycle on mixed 40GB/80GB nodes.
+The next run is the [N3 cohort comparison](N3_HANDOFF.md) on one uniform
+eight-GPU allocation. The original launch instructions below remain available.
+
 Current entrypoint: **`bash experiments/qwen/n2.sbatch`**. This runs actual
 Qwen2.5-3B weights through `pretrain_qwen.py` and the shared G/P/R/W training
 backends. E0c/E0d passed reports are **not prerequisites**. Existing numerical
-reports are untouched. No GPU N2 result is claimed until this launcher runs.
+reports are untouched; returned pilot evidence lives under `out/n2-*`.
 
 ## First run: interactive one node, four GPUs
 

@@ -14,10 +14,13 @@ def configuration(env=None):
     profile = env.get('PIER_N2_PROFILE', 'pilot')
     if profile not in ('pilot', 'main'):
         raise ValueError('PIER_N2_PROFILE must be pilot or main')
+    suite = env.get('PIER_N2_SUITE', 'baselines')
+    if suite not in ('baselines', 'cohorts'):
+        raise ValueError('PIER_N2_SUITE must be baselines or cohorts')
     nodes = int(env.get('SLURM_JOB_NUM_NODES', env.get('SLURM_NNODES', '1')))
     if nodes not in (1, 2, 4, 8):
         raise ValueError('N2 supports 1, 2, 4 or 8 nodes, four GPUs each')
-    arms = env.get('PIER_N2_ARMS', 'G,P,R,W').replace(' ', ',').split(',')
+    arms = ('P' if suite == 'cohorts' else env.get('PIER_N2_ARMS', 'G,P,R,W')).replace(' ', ',').split(',')
     arms = [arm for arm in arms if arm]
     if not arms or len(set(arms)) != len(arms) or any(arm not in ARMS for arm in arms):
         raise ValueError('PIER_N2_ARMS must contain distinct G,P,R,W labels')
@@ -33,7 +36,11 @@ def configuration(env=None):
         raise ValueError('PIER_N2_REPEATS must be 1..3')
     prefix = env.get('PIER_QWEN_DATA_PREFIX') or None
     root = Path(env.get('PIER_ROOT', ROOT)).resolve()
-    return dict(repository=str(root), profile=profile, nodes=nodes, world_size=nodes * 4, tp=2, learners=learners,
+    return dict(repository=str(root), profile=profile, suite=suite,
+                stage='N3' if suite == 'cohorts' else 'N2',
+                cohorts=sorted(set((1, 2, learners))) if suite == 'cohorts' else [cohort],
+                log_interval=1, expected_gpu=env.get('PIER_N2_EXPECTED_GPU') or None,
+                nodes=nodes, world_size=nodes * 4, tp=2, learners=learners,
                 arms=arms, cohort=cohort, workspace_mib=workspace, repeats=repeats,
                 interval=50, warmup_cycles=1 if profile == 'pilot' else 2,
                 measured_cycles=1 if profile == 'pilot' else 3,
@@ -49,15 +56,19 @@ def configuration(env=None):
 def cases(config):
     result = []
     for repeat in range(config['repeats']):
-        order = list(config['arms'])
+        sweep = config.get('suite') == 'cohorts'
+        order = [(arm, s) for arm in config['arms']
+                 for s in (config['cohorts'] if sweep and arm == 'P'
+                           else [config['cohort'] if arm == 'P' else 1])]
         # The first pilot gets the direct G/P comparison as soon as possible.
         # Main runs use a recorded order fixed before any measurements exist.
         if config['profile'] == 'main':
             random.Random(config['order_seed'] + repeat).shuffle(order)
-        for arm in order:
-            result.append({'id': f'run-{repeat + 1}-{arm}', 'repeat': repeat + 1,
+        for arm, cohort in order:
+            suffix = f'-s{cohort}' if sweep else ''
+            result.append({'id': f'run-{repeat + 1}-{arm}{suffix}', 'repeat': repeat + 1,
                            'arm': arm, 'backend': ARMS[arm],
-                           'cohort': config['cohort'] if arm == 'P' else 1})
+                           'cohort': cohort})
     return result
 
 
@@ -83,7 +94,7 @@ def training_args(config, case, directory):
         '--outer-sync-interval': config['interval'], '--outer-momentum': '.9',
         '--outer-learning-rate': '.7', '--momentum-warmup-steps': 0,
         '--outer-measure-dir': str(directory), '--outer-warmup-cycles': config['warmup_cycles'],
-        '--eval-iters': 0, '--log-interval': 1, '--seed': config['seed'],
+        '--eval-iters': 0, '--log-interval': config.get('log_interval', 1), '--seed': config['seed'],
     }
     argv = [item for pair in options.items() for item in (pair[0], str(pair[1]))]
     argv += ['--bf16', '--accumulate-allreduce-grads-in-fp32', '--local-sgd-inner-average']

@@ -42,10 +42,15 @@ def main():
         torch.cuda.set_device(local_rank)
         if not torch.cuda.is_bf16_supported():
             raise RuntimeError('N2 requires native BF16 support')
+        expected_gpu = manifest['config'].get('expected_gpu')
+        if expected_gpu and torch.cuda.get_device_name(local_rank) != expected_gpu:
+            raise RuntimeError(f'Expected {expected_gpu}; got {torch.cuda.get_device_name(local_rank)}')
         torch.set_num_threads(1)
         import safetensors
         import transformers
         argv = training_args(manifest['config'], case, directory)
+        if 'training_argv' in manifest and argv != manifest['training_argv'][case['id']]:
+            raise ValueError('training arguments changed after the launch plan was recorded')
         write(directory / f'worker-rank-{rank}.json', {
             'rank': rank, 'case': case, 'argv': argv,
             'manifest_sha256': hashlib.sha256(manifest_bytes).hexdigest(),

@@ -14,6 +14,22 @@ from experiments.centered_outer.cycle_summary import summarize, require
 from experiments.qwen.n2_config import training_args
 
 
+def expected_argv(output, manifest, case):
+    """New runs carry a frozen launch plan; support the two original N2 logs."""
+    if 'training_argv' in manifest:
+        return manifest['training_argv'][case['id']]
+    cfg = dict(manifest['config'])
+    if 'log_interval' not in cfg:
+        # The original v1 manifests predate the explicit log_interval field.
+        # Recover only this known 10 -> 1 change; all other arguments still match.
+        first = json.loads((output / case['id'] / 'worker-rank-0.json').read_text())['argv']
+        interval = first[first.index('--log-interval') + 1]
+        require(interval in ('1', '10'), 'unsupported historical logging interval')
+        cfg['log_interval'] = int(interval)
+    directory = Path(manifest.get('output_directory', output)) / case['id']
+    return training_args(cfg, case, directory)
+
+
 def collect_case(output, manifest, case):
     directory = output / case['id']
     row = {**case, 'status': 'pending'}
@@ -41,7 +57,7 @@ def collect_case(output, manifest, case):
         require(raw['eligible_cycles'] == cfg['measured_cycles'], 'incomplete measurement window')
         fingerprint = hashlib.sha256((output / 'manifest.json').read_bytes()).hexdigest()
         identities, hardware, losses = [], [], []
-        launch_directory = Path(manifest.get('output_directory', output)) / case['id']
+        argv = expected_argv(output, manifest, case)
         for rank, meta in enumerate(raw['rank_metadata']):
             require(meta['arm'] == case['backend'] and meta['cohort'] == case['cohort'], 'wrong backend/cohort')
             health = meta['final_health']
@@ -52,7 +68,9 @@ def collect_case(output, manifest, case):
             worker = json.loads((directory / f'worker-rank-{rank}.json').read_text())
             require(worker['rank'] == rank and worker['case'] == case and worker['GPU_executed']
                     and worker['manifest_sha256'] == fingerprint
-                    and worker['argv'] == training_args(cfg, case, launch_directory), 'worker launch differs from recipe')
+                    and worker['argv'] == argv, 'worker launch differs from recipe')
+            if cfg.get('expected_gpu'):
+                require(worker['gpu'] == cfg['expected_gpu'], 'GPU model differs from requested hardware')
             init = json.loads((directory / f'initialization-rank-{rank}.json').read_text())
             require(init['loaded_before_optimizer_construction'], 'missing pretrained initialization')
             identities.append(init['qwen_recipe'])
@@ -78,6 +96,7 @@ def collect(output):
     output = Path(output)
     manifest = json.loads((output / 'manifest.json').read_text())
     rows = [collect_case(output, manifest, case) for case in manifest['cases']]
+    sweep = manifest['config'].get('suite') == 'cohorts'
     measured = [row for row in rows if row['status'] == 'measured']
     # Paired comparisons require the same starting weights, tokens and hardware.
     if measured:
@@ -89,14 +108,20 @@ def collect(output):
             base = next((g for g in rows if g['arm'] == 'G' and g['repeat'] == row['repeat']
                          and g['status'] == 'measured'), None)
             row['speedup_vs_G'] = row['useful_tokens_per_second'] / base['useful_tokens_per_second'] if base else None
+            if sweep:
+                anchor = next((p for p in rows if p['arm'] == 'P' and p['cohort'] == 2
+                               and p['repeat'] == row['repeat'] and p['status'] == 'measured'), None)
+                row['speedup_vs_P_s2'] = (row['useful_tokens_per_second'] / anchor['useful_tokens_per_second']
+                                         if anchor else None)
     groups = []
-    for arm in manifest['config']['arms']:
-        samples = [r for r in rows if r['arm'] == arm and r['status'] == 'measured']
+    keys = list(dict.fromkeys((case['arm'], case['cohort']) for case in manifest['cases']))
+    for arm, cohort in keys:
+        samples = [r for r in rows if r['arm'] == arm and r['cohort'] == cohort and r['status'] == 'measured']
         if samples:
-            groups.append({'arm': arm, 'independent_launches': len(samples),
+            groups.append({'arm': arm, **({'cohort': cohort} if sweep else {}), 'independent_launches': len(samples),
                            'tokens_per_second_median': statistics.median(r['useful_tokens_per_second'] for r in samples)})
     complete = all(row['status'] == 'measured' for row in rows)
-    result = {'stage': 'N2', 'status': 'complete' if complete else 'incomplete',
+    result = {'stage': manifest.get('stage', 'N3' if sweep else 'N2'), 'status': 'complete' if complete else 'incomplete',
               'config': manifest['config'], 'cases': rows, 'by_arm': groups,
               'performance_result': any(row['status'] == 'measured' for row in rows),
               'paper_ready': False, 'cycles_treated_as_independent_runs': False,
@@ -104,21 +129,45 @@ def collect(output):
                                           'short-window numerical comparison for the native reduction arms'],
               'memory_scope': 'maximum rank PyTorch allocated/reserved peak in measured cycles; not device/NVML',
               'data_note': 'Synthetic-token runs measure Qwen execution, not training quality on a corpus.'}
+    if sweep:
+        result['historical_reference'] = ('historical-n2.json' if (output / 'historical-n2.json').is_file() else None)
+        result['comparison_note'] = 'Cohort ratios use this allocation only; historical N2 is a separate context table.'
+        result['remaining_for_main_table'] = ['independent paired repeats and cohort sweep at the 32-GPU main point']
     return result
 
 
 def render(result):
-    lines = ['N2: ' + result['status'],
-             'case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/G']
+    sweep = result['config'].get('suite') == 'cohorts'
+    ratio = 'P(s=2)' if sweep else 'G'
+    lines = [result['stage'] + ': ' + result['status'],
+             f'case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/{ratio}']
     for row in result['cases']:
         if row['status'] == 'measured':
-            speedup = '-' if row['speedup_vs_G'] is None else f"{row['speedup_vs_G']:.4f}x"
+            value = row.get('speedup_vs_P_s2' if sweep else 'speedup_vs_G')
+            speedup = '-' if value is None else f'{value:.4f}x'
             lines.append(f"{row['id']:<14} measured  {row['useful_tokens_per_second']:11.2f}"
                          f" {row['outer_and_commit_seconds_mean']:18.4f}"
                          f" {row['peak_allocated_gib']:8.2f}/{row['peak_reserved_gib']:.2f}   {speedup}")
         else:
             lines.append(f"{row['id']:<14} {row['status']:<12} {row.get('error', '')}")
     return '\n'.join(lines) + '\n'
+
+
+def copy_historical_reference(reference, output):
+    """Optional context, never a speedup denominator for the new allocation."""
+    try:
+        result = collect(reference)
+        if not result['performance_result'] or result['stage'] != 'N2':
+            raise ValueError('reference has no valid N2 performance results')
+        record = {'source_directory': str(reference.resolve()), 'comparison_scope': 'historical context only',
+                  'manifest_sha256': hashlib.sha256((reference / 'manifest.json').read_bytes()).hexdigest(),
+                  'result': result}
+        (output / 'historical-n2.json').write_text(json.dumps(record, indent=2, allow_nan=False) + '\n')
+        text = 'Historical N2 allocation; do not pool with the new cohort measurements.\n' + render(result)
+        (output / 'historical-n2.txt').write_text(text)
+        print(f'[N3] Historical context saved from {reference}; new cohort ratios use the current allocation.', flush=True)
+    except (OSError, ValueError, KeyError, TypeError, IndexError) as exc:
+        print(f'[N3] Historical context unavailable ({exc}); the cohort job will still run.', flush=True)
 
 
 def save_summary(output):
