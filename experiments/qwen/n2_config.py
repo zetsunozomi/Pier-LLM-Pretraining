@@ -83,7 +83,7 @@ def training_args(config, case, directory):
         '--outer-sync-interval': config['interval'], '--outer-momentum': '.9',
         '--outer-learning-rate': '.7', '--momentum-warmup-steps': 0,
         '--outer-measure-dir': str(directory), '--outer-warmup-cycles': config['warmup_cycles'],
-        '--eval-iters': 0, '--log-interval': 10, '--seed': config['seed'],
+        '--eval-iters': 0, '--log-interval': 1, '--seed': config['seed'],
     }
     argv = [item for pair in options.items() for item in (pair[0], str(pair[1]))]
     argv += ['--bf16', '--accumulate-allreduce-grads-in-fp32', '--local-sgd-inner-average']
