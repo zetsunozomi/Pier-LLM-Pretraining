@@ -1,0 +1,191 @@
+{
+  "status": "diagnostic_written",
+  "diagnostic_only": true,
+  "performance_result": false,
+  "acceptance_override": false,
+  "method": "FP64 products and math.fsum over captured FP32 operands; not full-model FP64",
+  "token_order": "batch,sequence",
+  "batch": 2,
+  "sequence_length": 64,
+  "weight_shape": [
+    2048,
+    11008
+  ],
+  "outside_tolerance": 2,
+  "points": [
+    {
+      "flat_index": 3580789,
+      "index": [
+        325,
+        3189
+      ],
+      "actual": 0.009429560042917728,
+      "reference": 0.009405365213751793,
+      "absolute_error": 2.4194829165935516e-05,
+      "tolerance": 2.1881073042750362e-05,
+      "ratio": 1.1057423517879874,
+      "hf_dot_fp64": 0.009405361200472341,
+      "native_dot_fp64": 0.009429558480308194,
+      "observed_native_minus_hf": 2.4194829165935516e-05,
+      "native_actual_minus_dot_fp64": 1.5626095348220126e-09,
+      "hf_actual_minus_dot_fp64": 4.013279451819951e-09,
+      "operands_delta_fp64": 2.4197279835852514e-05,
+      "activation_contribution_fp64": -3.9536424063316726e-08,
+      "incoming_gradient_contribution_fp64": 2.4236816259915975e-05,
+      "decomposition_residual": 0.0,
+      "operand_split_residual": -1.4568966692773966e-19,
+      "hf_sum_abs_products": 1.9761752800316397,
+      "native_sum_abs_products": 1.9761535632845049,
+      "hf_cancellation_ratio": 210.11157763216954,
+      "native_cancellation_ratio": 209.5701052611656,
+      "activation_difference": {
+        "max_abs": 0.001708984375,
+        "relative_l2": 4.5092400853663354e-07
+      },
+      "incoming_gradient_difference": {
+        "max_abs": 2.6426278054714203e-08,
+        "relative_l2": 1.0412816190228367e-05
+      },
+      "largest_operand_delta_tokens": [
+        {
+          "batch": 0,
+          "position": 1,
+          "hf_activation": 3395.7080078125,
+          "native_activation": 3395.70654296875,
+          "hf_incoming_gradient": -0.00028959635528735816,
+          "native_incoming_gradient": -0.00028958971961401403,
+          "operand_product_delta_fp64": 2.2957012802748977e-05
+        },
+        {
+          "batch": 1,
+          "position": 0,
+          "hf_activation": 3658.68505859375,
+          "native_activation": 3658.683349609375,
+          "hf_incoming_gradient": 0.00027132558170706034,
+          "native_incoming_gradient": 0.00027132604736834764,
+          "operand_product_delta_fp64": 1.240016018755341e-06
+        },
+        {
+          "batch": 0,
+          "position": 0,
+          "hf_activation": -2.659381151199341,
+          "native_activation": -2.659379482269287,
+          "hf_incoming_gradient": -3.582054341677576e-05,
+          "native_incoming_gradient": -3.582065983209759e-05,
+          "operand_product_delta_fp64": 2.498105368398118e-10
+        },
+        {
+          "batch": 0,
+          "position": 31,
+          "hf_activation": -0.0005915379151701927,
+          "native_activation": -0.0005915456567890942,
+          "hf_incoming_gradient": -0.0001533477770863101,
+          "native_incoming_gradient": -0.00015334734052885324,
+          "operand_product_delta_fp64": 9.289163820539272e-13
+        }
+      ]
+    },
+    {
+      "flat_index": 20290933,
+      "index": [
+        1843,
+        3189
+      ],
+      "actual": -0.02219339832663536,
+      "reference": -0.022167185321450233,
+      "absolute_error": 2.6213005185127258e-05,
+      "tolerance": 2.4433437064290048e-05,
+      "ratio": 1.0728333110137045,
+      "hf_dot_fp64": -0.022167159184206073,
+      "native_dot_fp64": -0.02219339200108783,
+      "observed_native_minus_hf": -2.6213005185127258e-05,
+      "native_actual_minus_dot_fp64": -6.325547530217079e-09,
+      "hf_actual_minus_dot_fp64": -2.6137244160673312e-08,
+      "operands_delta_fp64": -2.6232816881757715e-05,
+      "activation_contribution_fp64": 4.2412720364610217e-08,
+      "incoming_gradient_contribution_fp64": -2.627522960212194e-05,
+      "decomposition_residual": 0.0,
+      "operand_split_residual": -3.8285889215894375e-19,
+      "hf_sum_abs_products": 1.8146765804484473,
+      "native_sum_abs_products": 1.8146601369122475,
+      "hf_cancellation_ratio": 81.86328998536673,
+      "native_cancellation_ratio": 81.76578581693597,
+      "activation_difference": {
+        "max_abs": 0.001708984375,
+        "relative_l2": 4.5092400853663354e-07
+      },
+      "incoming_gradient_difference": {
+        "max_abs": 2.3748725652694702e-08,
+        "relative_l2": 8.042953016367689e-06
+      },
+      "largest_operand_delta_tokens": [
+        {
+          "batch": 0,
+          "position": 1,
+          "hf_activation": 3395.7080078125,
+          "native_activation": 3395.70654296875,
+          "hf_incoming_gradient": 0.00026393745793029666,
+          "native_incoming_gradient": 0.00026393128791823983,
+          "operand_product_delta_fp64": -2.1338177447205453e-05
+        },
+        {
+          "batch": 1,
+          "position": 0,
+          "hf_activation": 3658.68505859375,
+          "native_activation": 3658.683349609375,
+          "hf_incoming_gradient": -0.00025095712044276297,
+          "native_incoming_gradient": -0.0002509585756342858,
+          "operand_product_delta_fp64": -4.895203197463616e-06
+        },
+        {
+          "batch": 0,
+          "position": 0,
+          "hf_activation": -2.659381151199341,
+          "native_activation": -2.659379482269287,
+          "hf_incoming_gradient": 9.348364983452484e-05,
+          "native_incoming_gradient": 9.348349703941494e-05,
+          "operand_product_delta_fp64": 5.623578529928563e-10
+        },
+        {
+          "batch": 0,
+          "position": 27,
+          "hf_activation": -0.00010546953126322478,
+          "native_activation": -0.00010546782141318545,
+          "hf_incoming_gradient": 0.000380107929231599,
+          "native_incoming_gradient": 0.0003801070270128548,
+          "operand_product_delta_fp64": 7.450826031320376e-13
+        }
+      ]
+    }
+  ],
+  "layer": 2,
+  "parameter": "decoder.layers.2.mlp.linear_fc2.weight",
+  "rank": 3,
+  "dtype": "fp32",
+  "tp": 1,
+  "environment": {
+    "GPU_executed": true,
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "transformers": "4.57.3",
+    "safetensors": "0.7.0",
+    "tf32": false,
+    "reduced_precision_reduction": false,
+    "deterministic_algorithms": true
+  },
+  "manifest_sha256": "c25f23805432fe961638e6fe7da9e1332fa1000d465b624faba7afbd07269a4f",
+  "inputs_sha256": "c29bb2b995bf5b08e09a8d2395d6db154a0249597be6473aef30f92b70c68381",
+  "reference_report_sha256": "55ba3970395f6e6e6dcedec3a63cfba36914fb51d5354a7544f79cc80d14c162",
+  "native_report_sha256": "902f38f6d73bf0515d60edf707fa925d7459a84523846e7ef2056f4321fe7a41",
+  "trace_files": {
+    "reference-fp32/linear-trace.safetensors": {
+      "bytes": 6684840,
+      "sha256": "b5a5d898024daeb36407800d468593a185ce35fe25b33ec1848e19259bc4a18a"
+    },
+    "linear-traces/fp32-tp1-rank3.safetensors": {
+      "bytes": 6684840,
+      "sha256": "fe900340be7bf25fffb4ce96cb62991a51e1f067332b71e3fdde1c01fbecdba3"
+    }
+  }
+}

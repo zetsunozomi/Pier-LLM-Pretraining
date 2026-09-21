@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "error": "ValueError: numerical conversion check failed; inspect per-parameter JSON; later phases stopped",
+  "traceback": "Traceback (most recent call last):\n  File \"/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py\", line 269, in main\n    (reference if args.phase == 'reference' else native)(args, manifest)\n  File \"/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py\", line 252, in native\n    raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')\nValueError: numerical conversion check failed; inspect per-parameter JSON; later phases stopped\n",
+  "performance_result": false
+}

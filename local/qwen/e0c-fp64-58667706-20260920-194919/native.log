@@ -1,0 +1,9 @@
+[E0c FP64] native: loading weights; one gradient tensor enabled
+Subgroup creation: dp_size=1, num_subgroups=1
+We have 1 subgroups in total.
+[Rank 0] belongs to subgroup 0, ranks: [0]
+[E0c FP64] native: whole-model forward/backward in FP64
+[E0c FP64 point] {"index": [325, 3189], "hf_fp32": 0.009405365213751793, "native_fp32": 0.009427878074347973, "hf_fp64": 0.009494329370834751, "native_fp64": 0.009494329370884406, "fp64_native_minus_hf": 4.9654724776360126e-14, "hf_fp32_minus_hf_fp64": -8.896415708295816e-05, "native_fp32_minus_hf_fp64": -6.64512964867782e-05, "original_fp32_tolerance": 2.1881073042750362e-05, "original_fp32_ratio": 1.0288737006725053}
+[E0c FP64 point] {"index": [1843, 3189], "hf_fp32": -0.022167185321450233, "native_fp32": -0.022193631157279015, "hf_fp64": -0.02233369251372287, "native_fp64": -0.022333692513634748, "fp64_native_minus_hf": 8.812048313266985e-14, "hf_fp32_minus_hf_fp64": 0.00016650719227263508, "native_fp32_minus_hf_fp64": 0.00014006135644385395, "original_fp32_tolerance": 2.4433437064290048e-05, "original_fp32_ratio": 1.0823624919898085}
+[E0c FP64 point] {"index": [1856, 3189], "hf_fp32": -0.004094914998859167, "native_fp32": -0.0040733665227890015, "hf_fp64": -0.00404721517332781, "native_fp64": -0.004047215173251831, "fp64_native_minus_hf": 7.597915352430817e-14, "hf_fp32_minus_hf_fp64": -4.769982553135682e-05, "native_fp32_minus_hf_fp64": -2.6151349461191187e-05, "original_fp32_tolerance": 2.0818982999771835e-05, "original_fp32_ratio": 1.035039803356475}
+[E0c FP64] native: diagnostic written

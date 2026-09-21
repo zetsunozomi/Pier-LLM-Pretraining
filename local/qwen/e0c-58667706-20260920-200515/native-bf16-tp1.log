@@ -1,0 +1,15 @@
+[Rank 1] belongs to subgroup 1, ranks: [1]
+[Rank 2] belongs to subgroup 2, ranks: [2]
+[Rank 3] belongs to subgroup 3, ranks: [3]Subgroup creation: dp_size=4, num_subgroups=4
+
+We have 4 subgroups in total.
+[Rank 0] belongs to subgroup 0, ranks: [0]
+[E0c] rank0 native bf16/TP1: forward/backward
+[E0c] rank2 native bf16/TP1: forward/backward
+[E0c] rank1 native bf16/TP1: forward/backward
+[E0c] rank3 native bf16/TP1: forward/backward
+[E0c] rank2 gradient mismatch decoder.layers.3.input_layernorm.weight: {"actual_sq": 0.0049352727326641005, "changed": 2030, "cosine": 0.9917579851992323, "dot": 0.0044168586561190715, "elements": 2048, "error_sq": 0.0001204298223915351, "max_abs": 0.00341796875, "nonfinite": 0, "outside_tolerance": 0, "passed": false, "reference_sq": 0.0040188744019655775, "relative_l2": 0.1731070701707243, "shape": [2048]}
+[E0c] rank0 gradient mismatch decoder.layers.3.input_layernorm.weight: {"actual_sq": 0.0049352727326641005, "changed": 2030, "cosine": 0.9917579851992323, "dot": 0.0044168586561190715, "elements": 2048, "error_sq": 0.0001204298223915351, "max_abs": 0.00341796875, "nonfinite": 0, "outside_tolerance": 0, "passed": false, "reference_sq": 0.0040188744019655775, "relative_l2": 0.1731070701707243, "shape": [2048]}
+[E0c] rank1 gradient mismatch decoder.layers.3.input_layernorm.weight: {"actual_sq": 0.0049352727326641005, "changed": 2030, "cosine": 0.9917579851992323, "dot": 0.0044168586561190715, "elements": 2048, "error_sq": 0.0001204298223915351, "max_abs": 0.00341796875, "nonfinite": 0, "outside_tolerance": 0, "passed": false, "reference_sq": 0.0040188744019655775, "relative_l2": 0.1731070701707243, "shape": [2048]}
+[E0c] rank3 gradient mismatch decoder.layers.3.input_layernorm.weight: {"actual_sq": 0.0049352727326641005, "changed": 2030, "cosine": 0.9917579851992323, "dot": 0.0044168586561190715, "elements": 2048, "error_sq": 0.0001204298223915351, "max_abs": 0.00341796875, "nonfinite": 0, "outside_tolerance": 0, "passed": false, "reference_sq": 0.0040188744019655775, "relative_l2": 0.1731070701707243, "shape": [2048]}
+[E0c] NUMERICAL MISMATCH: complete finite rank reports saved; collecting remaining phases. E0c acceptance remains failed.

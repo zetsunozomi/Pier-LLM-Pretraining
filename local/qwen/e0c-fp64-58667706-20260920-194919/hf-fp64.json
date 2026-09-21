@@ -1,0 +1,39 @@
+{
+  "diagnostic_only": true,
+  "acceptance_override": false,
+  "GPU_conversion_validated": false,
+  "training_validated": false,
+  "performance_result": false,
+  "status": "diagnostic_written",
+  "backend": "hf",
+  "dtype": "float64",
+  "tp": 1,
+  "environment": {
+    "GPU_executed": true,
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "transformers": "4.57.3",
+    "safetensors": "0.7.0",
+    "tf32": false,
+    "reduced_precision_reduction": false,
+    "deterministic_algorithms": true
+  },
+  "precision": {
+    "norm_modules": 73,
+    "rope_dtype": "float64",
+    "trainable_parameters": [
+      "model.layers.2.mlp.down_proj.weight"
+    ],
+    "trainable_elements": 22544384,
+    "fp64_softmax_calls": 36
+  },
+  "parameter": "model.layers.2.mlp.down_proj.weight",
+  "manifest_sha256": "317425442bdf2d34c407c34a2677f03650f0dbf8b26a57f62745ad4a308a588e",
+  "inputs_sha256": "c29bb2b995bf5b08e09a8d2395d6db154a0249597be6473aef30f92b70c68381",
+  "tensors": {
+    "bytes": 335937792,
+    "sha256": "7a8a1c5990f812bf18c8e0d84ee317399b50407830a4050fd8aac3364ad3a0f5"
+  },
+  "loss": 3.4140711167921567
+}

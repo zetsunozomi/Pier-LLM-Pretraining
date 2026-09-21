@@ -1,0 +1,144 @@
+{
+  "diagnostic_only": true,
+  "acceptance_override": false,
+  "GPU_conversion_validated": false,
+  "training_validated": false,
+  "performance_result": false,
+  "status": "diagnostic_written",
+  "backend": "native",
+  "dtype": "float64",
+  "tp": 1,
+  "environment": {
+    "GPU_executed": true,
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "transformers": "4.57.3",
+    "safetensors": "0.7.0",
+    "tf32": false,
+    "reduced_precision_reduction": false,
+    "deterministic_algorithms": true
+  },
+  "precision": {
+    "norm_modules": 73,
+    "rope_dtype": "float64",
+    "trainable_parameters": [
+      "decoder.layers.2.mlp.linear_fc2.weight"
+    ],
+    "trainable_elements": 22544384,
+    "fp64_softmax_calls": 36
+  },
+  "parameter": "decoder.layers.2.mlp.linear_fc2.weight",
+  "manifest_sha256": "317425442bdf2d34c407c34a2677f03650f0dbf8b26a57f62745ad4a308a588e",
+  "inputs_sha256": "c29bb2b995bf5b08e09a8d2395d6db154a0249597be6473aef30f92b70c68381",
+  "tensors": {
+    "bytes": 335937792,
+    "sha256": "ef45324cb274ab0accaf7b14f6bef838406c5d43b182f365ee58818b738cef57"
+  },
+  "loss": 3.4140711167921562,
+  "comparisons": {
+    "logits": {
+      "elements": 19447808,
+      "shape": [
+        2,
+        64,
+        151936
+      ],
+      "nonfinite": 0,
+      "outside_tolerance": 0,
+      "max_abs": 8.633094239485217e-13,
+      "error_sq": 6.990833637443695e-21,
+      "reference_sq": 201591652.37616396,
+      "relative_l2": 5.888819072538718e-15,
+      "agrees": true,
+      "limits": {
+        "atol": 1e-09,
+        "rtol": 1e-08
+      }
+    },
+    "loss": {
+      "elements": 1,
+      "shape": [
+        1
+      ],
+      "nonfinite": 0,
+      "outside_tolerance": 0,
+      "max_abs": 4.440892098500626e-16,
+      "error_sq": 1.9721522630525295e-31,
+      "reference_sq": 11.655881590514444,
+      "relative_l2": 1.30076145064994e-16,
+      "agrees": true,
+      "limits": {
+        "atol": 1e-09,
+        "rtol": 1e-08
+      }
+    },
+    "gradient": {
+      "elements": 22544384,
+      "shape": [
+        2048,
+        11008
+      ],
+      "nonfinite": 0,
+      "outside_tolerance": 0,
+      "max_abs": 3.8496983378877303e-13,
+      "error_sq": 7.553444975029085e-24,
+      "reference_sq": 4610.332529242556,
+      "relative_l2": 4.0476822237000214e-14,
+      "agrees": true,
+      "limits": {
+        "atol": 1e-09,
+        "rtol": 1e-08
+      }
+    }
+  },
+  "hf_report_sha256": "d4ac2b3886faefb33d5bd08847e9bf8cc3e150321e68e27596f3bfb7a3cc8abb",
+  "fp64_implementations_agree": true,
+  "points": [
+    {
+      "index": [
+        325,
+        3189
+      ],
+      "hf_fp32": 0.009405365213751793,
+      "native_fp32": 0.009427878074347973,
+      "hf_fp64": 0.009494329370834751,
+      "native_fp64": 0.009494329370884406,
+      "fp64_native_minus_hf": 4.9654724776360126e-14,
+      "hf_fp32_minus_hf_fp64": -8.896415708295816e-05,
+      "native_fp32_minus_hf_fp64": -6.64512964867782e-05,
+      "original_fp32_tolerance": 2.1881073042750362e-05,
+      "original_fp32_ratio": 1.0288737006725053
+    },
+    {
+      "index": [
+        1843,
+        3189
+      ],
+      "hf_fp32": -0.022167185321450233,
+      "native_fp32": -0.022193631157279015,
+      "hf_fp64": -0.02233369251372287,
+      "native_fp64": -0.022333692513634748,
+      "fp64_native_minus_hf": 8.812048313266985e-14,
+      "hf_fp32_minus_hf_fp64": 0.00016650719227263508,
+      "native_fp32_minus_hf_fp64": 0.00014006135644385395,
+      "original_fp32_tolerance": 2.4433437064290048e-05,
+      "original_fp32_ratio": 1.0823624919898085
+    },
+    {
+      "index": [
+        1856,
+        3189
+      ],
+      "hf_fp32": -0.004094914998859167,
+      "native_fp32": -0.0040733665227890015,
+      "hf_fp64": -0.00404721517332781,
+      "native_fp64": -0.004047215173251831,
+      "fp64_native_minus_hf": 7.597915352430817e-14,
+      "hf_fp32_minus_hf_fp64": -4.769982553135682e-05,
+      "native_fp32_minus_hf_fp64": -2.6151349461191187e-05,
+      "original_fp32_tolerance": 2.0818982999771835e-05,
+      "original_fp32_ratio": 1.035039803356475
+    }
+  ]
+}

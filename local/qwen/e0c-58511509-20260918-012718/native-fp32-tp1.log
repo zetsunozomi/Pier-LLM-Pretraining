@@ -1,0 +1,81 @@
+[Rank 1] belongs to subgroup 1, ranks: [1]
+[Rank 2] belongs to subgroup 2, ranks: [2]Subgroup creation: dp_size=4, num_subgroups=4
+
+We have 4 subgroups in total.
+[Rank 0] belongs to subgroup 0, ranks: [0]
+[Rank 3] belongs to subgroup 3, ranks: [3]
+[E0c] rank1 native fp32/TP1: forward/backward
+[E0c] rank2 native fp32/TP1: forward/backward
+[E0c] rank0 native fp32/TP1: forward/backward
+[E0c] rank3 native fp32/TP1: forward/backward
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 237, in <module>
+[rank0]:     main()
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 227, in main
+[rank0]:     (reference if args.phase == 'reference' else native)(args, manifest)
+[rank0]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 210, in native
+[rank0]:     raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')
+[rank0]: ValueError: numerical conversion check failed; inspect per-parameter JSON; later phases stopped
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 237, in <module>
+[rank3]:     main()
+[rank3]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 227, in main
+[rank3]:     (reference if args.phase == 'reference' else native)(args, manifest)
+[rank3]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 210, in native
+[rank3]:     raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')
+[rank3]: ValueError: numerical conversion check failed; inspect per-parameter JSON; later phases stopped
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 237, in <module>
+[rank1]:     main()
+[rank1]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 227, in main
+[rank1]:     (reference if args.phase == 'reference' else native)(args, manifest)
+[rank1]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 210, in native
+[rank1]:     raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')
+[rank1]: ValueError: numerical conversion check failed; inspect per-parameter JSON; later phases stopped
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 237, in <module>
+[rank2]:     main()
+[rank2]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 227, in main
+[rank2]:     (reference if args.phase == 'reference' else native)(args, manifest)
+[rank2]:   File "/pscratch/sd/s/syfan/Pier/experiments/qwen/e0c.py", line 210, in native
+[rank2]:     raise ValueError('numerical conversion check failed; inspect per-parameter JSON; later phases stopped')
+[rank2]: ValueError: numerical conversion check failed; inspect per-parameter JSON; later phases stopped
+W0918 01:30:29.018000 866477 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 866494 closing signal SIGTERM
+W0918 01:30:29.020000 866477 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 866495 closing signal SIGTERM
+W0918 01:30:29.022000 866477 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 866496 closing signal SIGTERM
+E0918 01:30:29.401000 866477 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 866493) of binary: /pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pscratch/sd/s/syfan/conda/envs/diloco/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+experiments/qwen/e0c.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-09-18_01:30:29
+  host      : nid001037-hsn0
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 866493)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: nid001037: task 0: Exited with exit code 1
+srun: Terminating StepId=58511509.5

@@ -1,0 +1,58 @@
+{
+  "status": "failed",
+  "stage": "E0c",
+  "errors": [
+    "native-fp32-tp1-rank0.json: status differs",
+    "native-fp32-tp1-rank0.json: gradients mismatch: decoder.layers.2.mlp.linear_fc2.weight",
+    "native-fp32-tp1-rank1.json: status differs",
+    "native-fp32-tp1-rank1.json: gradients mismatch: decoder.layers.2.mlp.linear_fc2.weight",
+    "native-fp32-tp1-rank2.json: status differs",
+    "native-fp32-tp1-rank2.json: gradients mismatch: decoder.layers.2.mlp.linear_fc2.weight",
+    "native-fp32-tp1-rank3.json: status differs",
+    "native-fp32-tp1-rank3.json: gradients mismatch: decoder.layers.2.mlp.linear_fc2.weight",
+    "native-fp32-tp2-rank0.json: [Errno 2] No such file or directory: '/pscratch/sd/s/syfan/Pier/local/qwen/e0c-58515954-20260918-021901/native-fp32-tp2-rank0.json'",
+    "native-fp32-tp2-rank1.json: [Errno 2] No such file or directory: '/pscratch/sd/s/syfan/Pier/local/qwen/e0c-58515954-20260918-021901/native-fp32-tp2-rank1.json'",
+    "native-fp32-tp2-rank2.json: [Errno 2] No such file or directory: '/pscratch/sd/s/syfan/Pier/local/qwen/e0c-58515954-20260918-021901/native-fp32-tp2-rank2.json'",
+    "native-fp32-tp2-rank3.json: [Errno 2] No such file or directory: '/pscratch/sd/s/syfan/Pier/local/qwen/e0c-58515954-20260918-021901/native-fp32-tp2-rank3.json'",
+    "missing/invalid evidence: [Errno 2] No such file or directory: '/pscratch/sd/s/syfan/Pier/local/qwen/e0c-58515954-20260918-021901/hf-bf16.json'",
+    "launcher exited 1",
+    "worker failures: ['failure-native-fp32-tp1-rank0.json', 'failure-native-fp32-tp1-rank1.json', 'failure-native-fp32-tp1-rank2.json', 'failure-native-fp32-tp1-rank3.json']"
+  ],
+  "comparisons": [
+    {
+      "dtype": "fp32",
+      "tp": 1,
+      "rank": 0,
+      "passed": false
+    },
+    {
+      "dtype": "fp32",
+      "tp": 1,
+      "rank": 1,
+      "passed": false
+    },
+    {
+      "dtype": "fp32",
+      "tp": 1,
+      "rank": 2,
+      "passed": false
+    },
+    {
+      "dtype": "fp32",
+      "tp": 1,
+      "rank": 3,
+      "passed": false
+    }
+  ],
+  "performance_result": false,
+  "training_validated": false,
+  "not_validated": [
+    "real-data training recipe",
+    "Qwen optimizer/outer-state trajectory and restart",
+    "strong baseline performance",
+    "GPU peak memory or physical wire traffic",
+    "other model sizes, PP/CP/MoE, distributed optimizer or multi-slot pipeline"
+  ],
+  "finished_utc": "2026-09-18T09:22:25.038264+00:00",
+  "GPU_conversion_validated": false
+}
