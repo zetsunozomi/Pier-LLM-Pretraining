@@ -202,6 +202,19 @@ def native_worker(rank, rendezvous, directory):
             assert runtime.meter.records[0]['processed_loss_tokens_global'] == 32
             assert runtime.meter.records[0]['successful_loss_tokens_global'] == 24
             assert runtime.meter.records[0]['skipped_loss_tokens_global'] == 8
+            assert runtime.meter.metadata['final_health']['model_matches_master']
+            assert runtime.meter.metadata['final_health']['finite_model']
+            # Matching nonfinite master/model values still invalidate a measured run.
+            _, master, target = runtime.coordinates.pairs[0]
+            with torch.no_grad():
+                master.view(-1)[0] = float('inf')
+                target.view(-1)[0] = float('inf')
+            try:
+                runtime.coordinates.assert_model_committed(finite=True)
+            except AssertionError as exc:
+                assert 'nonfinite' in str(exc)
+            else:
+                raise AssertionError('nonfinite committed model accepted')
         dist.barrier()
     finally:
         dist.destroy_process_group()

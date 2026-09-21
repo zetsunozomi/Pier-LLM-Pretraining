@@ -252,6 +252,7 @@ class CenteredRuntime:
         self.events = []
         self.last_optimizer_before = None
         self.meter = None
+        self.measured_last_loss = None
         if getattr(args, 'outer_measure_dir', None):
             from .cycle_metrics import CycleMeter
             self.meter = CycleMeter(self.device, args.outer_measure_dir,
@@ -354,6 +355,7 @@ class CenteredRuntime:
             payload = None
         if self.meter is not None:
             self.meter.after_attempt(success, boundary, self.clock, payload)
+            self.measured_last_loss = loss_dict
         if self.verify:
             self.coordinates.assert_model_committed()
             self.events.append({'attempted': self.clock.attempted, 'successful': self.clock.successful,
@@ -419,6 +421,14 @@ class CenteredRuntime:
         self.write_report('passed' if iteration == self.args.train_iters else 'partial')
         if self.meter is not None:
             self.meter.finish(self.clock)
+            # One untimed final check; no oracle, snapshots or per-step tensor scans.
+            self.coordinates.assert_model_committed(finite=True)
+            losses = {key: float(value) for key, value in self.measured_last_loss.items()}
+            if not losses or not all(math.isfinite(value) for value in losses.values()):
+                raise ValueError('measured training finished with nonfinite loss')
+            self.meter.metadata['final_health'] = {
+                'model_matches_master': True, 'finite_model': True, 'finite_loss': True, 'losses': losses}
+            self.meter.write_report('complete')
 
 
 def build_runtime(args, model, optimizer):

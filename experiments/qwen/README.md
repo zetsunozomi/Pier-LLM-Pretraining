@@ -1,5 +1,10 @@
 # Qwen2.5 native-model preparation
 
+**Current next run (2026-09-21): [N2 performance comparison](N2_HANDOFF.md),
+`bash experiments/qwen/n2.sbatch`.** G/P/R/W use the actual Qwen training loop
+with cycle timing and allocator peaks. E0c/E0d passed reports are not required.
+The preparation history below describes the earlier validation work.
+
 Status (2026-09-17): native builder, TP weight mapping and snapshot preflight are
 implemented and tested on CPU. No pretrained weights were downloaded, no Qwen
 GPU job ran, and no Qwen training/performance result is claimed. The user has

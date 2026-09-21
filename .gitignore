@@ -99,3 +99,8 @@ samples_record*
 !/out/*/*.txt
 !/out/*/*.log
 !/out/*/*.json
+
+# N2 nested rank receipts and cycles; binary model/data/cache files stay scratch.
+!/out/n2-*/run-*/
+/out/n2-*/run-*/*
+!/out/n2-*/run-*/*.json

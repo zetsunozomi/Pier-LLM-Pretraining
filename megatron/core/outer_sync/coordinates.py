@@ -61,11 +61,13 @@ class ParameterCoordinates:
     def storage_tensors(self):
         return [p for _, master, model in self.pairs for p in (master, model)]
 
-    def assert_model_committed(self):
+    def assert_model_committed(self, *, finite=False):
         for name, master, model in self.pairs:
             source, target = master.detach().view(-1), model.detach().view(-1)
             for start in range(0, source.numel(), 262144):
                 expected = source[start:start + 262144].to(model.dtype)
+                if finite and not bool(torch.isfinite(expected).all()):
+                    raise AssertionError(f'nonfinite final model parameter: {name} at {start}')
                 if not torch.equal(target[start:start + 262144].view(torch.uint8), expected.view(torch.uint8)):
                     raise AssertionError(f'next forward sees stale model parameter: {name} at {start}')
 

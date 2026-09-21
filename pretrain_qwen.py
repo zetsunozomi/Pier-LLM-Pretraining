@@ -1,6 +1,7 @@
 """Native Qwen weights-only initialization, then the real Megatron GPT loop.
 
-This entrypoint needs a pinned local snapshot and matching pretokenized data.
+This entrypoint needs a pinned local snapshot and matching pretokenized data,
+or explicit synthetic tokens for a systems benchmark.
 It does not download models, pad the output vocabulary, or claim GPU validation.
 """
 
@@ -27,7 +28,14 @@ def snapshot_identity(report):
 
 def data_identity(args, report, *, tokenizer=None):
     if args.mock_data:
-        raise ValueError('pretrain_qwen requires real text preprocessed with the pinned tokenizer')
+        if not getattr(args, 'qwen_synthetic_benchmark', False) or not args.outer_measure_dir:
+            raise ValueError('synthetic Qwen inputs require --qwen-synthetic-benchmark and --outer-measure-dir')
+        return {'kind': 'synthetic_tokens', 'dataset': 'Megatron MockGPTDataset',
+                'documents': 'ascending token IDs followed by the pinned tokenizer EOD',
+                'document_seed': 0, 'training_seed': args.seed,
+                'quality_evaluation': False}
+    if getattr(args, 'qwen_synthetic_benchmark', False):
+        raise ValueError('--qwen-synthetic-benchmark requires --mock-data')
     if not args.data_path or len(args.data_path) != 1 or args.data_args_path or args.per_split_data_args_path:
         raise ValueError('initial Qwen recipe requires a single indexed dataset prefix')
     prefix = Path(args.data_path[0])
@@ -112,6 +120,8 @@ def main():
         parser.add_argument('--qwen-model-size', choices=('1.5B', '3B', '7B'), required=True)
         parser.add_argument('--qwen-snapshot', type=Path, required=True)
         parser.add_argument('--qwen-trace-dir', type=Path)
+        parser.add_argument('--qwen-synthetic-benchmark', action='store_true',
+                            help='Explicit synthetic-token systems benchmark; not corpus training quality.')
         parser.set_defaults(**training_defaults(arch),
                             tokenizer_type='HuggingFaceTokenizer', tokenizer_model=str(snapshot))
         return parser

@@ -1,9 +1,10 @@
 # G/R/W/T baselines and complete-cycle instrumentation
 
-Status (2026-09-17): implemented in the shared training adapter and checked on
-CPU/Gloo. **No GPU baseline/timing result exists and no E1 job is ready.**
-The next user submission remains [E0c](../qwen/E0C_HANDOFF.md), one node/four
-GPUs/one hour. The native model conversion gate does not execute these new arms.
+Status (2026-09-21): implemented in the shared training adapter and checked on
+CPU/Gloo. The [N2 launcher](../qwen/N2_HANDOFF.md) now runs Qwen G/P/R/W directly
+and collects complete-cycle throughput, outer time and allocator peaks. Start
+with `bash experiments/qwen/n2.sbatch` in a four-GPU allocation. No N2 GPU timing
+result has been collected yet. E0c/E0d are not performance prerequisites.
 
 ## Actual implementation
 
@@ -29,8 +30,9 @@ the final partial tile and padded suffix are handled explicitly.
 Native SUM order is opaque. G/R do not claim Pier's fixed-tree bitwise contract;
 W additionally moves centering after reduction. The existing `--outer-verify`
 oracle is deliberately rejected for these arms, rather than falsely certifying
-bitwise equality. GPU numerical validation with the appropriate contracts is
-still required before a performance comparison. Same-arm restart retains the
+bitwise equality. N2 records finite loss, successful updates and an untimed
+final model-commit check; a short numerical comparison can accompany the paper
+table without blocking first timings. Same-arm restart retains the
 native tile configuration; switching arms is rejected even when state shapes
 are identical. Existing Pier checkpoints without an arm field retain their
 meaning. Public Qwen initialization remains weights-only.
