@@ -1,0 +1,7 @@
+N2: complete
+case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/O
+run-1-O        measured     81858.98             7.7048    27.29/28.27   1.0000x
+run-1-R        measured     83166.57             5.2382    33.40/34.38   1.0160x
+run-1-P        measured     82583.21             6.3367    30.52/31.51   1.0088x
+O: pinned CPU R/M shards with blocking tiled transfers; not a tuned asynchronous offload implementation.
+run-1-O persistent host R/M: 0.719 GiB/rank (maximum; not host peak).
