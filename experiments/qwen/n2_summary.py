@@ -60,6 +60,15 @@ def collect_case(output, manifest, case):
         argv = expected_argv(output, manifest, case)
         for rank, meta in enumerate(raw['rank_metadata']):
             require(meta['arm'] == case['backend'] and meta['cohort'] == case['cohort'], 'wrong backend/cohort')
+            if case['arm'] == 'O' or 'state_storage' in meta:
+                storage = meta['state_storage']
+                expected_device = 'cpu' if case['arm'] == 'O' else 'cuda'
+                for name in ('reference', 'momentum'):
+                    require(storage[name]['device'] == expected_device, 'outer state is on the wrong device')
+                    require(storage[name]['bytes'] == meta['allocation'][name + '_bytes'],
+                            'outer state storage size differs from allocation receipt')
+                    if case['arm'] == 'O':
+                        require(storage[name]['pinned'] is True, 'offloaded state is not pinned')
             health = meta['final_health']
             require(health['model_matches_master'] and health['finite_model'] and health['finite_loss'],
                     'training health check failed')
@@ -87,6 +96,11 @@ def collect_case(output, manifest, case):
                    allocations=[m['allocation'] for m in raw['rank_metadata']],
                    tile_elements=[m['tile_elements'] for m in raw['rank_metadata']],
                    measurement_contract=raw['measurement_contract'], input_reports=raw['input_reports'])
+        if all('state_storage' in m for m in raw['rank_metadata']):
+            row['state_storage_by_rank'] = [m['state_storage'] for m in raw['rank_metadata']]
+            row['host_outer_state_gib_max_rank'] = max(
+                sum(t['bytes'] for t in m['state_storage'].values() if t['device'] == 'cpu')
+                for m in raw['rank_metadata']) / 2**30
     except (ValueError, KeyError, TypeError, OSError) as exc:
         row.update(status='invalid', error=str(exc))
     return row
@@ -108,6 +122,11 @@ def collect(output):
             base = next((g for g in rows if g['arm'] == 'G' and g['repeat'] == row['repeat']
                          and g['status'] == 'measured'), None)
             row['speedup_vs_G'] = row['useful_tokens_per_second'] / base['useful_tokens_per_second'] if base else None
+            if 'O' in manifest['config']['arms']:
+                offload = next((o for o in rows if o['arm'] == 'O' and o['repeat'] == row['repeat']
+                                and o['status'] == 'measured'), None)
+                row['speedup_vs_O'] = (row['useful_tokens_per_second'] / offload['useful_tokens_per_second']
+                                       if offload else None)
             if sweep:
                 anchor = next((p for p in rows if p['arm'] == 'P' and p['cohort'] == 2
                                and p['repeat'] == row['repeat'] and p['status'] == 'measured'), None)
@@ -133,23 +152,35 @@ def collect(output):
         result['historical_reference'] = ('historical-n2.json' if (output / 'historical-n2.json').is_file() else None)
         result['comparison_note'] = 'Cohort ratios use this allocation only; historical N2 is a separate context table.'
         result['remaining_for_main_table'] = ['independent paired repeats and cohort sweep at the 32-GPU main point']
+    elif 'O' in manifest['config']['arms']:
+        result['comparison_note'] = 'Main O/R/P: report both time and GPU memory for every arm; G/W remain auxiliary controls.'
+        result['offload_implementation'] = 'Author implementation: pinned CPU R/M shards, blocking tiled transfers, GPU gather/RS/update/AG.'
+        result['host_memory_scope'] = 'Persistent outer R/M tensor bytes only; not process/node host peak or all pinned allocations.'
+        result['remaining_for_main_table'] = ['selected configurations with equal tuning and three independent paired launches',
+                                              'offload transfer/scheduling characterization; no optimized-offload claim from this path alone']
     return result
 
 
 def render(result):
     sweep = result['config'].get('suite') == 'cohorts'
-    ratio = 'P(s=2)' if sweep else 'G'
+    offload = not sweep and 'O' in result['config']['arms']
+    ratio = 'P(s=2)' if sweep else ('O' if offload else 'G')
     lines = [result['stage'] + ': ' + result['status'],
              f'case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/{ratio}']
     for row in result['cases']:
         if row['status'] == 'measured':
-            value = row.get('speedup_vs_P_s2' if sweep else 'speedup_vs_G')
+            value = row.get('speedup_vs_P_s2' if sweep else ('speedup_vs_O' if offload else 'speedup_vs_G'))
             speedup = '-' if value is None else f'{value:.4f}x'
             lines.append(f"{row['id']:<14} measured  {row['useful_tokens_per_second']:11.2f}"
                          f" {row['outer_and_commit_seconds_mean']:18.4f}"
                          f" {row['peak_allocated_gib']:8.2f}/{row['peak_reserved_gib']:.2f}   {speedup}")
         else:
             lines.append(f"{row['id']:<14} {row['status']:<12} {row.get('error', '')}")
+    if offload:
+        lines.append('O: pinned CPU R/M shards with blocking tiled transfers; not a tuned asynchronous offload implementation.')
+        for row in result['cases']:
+            if row['arm'] == 'O' and row['status'] == 'measured':
+                lines.append(f"{row['id']} persistent host R/M: {row['host_outer_state_gib_max_rank']:.3f} GiB/rank (maximum; not host peak).")
     return '\n'.join(lines) + '\n'
 
 

@@ -262,6 +262,11 @@ class CenteredRuntime:
                                               'inner_ranks': self.inner_ranks,
                                               'coordinate_fingerprint': self.coordinates.fingerprint,
                                               'allocation': self.executor.allocation_bytes(),
+                                              'state_storage': {
+                                                  name: {'device': tensor.device.type,
+                                                         'bytes': tensor.numel() * tensor.element_size(),
+                                                         'pinned': tensor.is_pinned()}
+                                                  for name, tensor in (('reference', reference), ('momentum', momentum))},
                                               'tile_elements': self.executor.capacity})
         self.streamed_oracle = None
         if self.verify and self.oracle_storage == 'streamed':

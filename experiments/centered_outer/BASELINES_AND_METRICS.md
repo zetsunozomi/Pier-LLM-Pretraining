@@ -1,5 +1,13 @@
 # G/R/W/T baselines and complete-cycle instrumentation
 
+**2026-09-23 update:** the 32-GPU G/R/W/P window (three independent launches
+per arm) and eight-GPU cohort pilot are complete. The paper main table now uses
+[CPU-offloaded reconstruction / GPU resident / Pier](../qwen/N2_MAIN_HANDOFF.md).
+O reuses `gather` with `--outer-cpu-offload`; its current pinned-host copies are
+blocking. The new launcher records and verifies actual state placement and
+splits formal repeats into short jobs. O GPU timing is still pending. Older
+status paragraphs below are implementation history, not the current run order.
+
 Status (2026-09-21): implemented in the shared training adapter and checked on
 CPU/Gloo. Four/eight-GPU [N2 pilots](../qwen/N2_HANDOFF.md) now contain actual
 Qwen G/P/R/W cycle throughput, outer time and allocator peaks. All four arms
@@ -18,6 +26,7 @@ checkpoint code. No separate toy optimizer is used by their training path.
 | CLI arm | Paper arm | Outer operation | R per rank | M per rank |
 |---|---|---|---|---|
 | `gather` | G | Gather R, center local W, native RS, owner update, AG | width | width |
+| `gather` + `--outer-cpu-offload` | O | Pinned-host R/M tiles, GPU gather/center/RS/update/AG, host writeback | width (CPU) | width (CPU) |
 | `resident` | R | Center against replicated R, native RS, owner update, AG | K × width | width |
 | `recenter` | W | Native raw-W RS, divide, recenter, owner update, AG | width | width |
 | `pier` / omitted | P | Existing ordered reference-owner executor | K/s × width | width |

@@ -6,7 +6,7 @@ import random
 
 ROOT = Path(__file__).resolve().parents[2]
 REVISION = '3aab1f1954e9cc14eb9509a215f9e5ca08227a9b'
-ARMS = {'G': 'gather', 'R': 'resident', 'W': 'recenter', 'P': 'pier'}
+ARMS = {'G': 'gather', 'O': 'gather', 'R': 'resident', 'W': 'recenter', 'P': 'pier'}
 
 
 def configuration(env=None):
@@ -23,7 +23,7 @@ def configuration(env=None):
     arms = ('P' if suite == 'cohorts' else env.get('PIER_N2_ARMS', 'G,P,R,W')).replace(' ', ',').split(',')
     arms = [arm for arm in arms if arm]
     if not arms or len(set(arms)) != len(arms) or any(arm not in ARMS for arm in arms):
-        raise ValueError('PIER_N2_ARMS must contain distinct G,P,R,W labels')
+        raise ValueError('PIER_N2_ARMS must contain distinct G,O,P,R,W labels')
     cohort = int(env.get('PIER_N2_COHORT', '2'))
     learners = nodes * 2
     if cohort < 1 or cohort & (cohort - 1) or learners % cohort:
@@ -34,6 +34,9 @@ def configuration(env=None):
     repeats = int(env.get('PIER_N2_REPEATS', '1' if profile == 'pilot' else '3'))
     if not 1 <= repeats <= 3:
         raise ValueError('PIER_N2_REPEATS must be 1..3')
+    repeat_start = int(env.get('PIER_N2_REPEAT_START', '1'))
+    if not 1 <= repeat_start <= 3 or repeat_start + repeats - 1 > 3:
+        raise ValueError('repeat range must lie within 1..3; set PIER_N2_REPEATS=1 for split jobs')
     prefix = env.get('PIER_QWEN_DATA_PREFIX') or None
     root = Path(env.get('PIER_ROOT', ROOT)).resolve()
     return dict(repository=str(root), profile=profile, suite=suite,
@@ -41,7 +44,7 @@ def configuration(env=None):
                 cohorts=sorted(set((1, 2, learners))) if suite == 'cohorts' else [cohort],
                 log_interval=1, expected_gpu=env.get('PIER_N2_EXPECTED_GPU') or None,
                 nodes=nodes, world_size=nodes * 4, tp=2, learners=learners,
-                arms=arms, cohort=cohort, workspace_mib=workspace, repeats=repeats,
+                arms=arms, cohort=cohort, workspace_mib=workspace, repeats=repeats, repeat_start=repeat_start,
                 interval=50, warmup_cycles=1 if profile == 'pilot' else 2,
                 measured_cycles=1 if profile == 'pilot' else 3,
                 attempts=100 if profile == 'pilot' else 250,
@@ -55,7 +58,8 @@ def configuration(env=None):
 
 def cases(config):
     result = []
-    for repeat in range(config['repeats']):
+    first = config.get('repeat_start', 1) - 1
+    for repeat in range(first, first + config['repeats']):
         sweep = config.get('suite') == 'cohorts'
         order = [(arm, s) for arm in config['arms']
                  for s in (config['cohorts'] if sweep and arm == 'P'
@@ -98,6 +102,8 @@ def training_args(config, case, directory):
     }
     argv = [item for pair in options.items() for item in (pair[0], str(pair[1]))]
     argv += ['--bf16', '--accumulate-allreduce-grads-in-fp32', '--local-sgd-inner-average']
+    if case['arm'] == 'O':
+        argv.append('--outer-cpu-offload')
     if config['data_prefix']:
         argv += ['--data-path', config['data_prefix']]
     else:

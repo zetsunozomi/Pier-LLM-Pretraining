@@ -1,6 +1,12 @@
 # N2: first Qwen performance comparison
 
-**Progress (2026-09-21):** the four-GPU and eight-GPU pilots have returned.
+**Current handoff (2026-09-23):** use [O/R/P main comparison](N2_MAIN_HANDOFF.md)
+and `experiments/qwen/n2_main.sbatch`. The 32-GPU G/R/W/P three-repeat window
+and eight-GPU cohort pilot have completed. G/W now support the mechanism study;
+the next main measurement adds CPU-offloaded reconstruction. The instructions
+below retain the earlier G/R/W/P workflow for reference.
+
+**Historical progress (2026-09-21):** the four-GPU and eight-GPU pilots have returned.
 The eight-GPU pilot completed G/P/R/W; P reached 21,125.86 tokens/s versus
 20,853.64 for G and 21,112.62 for R, with 31.60 GiB allocated peak versus
 R's 34.47 GiB. This was one measured cycle on mixed 40GB/80GB nodes.

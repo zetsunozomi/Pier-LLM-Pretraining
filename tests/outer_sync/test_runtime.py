@@ -20,7 +20,7 @@ from megatron.core.outer_sync.checkpoint import load, restore_rng, save
 from megatron.core.outer_sync.runtime import CenteredRuntime, StepClock, digest
 
 
-def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_dir=None):
+def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_dir=None, measure=False):
     torch.manual_seed(7)
     model = torch.nn.Sequential(torch.nn.Linear(3, 4), torch.nn.Dropout(.2), torch.nn.Linear(4, 2))
     inner = torch.optim.AdamW(model.parameters(), lr=.01, foreach=False)
@@ -33,6 +33,8 @@ def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_di
     scheduler = torch.optim.lr_scheduler.StepLR(inner, step_size=3, gamma=.9)
     args = SimpleNamespace(outer_cohort_size=cohort, outer_sync_interval=3,
                            outer_tile_elements=2, outer_cpu_offload=False,
+                           outer_measure_dir=str(Path(directory) / 'cycles') if measure else None,
+                           outer_warmup_cycles=1,
                            outer_verify=arm is None, outer_trace_dir=str(trace_dir) if trace_dir else None,
                            outer_arm=arm, outer_verify_storage=oracle_storage, outer_verify_tile_elements=7,
                            outer_momentum=.9, outer_learning_rate=.7,
@@ -191,10 +193,11 @@ def native_worker(rank, rendezvous, directory):
             assert digest([optimizer.state_dict(), model.state_dict(), scheduler.state_dict(),
                            runtime.executor.reference, runtime.executor.momentum, runtime.clock.state_dict()]) == expected
             assert runtime.clock.state_dict() == dict(interval=3, attempted=11, successful=10, boundaries=3)
-            from megatron.core.outer_sync.cycle_metrics import CycleMeter
-            runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm)
-            runtime.meter = CycleMeter('cpu', path / 'cycles', warmup_cycles=1,
-                                      metadata={'fixture': 'CPU test only', 'arm': arm})
+            runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm, measure=True)
+            for name in ('reference', 'momentum'):
+                state = getattr(runtime.executor, name)
+                receipt = runtime.meter.metadata['state_storage'][name]
+                assert receipt == dict(device='cpu', bytes=state.numel() * state.element_size(), pinned=False)
             advance(runtime, model, optimizer, scheduler, 11)
             runtime.finish(11)
             assert runtime.meter.complete_count == 3
