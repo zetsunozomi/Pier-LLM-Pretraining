@@ -17,6 +17,7 @@ import torch.distributed as dist
 from .coordinates import optimizer_coordinates
 from .executor import CenteredExecutor, power2
 from .collectives import ARMS, CollectiveExecutor, tile_for_budget
+from .cpu_offload import NaiveCPUOffloadExecutor
 
 
 def enabled(args):
@@ -111,14 +112,16 @@ def validate_args(args):
     if not power2(args.outer_cohort_size) or args.outer_tile_elements < 1:
         raise ValueError('positive tile and power-of-two cohort required')
     arm = getattr(args, 'outer_arm', None) or 'pier'
-    if arm not in ('pier', 'dtensor', *ARMS):
+    if arm not in ('pier', 'dtensor', 'cpu_offload', *ARMS):
         raise ValueError('unknown outer arm')
-    if arm in ARMS and args.outer_cohort_size != 1:
-        raise ValueError('G/R/W native collective arms require cohort=1')
+    if arm in (*ARMS, 'cpu_offload') and args.outer_cohort_size != 1:
+        raise ValueError('native collective and naive offload arms require cohort=1')
     if arm != 'pier' and args.outer_verify:
         raise ValueError('native SUM arms have a separate numerical contract; '
                          '--outer-verify is the Pier fixed-tree oracle only')
     budget = getattr(args, 'outer_workspace_mib', None)
+    if arm == 'cpu_offload' and (not args.outer_cpu_offload or budget is not None):
+        raise ValueError('naive cpu_offload needs --outer-cpu-offload and uses whole-parameter buffers, not a tile cap')
     if budget is not None and (not math.isfinite(budget) or budget <= 0):
         raise ValueError('workspace MiB must be finite and positive')
     if not 0 <= args.outer_momentum < 1 or args.outer_learning_rate <= 0:
@@ -184,10 +187,10 @@ class CenteredRuntime:
         self.k, self.outer_rank = len(self.peers), dist.get_rank(self.group)
         self.s = args.outer_cohort_size
         self.arm = getattr(args, 'outer_arm', None) or 'pier'
-        if self.arm not in ('pier', 'dtensor', *ARMS):
+        if self.arm not in ('pier', 'dtensor', 'cpu_offload', *ARMS):
             raise ValueError('unknown outer arm')
-        if self.arm in ARMS and self.s != 1:
-            raise ValueError('G/R/W native collective arms require cohort=1')
+        if self.arm in (*ARMS, 'cpu_offload') and self.s != 1:
+            raise ValueError('native collective and naive offload arms require cohort=1')
         if self.arm != 'pier' and args.outer_verify:
             raise ValueError('the fixed-tree oracle applies only to Pier')
         if not power2(self.k) or self.s > self.k or self.k % self.s:
@@ -212,16 +215,22 @@ class CenteredRuntime:
         width = (self.coordinates.numel + self.k - 1) // self.k
         g, b = self.k // self.s, self.outer_rank % self.s
         state_device = torch.device('cpu') if args.outer_cpu_offload else self.device
-        pinned = state_device.type == 'cpu' and self.device.type == 'cuda'
-        if self.arm in ('pier', 'dtensor'):
+        naive = self.arm == 'cpu_offload'
+        if naive and (not args.outer_cpu_offload or getattr(args, 'outer_workspace_mib', None) is not None):
+            raise ValueError('naive cpu_offload requires CPU state and no tiled workspace cap')
+        pinned = state_device.type == 'cpu' and self.device.type == 'cuda' and not naive
+        if naive:
+            reference_size, start = self.coordinates.numel, 0
+        elif self.arm in ('pier', 'dtensor'):
             reference_size, start = g * width, b * g * width
         elif self.arm == 'resident':
             reference_size, start = self.k * width, 0
         else:
             reference_size, start = width, self.outer_rank * width
         reference = torch.zeros(reference_size, dtype=torch.float32, device=state_device, pin_memory=pinned)
-        momentum = torch.zeros(width, dtype=torch.float32, device=state_device, pin_memory=pinned)
-        # Initialize only this owner's reference interval; no full flat master.
+        momentum = torch.zeros(self.coordinates.numel if naive else width, dtype=torch.float32,
+                               device=state_device, pin_memory=pinned)
+        # Read this state's interval directly from existing masters.
         valid = max(0, min(reference_size, self.coordinates.numel - start))
         if valid:
             self.coordinates.read_into(start, reference[:valid])
@@ -232,7 +241,9 @@ class CenteredRuntime:
         budget = getattr(args, 'outer_workspace_mib', None)
         capacity = (tile_for_budget(self.k, self.arm, self.s, width, int(budget * 2**20))
                     if budget is not None else args.outer_tile_elements)
-        if self.arm == 'pier':
+        if naive:
+            self.executor = NaiveCPUOffloadExecutor(reference, momentum, coordinates=self.coordinates, group=self.group)
+        elif self.arm == 'pier':
             self.executor = CenteredExecutor(None, reference, momentum, cohort=self.s,
                                             tile_elements=capacity, coordinates=self.coordinates, group=self.group)
         elif self.arm == 'dtensor':
@@ -261,6 +272,7 @@ class CenteredRuntime:
                                     metadata={'arm': self.arm, 'cohort': self.s, 'outer_ranks': self.peers,
                                               'inner_ranks': self.inner_ranks,
                                               'coordinate_fingerprint': self.coordinates.fingerprint,
+                                              'coordinate_numel': self.coordinates.numel,
                                               'allocation': self.executor.allocation_bytes(),
                                               'state_storage': {
                                                   name: {'device': tensor.device.type,

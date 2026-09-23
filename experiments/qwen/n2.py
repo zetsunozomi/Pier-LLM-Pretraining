@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Launch G/P/R/W on the same allocation and publish results after each arm."""
+"""Launch selected outer-state arms on one allocation and publish each result."""
 
 import argparse
 from datetime import datetime, timezone
@@ -22,6 +22,7 @@ def source_identity():
     # Include newly implemented N2 files even before the user's first commit.
     paths += [str(p.relative_to(ROOT)) for pattern in ('n2*', 'n3*')
               for p in (ROOT / 'experiments/qwen').glob(pattern) if p.is_file()]
+    paths += [str(p.relative_to(ROOT)) for p in (ROOT / 'megatron/core/outer_sync').glob('*.py')]
     hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
               for name in sorted(set(paths)) if name and (ROOT / name).is_file()}
     return hashes

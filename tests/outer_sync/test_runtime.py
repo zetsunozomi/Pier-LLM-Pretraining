@@ -32,7 +32,7 @@ def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_di
     optimizer.grad_stats_parallel_group = dist.group.WORLD
     scheduler = torch.optim.lr_scheduler.StepLR(inner, step_size=3, gamma=.9)
     args = SimpleNamespace(outer_cohort_size=cohort, outer_sync_interval=3,
-                           outer_tile_elements=2, outer_cpu_offload=False,
+                           outer_tile_elements=2, outer_cpu_offload=arm == 'cpu_offload',
                            outer_measure_dir=str(Path(directory) / 'cycles') if measure else None,
                            outer_warmup_cycles=1,
                            outer_verify=arm is None, outer_trace_dir=str(trace_dir) if trace_dir else None,
@@ -164,7 +164,7 @@ def native_worker(rank, rendezvous, directory):
     dist.init_process_group('gloo', init_method=rendezvous, rank=rank, world_size=4,
                             timeout=timedelta(seconds=90))
     try:
-        for arm in ('gather', 'resident', 'recenter'):
+        for arm in ('gather', 'resident', 'recenter', 'cpu_offload'):
             path = Path(directory) / arm
             runtime, model, optimizer, scheduler = fixture(rank, 1, path, arm=arm)
             advance(runtime, model, optimizer, scheduler, 11)
@@ -198,6 +198,8 @@ def native_worker(rank, rendezvous, directory):
                 state = getattr(runtime.executor, name)
                 receipt = runtime.meter.metadata['state_storage'][name]
                 assert receipt == dict(device='cpu', bytes=state.numel() * state.element_size(), pinned=False)
+                if arm == 'cpu_offload':
+                    assert state.numel() == runtime.coordinates.numel
             advance(runtime, model, optimizer, scheduler, 11)
             runtime.finish(11)
             assert runtime.meter.complete_count == 3

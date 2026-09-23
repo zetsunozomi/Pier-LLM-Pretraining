@@ -6,7 +6,7 @@ import random
 
 ROOT = Path(__file__).resolve().parents[2]
 REVISION = '3aab1f1954e9cc14eb9509a215f9e5ca08227a9b'
-ARMS = {'G': 'gather', 'O': 'gather', 'R': 'resident', 'W': 'recenter', 'P': 'pier'}
+ARMS = {'G': 'gather', 'O': 'cpu_offload', 'OS': 'gather', 'R': 'resident', 'W': 'recenter', 'P': 'pier'}
 
 
 def configuration(env=None):
@@ -23,7 +23,7 @@ def configuration(env=None):
     arms = ('P' if suite == 'cohorts' else env.get('PIER_N2_ARMS', 'G,P,R,W')).replace(' ', ',').split(',')
     arms = [arm for arm in arms if arm]
     if not arms or len(set(arms)) != len(arms) or any(arm not in ARMS for arm in arms):
-        raise ValueError('PIER_N2_ARMS must contain distinct G,O,P,R,W labels')
+        raise ValueError('PIER_N2_ARMS must contain distinct G,O,OS,P,R,W labels')
     cohort = int(env.get('PIER_N2_COHORT', '2'))
     learners = nodes * 2
     if cohort < 1 or cohort & (cohort - 1) or learners % cohort:
@@ -100,9 +100,11 @@ def training_args(config, case, directory):
         '--outer-measure-dir': str(directory), '--outer-warmup-cycles': config['warmup_cycles'],
         '--eval-iters': 0, '--log-interval': config.get('log_interval', 1), '--seed': config['seed'],
     }
+    if case['backend'] == 'cpu_offload':
+        options.pop('--outer-workspace-mib')
     argv = [item for pair in options.items() for item in (pair[0], str(pair[1]))]
     argv += ['--bf16', '--accumulate-allreduce-grads-in-fp32', '--local-sgd-inner-average']
-    if case['arm'] == 'O':
+    if case['arm'] in ('O', 'OS'):
         argv.append('--outer-cpu-offload')
     if config['data_prefix']:
         argv += ['--data-path', config['data_prefix']]

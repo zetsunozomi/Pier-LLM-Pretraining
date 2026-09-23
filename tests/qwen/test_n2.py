@@ -31,10 +31,10 @@ class N2Tests(unittest.TestCase):
         for nodes in (1, 8):
             for profile in ('pilot', 'main'):
                 cfg = configuration({'SLURM_NNODES': str(nodes), 'PIER_N2_PROFILE': profile,
-                                     'PIER_N2_ARMS': 'G,O,R,W,P'})
+                                     'PIER_N2_ARMS': 'G,O,OS,R,W,P'})
                 self.assertEqual(cfg['global_batch'] // cfg['learners'], 8)
                 self.assertEqual(cfg['attempts'], cfg['interval'] * (cfg['warmup_cycles'] + cfg['measured_cycles']))
-                for case in cases(cfg)[:5]:
+                for case in cases(cfg)[:6]:
                     argv = training_args(cfg, case, '/tmp/n2-fixture')
                     def extra(parser):
                         parser.add_argument('--qwen-model-size')
@@ -52,7 +52,10 @@ class N2Tests(unittest.TestCase):
                     self.assertEqual(args.num_subgroup, nodes * 2)
                     self.assertEqual(args.outer_sync_interval, 50)
                     self.assertEqual(args.outer_cohort_size, 2 if case['arm'] == 'P' else 1)
-                    self.assertEqual(args.outer_cpu_offload, case['arm'] == 'O')
+                    self.assertEqual(args.outer_cpu_offload, case['arm'] in ('O', 'OS'))
+                    if case['arm'] == 'O':
+                        self.assertEqual(args.outer_arm, 'cpu_offload')
+                        self.assertIsNone(args.outer_workspace_mib)
         cfg = configuration({'PIER_N2_PROFILE': 'main'})
         self.assertEqual(cases(cfg), cases(cfg))
         self.assertEqual(len(cases(cfg)), 12)
@@ -214,11 +217,19 @@ class N2Tests(unittest.TestCase):
                     metadata=dict(arm=case['backend'], cohort=case['cohort'], tile_elements=1024, allocation={},
                                   final_health=dict(model_matches_master=True, finite_model=True,
                                                     finite_loss=True, losses={'lm loss': 2.})))
-                if case['arm'] == 'O':
+                if case['arm'] in ('O', 'OS'):
+                    naive = case['backend'] == 'cpu_offload'
                     report['metadata']['allocation'] = dict(reference_bytes=2 * 2**30, momentum_bytes=2**30)
                     report['metadata']['state_storage'] = {
                         'reference': dict(device='cpu', bytes=2 * 2**30, pinned=True),
                         'momentum': dict(device='cpu', bytes=2**30, pinned=True)}
+                    if naive:
+                        report['metadata']['coordinate_numel'] = 2**29
+                        report['metadata']['allocation'].update(momentum_bytes=2 * 2**30,
+                            state_layout='replicated', workspace_cap_applies=False)
+                        report['metadata']['state_storage'] = {
+                            name: dict(device='cpu', bytes=2 * 2**30, pinned=False)
+                            for name in ('reference', 'momentum')}
                 (directory / f'cycles-rank-{rank}.json').write_text(json.dumps(report))
                 worker = dict(rank=rank, case=case, GPU_executed=True, manifest_sha256=fingerprint,
                               argv=training_args(cfg, case, directory), hostname='fixture-only', local_rank=rank,
@@ -230,7 +241,7 @@ class N2Tests(unittest.TestCase):
                     'loaded_before_optimizer_construction': True, 'qwen_recipe': {'fixture': 'not real measurements'}}))
         return manifest
 
-    def test_offload_summary_requires_actual_pinned_host_storage_and_same_repeat(self):
+    def test_offload_summary_requires_full_pageable_state_and_same_repeat(self):
         cfg = configuration({'PIER_N2_ARMS': 'O,P', 'PIER_N2_REPEAT_START': '2'})
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
@@ -238,11 +249,11 @@ class N2Tests(unittest.TestCase):
             result = collect(root)
             self.assertEqual(result['status'], 'complete')
             self.assertEqual([r['speedup_vs_O'] for r in result['cases']], [1., 2.])
-            self.assertEqual(result['cases'][0]['host_outer_state_gib_max_rank'], 3.)
+            self.assertEqual(result['cases'][0]['host_outer_state_gib_max_rank'], 4.)
             self.assertIn('speedup/O', render(result))
             path = root / 'run-2-O/cycles-rank-3.json'
             original = json.loads(path.read_text())
-            for wrong in ({'device': 'cuda'}, {'pinned': False}, {'bytes': 1}):
+            for wrong in ({'device': 'cuda'}, {'pinned': True}, {'bytes': 1}):
                 report = json.loads(json.dumps(original))
                 report['metadata']['state_storage']['reference'].update(wrong)
                 path.write_text(json.dumps(report))
@@ -305,9 +316,9 @@ class N2Tests(unittest.TestCase):
 
     def test_archived_four_and_eight_gpu_results_are_read_only_and_still_recollect(self):
         archives = ['n2-58675806-20260920-222500.BFBhNF', 'n2-58678984-20260921-000738.rUk4TS',
-                    'n2-58728454-20260922-075100.gEXpVH']
+                    'n2-58728454-20260922-075100.gEXpVH', 'n2-58779130-20260922-193352.BDRzSL']
         for name, states in zip(archives, (['measured', 'measured', 'failed', 'measured'], ['measured'] * 4,
-                                           ['measured'] * 12)):
+                                           ['measured'] * 12, ['measured'] * 3)):
             root = ROOT / 'out' / name
             if not root.is_dir():
                 self.skipTest('archived pilot evidence is not present in this checkout')

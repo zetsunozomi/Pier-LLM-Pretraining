@@ -2099,8 +2099,8 @@ def _add_distributed_args(parser):
                             "Required by the new centered-outer recipe; changes historical scaling.")
     group.add_argument('--outer-runtime', choices=('legacy', 'centered'), default='legacy',
                        help='Select the production tiled centered runtime explicitly.')
-    group.add_argument('--outer-arm', choices=('pier', 'gather', 'resident', 'recenter', 'dtensor'), default=None,
-                       help='Shared training adapter: Pier, native G/R/W or explicit-layout DTensor; default Pier.')
+    group.add_argument('--outer-arm', choices=('pier', 'gather', 'resident', 'recenter', 'dtensor', 'cpu_offload'), default=None,
+                       help='Pier, native G/R/W, DTensor, or naive unsharded CPU offload; default Pier.')
     group.add_argument('--outer-cohort-size', type=int, default=1)
     workspace = group.add_mutually_exclusive_group()
     workspace.add_argument('--outer-tile-elements', type=int, default=8192,

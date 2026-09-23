@@ -60,15 +60,24 @@ def collect_case(output, manifest, case):
         argv = expected_argv(output, manifest, case)
         for rank, meta in enumerate(raw['rank_metadata']):
             require(meta['arm'] == case['backend'] and meta['cohort'] == case['cohort'], 'wrong backend/cohort')
-            if case['arm'] == 'O' or 'state_storage' in meta:
+            offloaded = case['arm'] in ('O', 'OS')
+            naive = case['backend'] == 'cpu_offload'
+            if offloaded or 'state_storage' in meta:
                 storage = meta['state_storage']
-                expected_device = 'cpu' if case['arm'] == 'O' else 'cuda'
+                expected_device = 'cpu' if offloaded else 'cuda'
                 for name in ('reference', 'momentum'):
                     require(storage[name]['device'] == expected_device, 'outer state is on the wrong device')
                     require(storage[name]['bytes'] == meta['allocation'][name + '_bytes'],
                             'outer state storage size differs from allocation receipt')
-                    if case['arm'] == 'O':
-                        require(storage[name]['pinned'] is True, 'offloaded state is not pinned')
+                    if offloaded:
+                        require(storage[name]['pinned'] is (not naive), 'offload pinning differs from the selected implementation')
+                    if naive:
+                        require(storage[name]['bytes'] == meta['coordinate_numel'] * 4,
+                                'naive offload must retain a full R and M replica per learner')
+                if naive:
+                    require(meta['allocation']['state_layout'] == 'replicated', 'naive offload state is sharded')
+                    require(meta['allocation']['workspace_cap_applies'] is False,
+                            'naive whole-parameter scratch must not claim a tiled workspace cap')
             health = meta['final_health']
             require(health['model_matches_master'] and health['finite_model'] and health['finite_loss'],
                     'training health check failed')
@@ -158,6 +167,13 @@ def collect(output):
         result['host_memory_scope'] = 'Persistent outer R/M tensor bytes only; not process/node host peak or all pinned allocations.'
         result['remaining_for_main_table'] = ['selected configurations with equal tuning and three independent paired launches',
                                               'offload transfer/scheduling characterization; no optimized-offload claim from this path alone']
+        if any(case['backend'] == 'cpu_offload' for case in manifest['cases']):
+            result['offload_implementation'] = ('Naive unsharded CPU offload v1: full pageable R/M replicas, '
+                'blocking per-parameter copies/AllReduce, CPU Nesterov, no overlap or bucketing.')
+            result['workspace_comparison'] = ('O uses dynamic whole-parameter buffers; the 64/256 MiB tile cap '
+                'applies to tiled R/P/G/W/OS only. Compare actual measured GPU peaks.')
+            result['remaining_for_main_table'] = ['independent paired repeats for the explicitly naive placement comparison',
+                'keep sharded offload OS and G/W as separate supporting controls']
     return result
 
 
@@ -177,7 +193,10 @@ def render(result):
         else:
             lines.append(f"{row['id']:<14} {row['status']:<12} {row.get('error', '')}")
     if offload:
-        lines.append('O: pinned CPU R/M shards with blocking tiled transfers; not a tuned asynchronous offload implementation.')
+        if any(row['backend'] == 'cpu_offload' for row in result['cases']):
+            lines.append('O-naive: full pageable CPU R/M replicas, serial parameter copies/AllReduce and CPU update; no tiled workspace cap.')
+        else:
+            lines.append('O: pinned CPU R/M shards with blocking tiled transfers; not a tuned asynchronous offload implementation.')
         for row in result['cases']:
             if row['arm'] == 'O' and row['status'] == 'measured':
                 lines.append(f"{row['id']} persistent host R/M: {row['host_outer_state_gib_max_rank']:.3f} GiB/rank (maximum; not host peak).")

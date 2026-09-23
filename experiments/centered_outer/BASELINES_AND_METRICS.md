@@ -3,9 +3,12 @@
 **2026-09-23 update:** the 32-GPU G/R/W/P window (three independent launches
 per arm) and eight-GPU cohort pilot are complete. The paper main table now uses
 [CPU-offloaded reconstruction / GPU resident / Pier](../qwen/N2_MAIN_HANDOFF.md).
-O reuses `gather` with `--outer-cpu-offload`; its current pinned-host copies are
-blocking. The new launcher records and verifies actual state placement and
-splits formal repeats into short jobs. O GPU timing is still pending. Older
+O now uses `cpu_offload`: full pageable CPU R/M replicas, blocking
+per-parameter transfers/AllReduce, and CPU Nesterov. State sharding belongs
+in the ablations; the old pinned/sharded `gather` host path is OS. Its first
+32-GPU pilot has returned (historically labeled O); new naive O timing is
+pending. The main launcher records actual placement and splits repeats into
+short jobs. Older
 status paragraphs below are implementation history, not the current run order.
 
 Status (2026-09-21): implemented in the shared training adapter and checked on
@@ -26,7 +29,8 @@ checkpoint code. No separate toy optimizer is used by their training path.
 | CLI arm | Paper arm | Outer operation | R per rank | M per rank |
 |---|---|---|---|---|
 | `gather` | G | Gather R, center local W, native RS, owner update, AG | width | width |
-| `gather` + `--outer-cpu-offload` | O | Pinned-host R/M tiles, GPU gather/center/RS/update/AG, host writeback | width (CPU) | width (CPU) |
+| `cpu_offload` + `--outer-cpu-offload` | O (naive) | Per-parameter blocking R load, center/AllReduce, CPU Nesterov, master writeback | N (pageable CPU) | N (pageable CPU) |
+| `gather` + `--outer-cpu-offload` | OS (ablation) | Pinned-host R/M tiles, GPU gather/center/RS/update/AG, host writeback | width (CPU) | width (CPU) |
 | `resident` | R | Center against replicated R, native RS, owner update, AG | K × width | width |
 | `recenter` | W | Native raw-W RS, divide, recenter, owner update, AG | width | width |
 | `pier` / omitted | P | Existing ordered reference-owner executor | K/s × width | width |

@@ -24,6 +24,7 @@ fi
     echo 'Cannot locate Pier; set PIER_ROOT to the repository root.' >&2; exit 2;
 }
 export PIER_ROOT
+# O = naive unsharded/pageable CPU state; OS is the separate sharded ablation.
 export PIER_N2_SUITE=baselines PIER_N2_ARMS=O,R,P
 # Default: one short calibration window. Main windows use --time=01:00:00.
 export PIER_N2_PROFILE="${PIER_N2_PROFILE:-pilot}"
