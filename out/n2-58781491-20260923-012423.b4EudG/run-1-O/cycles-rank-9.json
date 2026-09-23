@@ -1,0 +1,179 @@
+{
+  "format": "pier-training-cycles-v1",
+  "run_id": "861e763f-c0e4-4c40-9add-a5dba7711b7a",
+  "status": "complete",
+  "rank": 9,
+  "world_size": 32,
+  "GPU_executed": true,
+  "metadata": {
+    "arm": "cpu_offload",
+    "cohort": 1,
+    "outer_ranks": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31
+    ],
+    "inner_ranks": [
+      9
+    ],
+    "coordinate_fingerprint": "29979720bbe0c4c4a241af5e01d946c9a9bcc807c3bdd898524e9002c0694ca1",
+    "coordinate_numel": 1543044096,
+    "allocation": {
+      "reference_bytes": 6172176384,
+      "momentum_bytes": 6172176384,
+      "state_layout": "replicated",
+      "state_memory": "pageable_cpu",
+      "workspace_policy": "whole_parameter_dynamic_allocations",
+      "workspace_cap_applies": false,
+      "cpu_update_threads": 1,
+      "max_explicit_gpu_temporary_bytes": 1244659712,
+      "max_explicit_host_temporary_bytes": 1244659712,
+      "parameter_count": 254,
+      "excluded": [
+        "master/model",
+        "inner optimizer",
+        "allocator/library storage",
+        "process memory"
+      ]
+    },
+    "state_storage": {
+      "reference": {
+        "device": "cpu",
+        "bytes": 6172176384,
+        "pinned": false
+      },
+      "momentum": {
+        "device": "cpu",
+        "bytes": 6172176384,
+        "pinned": false
+      }
+    },
+    "tile_elements": 155582464,
+    "final_health": {
+      "model_matches_master": true,
+      "finite_model": true,
+      "finite_loss": true,
+      "losses": {
+        "lm loss": 0.010100983083248138
+      }
+    }
+  },
+  "planned_attempts": 100,
+  "initial_clock": {
+    "interval": 50,
+    "attempted": 0,
+    "successful": 0,
+    "boundaries": 0
+  },
+  "final_clock": {
+    "interval": 50,
+    "attempted": 100,
+    "successful": 100,
+    "boundaries": 2
+  },
+  "warmup_cycles": 1,
+  "complete_cycles": 2,
+  "eligible_cycles": 1,
+  "cycles": [
+    {
+      "outer_boundary_index": 1,
+      "complete_cycle": true,
+      "warmup": true,
+      "eligible": false,
+      "attempted_start": 0,
+      "attempted_end": 50,
+      "successful_start": 0,
+      "successful_end": 50,
+      "attempts": 50,
+      "successful_steps": 50,
+      "starts_midcycle": false,
+      "ends_at_outer_boundary": true,
+      "local_cycle_seconds": 165.62160424600006,
+      "max_rank_cycle_seconds": 166.41456481199566,
+      "local_outer_and_commit_seconds": 11.506242149996979,
+      "max_rank_outer_and_commit_seconds": 12.290635565994307,
+      "processed_loss_tokens_global": 13107200,
+      "successful_loss_tokens_global": 13107200,
+      "skipped_loss_tokens_global": 0,
+      "useful_tokens_per_second": null,
+      "payload": {
+        "arm": "cpu_offload",
+        "implementation": "naive_unsharded_cpu_v1",
+        "numerical_contract": "native_fp32_centered_allreduce_cpu_nesterov",
+        "allreduce_calls": 254,
+        "host_to_device_tensor_bytes": 12344352768,
+        "device_to_host_tensor_bytes": 6172176384,
+        "transfer_accounting": "API tensor bytes per rank; not measured physical link traffic",
+        "physical_wire_bytes": null
+      },
+      "torch_peak_allocated_bytes": 29231808000,
+      "torch_peak_reserved_bytes": 30903631872,
+      "device_level_peak_bytes": null,
+      "physical_wire_bytes": null
+    },
+    {
+      "outer_boundary_index": 2,
+      "complete_cycle": true,
+      "warmup": false,
+      "eligible": true,
+      "attempted_start": 50,
+      "attempted_end": 100,
+      "successful_start": 50,
+      "successful_end": 100,
+      "attempts": 50,
+      "successful_steps": 50,
+      "starts_midcycle": false,
+      "ends_at_outer_boundary": true,
+      "local_cycle_seconds": 163.74510218999785,
+      "max_rank_cycle_seconds": 164.6038865390001,
+      "local_outer_and_commit_seconds": 11.39755834099924,
+      "max_rank_outer_and_commit_seconds": 12.255952564999461,
+      "processed_loss_tokens_global": 13107200,
+      "successful_loss_tokens_global": 13107200,
+      "skipped_loss_tokens_global": 0,
+      "useful_tokens_per_second": 79628.73948844745,
+      "payload": {
+        "arm": "cpu_offload",
+        "implementation": "naive_unsharded_cpu_v1",
+        "numerical_contract": "native_fp32_centered_allreduce_cpu_nesterov",
+        "allreduce_calls": 254,
+        "host_to_device_tensor_bytes": 12344352768,
+        "device_to_host_tensor_bytes": 6172176384,
+        "transfer_accounting": "API tensor bytes per rank; not measured physical link traffic",
+        "physical_wire_bytes": null
+      },
+      "torch_peak_allocated_bytes": 29231811584,
+      "torch_peak_reserved_bytes": 30903631872,
+      "device_level_peak_bytes": null,
+      "physical_wire_bytes": null
+    }
+  ],
+  "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+  "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+  "excluded_from_cycle": [
+    "initial model/data/checkpoint loading",
+    "boundary barriers and report I/O",
+    "logging/callbacks between independent cycle windows"
+  ],
+  "performance_result": false,
+  "not_validated": [
+    "workload identity and tuned comparison",
+    "device-level peak memory",
+    "node host/pinned peaks",
+    "physical link traffic",
+    "end-to-end allocated GPU-hours"
+  ]
+}
