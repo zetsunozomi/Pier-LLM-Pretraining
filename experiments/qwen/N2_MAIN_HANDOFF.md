@@ -21,9 +21,48 @@ Each arm has one launch, 50 warmup steps and one measured 50-step cycle.
 Total training-launch wall time was 18.3 minutes. Additional repeats and
 250-step windows are optional extensions, not a prerequisite for this table.
 
-Next priority: the 32-GPU s=1/2/16 [cohort ablation](N3_HANDOFF.md).
-Remaining coverage: homogeneous eight-GPU O/R/P and a 1.5B/TP2 32-GPU point.
-N2 still hardcodes 3B; the model-size choice must be connected before 1.5B.
+The 32-GPU s=1/2/16 cohort sweep and homogeneous eight-GPU O/R/P point are
+complete (`out/n3-58815173-20260924-024052.i2jLI7` and
+`out/n2-58821531-20260924-055127.IfV9bj`). The remaining GPU point is
+Qwen2.5-1.5B/TP2 on 32 GPUs. Model selection is now connected; use the
+dedicated entrypoint below.
+
+## Next experiment: Qwen2.5-1.5B O/R/P
+
+Download the six pinned files first, using `bash experiments/qwen/download_qwen15b.sh`
+on a login node, or the standalone copy already provided. The snapshot directory is:
+
+```text
+/pscratch/sd/s/syfan/Pier/local/qwen/models/Qwen2.5-1.5B/8faed761d45a263340a0528343f099c05c9a4323/
+```
+
+After syncing this change to the cluster:
+
+```bash
+cd /pscratch/sd/s/syfan/Pier
+git pull --ff-only
+export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+sbatch experiments/qwen/n4_15b.sbatch
+```
+
+This requests eight nodes / 32 A100-40GB GPUs and 30 minutes. It fixes
+Qwen2.5-1.5B base, TP2, K=16, O/R/P, P cohort=2, a 64 MiB R/P workspace,
+synthetic tokens, full recomputation, and 50 warmup + 50 measured steps per
+method. Existing model/profile/data/cohort variables are overridden to preserve
+this coverage point. Missing/incomplete snapshot files fail before worker launch;
+the shared model loader still checks the pinned checkpoint contents.
+
+The tested `n2.sbatch` launch and measurement path is reused. Full output remains
+`out/n2-<job>-<time>.<unique>/out.txt`; the manifest records `model_size=1.5B`
+and its revision. The top-level Slurm file is `pier-n4-qwen15b-<job>.out`.
+Email is ALL to `sf850@scarletmail.rutgers.edu`. An existing **eight-node**
+allocation can run `bash experiments/qwen/n4_15b.sbatch`; a one-node shell
+cannot supply this 32-GPU coverage point and is rejected.
+
+For custom runs through `n2.sbatch`, `PIER_QWEN_MODEL_SIZE` selects the pin,
+default snapshot and training model together; it defaults to `3B`.
+`PIER_QWEN_SNAPSHOT` can override the location, but must contain the selected
+model. Historical manifests without `model_size` continue to use 3B.
 
 ## Reproduce the adopted O/R/P window
 
@@ -111,6 +150,17 @@ within each allocation before aggregating across jobs. If O exceeds the
 budget, split groups with a common anchor, retaining the same useful work.
 
 ## Local validation
+
+2026-09-25 model-size change: five focused tests in `test_n2_model_size.py`
+pass, including the actual shell chain for interactive/spooled Slurm launches,
+stale-environment overrides, wrong-allocation rejection, selected snapshot
+checking, and legacy 3B argument compatibility. All eight archived N2/N3
+summaries recollect exactly without modifying their raw data. Shell syntax
+checks pass. These are launcher checks, not a completed 1.5B GPU run.
+The broader existing `test_n2.py` suite could not import in this local test
+environment because `regex` is absent; no cluster packages were changed.
+
+Previously completed validation:
 
 Eleven N2 checks pass: real Megatron argument parsing, direct/spooled launch,
 repeat ordering, full-pageable-state verification, paired ratios, and exact

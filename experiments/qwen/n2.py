@@ -20,7 +20,7 @@ def source_identity():
     command = ['git', 'ls-files', '-z', '--', '*.py', '*.sh', '*.sbatch', 'experiments/qwen/pins.json']
     paths = subprocess.check_output(command, cwd=ROOT).decode().split('\0')
     # Include newly implemented N2 files even before the user's first commit.
-    paths += [str(p.relative_to(ROOT)) for pattern in ('n2*', 'n3*')
+    paths += [str(p.relative_to(ROOT)) for pattern in ('n2*', 'n3*', 'n4*')
               for p in (ROOT / 'experiments/qwen').glob(pattern) if p.is_file()]
     paths += [str(p.relative_to(ROOT)) for p in (ROOT / 'megatron/core/outer_sync').glob('*.py')]
     hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
@@ -35,7 +35,7 @@ def run(output):
     path = output / 'manifest.json'
     if path.exists():
         raise FileExistsError('N2 requires a fresh output directory')
-    pin = json.loads((ROOT / 'experiments/qwen/pins.json').read_text())['models']['3B']
+    pin = json.loads((ROOT / 'experiments/qwen/pins.json').read_text())['models'][cfg.get('model_size', '3B')]
     for name, record in pin['files'].items():
         target = Path(cfg['snapshot']) / name
         if not target.is_file() or target.stat().st_size != record['bytes']:

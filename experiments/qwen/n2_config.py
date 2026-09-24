@@ -1,16 +1,21 @@
 """Small, inspectable Qwen N2 recipes; no E0c/E0d prerequisite."""
 
+import json
 import os
 from pathlib import Path
 import random
 
 ROOT = Path(__file__).resolve().parents[2]
-REVISION = '3aab1f1954e9cc14eb9509a215f9e5ca08227a9b'
 ARMS = {'G': 'gather', 'O': 'cpu_offload', 'OS': 'gather', 'R': 'resident', 'W': 'recenter', 'P': 'pier'}
 
 
 def configuration(env=None):
     env = os.environ if env is None else env
+    model_size = env.get('PIER_QWEN_MODEL_SIZE') or '3B'
+    pins = json.loads((ROOT / 'experiments/qwen/pins.json').read_text())['models']
+    if model_size not in pins:
+        raise ValueError(f'PIER_QWEN_MODEL_SIZE must be one of {", ".join(pins)}')
+    pin = pins[model_size]
     profile = env.get('PIER_N2_PROFILE', 'pilot')
     if profile not in ('pilot', 'main'):
         raise ValueError('PIER_N2_PROFILE must be pilot or main')
@@ -49,11 +54,12 @@ def configuration(env=None):
                 measured_cycles=1 if profile == 'pilot' else 3,
                 attempts=100 if profile == 'pilot' else 250,
                 sequence=2048, microbatch=1, accumulation=8, global_batch=learners * 8,
-                snapshot=str(Path(env.get('PIER_QWEN_SNAPSHOT',
-                    root / 'local/qwen/models/Qwen2.5-3B' / REVISION)).resolve()),
+                snapshot=str(Path(env.get('PIER_QWEN_SNAPSHOT') or
+                    root / 'local/qwen/models' / f'Qwen2.5-{model_size}' / pin['revision']).resolve()),
                 data_prefix=str(Path(prefix).resolve()) if prefix else None,
                 data_kind='indexed_text' if prefix else 'synthetic_tokens',
-                seed=1234, order_seed=421, model='Qwen/Qwen2.5-3B', revision=REVISION)
+                seed=1234, order_seed=421, model_size=model_size,
+                model=pin['model'], revision=pin['revision'])
 
 
 def cases(config):
@@ -79,7 +85,8 @@ def cases(config):
 def training_args(config, case, directory):
     directory = Path(directory)
     options = {
-        '--qwen-model-size': '3B', '--qwen-snapshot': config['snapshot'],
+        # Historical 3B manifests predate the model_size field.
+        '--qwen-model-size': config.get('model_size', '3B'), '--qwen-snapshot': config['snapshot'],
         '--qwen-trace-dir': str(directory), '--tokenizer-model': config['snapshot'],
         '--split': '100,0,0', '--seq-length': config['sequence'], '--num-workers': 0,
         '--dataloader-type': 'single',
