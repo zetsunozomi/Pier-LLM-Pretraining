@@ -9,7 +9,7 @@
 #SBATCH --time=00:20:00
 #SBATCH --output=pier-e0-%j.out
 #SBATCH --mail-user=sf850@scarletmail.rutgers.edu
-#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-type=ALL
 
 set -euo pipefail
 export PIER_ROOT="${PIER_ROOT:-${SLURM_SUBMIT_DIR:?submit from the Pier repository root}}"

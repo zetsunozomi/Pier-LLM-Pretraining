@@ -3,8 +3,9 @@
 **Current handoff (2026-09-23):** use [O/R/P main comparison](N2_MAIN_HANDOFF.md)
 and `experiments/qwen/n2_main.sbatch`. The 32-GPU G/R/W/P three-repeat window
 and eight-GPU cohort pilot have completed. G/W now support the mechanism study;
-the next main measurement uses naive unsharded CPU offload (O). The returned
-sharded offload pilot is retained as OS ablation evidence. The instructions
+the completed naive O/R/P window is now the adopted paper core result.
+The next priority is the 32-GPU cohort ablation. The returned sharded offload
+pilot is retained as OS ablation evidence. The instructions
 below retain the earlier G/R/W/P workflow for reference.
 
 **Historical progress (2026-09-21):** the four-GPU and eight-GPU pilots have returned.

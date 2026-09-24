@@ -9,7 +9,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --output=pier-e0d-%j.out
 #SBATCH --mail-user=sf850@scarletmail.rutgers.edu
-#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-type=ALL
 
 set -euo pipefail
 # sbatch runs a spool copy; direct bash should use the actual script repository.

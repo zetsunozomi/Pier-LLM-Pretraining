@@ -8,6 +8,8 @@
 #SBATCH --gpus-per-node=4
 #SBATCH --time=01:00:00
 #SBATCH --output=pier-e0c-fp64-%j.out
+#SBATCH --mail-user=sf850@scarletmail.rutgers.edu
+#SBATCH --mail-type=ALL
 
 set -euo pipefail
 if [[ -z "${PIER_ROOT:-}" ]]; then

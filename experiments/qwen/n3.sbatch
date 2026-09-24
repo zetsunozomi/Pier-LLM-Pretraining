@@ -9,6 +9,8 @@
 #SBATCH --time=01:00:00
 #SBATCH --output=pier-n3-%j.out
 #SBATCH --export=ALL
+#SBATCH --mail-user=sf850@scarletmail.rutgers.edu
+#SBATCH --mail-type=ALL
 
 set -euo pipefail
 # Use the same launcher/training path as N2, including interactive allocations.

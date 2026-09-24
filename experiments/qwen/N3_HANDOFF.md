@@ -1,10 +1,32 @@
 # N3: one allocation for Pier s=1, s=2 and s=K
 
-Next cluster entrypoint: **`experiments/qwen/n3.sbatch`**. It reuses the N2
-training, measurement and failure-handling path. No new optimizer/backend is
-introduced. Local launcher/collector tests pass; N3 GPU results are pending.
+**Current status (2026-09-23):** the homogeneous eight-GPU s=1/2/4 run is
+complete at `out/n3-58684056-20260921-014323.UmGdL9`. It is included in the
+draft's sharding ablation table. The 32-GPU O/R/P core result is also adopted.
+The next missing anchor-scale ablation is **32 GPUs, s=1/2/16**.
 
-## Submit after syncing the code
+## Next: 32-GPU cohort ablation
+
+```bash
+cd /pscratch/sd/s/syfan/Pier
+export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
+PIER_N2_PROFILE=pilot PIER_N2_REPEATS=1 PIER_N2_WORKSPACE_MIB=64 PIER_QWEN_DATA_PREFIX= PIER_N3_REFERENCE= sbatch --export=ALL --nodes=8 --time=00:30:00 experiments/qwen/n3.sbatch
+```
+
+The existing launcher chooses K=16 and s=1/2/16 automatically, with 100 steps
+per setting (50 warmup, 50 measured). The new allocation includes its own
+s=2 anchor. Keep the 64 MiB workspace and full recomputation fixed. Thirty
+minutes is an initial budget: s=16 has not been timed at this scale. Retain
+completed results if interrupted; split later work with a shared anchor or
+use a one-hour request if necessary. Do not require three longer repetitions
+before using the current core result. Mail directives are ALL to
+`sf850@scarletmail.rutgers.edu`; logs remain under `out/n3-*/out.txt`.
+
+The instructions below describe the already completed eight-GPU run and remain
+available for reproduction. Both use the shared N2 training/measurement path;
+no new optimizer/backend is introduced.
+
+## Reproduce the completed eight-GPU run
 
 ```bash
 cd /pscratch/sd/s/syfan/Pier
@@ -64,8 +86,8 @@ Return the one printed directory using the existing Git workflow.
 
 It tests whether an intermediate cohort gives a useful speed/memory choice.
 Use the measured curve to select configurations for the 32-GPU main comparison.
-One pilot run does not settle small speed differences or replace the formal
-paired repeats and equal workspace tuning. The recipe also supports the main
+These are one-window observations. The current next step is the anchor-scale
+cohort curve, with the core O/R/P result already adopted. The recipe also supports the main
 window via `PIER_N2_PROFILE=main`; at 32 GPUs the cohorts become 1, 2 and 16.
 
 ## Local checks

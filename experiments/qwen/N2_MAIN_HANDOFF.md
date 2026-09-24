@@ -4,7 +4,28 @@
 offload path is OS, a supporting ablation alongside G/W and the cohort sweep.
 All three main rows report complete-cycle throughput, outer time, and GPU memory.
 
-## Run the new O/R/P pilot
+## Adopted core result
+
+The user selected `out/n2-58781491-20260923-012423.b4EudG` as the paper's
+core O/R/P comparison. All three completed on the same 32 A100-40GB allocation:
+
+| Arm | Tokens/s | Outer + commit (s) | Allocated / reserved GiB |
+|---|---:|---:|---:|
+| O | 79,628.74 | 12.256 | 27.22 / 28.78 |
+| R | 83,256.57 | 4.994 | 33.40 / 34.37 |
+| P, s=2 | 82,697.07 | 6.121 | 30.52 / 31.51 |
+
+P improves throughput over O by 3.85% and reduces outer time by 50.05%.
+Against R, it saves 2.87 GiB allocated per GPU with 0.67% lower throughput.
+Each arm has one launch, 50 warmup steps and one measured 50-step cycle.
+Total training-launch wall time was 18.3 minutes. Additional repeats and
+250-step windows are optional extensions, not a prerequisite for this table.
+
+Next priority: the 32-GPU s=1/2/16 [cohort ablation](N3_HANDOFF.md).
+Remaining coverage: homogeneous eight-GPU O/R/P and a 1.5B/TP2 32-GPU point.
+N2 still hardcodes 3B; the model-size choice must be connected before 1.5B.
+
+## Reproduce the adopted O/R/P window
 
 After syncing this implementation to the cluster:
 
@@ -15,8 +36,8 @@ PIER_N2_PROFILE=pilot PIER_N2_WORKSPACE_MIB=64 PIER_N2_COHORT=2 PIER_N2_REPEAT_S
 ```
 
 This requests eight nodes / 32 A100-40GB GPUs, one O/R/P group, 100 steps per
-method, and 30 minutes. The new O has no GPU timing yet; 30 minutes is an
-initial budget. In an existing GPU allocation, use the same variables with
+method, and 30 minutes. The completed window used about 18.3 minutes of
+training-launch wall time in total. In an existing GPU allocation, use the same variables with
 `bash experiments/qwen/n2_main.sbatch`; the allocation's node count and time
 limit apply. The wrapper fixes O/R/P and one repeat even if stale variables
 name another suite. The default log interval is one iteration.
@@ -75,9 +96,10 @@ evidence in the paper: 81,859 tokens/s and 7.705 s outer, versus that run's P
 82,583 tokens/s and 6.337 s outer. The paired +0.885% throughput belongs to
 this old implementation, not to the new naive O.
 
-## Later: three separate formal jobs
+## Optional longer repeated measurements
 
-After the pilot establishes a suitable time limit:
+Only when extra variability evidence is needed; these jobs are not the next
+required step or a prerequisite for the adopted core table:
 
 ```bash
 PIER_N2_PROFILE=main PIER_N2_WORKSPACE_MIB=64 PIER_N2_COHORT=2 PIER_QWEN_DATA_PREFIX= sbatch --export=ALL --array=1-3 --time=01:00:00 experiments/qwen/n2_main.sbatch
@@ -96,4 +118,5 @@ read-only recollection of all archived 4/8/32-GPU reports including old O.
 The new executor passes a four-process NumPy-oracle comparison over three
 updates, including noncontiguous groups and singleton groups. The shared
 runtime passes optimizer/skip/commit and exact midcycle checkpoint restore
-with O. These checks do not measure CUDA transfer behavior or GPU speed.
+with O. The separate GPU window above now supplies CUDA execution and
+performance evidence; local tests supply targeted update/restore checks.

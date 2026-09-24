@@ -9,6 +9,8 @@
 #SBATCH --time=02:00:00
 #SBATCH --output=pier-n2-%j.out
 #SBATCH --export=ALL
+#SBATCH --mail-user=sf850@scarletmail.rutgers.edu
+#SBATCH --mail-type=ALL
 
 set -euo pipefail
 if [[ -z "${PIER_ROOT:-}" ]]; then
