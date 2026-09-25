@@ -1,0 +1,7 @@
+N2: complete
+case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/O
+run-1-O        measured    139657.32             6.8755    14.04/15.34   1.0000x
+run-1-R        measured    146355.92             2.6133    17.16/17.99   1.0480x
+run-1-P        measured    145513.17             3.0776    15.72/16.56   1.0419x
+O-naive: full pageable CPU R/M replicas, serial parameter copies/AllReduce and CPU update; no tiled workspace cap.
+run-1-O persistent host R/M: 5.751 GiB/rank (maximum; not host peak).
