@@ -109,3 +109,14 @@ samples_record*
 !/out/n3-*/run-*/
 /out/n3-*/run-*/*
 !/out/n3-*/run-*/*.json
+
+# Capacity scan: resumable per-arm probes, text evidence only.
+!/out/capacity40-*/
+!/out/capacity40-*/*/
+/out/capacity40-*/*/*
+!/out/capacity40-*/*/*.json
+!/out/capacity40-*/*/*.txt
+!/out/capacity40-*/*/trial-*/
+/out/capacity40-*/*/trial-*/*
+!/out/capacity40-*/*/trial-*/*.json
+!/out/capacity40-*/*/trial-*/*.txt
