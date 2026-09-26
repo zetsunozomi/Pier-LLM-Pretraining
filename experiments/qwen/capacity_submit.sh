@@ -5,8 +5,8 @@ script_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 export PIER_ROOT="${PIER_ROOT:-$script_root}"
 cd "$PIER_ROOT"
 export PIER_PYTHON="${PIER_PYTHON:-$(command -v python)}"
-export PIER_CAPACITY_DIR="${PIER_CAPACITY_DIR:-$PIER_ROOT/out/capacity40-depth-v1}"
-minutes="${PIER_CAPACITY_MINUTES:-60}"
+export PIER_CAPACITY_DIR="${PIER_CAPACITY_DIR:-$PIER_ROOT/out/capacity40-depth-h10-v2}"
+minutes="${PIER_CAPACITY_MINUTES:-30}"
 case "$minutes" in
     30|60) ;;
     *) echo 'PIER_CAPACITY_MINUTES must be 30 or 60.' >&2; exit 2 ;;

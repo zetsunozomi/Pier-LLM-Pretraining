@@ -13,16 +13,17 @@ bash experiments/qwen/capacity_submit.sh
 ```
 
 The default array scans R, G, OS, P2, P16, one arm at a time, with eight
-A100-SXM4-40GB nodes / 32 GPUs per job and a one-hour wall limit. Mail is ALL to
+A100-SXM4-40GB nodes / 32 GPUs per job and a half-hour wall limit. Mail is ALL to
 sf850@scarletmail.rutgers.edu. An allocation saves each completed probe; if it runs
 out of time, repeat **the same submit command**. Completed arms are omitted and
 unfinished arms resume their saved search. Do not submit the same arm twice while
 its previous job is pending or running. A per-arm lock rejects concurrent scans.
 
-Half-hour allocations and individual arms are also supported:
+Individual arms and optional one-hour allocations are also supported:
 
 ```bash
-PIER_CAPACITY_MINUTES=30 bash experiments/qwen/capacity_submit.sh R G
+bash experiments/qwen/capacity_submit.sh R G
+PIER_CAPACITY_MINUTES=60 bash experiments/qwen/capacity_submit.sh OS
 bash experiments/qwen/capacity_submit.sh OS P2 P16
 ```
 
@@ -36,7 +37,8 @@ For an existing **eight-node** exclusive allocation:
 bash experiments/qwen/capacity.sbatch R
 ```
 
-The default `PIER_CAPACITY_DIR` is `out/capacity40-depth-v1`. Set a new directory
+The default `PIER_CAPACITY_DIR` is `out/capacity40-depth-h10-v2`. This separates
+the H=10 / 11-step recipe from the earlier H=50 campaign. Set a new directory
 for a fresh campaign. All driver logs, per-trial `out.txt` files, rank receipts,
 and summaries live there. Only JSON and text are tracked. No checkpoints are
 saved. The four tokenizer files from the existing pinned Qwen2.5-3B snapshot are
@@ -49,7 +51,7 @@ snapshot is stored somewhere else.
   vocabulary 151936, tied embeddings. **Only depth changes.**
 - TP2, PP1, inner DP1, K16; sequence 2048, microbatch 1, accumulation 8,
   global batch 128; BF16, FP32 masters/gradients/state; full uniform layer-wise
-  activation recomputation; AdamW inner / Nesterov outer every 50 successful steps.
+  activation recomputation; AdamW inner / Nesterov outer every 10 successful steps.
 - 64 MiB managed workspace for R/G/OS/P2/P16 (and optional W), as in N2.
 - Random initialization, seed 1234, synthetic tokens, identical recipe for every
   arm at a given depth. Existing runtime checks identical initial masters across
@@ -61,16 +63,22 @@ snapshot is stored somewhere else.
 1. Probe 36 layers (3.085938688B). If successful, double depth until CUDA OOM.
    If 36 fails, halve depth until a successful lower bound is found.
 2. Binary search between successful and failed depths to a one-layer gap.
-3. Each probe is a fresh distributed process and executes **51 successful steps**:
-   first optimizer-state allocation, one actual outer update and one subsequent
-   training step are included.
-4. Confirm the candidate maximum in a fresh process with **151 successful steps**
-   (three complete outer cycles plus one step). If it OOMs, reduce the bound and
-   continue. `complete` requires that depth to pass and the next layer to OOM.
+3. Each probe is a fresh distributed process and executes **11 successful steps**:
+   first optimizer-state allocation, the outer update at step 10 and the
+   post-sync training step at step 11 are included.
+4. Stop when that depth passes and the next layer OOMs. There is **no separate
+   confirmation run or three-cycle requirement**.
 5. Require every rank to finish with finite model/loss and committed master/model
    weights. Only explicit CUDA OutOfMemoryError establishes an OOM bound. Generic
    Slurm/NCCL errors, CPU OOM, skipped steps, incomplete evidence and timeouts are
    errors or interruptions, never capacity bounds.
+
+The current dense, fixed-shape recipe allocates R/M and tiled workspaces at
+runtime construction. Adam state is needed on the first optimizer update;
+the first outer cycle exercises communication and, for O, dynamic offload
+scratch. No application state is scheduled to appear only on the second or
+third outer cycle. This is a capacity check, so it uses H=10 to reach the same
+allocation paths sooner; N2 timing/quality recipes retain their own intervals.
 
 The search assumes feasibility decreases with depth under this fixed recipe.
 The default ceiling is 256 layers. Reaching it successfully is reported as
@@ -82,11 +90,11 @@ results. `needs_resume` means the saved search must continue in another allocati
 
 ```bash
 "$PIER_PYTHON" experiments/qwen/capacity.py \
-  --output-dir out/capacity40-depth-v1 --summary
+  --output-dir out/capacity40-depth-h10-v2 --summary
 ```
 
-Each `<arm>/summary.json` records `max_confirmed_layers`,
-`max_confirmed_parameters`, `smallest_oom_layers`, and `exact_layer_boundary`.
+Each `<arm>/summary.json` records `max_layers`,
+`max_parameters`, `smallest_oom_layers`, and `exact_layer_boundary`.
 Only `status=complete` / `exact_layer_boundary=true` is a resolved maximum.
 The statement supported is the largest depth that completes this fixed training
 window on this hardware and recipe, not long-run convergence or model quality.

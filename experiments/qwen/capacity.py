@@ -51,6 +51,9 @@ def classify(directory, manifest, code, interrupted=False):
     try:
         manifest_sha = hashlib.sha256((directory / 'manifest.json').read_bytes()).hexdigest()
         steps, world = manifest['steps'], manifest['config']['world_size']
+        interval = manifest['config']['interval']
+        if interval != 10 or steps != interval + 1:
+            raise ValueError('capacity v2 requires H=10 and 11 successful steps')
         run_ids = set()
         for rank in range(world):
             def check(condition, message):
@@ -68,11 +71,11 @@ def classify(directory, manifest, code, interrupted=False):
             check(init['initialization'] == 'random' and init['pretrained_weights_loaded'] is False, 'initialization differs')
             check(success['status'] == 'passed' and report['status'] == 'complete', 'run did not complete')
             check(report['world_size'] == world and report['GPU_executed'] is True, 'GPU world differs')
-            check(report['final_clock'] == dict(interval=50, attempted=steps, successful=steps, boundaries=steps//50),
+            check(report['final_clock'] == dict(interval=interval, attempted=steps, successful=steps, boundaries=1),
                   'missing successful steps or outer boundaries')
-            check(report['initial_clock'] == dict(interval=50, attempted=0, successful=0, boundaries=0), 'not a fresh run')
-            check(report['planned_attempts'] == steps and report['complete_cycles'] == steps//50, 'cycle count differs')
-            check(len(report['cycles']) == steps//50 + 1 and report['cycles'][-1]['successful_steps'] == 1,
+            check(report['initial_clock'] == dict(interval=interval, attempted=0, successful=0, boundaries=0), 'not a fresh run')
+            check(report['planned_attempts'] == steps and report['complete_cycles'] == 1, 'cycle count differs')
+            check(len(report['cycles']) == 2 and report['cycles'][-1]['successful_steps'] == 1,
                   'missing final post-sync step')
             label, cohort = ARMS[manifest['arm']]
             check(report['metadata']['arm'] == BACKENDS[label] and report['metadata']['cohort'] == cohort, 'backend differs')
@@ -86,7 +89,7 @@ def classify(directory, manifest, code, interrupted=False):
             raise ValueError('mixed run identities')
     except (KeyError, ValueError, TypeError, OSError) as exc:
         return {'status': 'error', 'reason': f'incomplete/invalid all-rank success evidence: {type(exc).__name__}: {exc}'}
-    return {'status': 'passed', 'successful_steps': steps, 'outer_cycles': steps//50}
+    return {'status': 'passed', 'successful_steps': steps, 'outer_cycles': 1}
 
 
 def history(directory):
@@ -101,12 +104,11 @@ def result(arm, trials, terminal):
     failed = min((t['layers'] for t in trials if t['status'] == 'oom'), default=None)
     good = [t for t in trials if t['status'] == 'passed'
             and (failed is None or t['layers'] < failed)]
-    confirmed = [t for t in good if t['phase'] == 'confirm']
     low = max((t['layers'] for t in good), default=None)
-    maximum = max((t['layers'] for t in confirmed), default=None)
+    maximum = low if terminal == 'complete' else None
     return {'arm': arm, 'status': terminal,
-            'max_confirmed_layers': maximum,
-            'max_confirmed_parameters': parameters(maximum) if maximum else None,
+            'max_layers': maximum,
+            'max_parameters': parameters(maximum) if maximum else None,
             'largest_probe_pass_layers': low, 'smallest_oom_layers': failed,
             'smallest_oom_parameters': parameters(failed) if failed else None,
             'exact_layer_boundary': terminal == 'complete' and maximum is not None and failed == maximum + 1,
@@ -122,9 +124,10 @@ def print_summary(root):
             rows.append(json.loads(path.read_text()))
     print('arm  status                   max_layers  parameters(B)  next_OOM_layers')
     for r in rows:
-        count = r['max_confirmed_parameters']
+        count = r.get('max_parameters', r.get('max_confirmed_parameters'))
+        layers = r.get('max_layers', r.get('max_confirmed_layers'))
         formatted = f'{count/1e9:.6f}' if count else 'pending'
-        print(f"{r['arm']:4} {r['status']:24} {str(r['max_confirmed_layers']):>10} "
+        print(f"{r['arm']:4} {r['status']:24} {str(layers):>10} "
               f"{formatted:>14} {str(r['smallest_oom_layers']):>16}")
     # No shared writable summary: concurrent array tasks own separate arm dirs.
     return rows
@@ -146,7 +149,7 @@ def run(args):
 
 def scan(args, root, directory):
     cfg = recipe(args.snapshot)
-    plan = dict(format='pier-capacity-v1', config=cfg, arm=args.arm,
+    plan = dict(format='pier-capacity-v2', config=cfg, arm=args.arm,
                 start_layers=args.start_layers, ceiling_layers=args.ceiling_layers,
                 tokenizer=tokenizer_identity(cfg['snapshot']), sources=sources())
     plan_path = directory / 'plan.json'
@@ -171,8 +174,8 @@ def scan(args, root, directory):
         if layers is None:
             terminal = phase
             break
-        steps = cfg['confirm_steps'] if phase == 'confirm' else cfg['probe_steps']
-        # Reserve enough time for a whole fresh run. Final confirmation is longer.
+        steps = cfg['probe_steps']
+        # Reserve enough time for a whole fresh 11-step run.
         passed = [t for t in trials if t['status'] == 'passed']
         estimate = 180 + 4 * steps
         if passed:
@@ -231,7 +234,7 @@ def main():
     parser.add_argument('--snapshot', type=Path)
     parser.add_argument('--start-layers', type=int, default=36)
     parser.add_argument('--ceiling-layers', type=int, default=256)
-    parser.add_argument('--budget-seconds', type=int, default=3300)
+    parser.add_argument('--budget-seconds', type=int, default=1500)
     parser.add_argument('--summary', action='store_true')
     args = parser.parse_args()
     if args.summary:

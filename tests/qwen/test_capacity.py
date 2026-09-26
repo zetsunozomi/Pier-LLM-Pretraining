@@ -23,14 +23,13 @@ from experiments.qwen.capacity_config import ARMS, ROOT, architecture, next_tria
 from experiments.qwen.n2_config import ARMS as BACKENDS
 
 
-def simulate(limit, confirm_limit=None, history=None):
+def simulate(limit, history=None):
     trials = list(history or [])
     for _ in range(100):
         layer, phase = next_trial(trials)
         if layer is None:
             return capacity.result('R', trials, phase), trials
-        threshold = confirm_limit if phase == 'confirm' and confirm_limit is not None else limit
-        trials.append(dict(layers=layer, phase=phase, status='passed' if layer <= threshold else 'oom'))
+        trials.append(dict(layers=layer, phase=phase, status='passed' if layer <= limit else 'oom'))
     raise AssertionError('search did not converge')
 
 
@@ -38,6 +37,7 @@ def evidence(path, manifest):
     capacity.write(path / 'manifest.json', manifest)
     fingerprint = hashlib.sha256((path / 'manifest.json').read_bytes()).hexdigest()
     steps, world = manifest['steps'], manifest['config']['world_size']
+    interval = manifest['config']['interval']
     label, cohort = ARMS[manifest['arm']]
     for rank in range(world):
         capacity.write(path / f'worker-rank-{rank}.json', dict(rank=rank, GPU_executed=True,
@@ -48,9 +48,9 @@ def evidence(path, manifest):
         capacity.write(path / f'success-rank-{rank}.json', dict(rank=rank, status='passed'))
         capacity.write(path / f'cycles-rank-{rank}.json', dict(rank=rank, status='complete',
             world_size=world, GPU_executed=True, run_id='fixture', planned_attempts=steps,
-            initial_clock=dict(interval=50, attempted=0, successful=0, boundaries=0),
-            final_clock=dict(interval=50, attempted=steps, successful=steps, boundaries=steps//50),
-            complete_cycles=steps//50, cycles=[{'successful_steps': 50}]*(steps//50)+[{'successful_steps': 1}],
+            initial_clock=dict(interval=interval, attempted=0, successful=0, boundaries=0),
+            final_clock=dict(interval=interval, attempted=steps, successful=steps, boundaries=steps//interval),
+            complete_cycles=steps//interval, cycles=[{'successful_steps': interval}]*(steps//interval)+[{'successful_steps': 1}],
             metadata=dict(arm=BACKENDS[label], cohort=cohort,
                 state_storage={name: {'device': 'cpu' if label in ('OS', 'O') else 'cuda'}
                                for name in ('reference', 'momentum')},
@@ -63,22 +63,24 @@ class CapacityTests(unittest.TestCase):
             with self.subTest(limit=limit):
                 summary, trials = simulate(limit)
                 self.assertTrue(summary['exact_layer_boundary'])
-                self.assertEqual(summary['max_confirmed_layers'], limit)
+                self.assertEqual(summary['max_layers'], limit)
                 self.assertEqual(summary['smallest_oom_layers'], limit+1)
                 self.assertLessEqual(len(trials), 18)
+                self.assertEqual(len({t['layers'] for t in trials}), len(trials))
+                self.assertTrue(all(t['phase'] == 'probe' for t in trials))
         self.assertEqual(simulate(0)[0]['status'], 'no_feasible_model')
         self.assertEqual(simulate(256)[0]['status'], 'search_ceiling_reached')
         self.assertFalse(simulate(256)[0]['capacity_result'])
 
-    def test_confirmation_failure_and_interruption_do_not_create_false_limit(self):
-        summary, trials = simulate(43, confirm_limit=40)
-        self.assertEqual(summary['max_confirmed_layers'], 40)
+    def test_interruption_does_not_create_false_limit(self):
+        summary, trials = simulate(43)
+        self.assertEqual(summary['max_layers'], 43)
         self.assertTrue(summary['exact_layer_boundary'])
         partial = trials[:4]
         candidate = next_trial(partial)
         for status in ('interrupted', 'error'):
             self.assertEqual(next_trial(partial + [dict(layers=candidate[0], phase=candidate[1], status=status)]), candidate)
-        self.assertEqual(simulate(43, confirm_limit=40, history=partial)[0], summary)
+        self.assertEqual(simulate(43, history=partial)[0], summary)
 
     def test_model_count_matches_independent_qwen_shape_schema(self):
         # Load this pure config module without importing the torch-dependent package.
@@ -97,11 +99,12 @@ class CapacityTests(unittest.TestCase):
     def test_arguments_reuse_backends_and_keep_recipe_fixed(self):
         cfg = recipe('/tmp/tokenizer')
         for arm, (label, cohort) in ARMS.items():
-            argv = training_args(cfg, arm, 45, 151, '/tmp/trial')
+            argv = training_args(cfg, arm, 45, cfg['probe_steps'], '/tmp/trial')
             self.assertEqual(argv[argv.index('--outer-arm')+1], BACKENDS[label])
             self.assertEqual(argv[argv.index('--outer-cohort-size')+1], str(cohort))
             self.assertEqual(argv[argv.index('--capacity-layers')+1], '45')
-            self.assertEqual(argv[argv.index('--train-iters')+1], '151')
+            self.assertEqual(argv[argv.index('--train-iters')+1], '11')
+            self.assertEqual(argv[argv.index('--outer-sync-interval')+1], '10')
             self.assertNotIn('--qwen-snapshot', argv)
             self.assertEqual('--outer-cpu-offload' in argv, label in ('O', 'OS'))
             self.assertEqual('--outer-workspace-mib' in argv, label != 'O')
@@ -109,13 +112,18 @@ class CapacityTests(unittest.TestCase):
     def test_missing_rank_skips_nonfinite_and_non_oom_failures_reject(self):
         with tempfile.TemporaryDirectory() as name:
             path = Path(name)
-            manifest = dict(config=recipe('/tmp/tokenizer'), arm='OS', layers=40, parameters=parameters(40), steps=51)
+            manifest = dict(config=recipe('/tmp/tokenizer'), arm='OS', layers=40, parameters=parameters(40), steps=11)
             evidence(path, manifest)
             self.assertEqual(capacity.classify(path, manifest, 0)['status'], 'passed')
             reportpath = path/'cycles-rank-31.json'
             good = reportpath.read_text()
             report = json.loads(good)
-            report['final_clock']['successful'] = 50
+            report['final_clock']['successful'] = 10
+            capacity.write(reportpath, report)
+            self.assertEqual(capacity.classify(path, manifest, 0)['status'], 'error')
+            reportpath.write_text(good)
+            report = json.loads(good)
+            report['final_clock']['interval'] = 50
             capacity.write(reportpath, report)
             self.assertEqual(capacity.classify(path, manifest, 0)['status'], 'error')
             reportpath.write_text(good)
@@ -133,13 +141,14 @@ class CapacityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as name:
             directory = Path(name)
             args = SimpleNamespace(output_dir=directory, arm='R', snapshot=directory/'tokenizer',
-                                   start_layers=36, ceiling_layers=256, budget_seconds=3300)
+                                   start_layers=36, ceiling_layers=256, budget_seconds=1500)
             calls = []
 
             class FakeProcess:
                 def __init__(self, command, **kwargs):
                     trial = Path(command[-1])
                     manifest = json.loads((trial/'manifest.json').read_text())
+                    assert manifest['steps'] == 11 and manifest['config']['interval'] == 10
                     calls.append(manifest['layers'])
                     if manifest['layers'] <= 39:
                         evidence(trial, manifest)
@@ -160,13 +169,14 @@ class CapacityTests(unittest.TestCase):
                 self.assertEqual(capacity.run(args), 0)
                 self.assertFalse(calls)
                 self.assertEqual(json.loads((directory/'R/summary.json').read_text())['status'], 'needs_resume')
-                args.budget_seconds = 3300
+                args.budget_seconds = 1500
                 self.assertEqual(capacity.run(args), 0)
                 count = len(calls)
                 self.assertEqual(capacity.run(args), 0)
                 self.assertEqual(len(calls), count)
             report = json.loads((directory/'R/summary.json').read_text())
-            self.assertEqual(report['max_confirmed_layers'], 39)
+            self.assertEqual(report['max_layers'], 39)
+            self.assertEqual(len(calls), len(set(calls)))
             self.assertTrue(report['exact_layer_boundary'])
 
     def test_submit_selects_unfinished_arms_and_exports_environment(self):
@@ -180,7 +190,7 @@ class CapacityTests(unittest.TestCase):
             sbatch.chmod(0o755)
             env = {k: v for k, v in os.environ.items() if not k.startswith(('PIER_', 'SLURM_'))}
             env.update(PATH=f'{path}:{os.environ["PATH"]}', PIER_ROOT=str(ROOT), PIER_PYTHON=sys.executable,
-                       PIER_CAPACITY_DIR=str(campaign), PIER_CAPACITY_MINUTES='30')
+                       PIER_CAPACITY_DIR=str(campaign))
             run = subprocess.run(['bash', str(ROOT/'experiments/qwen/capacity_submit.sh'), 'R', 'OS', 'P16'],
                                  env=env, capture_output=True, text=True, timeout=10)
             self.assertEqual(run.returncode, 0, run.stderr)
@@ -220,7 +230,7 @@ class CapacityTests(unittest.TestCase):
                 self.assertEqual(call['master'], 'nid001')
                 self.assertEqual(call['export'], 'ALL')
                 self.assertEqual(call['argv'][call['argv'].index('--arm')+1], 'P16')
-                self.assertEqual(call['argv'][call['argv'].index('--budget-seconds')+1], '3300')
+                self.assertEqual(call['argv'][call['argv'].index('--budget-seconds')+1], '1500')
                 self.assertIn(str(logfile), run.stdout)
                 env['SLURM_JOB_NUM_NODES'] = '1'
                 run = subprocess.run(['bash', str(script), 'R'], env=env, cwd=path,

@@ -6,7 +6,7 @@
 #SBATCH --nodes=8
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #SBATCH --array=0-4%1
 #SBATCH --output=out/capacity40-%A_%a.out
 #SBATCH --export=ALL
@@ -33,7 +33,7 @@ fi
 arms=(R G OS P2 P16 O W)
 arm="${1:-${arms[${SLURM_ARRAY_TASK_ID:-0}]}}"
 export PIER_PYTHON="${PIER_PYTHON:-$(command -v python)}"
-export PIER_CAPACITY_DIR="${PIER_CAPACITY_DIR:-$PIER_ROOT/out/capacity40-depth-v1}"
+export PIER_CAPACITY_DIR="${PIER_CAPACITY_DIR:-$PIER_ROOT/out/capacity40-depth-h10-v2}"
 mkdir -p "$PIER_CAPACITY_DIR/$arm"
 PIER_CAPACITY_DIR=$(cd "$PIER_CAPACITY_DIR" && pwd)
 export PIER_CAPACITY_DIR
@@ -52,4 +52,4 @@ exec "$PIER_PYTHON" experiments/qwen/capacity.py \
     --output-dir "$PIER_CAPACITY_DIR" --arm "$arm" --snapshot "$snapshot" \
     --start-layers "${PIER_CAPACITY_START_LAYERS:-36}" \
     --ceiling-layers "${PIER_CAPACITY_MAX_LAYERS:-256}" \
-    --budget-seconds "${PIER_CAPACITY_BUDGET_SECONDS:-3300}"
+    --budget-seconds "${PIER_CAPACITY_BUDGET_SECONDS:-1500}"

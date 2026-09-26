@@ -33,12 +33,12 @@ def recipe(snapshot):
     return dict(repository=str(ROOT), snapshot=str(Path(snapshot).resolve()),
                 nodes=8, world_size=32, tp=2, learners=16,
                 sequence=2048, microbatch=1, accumulation=8, global_batch=128,
-                interval=50, workspace_mib=64, seed=1234, log_interval=1,
+                interval=10, workspace_mib=64, seed=1234, log_interval=1,
                 warmup_cycles=0, data_prefix=None, model_size='3B',
                 initialization='random', data_kind='synthetic_tokens',
                 architecture_family='Qwen2.5-3B depth variants', base_architecture=architecture(36),
                 expected_gpu='NVIDIA A100-SXM4-40GB',
-                probe_steps=51, confirm_steps=151)
+                probe_steps=11)
 
 
 def training_args(config, arm, layers, steps, directory):
@@ -71,10 +71,10 @@ def tokenizer_identity(snapshot):
 
 
 def next_trial(trials, *, start=36, ceiling=256):
-    """Exponential bracketing, binary search, then a fresh 151-step confirmation.
+    """Exponential bracketing and binary search using one 11-step trial per depth.
 
-    GPU OOMs bound the search. Timeouts/errors never tighten a bound. A later
-    confirmation OOM supersedes a shorter successful probe at the same depth.
+    GPU OOMs bound the search. Timeouts/errors never tighten a bound.
+    A passing depth and an OOM at the next layer resolve the maximum directly.
     Returns (layers, phase), or (None, terminal status).
     """
     if not 1 <= start <= ceiling:
@@ -88,9 +88,7 @@ def next_trial(trials, *, start=36, ceiling=256):
     if high == 1:
         return None, 'no_feasible_model'
     if low == ceiling or (low and high == low + 1):
-        if any(t['layers'] == low and t['phase'] == 'confirm' for t in passed):
-            return None, 'complete' if oom else 'search_ceiling_reached'
-        return low, 'confirm'
+        return None, 'complete' if oom else 'search_ceiling_reached'
     if not low:
         return max(1, high // 2), 'probe'
     if not oom:
