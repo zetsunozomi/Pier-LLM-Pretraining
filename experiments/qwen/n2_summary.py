@@ -60,6 +60,9 @@ def collect_case(output, manifest, case):
         argv = expected_argv(output, manifest, case)
         for rank, meta in enumerate(raw['rank_metadata']):
             require(meta['arm'] == case['backend'] and meta['cohort'] == case['cohort'], 'wrong backend/cohort')
+            if case['backend'] == 'pier':
+                require(meta['allocation'].get('schedule', 'reference') == cfg.get('pier_schedule', 'reference'),
+                        'Pier execution schedule differs from the launch configuration')
             offloaded = case['arm'] in ('O', 'OS')
             naive = case['backend'] == 'cpu_offload'
             if offloaded or 'state_storage' in meta:
@@ -105,6 +108,8 @@ def collect_case(output, manifest, case):
                    allocations=[m['allocation'] for m in raw['rank_metadata']],
                    tile_elements=[m['tile_elements'] for m in raw['rank_metadata']],
                    measurement_contract=raw['measurement_contract'], input_reports=raw['input_reports'])
+        if case['backend'] == 'pier' and 'pier_schedule' in cfg:
+            row['pier_schedule'] = cfg.get('pier_schedule', 'reference')
         if all('state_storage' in m for m in raw['rank_metadata']):
             row['state_storage_by_rank'] = [m['state_storage'] for m in raw['rank_metadata']]
             row['host_outer_state_gib_max_rank'] = max(
@@ -183,6 +188,8 @@ def render(result):
     ratio = 'P(s=2)' if sweep else ('O' if offload else 'G')
     lines = [result['stage'] + ': ' + result['status'],
              f'case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/{ratio}']
+    if result['config'].get('pier_schedule', 'reference') != 'reference':
+        lines.insert(1, 'Pier schedule: ' + result['config']['pier_schedule'])
     for row in result['cases']:
         if row['status'] == 'measured':
             value = row.get('speedup_vs_P_s2' if sweep else ('speedup_vs_O' if offload else 'speedup_vs_G'))

@@ -34,7 +34,7 @@ class CenteredExecutor:
     """
 
     def __init__(self, master, reference, momentum, *, cohort, tile_elements,
-                 model=None, group=None, coordinates=None):
+                 model=None, group=None, coordinates=None, schedule='reference'):
         if not dist.is_initialized():
             raise ValueError('initialize a distributed group first')
         # Older PyTorch accepts None for get_rank/get_world_size, but not for
@@ -58,6 +58,16 @@ class CenteredExecutor:
             raise ValueError('positive tile capacity and nonempty master required')
         self.g = self.k // self.s
         self.a, self.b = divmod(self.rank, self.s)
+        if schedule not in ('reference', 'contiguous'):
+            raise ValueError('unknown ordered communication schedule')
+        self.schedule = schedule
+        # Reverse coordinate-owner bits, never learner leaves. Low-bit-first
+        # reduction then halves a contiguous bank without changing any adds.
+        bits = self.g.bit_length() - 1
+        self.owner_order = [sum(((owner >> bit) & 1) << (bits - 1 - bit)
+                                for bit in range(bits)) for owner in range(self.g)]
+        if schedule == 'reference':
+            self.owner_order = list(range(self.g))
         self.width = (self.n + self.k - 1) // self.k
         self.capacity = int(tile_elements)
         if any(x.dtype != torch.float32 or not x.is_contiguous()
@@ -101,6 +111,7 @@ class CenteredExecutor:
         return {'workspace_tensor_bytes': actual, 'reference_bytes': self.reference.numel() * 4,
                 'momentum_bytes': self.momentum.numel() * 4, 'C_bytes': c,
                 'slot_count': 1, 'formula_bytes': exact,
+                'schedule': self.schedule,
                 'excluded': ['master/model', 'inner optimizer', 'allocator/library storage',
                              'Python and process metadata']}
 
@@ -121,6 +132,8 @@ class CenteredExecutor:
 
     def _upper(self, bank, t, mu, eta, offset):
         """Ordered recursive halving, update at owner a, then inverse gather."""
+        if self.schedule == 'contiguous':
+            return self._upper_contiguous(bank, t, mu, eta, offset)
         send = self.buffers['send_stage']
         recv = self.buffers['receive_stage']
         active = list(range(self.g))
@@ -141,18 +154,8 @@ class CenteredExecutor:
             active = keep
         assert active == [self.a]
         average = bank[self.a]
-        average.div_(self.k)
-        m = self.buffers['momentum_stage'][:t]
-        m.copy_(self.momentum[offset:offset + t])
-        m.mul_(mu).add_(average)
-        direction = send[:t]
-        torch.mul(m, mu, out=direction)
-        torch.add(average, direction, out=direction)
-        direction.mul_(eta)
         r = self.buffers['reference_stage'][:self.g * t].view(self.g, t)[self.a]
-        torch.sub(r, direction, out=average)
-        # The owned momentum is durable before distributing the new reference.
-        self.momentum[offset:offset + t].copy_(m)
+        self._update_owner(average, r, t, mu, eta, offset)
         known = [self.a]
         for bit in reversed(range(self.g.bit_length() - 1)):
             hop = 1 << bit
@@ -164,6 +167,67 @@ class CenteredExecutor:
             for i, j in enumerate(incoming_indices):
                 bank[j].copy_(recv[i * t:(i + 1) * t])
             known = sorted(known + incoming_indices)
+
+    def _update_owner(self, average, r, t, mu, eta, offset):
+        """Keep the original separate FP32 rounding operations in both schedules."""
+        average.div_(self.k)
+        m = self.buffers['momentum_stage'][:t]
+        m.copy_(self.momentum[offset:offset + t])
+        m.mul_(mu).add_(average)
+        direction = self.buffers['send_stage'][:t]
+        torch.mul(m, mu, out=direction)
+        torch.add(average, direction, out=direction)
+        direction.mul_(eta)
+        torch.sub(r, direction, out=average)
+        # The owned momentum is durable before distributing the new reference.
+        self.momentum[offset:offset + t].copy_(m)
+
+    def _upper_contiguous(self, bank, t, mu, eta, offset):
+        """Same recursive-halving tree with direct sends and one add per level."""
+        lo, size = 0, self.g
+        levels = []
+        for bit in range(self.g.bit_length() - 1):
+            half, hop = size // 2, 1 << bit
+            keep = lo + half if self.a & hop else lo
+            outgoing = lo if self.a & hop else lo + half
+            peer = (self.a ^ hop) * self.s + self.b
+            incoming = self.buffers['receive_stage'][:half * t].view(half, t)
+            retained = bank[keep:keep + half]
+            self._exchange(bank[outgoing:outgoing + half].view(-1), incoming.view(-1),
+                           peer, peer, 1)
+            if self.a & hop:
+                torch.add(incoming, retained, out=retained)
+            else:
+                torch.add(retained, incoming, out=retained)
+            levels.append((keep, outgoing, half, peer))
+            lo, size = keep, half
+        r = self.buffers['reference_stage'][:self.g * t].view(self.g, t)[lo]
+        self._update_owner(bank[lo], r, t, mu, eta, offset)
+        for keep, outgoing, half, peer in reversed(levels):
+            # Send and receive are disjoint contiguous regions of the bank.
+            self._exchange(bank[keep:keep + half].view(-1),
+                           bank[outgoing:outgoing + half].view(-1), peer, peer, 2)
+
+    def _cohort_gather_contiguous(self, pack):
+        # Gathering has no arithmetic. Low bits first keep each known interval
+        # contiguous in b order, so updated blocks land at their final address.
+        lo = self.b
+        for bit in range(self.s.bit_length() - 1):
+            count = 1 << bit
+            incoming = lo ^ count
+            peer = self.a * self.s + (self.b ^ count)
+            self._exchange(pack[lo:lo + count].view(-1),
+                           pack[incoming:incoming + count].view(-1), peer, peer, 3)
+            lo = min(lo, incoming)
+
+    def _stage_reference(self, stage, offset, t, *, writeback=False):
+        persistent = self.reference[:, offset:offset + t]
+        if self.schedule == 'reference' or self.g <= 2:
+            (persistent if writeback else stage).copy_(stage if writeback else persistent)
+        else:
+            for slot, owner in enumerate(self.owner_order):
+                target, source = (persistent[owner], stage[slot]) if writeback else (stage[slot], persistent[owner])
+                target.copy_(source)
 
     @torch.no_grad()
     def step(self, *, mu=.9, eta=.7):
@@ -177,15 +241,15 @@ class CenteredExecutor:
             pack.zero_()
             # Read all local old-master inputs before any writeback in this tile.
             for target_b in range(self.s):
-                for owner_a in range(self.g):
+                for slot, owner_a in enumerate(self.owner_order):
                     start = (target_b * self.g + owner_a) * self.width + offset
                     count = max(0, min(t, self.n - start))
                     if count:
                         if self.coordinates is None:
-                            pack[target_b, owner_a, :count].copy_(self.master[start:start + count])
+                            pack[target_b, slot, :count].copy_(self.master[start:start + count])
                         else:
-                            self.coordinates.read_into(start, pack[target_b, owner_a, :count])
-            reference.copy_(self.reference[:, offset:offset + t])
+                            self.coordinates.read_into(start, pack[target_b, slot, :count])
+            self._stage_reference(reference, offset, t)
             received[self.b].copy_(pack[self.b].view(-1))
             # Post the cohort AllToAll as one batch. Each peer pair has one
             # message per direction, avoiding per-peer host serialization.
@@ -208,14 +272,17 @@ class CenteredExecutor:
                 active //= 2
             bank = received[0].view(self.g, t)
             self._upper(bank, t, mu, eta, offset)
-            self.reference[:, offset:offset + t].copy_(bank)
+            self._stage_reference(bank, offset, t, writeback=True)
             pack[self.b].copy_(bank)
+            if self.schedule == 'contiguous':
+                self._cohort_gather_contiguous(pack)
             # All consumers of received/centering data have finished. Reuse it
             # as disjoint outgoing and incoming areas for cohort AllGather.
             scratch = received.view(-1)
             split = (self.s // 2) * c
             known = [self.b]
-            for bit in reversed(range(self.s.bit_length() - 1)):
+            for bit in (reversed(range(self.s.bit_length() - 1))
+                        if self.schedule == 'reference' else ()):
                 hop = 1 << bit
                 incoming_indices = sorted(j ^ hop for j in known)
                 count = len(known) * c
@@ -227,14 +294,14 @@ class CenteredExecutor:
                     pack[j].view(-1).copy_(scratch[split + i * c:split + (i + 1) * c])
                 known = sorted(known + incoming_indices)
             for target_b in range(self.s):
-                for owner_a in range(self.g):
+                for slot, owner_a in enumerate(self.owner_order):
                     start = (target_b * self.g + owner_a) * self.width + offset
                     count = max(0, min(t, self.n - start))
                     if count:
                         if self.coordinates is None:
-                            self.master[start:start + count].copy_(pack[target_b, owner_a, :count])
+                            self.master[start:start + count].copy_(pack[target_b, slot, :count])
                         else:
-                            self.coordinates.write_from(start, pack[target_b, owner_a, :count])
+                            self.coordinates.write_from(start, pack[target_b, slot, :count])
                         if self.model is not None:
                             self.model[start:start + count].copy_(self.master[start:start + count])
         # q=1 reference executor returns only after its local device work drains.

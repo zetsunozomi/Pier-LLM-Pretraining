@@ -2102,6 +2102,8 @@ def _add_distributed_args(parser):
     group.add_argument('--outer-arm', choices=('pier', 'gather', 'resident', 'recenter', 'dtensor', 'cpu_offload'), default=None,
                        help='Pier, native G/R/W, DTensor, or naive unsharded CPU offload; default Pier.')
     group.add_argument('--outer-cohort-size', type=int, default=1)
+    group.add_argument('--outer-pier-schedule', choices=('reference', 'contiguous'), default='reference',
+                       help='Ordered Pier schedule; contiguous removes tree staging copies while preserving FP32 order.')
     workspace = group.add_mutually_exclusive_group()
     workspace.add_argument('--outer-tile-elements', type=int, default=8192,
                        help='Coordinates per momentum owner per tile; one shared workspace.')

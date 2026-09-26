@@ -241,6 +241,24 @@ class N2Tests(unittest.TestCase):
                     'loaded_before_optimizer_construction': True, 'qwen_recipe': {'fixture': 'not real measurements'}}))
         return manifest
 
+    def test_summary_requires_executed_pier_schedule(self):
+        cfg = configuration({'PIER_N2_ARMS': 'G,P', 'PIER_N2_PIER_SCHEDULE': 'contiguous'})
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            self.make_reports(root, cfg)
+            result = collect(root)
+            self.assertEqual(result['cases'][1]['status'], 'invalid')
+            self.assertIn('schedule differs', result['cases'][1]['error'])
+            for rank in range(cfg['world_size']):
+                path = root / f'run-1-P/cycles-rank-{rank}.json'
+                report = json.loads(path.read_text())
+                report['metadata']['allocation']['schedule'] = 'contiguous'
+                path.write_text(json.dumps(report))
+            result = collect(root)
+            self.assertEqual(result['status'], 'complete')
+            self.assertEqual(result['cases'][1]['pier_schedule'], 'contiguous')
+            self.assertIn('Pier schedule: contiguous', render(result))
+
     def test_offload_summary_requires_full_pageable_state_and_same_repeat(self):
         cfg = configuration({'PIER_N2_ARMS': 'O,P', 'PIER_N2_REPEAT_START': '2'})
         with tempfile.TemporaryDirectory() as name:

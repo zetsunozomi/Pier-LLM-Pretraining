@@ -20,7 +20,8 @@ from megatron.core.outer_sync.checkpoint import load, restore_rng, save
 from megatron.core.outer_sync.runtime import CenteredRuntime, StepClock, digest
 
 
-def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_dir=None, measure=False):
+def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_dir=None, measure=False,
+            schedule='reference'):
     torch.manual_seed(7)
     model = torch.nn.Sequential(torch.nn.Linear(3, 4), torch.nn.Dropout(.2), torch.nn.Linear(4, 2))
     inner = torch.optim.AdamW(model.parameters(), lr=.01, foreach=False)
@@ -32,6 +33,7 @@ def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_di
     optimizer.grad_stats_parallel_group = dist.group.WORLD
     scheduler = torch.optim.lr_scheduler.StepLR(inner, step_size=3, gamma=.9)
     args = SimpleNamespace(outer_cohort_size=cohort, outer_sync_interval=3,
+                           outer_pier_schedule=schedule,
                            outer_tile_elements=2, outer_cpu_offload=arm == 'cpu_offload',
                            outer_measure_dir=str(Path(directory) / 'cycles') if measure else None,
                            outer_warmup_cycles=1,

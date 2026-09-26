@@ -97,7 +97,7 @@ def payload_check(engine, record):
     assert record['sent_tensor_bytes_by_phase'] == expected
 
 
-def operator_checks(rank, k, device):
+def operator_checks(rank, k, device, schedule='reference'):
     records = []
     tiers = ('device', 'host') if device.type == 'cuda' else ('device',)
     for s in [1 << i for i in range(k.bit_length())]:
@@ -110,7 +110,8 @@ def operator_checks(rank, k, device):
                     master = from_numpy(r, device)
                     model = master.to(torch.bfloat16)
                     ref, mom = initial_states(r, m, k, rank, s, device, tier)
-                    engine = CenteredExecutor(master, ref, mom, cohort=s, tile_elements=capacity, model=model)
+                    engine = CenteredExecutor(master, ref, mom, cohort=s, tile_elements=capacity,
+                                              model=model, schedule=schedule)
                     allocation = engine.allocation_bytes()
                     pointers = [storage_key(x) for x in engine.buffers.values()]
                     total_guard_ops = 0
@@ -150,7 +151,7 @@ def model_loss(model, inputs, target):
     return F.mse_loss(output, target)
 
 
-def training_checks(rank, k, device):
+def training_checks(rank, k, device, schedule='reference'):
     records = []
     for s in [1 << i for i in range(k.bit_length())]:
         rng = np.random.default_rng(775)
@@ -165,7 +166,7 @@ def training_checks(rank, k, device):
         oracle_opt = torch.optim.AdamW([oracle_master], lr=1e-3, betas=(.9, .95), weight_decay=.1,
                                       foreach=False, fused=False)
         ref, mom = initial_states(r, m, k, rank, s, device, 'device')
-        engine = CenteredExecutor(master, ref, mom, cohort=s, tile_elements=2, model=model)
+        engine = CenteredExecutor(master, ref, mom, cohort=s, tile_elements=2, model=model, schedule=schedule)
         generator = torch.Generator().manual_seed(304 + rank)
         restored = False
         for step in range(7):
@@ -203,7 +204,7 @@ def training_checks(rank, k, device):
                     # Reconstruct the executor at a drained boundary with only
                     # owned outer state; keep the actual local inner optimizer.
                     engine = CenteredExecutor(master, engine.reference.clone(), engine.momentum.clone(),
-                                              cohort=s, tile_elements=2, model=model)
+                                              cohort=s, tile_elements=2, model=model, schedule=schedule)
                     restored = True
         records.append({'rank': rank, 'K': k, 's': s, 'inner_steps': 7, 'sync_period': 2,
                         'outer_boundaries': 3, 'next_forward_and_inner_moments_bitwise': True,
@@ -229,7 +230,7 @@ def rejection_checks(rank, k, device):
     return rejected
 
 
-def worker(rank, k, init_method, device_kind, output):
+def worker(rank, k, init_method, device_kind, output, schedule='reference'):
     torch.set_num_threads(1)
     if device_kind == 'cuda':
         local_rank = int(os.environ.get('LOCAL_RANK', rank))
@@ -246,8 +247,8 @@ def worker(rank, k, init_method, device_kind, output):
     try:
         # Bind the first NCCL collective to the device selected by LOCAL_RANK.
         dist.barrier(device_ids=[device.index] if device.type == 'cuda' else None)
-        local = {'operator': operator_checks(rank, k, device),
-                 'training': training_checks(rank, k, device),
+        local = {'operator': operator_checks(rank, k, device, schedule),
+                 'training': training_checks(rank, k, device, schedule),
                  'rejected_unsafe_configs': rejection_checks(rank, k, device)}
         gathered = [None] * k if rank == 0 else None
         dist.gather_object(local, gathered, dst=0)
@@ -255,6 +256,9 @@ def worker(rank, k, init_method, device_kind, output):
             records = {key: [r for rank_record in gathered for r in rank_record[key]]
                        for key in ('operator', 'training')}
             report = {'status': 'passed', 'backend': backend, 'device': device_kind,
+                      'schedule': schedule,
+                      'production_executor_sha256': hashlib.sha256(
+                          (Path(__file__).resolve().parents[3] / 'megatron/core/outer_sync/executor.py').read_bytes()).hexdigest(),
                       'torch_version': torch.__version__, 'ranks': k, 'records': records,
                       'actual_distributed_transport': k > 1,
                       'rejected_unsafe_configs_per_rank': [x['rejected_unsafe_configs'] for x in gathered],
@@ -273,17 +277,18 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--world-size', type=int, default=4)
     parser.add_argument('--device', choices=('cpu', 'cuda'), default='cpu')
+    parser.add_argument('--schedule', choices=('reference', 'contiguous'), default='reference')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG', ':4096:8')
     k = int(os.environ.get('WORLD_SIZE', args.world_size))
     output = (args.output or Path(__file__).with_name(f'executor_{args.device}_{k}.json')).resolve()
     if 'RANK' in os.environ:
-        worker(int(os.environ['RANK']), k, 'env://', args.device, str(output))
+        worker(int(os.environ['RANK']), k, 'env://', args.device, str(output), args.schedule)
     else:
         with tempfile.TemporaryDirectory(prefix='pier-executor-') as task_tmp:
             init_method = 'file://' + str(Path(task_tmp) / 'rendezvous')
-            mp.spawn(worker, args=(k, init_method, args.device, str(output)), nprocs=k, join=True)
+            mp.spawn(worker, args=(k, init_method, args.device, str(output), args.schedule), nprocs=k, join=True)
     if int(os.environ.get('RANK', '0')) == 0:
         report = json.loads(output.read_text())
         print(json.dumps({'status': report['status'], 'device': report['device'], 'ranks': k,

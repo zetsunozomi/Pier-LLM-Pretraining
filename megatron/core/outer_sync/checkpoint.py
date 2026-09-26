@@ -31,7 +31,7 @@ RECIPE_FIELDS = (
     'weight_decay', 'clip_grad', 'optimizer', 'bf16', 'local_sgd_inner_average',
     'outer_sync_interval', 'outer_momentum', 'outer_learning_rate', 'outer_cohort_size',
     'outer_cpu_offload', 'outer_verify', 'outer_inject_skip_at', 'outer_inject_skip_rank',
-    'qwen_recipe', 'outer_arm', 'outer_verify_storage',
+    'qwen_recipe', 'outer_arm', 'outer_verify_storage', 'outer_pier_schedule',
     'recompute_granularity', 'recompute_method', 'recompute_num_layers',
     'distribute_saved_activations',
 )
@@ -56,6 +56,10 @@ def recipe(args):
             'workspace_mib': getattr(args, 'outer_workspace_mib', None)}
     if result['outer_verify_storage'] in (None, 'memory'):
         result['outer_verify_storage'] = None
+    # Preserve historical checkpoint recipes; keep the experimental schedule
+    # explicit until CUDA trajectory and restart checks have passed.
+    if result['outer_pier_schedule'] in (None, 'reference'):
+        result['outer_pier_schedule'] = None
     # Historical recipes omit recompute fields. Disabled recomputation retains
     # that meaning; changing an enabled activation/RNG schedule cannot restore
     # silently under the exact-trajectory checkpoint contract.

@@ -79,6 +79,11 @@ class StepClock:
 
 def validate_args(args):
     """Reject unsupported ownership/restore semantics before model allocation."""
+    schedule = getattr(args, 'outer_pier_schedule', 'reference')
+    if schedule not in ('reference', 'contiguous'):
+        raise ValueError('unknown Pier schedule')
+    if schedule != 'reference' and (not enabled(args) or (getattr(args, 'outer_arm', None) or 'pier') != 'pier'):
+        raise ValueError('the Pier schedule option requires the centered Pier arm')
     if not enabled(args):
         if (getattr(args, 'outer_arm', None) is not None or getattr(args, 'outer_measure_dir', None)
                 or getattr(args, 'outer_workspace_mib', None) is not None
@@ -245,7 +250,8 @@ class CenteredRuntime:
             self.executor = NaiveCPUOffloadExecutor(reference, momentum, coordinates=self.coordinates, group=self.group)
         elif self.arm == 'pier':
             self.executor = CenteredExecutor(None, reference, momentum, cohort=self.s,
-                                            tile_elements=capacity, coordinates=self.coordinates, group=self.group)
+                                            tile_elements=capacity, coordinates=self.coordinates, group=self.group,
+                                            schedule=getattr(args, 'outer_pier_schedule', 'reference'))
         elif self.arm == 'dtensor':
             from .dtensor import DTensorExecutor
             self.executor = DTensorExecutor(None, reference, momentum, cohort=self.s,

@@ -36,6 +36,9 @@ def configuration(env=None):
     workspace = int(env.get('PIER_N2_WORKSPACE_MIB', '64'))
     if workspace not in (64, 256):
         raise ValueError('PIER_N2_WORKSPACE_MIB must be 64 or 256')
+    pier_schedule = env.get('PIER_N2_PIER_SCHEDULE', 'reference')
+    if pier_schedule not in ('reference', 'contiguous'):
+        raise ValueError('PIER_N2_PIER_SCHEDULE must be reference or contiguous')
     repeats = int(env.get('PIER_N2_REPEATS', '1' if profile == 'pilot' else '3'))
     if not 1 <= repeats <= 3:
         raise ValueError('PIER_N2_REPEATS must be 1..3')
@@ -49,7 +52,8 @@ def configuration(env=None):
                 cohorts=sorted(set((1, 2, learners))) if suite == 'cohorts' else [cohort],
                 log_interval=1, expected_gpu=env.get('PIER_N2_EXPECTED_GPU') or None,
                 nodes=nodes, world_size=nodes * 4, tp=2, learners=learners,
-                arms=arms, cohort=cohort, workspace_mib=workspace, repeats=repeats, repeat_start=repeat_start,
+                arms=arms, cohort=cohort, workspace_mib=workspace, pier_schedule=pier_schedule,
+                repeats=repeats, repeat_start=repeat_start,
                 interval=50, warmup_cycles=1 if profile == 'pilot' else 2,
                 measured_cycles=1 if profile == 'pilot' else 3,
                 attempts=100 if profile == 'pilot' else 250,
@@ -109,6 +113,8 @@ def training_args(config, case, directory):
     }
     if case['backend'] == 'cpu_offload':
         options.pop('--outer-workspace-mib')
+    if case['backend'] == 'pier' and config.get('pier_schedule', 'reference') != 'reference':
+        options['--outer-pier-schedule'] = config['pier_schedule']
     argv = [item for pair in options.items() for item in (pair[0], str(pair[1]))]
     argv += ['--bf16', '--accumulate-allreduce-grads-in-fp32', '--local-sgd-inner-average']
     if case['arm'] in ('O', 'OS'):
