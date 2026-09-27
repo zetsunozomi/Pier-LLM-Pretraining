@@ -1,0 +1,13 @@
+{
+  "arm": "R",
+  "status": "error",
+  "max_layers": null,
+  "max_parameters": null,
+  "largest_probe_pass_layers": 36,
+  "smallest_oom_layers": 45,
+  "smallest_oom_parameters": 3779631616,
+  "exact_layer_boundary": false,
+  "capacity_result": false,
+  "performance_result": false,
+  "trial_count": 5
+}

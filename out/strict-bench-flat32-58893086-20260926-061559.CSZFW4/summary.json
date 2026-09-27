@@ -1,0 +1,50 @@
+{
+  "status": "measured",
+  "GPU_executed": true,
+  "scope": "synthetic flat-master outer update plus BF16 commit; no inner training",
+  "config": {
+    "device": "cuda",
+    "elements": 1543044096,
+    "tp": 2,
+    "cohort": 2,
+    "workspace_mib": 64,
+    "warmup": 3,
+    "samples": 10,
+    "repeats": 1,
+    "arms": [
+      "reference",
+      "contiguous",
+      "recenter"
+    ],
+    "output": "/pscratch/sd/s/syfan/Pier/out/strict-bench-flat32-58893086-20260926-061559.CSZFW4/benchmark.json"
+  },
+  "statistic": "median of per-repeat medians of maximum-rank outer+commit samples",
+  "repeat_scope": "repeated blocks in one launch, not independent job launches",
+  "by_arm": {
+    "recenter": {
+      "outer_plus_commit_seconds": 4.100823816494085,
+      "peak_allocated_gib": 9.405320167541504
+    },
+    "contiguous": {
+      "outer_plus_commit_seconds": 6.133658857492264,
+      "peak_allocated_gib": 11.920849323272705
+    },
+    "reference": {
+      "outer_plus_commit_seconds": 6.223820167477243,
+      "peak_allocated_gib": 11.920849323272705
+    }
+  },
+  "comparisons": [
+    {
+      "repeat": 1,
+      "new_vs_old_latency_reduction_pct": 1.4486490219643433,
+      "old_vs_relaxed_latency_overhead_pct": 51.7699966149282,
+      "new_vs_relaxed_latency_overhead_pct": 49.57138204333076
+    }
+  ],
+  "production_executor_sha256": "0134695bff923f21c1763131aba623b150dbeddec7204728db1fd69a0d870930",
+  "not_measured": [
+    "Qwen parameter fragmentation and full training",
+    "convergence"
+  ]
+}

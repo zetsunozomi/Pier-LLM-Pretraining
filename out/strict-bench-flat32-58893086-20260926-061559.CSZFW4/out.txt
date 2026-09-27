@@ -1,0 +1,22 @@
+[strict-bench-flat32] Full stdout/stderr: /pscratch/sd/s/syfan/Pier/out/strict-bench-flat32-58893086-20260926-061559.CSZFW4/out.txt
+[strict-bench] profile=flat32 nodes=8 benchmark_tp=2 elements=1543044096
+{
+  "status": "passed",
+  "device": "cuda",
+  "ranks": 16,
+  "operator_configurations": 80,
+  "training_configurations": 5,
+  "performance_result": false
+}
+{"repeat": 1, "arm": "reference", "mean_seconds": 6.2279364853922745, "median_seconds": 6.223820167477243}
+{"repeat": 1, "arm": "contiguous", "mean_seconds": 6.131798640813213, "median_seconds": 6.133658857492264}
+{"repeat": 1, "arm": "recenter", "mean_seconds": 4.092061875696527, "median_seconds": 4.100823816494085}
+Status: measured
+synthetic flat-master outer update plus BF16 commit; no inner training
+Arm                      Outer+commit (s)   Peak allocated (GiB)
+reference                      6.223820   11.921
+contiguous                     6.133659   11.921
+recenter                       4.100824   9.405
+Repeat 1: new Pier latency reduction vs old +1.45%; overhead vs W: old +51.77%, new +49.57%
+Flat-master experiment; use Qwen runs before replacing paper results.
+[strict-bench] phase=complete exit=0 artifacts=/pscratch/sd/s/syfan/Pier/out/strict-bench-flat32-58893086-20260926-061559.CSZFW4

@@ -1,0 +1,20 @@
+[P2] probe: L=36, 3.085939B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-001-L36-probe/out.txt
+[P2] passed: L=36 (78.2s)
+[P2] probe: L=72, 5.860710B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-002-L72-probe/out.txt
+[P2] oom: L=72 (36.1s)
+[P2] probe: L=54, 4.473325B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-003-L54-probe/out.txt
+[P2] oom: L=54 (32.1s)
+[P2] probe: L=45, 3.779632B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-004-L45-probe/out.txt
+[P2] oom: L=45 (32.1s)
+[P2] probe: L=40, 3.394247B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-005-L40-probe/out.txt
+[P2] passed: L=40 (72.2s)
+[P2] probe: L=42, 3.548401B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-006-L42-probe/out.txt
+[P2] passed: L=42 (74.2s)
+[P2] probe: L=43, 3.625478B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P2/trial-007-L43-probe/out.txt
+[P2] error: L=43 (79.0s)
+arm  status                   max_layers  parameters(B)  next_OOM_layers
+R    error                          None        pending               45
+G    error                          None        pending               54
+OS   error                          None        pending               54
+P2   error                          None        pending               45
+O    error                          None        pending               54

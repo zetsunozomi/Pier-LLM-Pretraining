@@ -1,0 +1,6712 @@
+{
+  "scope": "synthetic flat-master outer update plus BF16 commit; no inner training",
+  "offload_definition": "sharded pinned CPU R/M with GPU reference gather and GPU owner update",
+  "arm_definitions": {
+    "reference": "strict Pier, original ordered schedule",
+    "contiguous": "strict Pier, contiguous ordered schedule",
+    "gather": "G, sharded GPU reference reconstruction",
+    "offload": "OS, sharded pinned CPU reference reconstruction",
+    "recenter": "W, fully sharded GPU R/M, native raw-weight averaging"
+  },
+  "GPU_executed": true,
+  "end_to_end_training_result": false,
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "world_size": 32,
+  "config": {
+    "device": "cuda",
+    "elements": 1543044096,
+    "tp": 2,
+    "cohort": 2,
+    "workspace_mib": 64,
+    "warmup": 3,
+    "samples": 10,
+    "repeats": 1,
+    "arms": [
+      "reference",
+      "contiguous",
+      "recenter"
+    ],
+    "output": "/pscratch/sd/s/syfan/Pier/out/strict-bench-flat32-58893086-20260926-061559.CSZFW4/benchmark.json"
+  },
+  "orders": [
+    [
+      "reference",
+      "contiguous",
+      "recenter"
+    ]
+  ],
+  "records": [
+    {
+      "repeat": 1,
+      "arm": "reference",
+      "rank_records": [
+        {
+          "rank": 0,
+          "outer_rank": 0,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.9766590090002865,
+            6.00524436798878,
+            6.002853473997675,
+            5.992078959010541,
+            5.97432670899434,
+            5.91258750698762,
+            5.906863047974184,
+            5.914963132003322,
+            5.912445182970259,
+            5.923049090022687
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 1,
+          "outer_rank": 0,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.2264541239710525,
+            6.1916361130424775,
+            6.222538692003582,
+            6.222578428976703,
+            6.207795451045968,
+            6.250420379976276,
+            6.224267584970221,
+            6.221770978008863,
+            6.255050985026173,
+            6.253728277049959
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 2,
+          "outer_rank": 1,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976614832994528,
+            6.005236722994596,
+            6.002922196988948,
+            5.992140177986585,
+            5.974348299962003,
+            5.912660447997041,
+            5.906910168996546,
+            5.914919656992424,
+            5.912495338998269,
+            5.923036996042356
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 3,
+          "outer_rank": 1,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226550410035998,
+            6.191650539985858,
+            6.222577516979072,
+            6.222587978001684,
+            6.207820290001109,
+            6.250429006002378,
+            6.224291121005081,
+            6.221812016970944,
+            6.2551272620330565,
+            6.2537745669833384
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 4,
+          "outer_rank": 2,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.97627324500354,
+            6.005519062047824,
+            6.002741385949776,
+            5.992425217991695,
+            5.9741077609942295,
+            5.912392278027255,
+            5.906712695024908,
+            5.914789417991415,
+            5.912431672972161,
+            5.923025849973783
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 5,
+          "outer_rank": 2,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226372332021128,
+            6.191261303960346,
+            6.222383928019553,
+            6.222389137023129,
+            6.207619624969084,
+            6.250286750961095,
+            6.2240650249877945,
+            6.221505892055575,
+            6.25466196303023,
+            6.25355150795076
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 6,
+          "outer_rank": 3,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976347408024594,
+            6.005394422041718,
+            6.002875245001633,
+            5.992392433981877,
+            5.974121808016207,
+            5.912428086972795,
+            5.906721351959277,
+            5.914671280013863,
+            5.912471720017493,
+            5.923100042971782
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 7,
+          "outer_rank": 3,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226460823032539,
+            6.191271915042307,
+            6.222421982034575,
+            6.222436909971293,
+            6.207656415994279,
+            6.250348320987541,
+            6.224098931008484,
+            6.221541409962811,
+            6.254718091047835,
+            6.25357569399057
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 8,
+          "outer_rank": 4,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976261745032389,
+            6.005205927998759,
+            6.002696764015127,
+            5.992001586011611,
+            5.974176632007584,
+            5.912555415998213,
+            5.906807246035896,
+            5.914627488993574,
+            5.912484067957848,
+            5.923204026010353
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 9,
+          "outer_rank": 4,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.22660931001883,
+            6.191576823010109,
+            6.2222779439762235,
+            6.222351005009841,
+            6.207600333029404,
+            6.250329067988787,
+            6.223714635008946,
+            6.221996499050874,
+            6.254718096985016,
+            6.253696808998939
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 10,
+          "outer_rank": 5,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.97633340297034,
+            6.005138817999978,
+            6.002733075001743,
+            5.992020581965335,
+            5.9741654609679244,
+            5.91260019299807,
+            5.906802226032596,
+            5.914744384994265,
+            5.912458900013007,
+            5.923171041999012
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 11,
+          "outer_rank": 5,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226628598000389,
+            6.191616398980841,
+            6.222232675005216,
+            6.222335655009374,
+            6.207617598003708,
+            6.250344679050613,
+            6.223735876963474,
+            6.222045433009043,
+            6.254711233021226,
+            6.253672220977023
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 12,
+          "outer_rank": 6,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976294472988229,
+            6.005386652017478,
+            6.002727755985688,
+            5.992384465003852,
+            5.973928151011933,
+            5.912022354023065,
+            5.9068330290028825,
+            5.914619320014026,
+            5.912421885004733,
+            5.923014928994235
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 13,
+          "outer_rank": 6,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.2263918640092015,
+            6.191572880023159,
+            6.2223488229792565,
+            6.2223728990065865,
+            6.207537220034283,
+            6.250132885004859,
+            6.224170943023637,
+            6.222135540971067,
+            6.254571990983095,
+            6.253491993993521
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 14,
+          "outer_rank": 7,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976309411984403,
+            6.005348418024369,
+            6.0027444080333225,
+            5.992337793984916,
+            5.973945135017857,
+            5.91206315200543,
+            5.906819452007767,
+            5.9146677940152586,
+            5.912430641998071,
+            5.923048242984805
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 15,
+          "outer_rank": 7,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226366455026437,
+            6.1915144579834305,
+            6.222266714961734,
+            6.222325787995942,
+            6.207486973027699,
+            6.250134147005156,
+            6.224187645013444,
+            6.22213054104941,
+            6.254562052024994,
+            6.253504597989377
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 16,
+          "outer_rank": 8,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976421019993722,
+            6.005206012981944,
+            6.002991043962538,
+            5.992069762956817,
+            5.974106578039937,
+            5.912754204007797,
+            5.906765163003001,
+            5.914824242994655,
+            5.912550102977548,
+            5.923169390007388
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 17,
+          "outer_rank": 8,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.2267311830073595,
+            6.191690915031359,
+            6.222423790954053,
+            6.222420706006233,
+            6.207711477007251,
+            6.2501589669846,
+            6.2235750060062855,
+            6.221495928999502,
+            6.25522524502594,
+            6.253640073002316
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 18,
+          "outer_rank": 9,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976498238975182,
+            6.005190343013965,
+            6.002987637009937,
+            5.992051578010432,
+            5.974070147029124,
+            5.912704908987507,
+            5.906708072987385,
+            5.9147598600247875,
+            5.912502452032641,
+            5.9231152050197124
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 19,
+          "outer_rank": 9,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226681116968393,
+            6.19170955196023,
+            6.222460001998115,
+            6.22242337098578,
+            6.207808564999141,
+            6.250185548036825,
+            6.223679258022457,
+            6.221525316010229,
+            6.25524760800181,
+            6.253665072028525
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 20,
+          "outer_rank": 10,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976370993012097,
+            6.005394871986937,
+            6.00278704095399,
+            5.992351113993209,
+            5.974002244009171,
+            5.912090314028319,
+            5.906629130942747,
+            5.914694017032161,
+            5.912330569990445,
+            5.92306096397806
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 21,
+          "outer_rank": 10,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226358740008436,
+            6.191532404976897,
+            6.22243406396592,
+            6.222331965982448,
+            6.207597792032175,
+            6.250029234040994,
+            6.223682767013088,
+            6.221501482010353,
+            6.255131512996741,
+            6.25358973297989
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 22,
+          "outer_rank": 11,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976322347996756,
+            6.005344845994841,
+            6.0029681930318475,
+            5.992361635027919,
+            5.974035597988404,
+            5.912077138957102,
+            5.906620745023247,
+            5.9147230929811485,
+            5.91231790499296,
+            5.923079077969305
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 23,
+          "outer_rank": 11,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226367206021678,
+            6.191535240039229,
+            6.222454403003212,
+            6.222357988008298,
+            6.207671324023977,
+            6.250065543979872,
+            6.223691704974044,
+            6.221516249992419,
+            6.255149688979145,
+            6.253604541998357
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 24,
+          "outer_rank": 12,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976442933024373,
+            6.005389984988142,
+            6.002869235991966,
+            5.992578206991311,
+            5.973940692027099,
+            5.912521886988543,
+            5.906798547948711,
+            5.91475185204763,
+            5.912523809995037,
+            5.9231593160075136
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 25,
+          "outer_rank": 12,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.227196915016975,
+            6.191646341001615,
+            6.222595317987725,
+            6.222986774984747,
+            6.207589701982215,
+            6.250731509993784,
+            6.224549049045891,
+            6.221530306036584,
+            6.2554087929893285,
+            6.253739541978575
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 26,
+          "outer_rank": 13,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976418596983422,
+            6.0053949049906805,
+            6.002808377961628,
+            5.992526717018336,
+            5.973982370982412,
+            5.912531184032559,
+            5.906769872002769,
+            5.914735369966365,
+            5.912530612957198,
+            5.9231609589769505
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 27,
+          "outer_rank": 13,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.227193217957392,
+            6.191693110973574,
+            6.222614495025482,
+            6.223000130965374,
+            6.207663525012322,
+            6.250790642981883,
+            6.2246141149662435,
+            6.2215911140083335,
+            6.255430374993011,
+            6.2537800499703735
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 28,
+          "outer_rank": 14,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976532556000166,
+            6.005411532998551,
+            6.0027788919978775,
+            5.992542552994564,
+            5.973930856038351,
+            5.912468031980097,
+            5.906636111030821,
+            5.914757675025612,
+            5.912431409000419,
+            5.923167138011195
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 29,
+          "outer_rank": 14,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.227223426976707,
+            6.1917374660260975,
+            6.22249291499611,
+            6.222923871013336,
+            6.207723225001246,
+            6.250816532992758,
+            6.224560567992739,
+            6.221609018975869,
+            6.25481871602824,
+            6.253831249021459
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 30,
+          "outer_rank": 15,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.976452541013714,
+            6.005386624019593,
+            6.0027274820022285,
+            5.992493046040181,
+            5.973912889952771,
+            5.912459314975422,
+            5.906650560034905,
+            5.914758807979524,
+            5.9124303170247,
+            5.923158711986616
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 31,
+          "outer_rank": 15,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.227270157018211,
+            6.191788224969059,
+            6.222576477041002,
+            6.223026219988242,
+            6.207677405967843,
+            6.250790091988165,
+            6.224600706016645,
+            6.2216310009825975,
+            6.254836130014155,
+            6.253848902997561
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "reference",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        }
+      ],
+      "max_rank_seconds": [
+        6.227270157018211,
+        6.191788224969059,
+        6.222614495025482,
+        6.223026219988242,
+        6.207820290001109,
+        6.250816532992758,
+        6.2246141149662435,
+        6.222135540971067,
+        6.255430374993011,
+        6.253848902997561
+      ],
+      "mean_seconds": 6.2279364853922745,
+      "median_seconds": 6.223820167477243
+    },
+    {
+      "repeat": 1,
+      "arm": "contiguous",
+      "rank_records": [
+        {
+          "rank": 0,
+          "outer_rank": 0,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956482681969646,
+            6.0333571920054965,
+            5.979990962019656,
+            5.924836794962175,
+            5.942350192985032,
+            5.9478187980130315,
+            6.002156767004635,
+            5.9286634150194,
+            5.927209543995559,
+            5.92876417998923
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 1,
+          "outer_rank": 0,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225848462025169,
+            6.163714808993973,
+            6.161413618014194,
+            6.125937766046263,
+            6.150789303006604,
+            6.1410233080387115,
+            6.084370943019167,
+            6.099066571972799,
+            6.092239247984253,
+            6.071411504002754
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 2,
+          "outer_rank": 1,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956464666989632,
+            6.033344677998684,
+            5.979994177992921,
+            5.924832395976409,
+            5.942354982020333,
+            5.947805061005056,
+            6.002062494982965,
+            5.928682180994656,
+            5.927177342004143,
+            5.928731797030196
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 3,
+          "outer_rank": 1,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225913278001826,
+            6.1637478320044465,
+            6.16148189001251,
+            6.126003172015771,
+            6.150823308969848,
+            6.141031763982028,
+            6.084359301021323,
+            6.099078494997229,
+            6.092232335009612,
+            6.071395484032109
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 4,
+          "outer_rank": 2,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.955952132993843,
+            6.033213319024071,
+            5.979870287002996,
+            5.924784597998951,
+            5.942200233985204,
+            5.947694594971836,
+            6.0019664210267365,
+            5.9286277330247685,
+            5.927137313003186,
+            5.928694652975537
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 5,
+          "outer_rank": 2,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225772401026916,
+            6.163350866001565,
+            6.161315613950137,
+            6.125573715020437,
+            6.150640738022048,
+            6.140796396008227,
+            6.084213145019021,
+            6.098986900993623,
+            6.091910713992547,
+            6.070684153004549
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 6,
+          "outer_rank": 3,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956007649016101,
+            6.033284945995547,
+            5.979844487039372,
+            5.924844352994114,
+            5.942210754030384,
+            5.947724552010186,
+            6.001874501991551,
+            5.928391587978695,
+            5.927065265015699,
+            5.928683460981119
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 7,
+          "outer_rank": 3,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225776038016193,
+            6.163349893991835,
+            6.161331806040835,
+            6.125591500021983,
+            6.15065460500773,
+            6.140819450025447,
+            6.084217372990679,
+            6.09900024603121,
+            6.091928169014864,
+            6.070676427974831
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 8,
+          "outer_rank": 4,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956419889989775,
+            6.033227249979973,
+            5.979793777980376,
+            5.924776309984736,
+            5.942183103994466,
+            5.947544394002762,
+            6.0019649880123325,
+            5.928599442006089,
+            5.927110679040197,
+            5.928657907003071
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 9,
+          "outer_rank": 4,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225529098010156,
+            6.163771778985392,
+            6.161021645006258,
+            6.125486470002215,
+            6.150686151988339,
+            6.140915573982056,
+            6.084486011008266,
+            6.09914155799197,
+            6.09232753503602,
+            6.071337667002808
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 10,
+          "outer_rank": 5,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956500876985956,
+            6.033274963032454,
+            5.9798355989623815,
+            5.924831326003186,
+            5.942212752008345,
+            5.947628437017556,
+            6.002040093007963,
+            5.928646664018743,
+            5.9271316599915735,
+            5.928692033980042
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 11,
+          "outer_rank": 5,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225508487957995,
+            6.163761047995649,
+            6.161034299992025,
+            6.125498712994158,
+            6.150713905983139,
+            6.140906204993371,
+            6.08446634298889,
+            6.099137479963247,
+            6.092312253953423,
+            6.071319664013572
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 12,
+          "outer_rank": 6,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956482378009241,
+            6.033391750010196,
+            5.979747598990798,
+            5.924784891016316,
+            5.942213296017144,
+            5.947477784997318,
+            6.001828292035498,
+            5.928447251964826,
+            5.927042919967789,
+            5.928579297033139
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 13,
+          "outer_rank": 6,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225492944009602,
+            6.163434619025793,
+            6.1610388809931464,
+            6.125498319044709,
+            6.150547725032084,
+            6.140624437015504,
+            6.084443865984213,
+            6.099074419005774,
+            6.0921843140386045,
+            6.071343410003465
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 14,
+          "outer_rank": 7,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956462701025885,
+            6.033296997018624,
+            5.9797029930050485,
+            5.924765953968745,
+            5.942218434996903,
+            5.947526237985585,
+            6.001813493028749,
+            5.928426451981068,
+            5.926967474981211,
+            5.9285747180110775
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 15,
+          "outer_rank": 7,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225515187019482,
+            6.163424608996138,
+            6.1610371269634925,
+            6.125499582034536,
+            6.150538337009493,
+            6.140634456009138,
+            6.084428125992417,
+            6.099064470035955,
+            6.09218300099019,
+            6.071333670988679
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 16,
+          "outer_rank": 8,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.955766333034262,
+            6.0333953340305015,
+            5.98007081594551,
+            5.924903267994523,
+            5.942305789038073,
+            5.947629861009773,
+            6.001867820974439,
+            5.928771320963278,
+            5.926980771997478,
+            5.9285543719888665
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 17,
+          "outer_rank": 8,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225749692006502,
+            6.1640305680339225,
+            6.161135834991001,
+            6.125705898972228,
+            6.15067107899813,
+            6.140857027028687,
+            6.084299306035973,
+            6.0990855100099,
+            6.0922412920044735,
+            6.071429092960898
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 18,
+          "outer_rank": 9,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.955733118986245,
+            6.033396876999177,
+            5.980062882008497,
+            5.9249073269893415,
+            5.942312070983462,
+            5.947613829979673,
+            6.001854133035522,
+            5.928745281009469,
+            5.926975752983708,
+            5.9285400150110945
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 19,
+          "outer_rank": 9,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225734392995946,
+            6.164069663034752,
+            6.161141797027085,
+            6.125732468964998,
+            6.150685706990771,
+            6.140884260006715,
+            6.084317289991304,
+            6.099112151016016,
+            6.092260550009087,
+            6.071448098984547
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 20,
+          "outer_rank": 10,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956055534014013,
+            6.033311815990601,
+            5.979901382990647,
+            5.924906878033653,
+            5.942252468026709,
+            5.947427320992574,
+            6.001726976013742,
+            5.928384406026453,
+            5.926813334983308,
+            5.928456970024854
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 21,
+          "outer_rank": 10,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225269232993014,
+            6.163970824971329,
+            6.161144835990854,
+            6.125668312015478,
+            6.1505639970419,
+            6.1407537730410695,
+            6.084175883966964,
+            6.099054182006512,
+            6.092205950000789,
+            6.071283321012743
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 22,
+          "outer_rank": 11,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956024745013565,
+            6.033313067979179,
+            5.979926380969118,
+            5.924898391007446,
+            5.942262978001963,
+            5.947413013025653,
+            6.0017646990017965,
+            5.928364065999631,
+            5.926859393948689,
+            5.928451889951248
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 23,
+          "outer_rank": 11,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225261717976537,
+            6.163981374993455,
+            6.161173732019961,
+            6.125722567026969,
+            6.150575981009752,
+            6.140758782974444,
+            6.084180192963686,
+            6.099064301990438,
+            6.092217832978349,
+            6.071274634974543
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 24,
+          "outer_rank": 12,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.955776896036696,
+            6.033439630991779,
+            5.979846240952611,
+            5.924973010958638,
+            5.942161619022954,
+            5.947325689019635,
+            6.001835155009758,
+            5.9285733720171265,
+            5.927091924997512,
+            5.928521771973465
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 25,
+          "outer_rank": 12,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225987136014737,
+            6.163989168999251,
+            6.161721307027619,
+            6.126198340964038,
+            6.15111276198877,
+            6.140841259039007,
+            6.084397218015511,
+            6.099268097023014,
+            6.092484912020154,
+            6.071371093974449
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 26,
+          "outer_rank": 13,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.955840289010666,
+            6.033500439021736,
+            5.979874183947686,
+            5.924998539034277,
+            5.9421849839854985,
+            5.947372609982267,
+            6.00187391001964,
+            5.928579685045406,
+            5.9271422940073535,
+            5.928529547993094
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 27,
+          "outer_rank": 13,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.226016964006703,
+            6.164025319041684,
+            6.161756886052899,
+            6.126219934027176,
+            6.151138061017264,
+            6.140840868989471,
+            6.084399602026679,
+            6.099261274037417,
+            6.092462077969685,
+            6.07136984198587
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 28,
+          "outer_rank": 14,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956105545046739,
+            6.033191966009326,
+            5.979729721031617,
+            5.924957803974394,
+            5.942416000994854,
+            5.947357358993031,
+            6.001720173982903,
+            5.9285227750078775,
+            5.926942937949207,
+            5.928354718023911
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 29,
+          "outer_rank": 14,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.22587189701153,
+            6.163798968016636,
+            6.161658423021436,
+            6.1262688380084,
+            6.150847076030914,
+            6.140800915949512,
+            6.084182530990802,
+            6.099049822019879,
+            6.092243228980806,
+            6.071091737016104
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 30,
+          "outer_rank": 15,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            5.956126345030498,
+            6.033206774969585,
+            5.979737556015607,
+            5.924980839015916,
+            5.9424506789655425,
+            5.947347540000919,
+            6.0017557829851285,
+            5.928499569010455,
+            5.92691541404929,
+            5.928362223028671
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        },
+        {
+          "rank": 31,
+          "outer_rank": 15,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            6.225888488988858,
+            6.163801722985227,
+            6.161682580015622,
+            6.126285951002501,
+            6.150864129012916,
+            6.140817568986677,
+            6.084188512992114,
+            6.099042889021803,
+            6.0922211049473844,
+            6.071105423965491
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108836,
+            "reference_bytes": 3086088192,
+            "momentum_bytes": 385761024,
+            "C_bytes": 9418784,
+            "slot_count": 1,
+            "formula_bytes": 67108836,
+            "schedule": "contiguous",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "sent_tensor_bytes_by_phase": [
+              3086088192,
+              2700327168,
+              2700327168,
+              3086088192
+            ],
+            "sent_tensor_bytes": 11572830720,
+            "padded_master_bytes": 6172176384
+          },
+          "finite_state": true,
+          "tile_elements": 294337,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 12799914496,
+          "peak_reserved_bytes": 12815695872
+        }
+      ],
+      "max_rank_seconds": [
+        6.226016964006703,
+        6.164069663034752,
+        6.161756886052899,
+        6.126285951002501,
+        6.151138061017264,
+        6.141031763982028,
+        6.084486011008266,
+        6.099268097023014,
+        6.092484912020154,
+        6.071448098984547
+      ],
+      "mean_seconds": 6.131798640813213,
+      "median_seconds": 6.133658857492264
+    },
+    {
+      "repeat": 1,
+      "arm": "recenter",
+      "rank_records": [
+        {
+          "rank": 0,
+          "outer_rank": 0,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.984450989984907,
+            3.9776931459782645,
+            3.971453595033381,
+            3.979970268032048,
+            4.052919653011486,
+            4.045480002998374,
+            3.977325826010201,
+            3.984383549017366,
+            3.982695537037216,
+            3.9756940220249817
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 1,
+          "outer_rank": 0,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066830584022682,
+            4.10586016997695,
+            4.115697205008473,
+            4.097406279004645,
+            4.043276763986796,
+            4.0915299680200405,
+            4.121394929010421,
+            4.0362088099936955,
+            4.11931351601379,
+            4.102032359980512
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 2,
+          "outer_rank": 1,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.985343264997937,
+            3.977789792988915,
+            3.9715295619680546,
+            3.980831463006325,
+            4.053008214046713,
+            4.045937196991872,
+            3.978293426975142,
+            3.9850542949861847,
+            3.98315232997993,
+            3.975675215013325
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 3,
+          "outer_rank": 1,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066927290987223,
+            4.106347852037288,
+            4.115645935991779,
+            4.096905180020258,
+            4.043349203013349,
+            4.091542212001514,
+            4.121784151997417,
+            4.037047630990855,
+            4.119734039006289,
+            4.102682737982832
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 4,
+          "outer_rank": 2,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.984517449978739,
+            3.977600087004248,
+            3.970207055041101,
+            3.9796594160143286,
+            4.05303346196888,
+            4.046002076996956,
+            3.977840753039345,
+            3.9850680039962754,
+            3.9833537120139226,
+            3.9756837739842013
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 5,
+          "outer_rank": 2,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066924576007295,
+            4.106769729987718,
+            4.116609668999445,
+            4.097940302977804,
+            4.048549828992691,
+            4.094152064004447,
+            4.122352201957256,
+            4.036804158997256,
+            4.119073006964754,
+            4.102184802992269
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 6,
+          "outer_rank": 3,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9844421750167385,
+            3.9779128420050256,
+            3.9701360180042684,
+            3.979087059968151,
+            4.05260970297968,
+            4.045950828003697,
+            3.977781057008542,
+            3.9850203529931605,
+            3.9832940669730306,
+            3.9754826860153116
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 7,
+          "outer_rank": 3,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066943441983312,
+            4.106712619017344,
+            4.116498944989871,
+            4.097893302037846,
+            4.048504011007026,
+            4.0939651929656975,
+            4.122287557984237,
+            4.03673037601402,
+            4.1188452179776505,
+            4.10191870899871
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 8,
+          "outer_rank": 4,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.98546246701153,
+            3.9768427109811455,
+            3.970206946018152,
+            3.979255432030186,
+            4.052574484026991,
+            4.046105390007142,
+            3.9774817979778163,
+            3.9846453360514715,
+            3.9836296489811502,
+            3.975188458978664
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 9,
+          "outer_rank": 4,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066256007004995,
+            4.106629533984233,
+            4.116390288982075,
+            4.097698675992433,
+            4.048238690011203,
+            4.093803254014347,
+            4.122463224979583,
+            4.036925821972545,
+            4.118833037966397,
+            4.101805234036874
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 10,
+          "outer_rank": 5,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9855926989694126,
+            3.9780501890345477,
+            3.970329462958034,
+            3.9793733489932492,
+            4.052708433009684,
+            4.046230692998506,
+            3.9779340850072913,
+            3.9853538980241865,
+            3.983673363982234,
+            3.9756012879661284
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 11,
+          "outer_rank": 5,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066858794016298,
+            4.106969079992268,
+            4.116427650966216,
+            4.09772222104948,
+            4.047552952950355,
+            4.094122711976524,
+            4.122062408016063,
+            4.036926011031028,
+            4.119102198979817,
+            4.101546093006618
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 12,
+          "outer_rank": 6,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.986107150965836,
+            3.976933335943613,
+            3.9707915660110302,
+            3.9800405760179274,
+            4.052555705944542,
+            4.046384098008275,
+            3.976950110984035,
+            3.984375882020686,
+            3.9834854929940775,
+            3.9751450640033
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 13,
+          "outer_rank": 6,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.065740435034968,
+            4.106642137980089,
+            4.116489934036508,
+            4.097516486013774,
+            4.0469157340121455,
+            4.094794981006999,
+            4.1223381200106815,
+            4.036833293037489,
+            4.1195792680373415,
+            4.101750322966836
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 14,
+          "outer_rank": 7,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.986020233016461,
+            3.97673182800645,
+            3.970703046012204,
+            3.9799410739797167,
+            4.052470360009465,
+            4.045839747006539,
+            3.9769179379800335,
+            3.9843688490218483,
+            3.9832491250126623,
+            3.97487275802996
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 15,
+          "outer_rank": 7,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.065473811002448,
+            4.106532274978235,
+            4.116397486010101,
+            4.097468002990354,
+            4.047626125975512,
+            4.094590476015583,
+            4.121941633988172,
+            4.036578561004717,
+            4.1194777909549884,
+            4.101709212991409
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 16,
+          "outer_rank": 8,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.986068147001788,
+            3.976062675996218,
+            3.971359877032228,
+            3.98034834000282,
+            4.052167383953929,
+            4.046253548003733,
+            3.9771828720113263,
+            3.9837171180406585,
+            3.983057111967355,
+            3.9749876849818975
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 17,
+          "outer_rank": 8,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.06550015200628,
+            4.1066528629744425,
+            4.116084411041811,
+            4.097200286050793,
+            4.047539493010845,
+            4.094679977046326,
+            4.121822850021999,
+            4.035952207981609,
+            4.11954489198979,
+            4.101628543983679
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 18,
+          "outer_rank": 9,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9857213880168274,
+            3.9763946579769254,
+            3.9714119270211086,
+            3.980451298994012,
+            4.051980933989398,
+            4.0463317389949225,
+            3.977198523003608,
+            3.9844439509906806,
+            3.9836460889782757,
+            3.9751166139612906
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 19,
+          "outer_rank": 9,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066022450977471,
+            4.1068223300389946,
+            4.116728664957918,
+            4.09769140498247,
+            4.04792278300738,
+            4.094746864982881,
+            4.122043106006458,
+            4.036625707987696,
+            4.11966071597999,
+            4.101917882042471
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 20,
+          "outer_rank": 10,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.986397400032729,
+            3.9763167210039683,
+            3.972734214970842,
+            3.9810598460026085,
+            4.051864015986212,
+            4.046346842020284,
+            3.978279161034152,
+            3.984543018974364,
+            3.9841666310094297,
+            3.975967595994007
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 21,
+          "outer_rank": 10,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066553917014971,
+            4.107144262990914,
+            4.116841643000953,
+            4.097727540007327,
+            4.046690215996932,
+            4.093924800050445,
+            4.122647666023113,
+            4.035837489995174,
+            4.120270901010372,
+            4.103707330010366
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 22,
+          "outer_rank": 11,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.98636187199736,
+            3.976261865987908,
+            3.972643088956829,
+            3.9809870550525375,
+            4.051374830014538,
+            4.046293179038912,
+            3.9780993839958683,
+            3.9844702879781835,
+            3.9840453260112554,
+            3.97586250299355
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 23,
+          "outer_rank": 11,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066478502005339,
+            4.1063527630176395,
+            4.116840431001037,
+            4.097651042044163,
+            4.046116326004267,
+            4.0942205709870905,
+            4.122648217016831,
+            4.035735922981985,
+            4.120269018050749,
+            4.1036841360037215
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 24,
+          "outer_rank": 12,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9860272190417163,
+            3.9770100350142457,
+            3.972490567015484,
+            3.981048261979595,
+            4.051140567986295,
+            4.046366766968276,
+            3.9782607759698294,
+            3.984527395979967,
+            3.9839436860056594,
+            3.9757490600459278
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 25,
+          "outer_rank": 12,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066317806020379,
+            4.106093067966867,
+            4.1164260389632545,
+            4.097681617015041,
+            4.0452511179610156,
+            4.093384859035723,
+            4.12247868598206,
+            4.036717390001286,
+            4.120015306980349,
+            4.103513064968865
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 26,
+          "outer_rank": 13,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9864858969813213,
+            3.9770524369669147,
+            3.9730809499742463,
+            3.9810889810323715,
+            4.051459465001244,
+            4.04601663001813,
+            3.9783213839982636,
+            3.9847445270279422,
+            3.9843300840002485,
+            3.9761633439920843
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 27,
+          "outer_rank": 13,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.0666583349811845,
+            4.106683060002979,
+            4.115823764994275,
+            4.097880290995818,
+            4.045645149948541,
+            4.093345352972392,
+            4.122894801024813,
+            4.036832441983279,
+            4.119497524981853,
+            4.103525479033124
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 28,
+          "outer_rank": 14,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9862511020037346,
+            3.977472479979042,
+            3.9721691149752587,
+            3.9810091559775174,
+            4.051233353966381,
+            4.046357929997612,
+            3.9784650270012207,
+            3.9850880039739423,
+            3.9836730170063674,
+            3.975579474994447
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 29,
+          "outer_rank": 14,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066385148966219,
+            4.106047816982027,
+            4.115628967003431,
+            4.097699320001993,
+            4.044330914039165,
+            4.091843826987315,
+            4.121116144990083,
+            4.0369628759799525,
+            4.119519313971978,
+            4.1012574909836985
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 30,
+          "outer_rank": 15,
+          "outer_ranks": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            3.9853384899906814,
+            3.977400250034407,
+            3.971480979002081,
+            3.9805684000020847,
+            4.050788660009857,
+            4.0456234739976935,
+            3.9781492530019023,
+            3.9845608510077,
+            3.9830619010026567,
+            3.975562521023676
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        },
+        {
+          "rank": 31,
+          "outer_rank": 15,
+          "outer_ranks": [
+            1,
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            27,
+            29,
+            31
+          ],
+          "device_name": "NVIDIA A100-SXM4-40GB",
+          "seconds": [
+            4.066364187980071,
+            4.106020813982468,
+            4.115214762976393,
+            4.097542836039793,
+            4.043273581017274,
+            4.092249044042546,
+            4.121374776994344,
+            4.036540737026371,
+            4.119446333032101,
+            4.102561753010377
+          ],
+          "allocation": {
+            "workspace_tensor_bytes": 67108800,
+            "formula_bytes": 67108800,
+            "reference_bytes": 385761024,
+            "momentum_bytes": 385761024,
+            "slot_count": 1,
+            "arm": "recenter",
+            "excluded": [
+              "master/model",
+              "inner optimizer",
+              "allocator/library storage",
+              "Python and process metadata"
+            ]
+          },
+          "payload": {
+            "arm": "recenter",
+            "numerical_contract": "native_fp32_raw_weight_recenter",
+            "collective_calls": {
+              "reference_allgather": 0,
+              "reduce_scatter": 115,
+              "updated_reference_allgather": 115
+            },
+            "api_input_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 6172176384,
+              "updated_reference_allgather": 385761024
+            },
+            "api_output_bytes": {
+              "reference_allgather": 0,
+              "reduce_scatter": 385761024,
+              "updated_reference_allgather": 6172176384
+            },
+            "modeled_payload_bytes": 11572830720,
+            "padded_master_bytes": 6172176384,
+            "physical_wire_bytes": null
+          },
+          "finite_state": true,
+          "tile_elements": 838860,
+          "reference_and_momentum_on": "cuda",
+          "peak_allocated_bytes": 10098885632,
+          "peak_reserved_bytes": 10110369792
+        }
+      ],
+      "max_rank_seconds": [
+        4.066943441983312,
+        4.107144262990914,
+        4.116841643000953,
+        4.097940302977804,
+        4.05303346196888,
+        4.094794981006999,
+        4.122894801024813,
+        4.037047630990855,
+        4.120270901010372,
+        4.103707330010366
+      ],
+      "mean_seconds": 4.092061875696527,
+      "median_seconds": 4.100823816494085
+    }
+  ],
+  "repeat_scope": "repeated blocks in one launch, not independent job launches",
+  "timing": "per-step maximum rank wall time; warmup, input perturbation and barriers excluded",
+  "sources": {
+    "experiments/centered_outer/benchmark_outer.py": "c70857d135b25f0d5f1a2be80f5fa4fad7319c146b9f2de3c747aa32131746e4",
+    "megatron/core/outer_sync/cpu_offload.py": "a48f55b55a3f7e8c6274e9e19920c0122cb17ebb1a981324f56cd28ef463f0c2",
+    "megatron/core/outer_sync/cycle_metrics.py": "adcdb56c6d2c8eaf9a33b06e3cf97cf0622c46dea820f629240d0b254bc4d6aa",
+    "megatron/core/outer_sync/dtensor.py": "644de7742200ab1dd052832ab9b2f053b1421cb6d9ec9b92dd7a4f233ad20b4e",
+    "megatron/core/outer_sync/collectives.py": "41c61ef49861c1e317e3ac205d86bbf3e38a07918b382b6445e15e751091b7cc",
+    "megatron/core/outer_sync/legacy.py": "4d750ff4b38cdcc20de4affee646dff37a22d19eea29c2367ebeabd67f29cf5f",
+    "megatron/core/outer_sync/verification.py": "7ad4a9b3d2f21a09366d11fdc8e2eb8e5f77814ab74546a61fef60ab15b1da02",
+    "megatron/core/outer_sync/coordinates.py": "6dc41d756b9037cd69b23be8c5248191c2433ecae51b34afcacb1053ce96aeb6",
+    "megatron/core/outer_sync/runtime.py": "f5be63a506a69022b8441c2a90ff6cec21dfdc2214f5473f5a6d7d86c6207475",
+    "megatron/core/outer_sync/executor.py": "0134695bff923f21c1763131aba623b150dbeddec7204728db1fd69a0d870930",
+    "megatron/core/outer_sync/spec.py": "9ebf8e6ba511d08bf55a33376affa48d818b2ec1e68564753592cdf776e5ca49",
+    "megatron/core/outer_sync/normalization.py": "5bea2d3af18a79e68b53182bf974c1e118980716a10c2c51d5d8f707153cd102",
+    "megatron/core/outer_sync/streamed_oracle.py": "5cbdd2cc7447917c3cc0d4ec9fa3b1761996b961d955052c780a0c2d869d3888",
+    "megatron/core/outer_sync/checkpoint.py": "f16d41b468dd9d5c87539840faf38455814a3d281a3fde4794c047cc32cec819",
+    "megatron/core/outer_sync/__init__.py": "7f22d9db5e726f77cc7e108de63622be906ef935d5100e5c2c9fbb3ed54c9287"
+  }
+}

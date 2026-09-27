@@ -1,0 +1,8 @@
+Status: measured
+synthetic flat-master outer update plus BF16 commit; no inner training
+Arm                      Outer+commit (s)   Peak allocated (GiB)
+reference                      6.223820   11.921
+contiguous                     6.133659   11.921
+recenter                       4.100824   9.405
+Repeat 1: new Pier latency reduction vs old +1.45%; overhead vs W: old +51.77%, new +49.57%
+Flat-master experiment; use Qwen runs before replacing paper results.

@@ -1,0 +1,13 @@
+[G] probe: L=36, 3.085939B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/G/trial-001-L36-probe/out.txt
+[G] passed: L=36 (79.2s)
+[G] probe: L=72, 5.860710B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/G/trial-002-L72-probe/out.txt
+[G] oom: L=72 (37.1s)
+[G] probe: L=54, 4.473325B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/G/trial-003-L54-probe/out.txt
+[G] oom: L=54 (33.1s)
+[G] probe: L=45, 3.779632B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/G/trial-004-L45-probe/out.txt
+[G] passed: L=45 (80.2s)
+[G] probe: L=49, 4.087940B, 11 steps; /pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/G/trial-005-L49-probe/out.txt
+[G] error: L=49 (86.0s)
+arm  status                   max_layers  parameters(B)  next_OOM_layers
+R    error                          None        pending               45
+G    error                          None        pending               54

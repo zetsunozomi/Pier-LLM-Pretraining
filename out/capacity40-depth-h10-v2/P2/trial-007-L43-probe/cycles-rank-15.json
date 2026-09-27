@@ -1,0 +1,167 @@
+{
+  "format": "pier-training-cycles-v1",
+  "run_id": "5e4e18dd-1c7c-4de3-b5ca-3b6e5deeb88f",
+  "status": "complete",
+  "rank": 15,
+  "world_size": 32,
+  "GPU_executed": true,
+  "metadata": {
+    "arm": "pier",
+    "cohort": 2,
+    "outer_ranks": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31
+    ],
+    "inner_ranks": [
+      15
+    ],
+    "coordinate_fingerprint": "7d7b6a765dd039a90934c4131598f3e49e9fb9e472a013b96c6d05af87c3a97b",
+    "coordinate_numel": 1812827904,
+    "allocation": {
+      "workspace_tensor_bytes": 67108836,
+      "reference_bytes": 3625655808,
+      "momentum_bytes": 453206976,
+      "C_bytes": 9418784,
+      "slot_count": 1,
+      "formula_bytes": 67108836,
+      "schedule": "reference",
+      "excluded": [
+        "master/model",
+        "inner optimizer",
+        "allocator/library storage",
+        "Python and process metadata"
+      ]
+    },
+    "state_storage": {
+      "reference": {
+        "device": "cuda",
+        "bytes": 3625655808,
+        "pinned": false
+      },
+      "momentum": {
+        "device": "cuda",
+        "bytes": 453206976,
+        "pinned": false
+      }
+    },
+    "tile_elements": 294337,
+    "final_health": {
+      "model_matches_master": true,
+      "finite_model": true,
+      "finite_loss": true,
+      "losses": {
+        "lm loss": 0.1947631537914276
+      }
+    }
+  },
+  "planned_attempts": 11,
+  "initial_clock": {
+    "interval": 10,
+    "attempted": 0,
+    "successful": 0,
+    "boundaries": 0
+  },
+  "final_clock": {
+    "interval": 10,
+    "attempted": 11,
+    "successful": 11,
+    "boundaries": 1
+  },
+  "warmup_cycles": 0,
+  "complete_cycles": 1,
+  "eligible_cycles": 1,
+  "cycles": [
+    {
+      "outer_boundary_index": 1,
+      "complete_cycle": true,
+      "warmup": false,
+      "eligible": true,
+      "attempted_start": 0,
+      "attempted_end": 10,
+      "successful_start": 0,
+      "successful_end": 10,
+      "attempts": 10,
+      "successful_steps": 10,
+      "starts_midcycle": false,
+      "ends_at_outer_boundary": true,
+      "local_cycle_seconds": 44.71690390800359,
+      "max_rank_cycle_seconds": 44.71828787898994,
+      "local_outer_and_commit_seconds": 7.391364401002647,
+      "max_rank_outer_and_commit_seconds": 7.393015495996224,
+      "processed_loss_tokens_global": 2621440,
+      "successful_loss_tokens_global": 2621440,
+      "skipped_loss_tokens_global": 0,
+      "useful_tokens_per_second": 58621.206766541596,
+      "payload": {
+        "sent_tensor_bytes_by_phase": [
+          3625655808,
+          3172448832,
+          3172448832,
+          3625655808
+        ],
+        "sent_tensor_bytes": 13596209280,
+        "padded_master_bytes": 7251311616
+      },
+      "torch_peak_allocated_bytes": 38325331456,
+      "torch_peak_reserved_bytes": 39374028800,
+      "device_level_peak_bytes": null,
+      "physical_wire_bytes": null
+    },
+    {
+      "outer_boundary_index": 1,
+      "complete_cycle": false,
+      "warmup": false,
+      "eligible": false,
+      "attempted_start": 10,
+      "attempted_end": 11,
+      "successful_start": 10,
+      "successful_end": 11,
+      "attempts": 1,
+      "successful_steps": 1,
+      "starts_midcycle": false,
+      "ends_at_outer_boundary": false,
+      "local_cycle_seconds": 3.612125871994067,
+      "max_rank_cycle_seconds": 3.6122683589928783,
+      "local_outer_and_commit_seconds": 0.0,
+      "max_rank_outer_and_commit_seconds": 0.0,
+      "processed_loss_tokens_global": 262144,
+      "successful_loss_tokens_global": 262144,
+      "skipped_loss_tokens_global": 0,
+      "useful_tokens_per_second": null,
+      "payload": null,
+      "torch_peak_allocated_bytes": 38324808192,
+      "torch_peak_reserved_bytes": 39374028800,
+      "device_level_peak_bytes": null,
+      "physical_wire_bytes": null
+    }
+  ],
+  "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+  "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+  "excluded_from_cycle": [
+    "initial model/data/checkpoint loading",
+    "boundary barriers and report I/O",
+    "logging/callbacks between independent cycle windows"
+  ],
+  "performance_result": false,
+  "not_validated": [
+    "workload identity and tuned comparison",
+    "device-level peak memory",
+    "node host/pinned peaks",
+    "physical link traffic",
+    "end-to-end allocated GPU-hours"
+  ]
+}

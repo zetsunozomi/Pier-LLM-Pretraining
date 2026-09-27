@@ -1,0 +1,12 @@
+{
+  "rank": 11,
+  "host": "nid001880",
+  "world_size": 32,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "GPU_executed": true,
+  "total_memory": 42404806656,
+  "python": "3.11.14 (main, Oct 21 2025, 18:31:21) [GCC 11.2.0]",
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "manifest_sha256": "249554ca766fc44cf74328f39230733e06ecb54992f4ae1d12759ce379db2469"
+}

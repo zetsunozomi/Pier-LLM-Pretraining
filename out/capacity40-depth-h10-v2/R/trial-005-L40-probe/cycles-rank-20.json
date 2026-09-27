@@ -1,0 +1,178 @@
+{
+  "format": "pier-training-cycles-v1",
+  "run_id": "d3e21168-9839-46d7-906a-0088b008d10a",
+  "status": "complete",
+  "rank": 20,
+  "world_size": 32,
+  "GPU_executed": true,
+  "metadata": {
+    "arm": "resident",
+    "cohort": 1,
+    "outer_ranks": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    "inner_ranks": [
+      20
+    ],
+    "coordinate_fingerprint": "00279e52fc08f91874552fcc37cc62576e7a131c7456fd13cbcc6e24d1718214",
+    "coordinate_numel": 1697206272,
+    "allocation": {
+      "workspace_tensor_bytes": 67108860,
+      "formula_bytes": 67108860,
+      "reference_bytes": 6788825088,
+      "momentum_bytes": 424301568,
+      "slot_count": 1,
+      "arm": "resident",
+      "excluded": [
+        "master/model",
+        "inner optimizer",
+        "allocator/library storage",
+        "Python and process metadata"
+      ]
+    },
+    "state_storage": {
+      "reference": {
+        "device": "cuda",
+        "bytes": 6788825088,
+        "pinned": false
+      },
+      "momentum": {
+        "device": "cuda",
+        "bytes": 424301568,
+        "pinned": false
+      }
+    },
+    "tile_elements": 479349,
+    "final_health": {
+      "model_matches_master": true,
+      "finite_model": true,
+      "finite_loss": true,
+      "losses": {
+        "lm loss": 0.19433267414569855
+      }
+    }
+  },
+  "planned_attempts": 11,
+  "initial_clock": {
+    "interval": 10,
+    "attempted": 0,
+    "successful": 0,
+    "boundaries": 0
+  },
+  "final_clock": {
+    "interval": 10,
+    "attempted": 11,
+    "successful": 11,
+    "boundaries": 1
+  },
+  "warmup_cycles": 0,
+  "complete_cycles": 1,
+  "eligible_cycles": 1,
+  "cycles": [
+    {
+      "outer_boundary_index": 1,
+      "complete_cycle": true,
+      "warmup": false,
+      "eligible": true,
+      "attempted_start": 0,
+      "attempted_end": 10,
+      "successful_start": 0,
+      "successful_end": 10,
+      "attempts": 10,
+      "successful_steps": 10,
+      "starts_midcycle": false,
+      "ends_at_outer_boundary": true,
+      "local_cycle_seconds": 40.3907860229956,
+      "max_rank_cycle_seconds": 40.92433450097451,
+      "local_outer_and_commit_seconds": 5.4217829139961395,
+      "max_rank_outer_and_commit_seconds": 5.955540185997961,
+      "processed_loss_tokens_global": 2621440,
+      "successful_loss_tokens_global": 2621440,
+      "skipped_loss_tokens_global": 0,
+      "useful_tokens_per_second": 64055.77590852643,
+      "payload": {
+        "arm": "resident",
+        "numerical_contract": "native_fp32_centered_sum",
+        "collective_calls": {
+          "reference_allgather": 0,
+          "reduce_scatter": 222,
+          "updated_reference_allgather": 222
+        },
+        "api_input_bytes": {
+          "reference_allgather": 0,
+          "reduce_scatter": 6788825088,
+          "updated_reference_allgather": 424301568
+        },
+        "api_output_bytes": {
+          "reference_allgather": 0,
+          "reduce_scatter": 424301568,
+          "updated_reference_allgather": 6788825088
+        },
+        "modeled_payload_bytes": 12729047040,
+        "padded_master_bytes": 6788825088,
+        "physical_wire_bytes": null
+      },
+      "torch_peak_allocated_bytes": 39340051456,
+      "torch_peak_reserved_bytes": 40384856064,
+      "device_level_peak_bytes": null,
+      "physical_wire_bytes": null
+    },
+    {
+      "outer_boundary_index": 1,
+      "complete_cycle": false,
+      "warmup": false,
+      "eligible": false,
+      "attempted_start": 10,
+      "attempted_end": 11,
+      "successful_start": 10,
+      "successful_end": 11,
+      "attempts": 1,
+      "successful_steps": 1,
+      "starts_midcycle": false,
+      "ends_at_outer_boundary": false,
+      "local_cycle_seconds": 3.376019716990413,
+      "max_rank_cycle_seconds": 3.37604016601108,
+      "local_outer_and_commit_seconds": 0.0,
+      "max_rank_outer_and_commit_seconds": 0.0,
+      "processed_loss_tokens_global": 262144,
+      "successful_loss_tokens_global": 262144,
+      "skipped_loss_tokens_global": 0,
+      "useful_tokens_per_second": null,
+      "payload": null,
+      "torch_peak_allocated_bytes": 39340046848,
+      "torch_peak_reserved_bytes": 40384856064,
+      "device_level_peak_bytes": null,
+      "physical_wire_bytes": null
+    }
+  ],
+  "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+  "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+  "excluded_from_cycle": [
+    "initial model/data/checkpoint loading",
+    "boundary barriers and report I/O",
+    "logging/callbacks between independent cycle windows"
+  ],
+  "performance_result": false,
+  "not_validated": [
+    "workload identity and tuned comparison",
+    "device-level peak memory",
+    "node host/pinned peaks",
+    "physical link traffic",
+    "end-to-end allocated GPU-hours"
+  ]
+}

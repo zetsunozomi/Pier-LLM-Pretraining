@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "successful_steps": 11,
+  "outer_cycles": 1,
+  "layers": 45,
+  "parameters": 3779631616,
+  "steps": 11,
+  "phase": "probe",
+  "wall_seconds": 80.171024493,
+  "exit_code": 0,
+  "command": [
+    "srun",
+    "--nodes=8",
+    "--ntasks=8",
+    "--ntasks-per-node=1",
+    "--kill-on-bad-exit=1",
+    "--gpu-bind=none",
+    "bash",
+    "/pscratch/sd/s/syfan/Pier/experiments/qwen/capacity_node.sh",
+    "/pscratch/sd/s/syfan/Pier/out/capacity40-depth-h10-v2/P16/trial-004-L45-probe"
+  ],
+  "slurm_job_id": "58891778"
+}
