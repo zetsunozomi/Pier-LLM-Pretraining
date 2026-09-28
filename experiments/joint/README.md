@@ -57,18 +57,47 @@ an allocation that already exceeds physical memory cannot be recovered here.
 
 ## Cluster preparation and gate
 
-From the repository on Perlmutter, using the existing environment and Qwen3B
-snapshot (no new package or model download is performed):
+Prefer an interactive allocation for one-node/four-GPU correctness work.
+Request **30 minutes** for short jobs; estimate larger jobs from returned phase
+timings before choosing a longer limit. Leave about five minutes for startup,
+Slurm cleanup and returning logs. Backfill is handled by the scheduler; a short
+honest walltime helps fit available gaps but does not guarantee a start time.
+See the [NERSC scheduling guide](https://docs.nersc.gov/jobs/scheduling/) and
+[interactive guide](https://docs.nersc.gov/jobs/interactive/).
+
+First sync the checkout **before** requesting the allocation. From the repository
+on Perlmutter, using the existing environment (no package/model download):
 
 ```bash
 cd /pscratch/sd/s/syfan/Pier
 export PIER_ROOT="$PWD"
+export PIER_OUT_ROOT="$PWD/out"
 export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
-sbatch experiments/joint/training_gate.sbatch
-sbatch --time=00:30:00 experiments/joint/outer.sbatch verify
+# Request 1 node / 4 A100-40GB / 00:30:00 with your usual salloc account.
+# Once the allocation is ready, start immediately:
+unset PIER_JOINT_TRAINING_RESUME
+bash experiments/joint/training_gate.sbatch --max-phases 2
 ```
 
-The first job uses one four-GPU node and the actual `pretrain_gpt.py` entrypoint,
+Run the script with `bash` directly inside the allocation: its `#SBATCH` lines
+are ignored, and its internal `srun` launches the workers with explicit GPU
+resources. Do not wrap it in another `srun` or submit another allocation from
+inside the interactive one. If using batch instead, submit from the login node:
+
+```bash
+sbatch --time=00:30:00 experiments/joint/training_gate.sbatch --max-phases 2
+```
+
+This first chunk runs `reference-tp1` and `single-tp1`. It records each phase's
+elapsed walltime in `exit.json`. The driver defaults to a 1,500-second budget,
+caps each Slurm step to the remaining budget, and saves `summary.json` after
+every phase. It stops between phases if the remaining budget is too small for
+another phase based on the timings observed in that invocation. These are
+guards, not a claim that an unmeasured phase will finish within 30 minutes.
+If you start late in an existing allocation, pass a smaller `--budget-seconds`.
+An unfinished phase is a failed gate requiring inspection, never a passed gate.
+
+The complete 13-phase gate uses the actual `pretrain_gpt.py` entrypoint,
 with BF16/FP32 AdamW, dropout, an injected global skip, all four variants, TP1,
 TP2 and inner-DP2. It checks complete trajectories and checkpoint restore both
 at attempt 4 (an outer boundary) and attempt 5 (inside a local cycle), against
@@ -77,9 +106,10 @@ Its workers explicitly set `NCCL_ALGO=Ring` and `CUBLAS_WORKSPACE_CONFIG=:4096:8
 for Megatron's deterministic correctness mode, with that environment frozen in
 the launch receipt. Performance jobs retain their separately recorded settings.
 
-For a step-by-step first run, submit only `training_gate.sbatch` and review its
-returned evidence before submitting the other jobs. The launcher prints the
-exact fresh `out/joint-training-gate-.../` directory in the Slurm output.
+For a step-by-step first run, run only the first chunk and return its evidence
+for a quick check before continuing. `status: incomplete` with no errors and
+11 pending phases is expected after two successful phases. The launcher prints
+the exact fresh `out/joint-training-gate-.../` directory in the terminal or Slurm output.
 After the job exits, use `git add out/joint-training-gate-<actual-run>/` on the
 cluster to return the complete text evidence, including `gate/summary.json`,
 `gate/manifest.json`, all phase/rank JSON files and logs. The repository ignore
@@ -87,7 +117,37 @@ rules retain nested JSON/log/txt files while excluding binary checkpoints and
 caches. Keep the checkpoint files on the cluster. Return the directory even
 when a phase fails or the time limit is reached; logs can diagnose a partial run.
 
-The second job defaults to eight four-GPU A100-40GB nodes, TP2, K16. The Slurm output
+After that quick check, clean partial gates can continue in a new allocation:
+
+```bash
+# Use the actual gate directory from the previous chunk; keep checkpoints there.
+export PIER_JOINT_TRAINING_RESUME=/absolute/path/to/out/joint-training-gate-RUN/gate
+bash experiments/joint/training_gate.sbatch --max-phases 2
+```
+
+The phase count can be adjusted after measuring the first chunk. Resume checks
+the frozen source, configs and phase plan, validates completed phase evidence,
+and skips those phases. It refuses changed sources or damaged/interrupted phases;
+return these for diagnosis before retrying. Only all 13 validated phases produce
+`status: passed`. Do not run two continuations concurrently in the same directory.
+Return the same directory after each chunk; checkpoints stay on the cluster.
+
+| Stage | Nodes / GPUs | Allocation plan |
+|---|---|---|
+| Real-training/restart gate | 1 / 4 | Interactive, 30 min per chunk; first chunk is two phases |
+| Optional small operator gate | 1 / 4 | Interactive, 30 min; does not replace the full topology gate |
+| Required TP2/K16 operator gate | 8 / 32 | Batch, 30 min initial limit |
+| W numerical diagnostic | 8 / 32 | Batch, 30 min initial limit |
+| Pipeline/transition scans and traces | 8 / 32 | Measure a small configuration subset first; size later batches for 30 min when feasible |
+| Full Qwen fixed/changing-budget experiments | 8 / 32 | Measure complete case duration first; preserve full cycles and paired comparisons when splitting |
+
+The full operator gate is the next stage after the complete training gate passes:
+
+```bash
+sbatch --time=00:30:00 experiments/joint/outer.sbatch verify
+```
+
+It defaults to eight four-GPU A100-40GB nodes, TP2, K16. The Slurm output
 points to `out/joint-verify-*/report.json`. The CUDA gate checks the production
 executor against an independent NumPy FP32 oracle, all directed cohort edges,
 partial/padded tiles, slot counts 1/2/4, remote momentum, fragmented master/BF16
@@ -102,7 +162,8 @@ export PIER_JOINT_TRAINING_GATE=/absolute/path/to/out/joint-training-gate-RUN/ga
 
 The Slurm performance entrypoints verify the operator gate's CUDA status, world/TP topology
 and source hashes. A CPU gate or stale hash is rejected. For an inexpensive
-four-GPU preliminary gate use `PIER_JOINT_TP=1 sbatch --nodes=1 ... verify`;
+four-GPU preliminary gate use `PIER_JOINT_TP=1 bash experiments/joint/outer.sbatch verify`
+inside a one-node interactive allocation;
 it does not replace the 32-GPU gate.
 Qwen campaigns additionally require the passed real-training/restart gate.
 

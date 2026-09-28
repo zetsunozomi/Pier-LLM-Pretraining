@@ -8,6 +8,7 @@ from pathlib import Path
 import runpy
 import subprocess
 import sys
+import time
 import traceback
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -74,11 +75,14 @@ def phase_plan(output):
 def summarize(output):
     output = Path(output)
     manifest = json.loads((output / 'manifest.json').read_text())
-    errors, reports, comparisons = [], {}, []
+    errors, reports, comparisons, pending = [], {}, [], []
     if manifest['sources'] != sources():
         errors.append('source changed during the training gate')
     for phase in manifest['phases']:
         name = phase['name']
+        if not (output / name).exists():
+            pending.append(name)
+            continue
         reports[name] = []
         expected_end = phase['stop'] or 11
         for rank in range(4):
@@ -122,7 +126,9 @@ def summarize(output):
     if not errors:
         comparable = lambda row: [{k: v for k, v in event.items() if k != 'payload'} for event in row['events']]
         for phase in manifest['phases']:
-            if phase['variant'] is None:
+            if phase['variant'] is None or phase['name'] in pending:
+                continue
+            if f"reference-{phase['topology']}" in pending:
                 continue
             for rank in range(4):
                 base = comparable(reports[f"reference-{phase['topology']}"][rank])
@@ -132,10 +138,10 @@ def summarize(output):
                 if not equal:
                     errors.append(f"{phase['name']}/rank{rank}: training trajectory differs")
     return dict(format='pier-joint-training-gate-v1', kind='training_correctness',
-                status='passed' if not errors else 'failed',
+                status='failed' if errors else ('incomplete' if pending else 'passed'),
                 GPU_executed=any(r.get('GPU_executed') for rows in reports.values() for r in rows), world_size=4,
                 torch_versions=sorted({r['torch_version'] for rows in reports.values() for r in rows}),
-                sources=manifest['sources'], comparisons=comparisons, errors=errors,
+                sources=manifest['sources'], comparisons=comparisons, errors=errors, pending_phases=pending,
                 not_tested=['full-size Qwen training', 'convergence', 'performance'])
 
 
@@ -175,34 +181,73 @@ def worker(output, phase_name):
         raise
 
 
-def run(output, plan_only=False):
+def write_summary(output):
+    summary = summarize(output)
+    temporary = output / 'summary.json.tmp'
+    temporary.write_text(json.dumps(summary, indent=2) + '\n')
+    temporary.replace(output / 'summary.json')
+    return summary
+
+
+def run(output, plan_only=False, *, resume=False, max_phases=13, budget_seconds=1500):
+    if max_phases < 1 or budget_seconds < 120 or (resume and plan_only):
+        raise ValueError('positive phase count, >=120 second budget, and no resume/plan-only combination required')
+    started = time.monotonic()
     output = Path(output).resolve()
-    output.mkdir(parents=True, exist_ok=False)
     plan = phase_plan(output)
     manifest = dict(phases=plan, sources=sources(), plan_only=plan_only, environment=GATE_ENV)
-    for phase in plan:
-        if phase['config'] is not None:
-            (output / f"{phase['name']}.json").write_text(json.dumps(phase['config'], indent=2))
-    (output / 'manifest.json').write_text(json.dumps(manifest, indent=2))
+    if resume:
+        previous = json.loads((output / 'manifest.json').read_text())
+        if previous != manifest:
+            raise ValueError('cannot resume: source, environment, output path or phase plan changed')
+        for phase in plan:
+            if phase['config'] is not None and json.loads((output / f"{phase['name']}.json").read_text()) != phase['config']:
+                raise ValueError('cannot resume: frozen phase configuration changed')
+    else:
+        output.mkdir(parents=True, exist_ok=False)
+        for phase in plan:
+            if phase['config'] is not None:
+                (output / f"{phase['name']}.json").write_text(json.dumps(phase['config'], indent=2))
+        (output / 'manifest.json').write_text(json.dumps(manifest, indent=2))
     if plan_only:
         return
+    summary = write_summary(output)
+    if summary['status'] == 'failed':
+        raise RuntimeError('existing phase failed or was interrupted; inspect evidence before retrying')
+    completed_here, durations = 0, []
     for phase in plan:
+        if phase['name'] not in summary['pending_phases']:
+            continue
+        remaining = budget_seconds - (time.monotonic() - started)
+        # Leave room to close the Slurm step and write the partial summary.
+        if completed_here >= max_phases or remaining < max(120, 2 * max(durations, default=0) + 60):
+            break
         directory = output / phase['name']
         directory.mkdir()
+        step_minutes = max(1, int((remaining - 60) // 60))
         command = ['srun', '--nodes=1', '--ntasks=1', '--ntasks-per-node=1', '--kill-on-bad-exit=1',
+                   '--gpus-per-node=4', f'--time={step_minutes}',
                    '--gpu-bind=none', 'bash', 'experiments/joint/node.sh',
                    'experiments/joint/training_gate.py', '--worker', phase['name'], '--output-dir', str(output)]
+        print(f"START {phase['name']} (step limit {step_minutes} min)", flush=True)
+        phase_started = time.monotonic()
         with (directory / 'out.txt').open('w') as log:
             result = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                                     env={**os.environ, **GATE_ENV})
-        (directory / 'exit.json').write_text(json.dumps(dict(exit_code=result.returncode, command=command)))
-        print(f"{phase['name']}: exit={result.returncode}", flush=True)
-        if result.returncode:
+        elapsed = time.monotonic() - phase_started
+        (directory / 'exit.json').write_text(json.dumps(dict(
+            exit_code=result.returncode, command=command, elapsed_seconds=elapsed,
+            slurm_job_id=os.environ.get('SLURM_JOB_ID')), indent=2))
+        durations.append(elapsed)
+        completed_here += 1
+        print(f"{phase['name']}: exit={result.returncode}, elapsed={elapsed:.1f}s", flush=True)
+        summary = write_summary(output)
+        if summary['status'] == 'failed':
             break
-    summary = summarize(output)
-    (output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
-    if summary['status'] != 'passed':
+    print(f"Gate {summary['status']}; {len(summary['pending_phases'])} phases pending. Evidence: {output}", flush=True)
+    if summary['status'] == 'failed':
         raise RuntimeError('training gate failed; inspect summary.json and per-phase out.txt')
+    return summary
 
 
 if __name__ == '__main__':
@@ -210,8 +255,12 @@ if __name__ == '__main__':
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--worker')
     parser.add_argument('--plan-only', action='store_true')
+    parser.add_argument('--resume', action='store_true', help='Continue a clean partial gate with the identical frozen source')
+    parser.add_argument('--max-phases', type=int, default=13, help='Maximum new phases in this allocation')
+    parser.add_argument('--budget-seconds', type=int, default=1500, help='Driver time budget; reserve 5 min in a fresh 30 min allocation')
     args = parser.parse_args()
     if args.worker:
         worker(args.output_dir, args.worker)
     else:
-        run(args.output_dir, args.plan_only)
+        run(args.output_dir, args.plan_only, resume=args.resume,
+            max_phases=args.max_phases, budget_seconds=args.budget_seconds)

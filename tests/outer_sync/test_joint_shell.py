@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class JointShellTests(unittest.TestCase):
-    def invoke(self, script, nodes, extra=(), missing_training=False):
+    def invoke(self, script, nodes, extra=(), missing_training=False, resume=None):
         with tempfile.TemporaryDirectory(prefix='pier-joint-shell-') as folder:
             root = Path(folder)
             capture = root / 'args.txt'
@@ -36,6 +36,9 @@ class JointShellTests(unittest.TestCase):
                    'PIER_JOINT_GATE': '/fixture/operator.json'}
             env.pop('PIER_ROOT', None)
             env.pop('PIER_JOINT_TRAINING_GATE', None)
+            env.pop('PIER_JOINT_TRAINING_RESUME', None)
+            if resume:
+                env['PIER_JOINT_TRAINING_RESUME'] = resume
             if not missing_training:
                 env['PIER_JOINT_TRAINING_GATE'] = '/fixture/training.json'
             result = subprocess.run(['bash', str(spool), *extra], cwd=root, env=env,
@@ -58,9 +61,13 @@ class JointShellTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
 
     def test_training_gate_rejects_wrong_allocation(self):
-        result, captured = self.invoke('training_gate.sbatch', 1)
+        result, captured = self.invoke('training_gate.sbatch', 1, ('--max-phases', '2'))
         self.assertEqual(result.returncode, 0, result.stdout)
         self.assertIn('training_gate.py --output-dir', captured)
+        self.assertIn('--max-phases 2', captured)
+        result, captured = self.invoke('training_gate.sbatch', 1, ('--max-phases', '3'), resume='/fixture/gate')
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn('--output-dir /fixture/gate --resume --max-phases 3', captured)
         result, _ = self.invoke('training_gate.sbatch', 8)
         self.assertNotEqual(result.returncode, 0)
 

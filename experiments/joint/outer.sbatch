@@ -33,5 +33,5 @@ case "$stage" in
     *) echo 'Expected verify, pipeline, transitions, or numerics.' >&2; exit 2 ;;
 esac
 srun --nodes="$PIER_JOINT_NODES" --ntasks="$PIER_JOINT_NODES" --ntasks-per-node=1 \
-    --kill-on-bad-exit=1 --gpu-bind=none bash experiments/joint/node.sh \
+    --gpus-per-node=4 --kill-on-bad-exit=1 --gpu-bind=none bash experiments/joint/node.sh \
     "${command[@]}" "$@" --output "$PIER_OUT_DIR/report.json"
