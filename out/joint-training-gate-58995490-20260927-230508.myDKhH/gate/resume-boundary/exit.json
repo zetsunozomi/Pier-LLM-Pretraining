@@ -1,0 +1,22 @@
+{
+  "exit_code": 0,
+  "command": [
+    "srun",
+    "--nodes=1",
+    "--ntasks=1",
+    "--ntasks-per-node=1",
+    "--kill-on-bad-exit=1",
+    "--gpus-per-node=4",
+    "--time=19",
+    "--gpu-bind=none",
+    "bash",
+    "experiments/joint/node.sh",
+    "experiments/joint/training_gate.py",
+    "--worker",
+    "resume-boundary",
+    "--output-dir",
+    "/pscratch/sd/s/syfan/Pier/out/joint-training-gate-58995490-20260927-230508.myDKhH/gate"
+  ],
+  "elapsed_seconds": 33.42295044101775,
+  "slurm_job_id": "58995490"
+}

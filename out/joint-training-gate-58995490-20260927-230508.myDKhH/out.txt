@@ -1,0 +1,28 @@
+[joint-training-gate] Full stdout/stderr: /pscratch/sd/s/syfan/Pier/out/joint-training-gate-58995490-20260927-230508.myDKhH/out.txt
+START reference-tp1 (step limit 23 min)
+reference-tp1: exit=0, elapsed=20.8s
+START single-tp1 (step limit 23 min)
+single-tp1: exit=0, elapsed=28.7s
+START pipeline-tp1 (step limit 23 min)
+pipeline-tp1: exit=0, elapsed=33.9s
+START separate-tp1 (step limit 22 min)
+separate-tp1: exit=0, elapsed=35.1s
+START joint-tp1 (step limit 22 min)
+joint-tp1: exit=0, elapsed=34.5s
+START split-step (step limit 21 min)
+split-step: exit=0, elapsed=30.3s
+START resume-step (step limit 20 min)
+resume-step: exit=0, elapsed=34.3s
+START split-boundary (step limit 20 min)
+split-boundary: exit=0, elapsed=31.8s
+START resume-boundary (step limit 19 min)
+resume-boundary: exit=0, elapsed=33.4s
+START reference-tp2 (step limit 19 min)
+reference-tp2: exit=0, elapsed=18.4s
+START joint-tp2 (step limit 18 min)
+joint-tp2: exit=0, elapsed=24.8s
+START reference-dp2 (step limit 18 min)
+reference-dp2: exit=0, elapsed=20.1s
+START joint-dp2 (step limit 18 min)
+joint-dp2: exit=0, elapsed=26.3s
+Gate passed; 0 phases pending. Evidence: /pscratch/sd/s/syfan/Pier/out/joint-training-gate-58995490-20260927-230508.myDKhH/gate
