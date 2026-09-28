@@ -1,0 +1,6 @@
+[joint-training-gate] Full stdout/stderr: /pscratch/sd/s/syfan/Pier/out/joint-training-gate-58995490-20260927-225136.f23aHe/out.txt
+START reference-tp1 (step limit 23 min)
+reference-tp1: exit=0, elapsed=21.1s
+START single-tp1 (step limit 23 min)
+single-tp1: exit=0, elapsed=29.0s
+Gate incomplete; 11 phases pending. Evidence: /pscratch/sd/s/syfan/Pier/out/joint-training-gate-58995490-20260927-225136.f23aHe/gate
