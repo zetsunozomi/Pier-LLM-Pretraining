@@ -118,8 +118,14 @@ def summarize(output):
                     expected_checkpoint = 4 if 'boundary' in name else 5
                     if row['restore_evidence']['iteration'] != expected_checkpoint:
                         raise ValueError('wrong resume checkpoint')
-                if not phase['stop'] and (row['pending_consumer'] or row['consumer_checks'] != 3):
-                    raise ValueError('post-sync forward was not checked')
+                # Loading always checks the first restored forward. At step 5
+                # the pre-save boundary was already consumed, so this adds a
+                # fourth check. At boundary 4 it fulfills the still-pending
+                # boundary check instead; that trajectory still has three.
+                expected_consumers = 3 + int(phase['resume'] == 'split-step')
+                if not phase['stop'] and (row['pending_consumer'] or row['consumer_checks'] != expected_consumers):
+                    raise ValueError(f"post-sync/restore forward checks: expected {expected_consumers}, "
+                                     f"got {row['consumer_checks']}, pending={row['pending_consumer']}")
                 reports[name].append(row)
             except (OSError, ValueError, KeyError) as exc:
                 errors.append(f'{name}/rank{rank}: {exc}')

@@ -44,6 +44,8 @@ def worker(rank, rendezvous, directory):
                 resume = path / f'restart-{interruption}'
                 runtime, model, optimizer, scheduler = fixture(rank, 1, resume, schedule='joint', joint_config=config)
                 advance(runtime, model, optimizer, scheduler, interruption)
+                assert runtime.consumer_checks == (0 if interruption == 4 else 1)
+                assert runtime.pending_consumer == (interruption == 4)
                 save(runtime, interruption, scheduler, 0.)
                 runtime.executor.close()
                 runtime, model, optimizer, scheduler = fixture(rank, 1, resume, schedule='joint', joint_config=config)
@@ -55,6 +57,8 @@ def worker(rank, rendezvous, directory):
                 advance(runtime, model, optimizer, scheduler, 11)
                 assert digest([model.state_dict(), optimizer.state_dict(), scheduler.state_dict()]) == expected
                 assert digest(runtime.executor.state_dict()) == expected_state
+                assert runtime.consumer_checks == (3 if interruption == 4 else 4)
+                assert not runtime.pending_consumer
                 runtime.executor.close()
         # Exercise the production cycle meter with changing layouts and actual
         # payload traces, independently of full-state oracle measurements.

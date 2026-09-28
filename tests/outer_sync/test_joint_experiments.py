@@ -30,22 +30,29 @@ class JointExperimentTests(unittest.TestCase):
         name = command[command.index('--worker') + 1]
         manifest = json.loads((output / 'manifest.json').read_text())
         phase = next(p for p in manifest['phases'] if p['name'] == name)
+        end = phase['stop'] or 11
         events = []
         from megatron.core.outer_sync.joint_config import JointController
-        for attempt in range(1, 12):
+        for attempt in range(1, end + 1):
             event = dict(outer_boundary=attempt in (4, 7, 10), skipped=attempt == 3,
                          oracle_states_bitwise=True, outer_retained_inner_state=True,
                          skip_retained_optimizer=True, boundaries=(attempt - (attempt >= 3)) // 3)
             if phase['config'] and event['outer_boundary']:
                 controller = JointController(phase['config'])
+                target = (2 if phase['variant'] in ('single', 'pipeline') else
+                          controller.announcement(event['boundaries'])['target'])
                 event['payload'] = dict(configuration_sha256=controller.sha256,
-                                        plan=dict(cohort=2), variant=phase['variant'])
+                                        plan=dict(cohort=target), variant=phase['variant'])
             events.append(event)
         for rank in range(4):
-            row = dict(GPU_executed=True, backend='nccl', world_size=4, status='passed',
-                       clock=dict(interval=3, attempted=11, successful=10, boundaries=3),
-                       restored=False, error=None, events=events, pending_consumer=False,
-                       consumer_checks=3, torch_version='fixture')
+            row = dict(GPU_executed=True, backend='nccl', world_size=4,
+                       status='partial' if phase['stop'] else 'passed',
+                       clock=dict(interval=3, attempted=end, successful=end - 1, boundaries=(end - 1) // 3),
+                       restored=bool(phase['resume']), error=None, events=events,
+                       pending_consumer=end == 4,
+                       consumer_checks=({'split-boundary': 0, 'split-step': 1, 'resume-step': 4}.get(name, 3)),
+                       restore_evidence={'iteration': 4 if 'boundary' in name else 5} if phase['resume'] else None,
+                       torch_version='fixture')
             (output / name / f'rank-{rank}.json').write_text(json.dumps(row))
             launch = dict(argv=phase['argv'], GPU_executed=True, environment=manifest['environment'])
             (output / name / f'launch-rank-{rank}.json').write_text(json.dumps(launch))
@@ -91,6 +98,30 @@ class JointExperimentTests(unittest.TestCase):
             self.assertEqual(launch.call_count, 1)
             self.assertEqual(summary['status'], 'incomplete')
             self.assertEqual(len(summary['pending_phases']), 12)
+
+    def test_training_gate_requires_exact_forward_coverage_for_both_restart_points(self):
+        with tempfile.TemporaryDirectory() as folder, \
+                patch('experiments.joint.training_gate.sources', return_value={'fixture': 'v1'}), \
+                patch('experiments.joint.training_gate.subprocess.run', side_effect=self.completed_gate_phase):
+            output = Path(folder) / 'gate'
+            summary = run_training_gate(output)
+            self.assertEqual(summary['status'], 'passed', summary['errors'])
+            self.assertEqual(len(summary['comparisons']), 40)
+            for phase, wrong_count in (('resume-step', 3), ('resume-boundary', 2), ('resume-boundary', 4)):
+                path = output / phase / 'rank-0.json'
+                original = path.read_text()
+                row = json.loads(original)
+                row['consumer_checks'] = wrong_count
+                path.write_text(json.dumps(row))
+                rejected = summarize_training_gate(output)
+                self.assertEqual(rejected['status'], 'failed')
+                self.assertTrue(any('forward checks' in error for error in rejected['errors']))
+                path.write_text(original)
+            path = output / 'resume-step' / 'rank-0.json'
+            row = json.loads(path.read_text())
+            row['pending_consumer'] = True
+            path.write_text(json.dumps(row))
+            self.assertEqual(summarize_training_gate(output)['status'], 'failed')
 
     def test_real_training_gate_has_both_restart_boundaries_and_topologies(self):
         rows = {r['name']: r for r in phase_plan('/tmp/test-joint-gate')}
