@@ -52,13 +52,25 @@ class JointShellTests(unittest.TestCase):
         self.assertIn('--scenario transitions --repeat-id 2 --slots 2', captured)
         self.assertIn('--nodes=8 --ntasks=8', captured)
 
-    def test_qwen_requires_both_gates_and_routes_repeat(self):
+    def test_qwen_routes_repeat_without_separate_gate_jobs(self):
         result, captured = self.invoke('qwen.sbatch', 8, ('budgets', '--only', 'joint-s1'))
         self.assertEqual(result.returncode, 0, result.stdout)
-        self.assertIn('--repeat-id 2 --gate /fixture/operator.json --training-gate /fixture/training.json', captured)
+        self.assertIn('--repeat-id 2', captured)
+        self.assertNotIn('--gate', captured)
+        self.assertNotIn('--training-gate', captured)
         self.assertIn('--only joint-s1', captured)
         result, _ = self.invoke('qwen.sbatch', 8, missing_training=True)
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_paper_job_runs_one_full_case_with_explicit_repeat(self):
+        result, captured = self.invoke('paper.sbatch', 8, ('joint-s1', '1'), missing_training=True)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn('--scenario fixed --only joint-s1 --repeat-id 1', captured)
+        self.assertNotIn('--gate', captured)
+        self.assertNotIn('--training-gate', captured)
+        for nodes, extra in ((1, ()), (8, ('native-controls',)), (8, ('joint-s1', '4'))):
+            result, _ = self.invoke('paper.sbatch', nodes, extra)
+            self.assertNotEqual(result.returncode, 0)
 
     def test_training_gate_rejects_wrong_allocation(self):
         result, captured = self.invoke('training_gate.sbatch', 1, ('--max-phases', '2'))

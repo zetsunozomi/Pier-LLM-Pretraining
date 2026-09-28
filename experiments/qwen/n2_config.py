@@ -144,7 +144,7 @@ def launch_command(config, case, output, *, slurm=True):
     node = ['bash', str(ROOT / 'experiments/qwen/n2_node.sh'), str(output), case['id']]
     if slurm:
         return ['srun', f"--nodes={config['nodes']}", f"--ntasks={config['nodes']}",
-                '--ntasks-per-node=1', '--kill-on-bad-exit=1', '--gpu-bind=none', *node]
+                '--ntasks-per-node=1', '--gpus-per-node=4', '--kill-on-bad-exit=1', '--gpu-bind=none', *node]
     if config['nodes'] != 1:
         raise ValueError('multiple nodes require a Slurm allocation')
     return node

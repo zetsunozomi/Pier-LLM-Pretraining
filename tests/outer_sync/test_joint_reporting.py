@@ -37,9 +37,57 @@ def campaigns():
 
 
 class JointReportingTests(unittest.TestCase):
-    def aggregate(self, loaded):
+    def aggregate(self, loaded, **kwargs):
         with patch.object(qwen_summary, 'campaign', side_effect=loaded):
-            return qwen_summary.aggregate(list(range(len(loaded))))
+            return qwen_summary.aggregate(list(range(len(loaded))), **kwargs)
+
+    def split_campaigns(self):
+        loaded = []
+        for repeat in (1, 2, 3):
+            for name in ('single-s2', 'pipeline-s2', 'separate-s1', 'joint-s1', 'reference-s2'):
+                r = row(name, 'P', repeat, [5, 3, 4])
+                r['hardware'][0]['hostname'] = f'node-{repeat}-{name}'
+                for boundary in r['boundaries']:
+                    boundary.update(peak_allocated_bytes=30 * 2**30, peak_reserved_bytes=31 * 2**30)
+                m = dict(repeat_id=repeat, sources={'executor': 'fixture'}, scenario='fixed',
+                         slurm_job_id=f'{repeat}-{name}', planned_cases=[dict(name=name, config=None)],
+                         budget_announcements=[dict(round=1, transition_mib=39, next_phase_mib=35)])
+                loaded.append((m, [r]))
+        return loaded
+
+    def test_split_allocations_keep_repeat_counts_memory_and_unpaired_labels(self):
+        loaded = self.split_campaigns()
+        summary = self.aggregate(loaded, split_allocations=True)
+        self.assertEqual(summary['status'], 'complete')
+        self.assertEqual(summary['missing_table_vi_rows'], [])
+        self.assertEqual(len(summary['by_case']), 5)
+        self.assertTrue(all(r['independent_launches'] == 3 for r in summary['by_case']))
+        self.assertTrue(all(r['max_peak_allocated_gib'] == 30 for r in summary['by_case']))
+        self.assertTrue(all(r['median_peak_reserved_gib'] == 31 for r in summary['by_case']))
+        self.assertTrue(all('unpaired' in r['comparison_basis'] for r in summary['comparisons']))
+        partial = self.aggregate(loaded[:1], split_allocations=True)
+        self.assertEqual(partial['status'], 'incomplete')
+        self.assertEqual(partial['by_case'][0]['independent_launches'], 1)
+        only_joint = self.aggregate([x for x in loaded if x[1][0]['case'] == 'joint-s1'], split_allocations=True)
+        self.assertEqual(only_joint['status'], 'incomplete')
+        self.assertEqual(only_joint['missing_table_vi_rows'], ['single', 'pipeline', 'separate'])
+        self.assertEqual(self.aggregate(loaded[:-1], split_allocations=True)['status'], 'incomplete')
+
+    def test_split_allocations_reject_duplicate_or_changed_case_and_recipe(self):
+        for mutation in ('duplicate', 'config', 'source', 'model', 'software'):
+            loaded = self.split_campaigns()
+            if mutation == 'duplicate':
+                loaded.append(copy.deepcopy(loaded[0]))
+            elif mutation == 'config':
+                loaded[5][0]['planned_cases'][0]['config'] = {'changed': True}
+            elif mutation == 'source':
+                loaded[1][0]['sources']['executor'] = 'changed'
+            elif mutation == 'model':
+                loaded[1][1][0]['recipe']['data'] = 'changed'
+            else:
+                loaded[1][1][0]['hardware'][0]['torch'] = 'changed'
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                self.aggregate(loaded, split_allocations=True)
 
     def test_payback_and_negative_w_result_preserve_independent_launches(self):
         summary = self.aggregate(campaigns())

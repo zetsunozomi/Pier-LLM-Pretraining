@@ -108,30 +108,62 @@ def campaign(path):
     return manifest, rows
 
 
-def aggregate(paths, required_repeats=3):
+def merge_allocations(loaded):
+    """Group explicitly split case launches without inventing co-run pairing."""
+    recipes, groups, seen = {}, {}, set()
+    for index, (manifest, rows) in enumerate(loaded):
+        repeat = manifest['repeat_id']
+        allocation = manifest.get('slurm_job_id') or f'input-{index}'
+        for case in manifest['planned_cases']:
+            name = case['name']
+            if name in recipes and recipes[name] != case:
+                raise ValueError('case configuration changed across split allocations')
+            recipes[name] = case
+            if (repeat, name) in seen:
+                raise ValueError('duplicate case/repeat across split allocations')
+            seen.add((repeat, name))
+        group = groups.setdefault(repeat, [])
+        group.extend({**row, 'allocation_id': str(allocation)} for row in rows)
+    merged = []
+    for repeat, rows in sorted(groups.items()):
+        present = {row['case'] for row in rows}
+        rows += [dict(case=name, repeat_id=repeat, status='unfinished')
+                 for name in recipes if name not in present]
+        merged.append(({**loaded[0][0], 'repeat_id': repeat,
+                        'planned_cases': list(recipes.values())}, rows))
+    return merged
+
+
+def aggregate(paths, required_repeats=3, *, split_allocations=False):
     loaded = [campaign(path) for path in paths]
     if not loaded:
         raise ValueError('campaigns required')
     first = loaded[0][0]
-    if len({m['repeat_id'] for m, _ in loaded}) != len(loaded):
+    if not split_allocations and len({m['repeat_id'] for m, _ in loaded}) != len(loaded):
         raise ValueError('duplicate repeat identity; do not pool reruns as extra independent repeats')
     for manifest, _ in loaded:
         if (manifest['sources'] != first['sources'] or manifest['scenario'] != first['scenario']
                 or manifest.get('budget_announcements') != first.get('budget_announcements')
-                or sorted(manifest['planned_cases'], key=lambda c: c['name']) !=
-                   sorted(first['planned_cases'], key=lambda c: c['name'])):
+                or (not split_allocations and sorted(manifest['planned_cases'], key=lambda c: c['name']) !=
+                    sorted(first['planned_cases'], key=lambda c: c['name']))):
             raise ValueError('source, scenario or planned configurations changed across repeats')
-    software = None
+    software, model_recipe = None, None
     for _, rows in loaded:
         measured = [r for r in rows if r['status'] == 'measured']
         for row in measured:
             if row['recipe'] != measured[0]['recipe'] or row['hardware'] != measured[0]['hardware']:
                 raise ValueError('paired cases used different model/data identities or physical allocations')
+            if model_recipe is None:
+                model_recipe = row['recipe']
+            elif row['recipe'] != model_recipe:
+                raise ValueError('model/data recipe changed across independent launches')
             signature = sorted((h['gpu'], h['torch'], h['cuda']) for h in row['hardware'])
             if software is None:
                 software = signature
             elif signature != software:
                 raise ValueError('GPU/software type changed across independent launches')
+    if split_allocations:
+        loaded = merge_allocations(loaded)
     runs = [r for _, rows in loaded for r in rows]
     ids = [r['run_id'] for r in runs if r['status'] == 'measured']
     if len(ids) != len(set(ids)):
@@ -150,6 +182,12 @@ def aggregate(paths, required_repeats=3):
                      min_outer_seconds=min(times) if times else None, max_outer_seconds=max(times) if times else None,
                      stdev_outer_seconds=statistics.stdev(times) if len(times) > 1 else None,
                      median_tokens_per_second=statistics.median(r['tokens_per_second'] for r in measured) if times else None)
+        for metric in ('allocated', 'reserved'):
+            key = f'peak_{metric}_bytes'
+            peaks = [max(b[key] for b in r['boundaries'] if b['eligible']) / 2**30
+                     for r in measured if all(key in b for b in r['boundaries'])]
+            entry[f'max_peak_{metric}_gib'] = max(peaks) if peaks else None
+            entry[f'median_peak_{metric}_gib'] = statistics.median(peaks) if peaks else None
         summary.append(entry)
     comparisons = []
     for manifest, rows in loaded:
@@ -175,6 +213,10 @@ def aggregate(paths, required_repeats=3):
                                                joint_is_transition=a.get('is_transition', False)))
                     comparisons.append(dict(repeat_id=manifest['repeat_id'], baseline=label,
                                              baseline_case=baseline['case'],
+                                             comparison_basis=('same-allocation paired' if
+                                                 joint.get('allocation_id') == baseline.get('allocation_id')
+                                                 and joint['hardware'] == baseline['hardware'] else
+                                                 'different-allocation unpaired; matched recipe and boundary sequence'),
                                              outer_latency_reduction_pct=100 * (1 - joint['total_outer_seconds'] / baseline['total_outer_seconds']),
                                              cycle_time_reduction_pct=100 * (1 - joint['total_cycle_seconds'] / baseline['total_cycle_seconds']),
                                              cumulative_savings=series))
@@ -186,8 +228,14 @@ def aggregate(paths, required_repeats=3):
         matching = [r for r in summary if r['case'].startswith(prefix)]
         if matching and not any(r['independent_launches'] >= required_repeats for r in matching):
             incomplete = True
+    missing_rows = [variant for variant in ('single', 'pipeline', 'separate', 'joint')
+                    if not any(r['case'].startswith(variant + '-') and r['independent_launches'] >= required_repeats
+                               for r in summary)]
+    if split_allocations and missing_rows:
+        incomplete = True
     return dict(status='incomplete' if incomplete or len(loaded) < required_repeats else 'complete',
                 scenario=first['scenario'], required_independent_launches=required_repeats,
+                split_allocations=split_allocations, missing_table_vi_rows=missing_rows,
                 cycles_treated_as_independent_runs=False, runs=runs, by_case=summary, comparisons=comparisons,
                 limitations=['synthetic-token execution, not model quality', 'logical API payload, not physical link counters',
                              'PyTorch allocated/reserved memory, not NVML total device memory'])
@@ -197,11 +245,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('campaigns', nargs='+', type=Path)
     parser.add_argument('--required-repeats', type=int, default=3)
+    parser.add_argument('--split-allocations', action='store_true',
+                        help='Combine per-case jobs; label cross-allocation comparisons as unpaired')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists() or args.required_repeats < 1:
         parser.error('positive repeat count and fresh output required')
-    result = aggregate(args.campaigns, args.required_repeats)
+    result = aggregate(args.campaigns, args.required_repeats, split_allocations=args.split_allocations)
     with args.output.open('x') as stream:
         json.dump(result, stream, indent=2, allow_nan=False)
         stream.write('\n')

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One paired Qwen campaign per allocation; repeat via independent array jobs."""
+"""Qwen paper measurements, optionally split by case across short allocations."""
 
 import argparse
 from datetime import datetime, timezone
@@ -39,8 +39,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--scenario', choices=('fixed', 'budgets', 'forced'), default='fixed')
     parser.add_argument('--repeat-id', type=int, choices=(1, 2, 3), default=1)
-    parser.add_argument('--gate', type=Path, required=True)
-    parser.add_argument('--training-gate', type=Path, help='Passed real pretrain_gpt restart gate; required for GPU runs')
+    parser.add_argument('--gate', type=Path, help='Optional prior operator receipt; checked only when explicitly supplied')
+    parser.add_argument('--training-gate', type=Path, help='Optional prior training receipt; checked only when explicitly supplied')
     parser.add_argument('--cost-table', type=Path)
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--only', nargs='+', help='Explicit subset, e.g. joint-s1 separate-s1; recorded in campaign')
@@ -81,16 +81,21 @@ def main():
     if not args.plan_only:
         if int(os.environ.get('PIER_N2_NODES', 0)) != 8:
             parser.error('this paper campaign requires 8 nodes / 32 GPUs / TP2')
-        check(args.gate, 32, 2)
-        if args.training_gate is None:
-            parser.error('--training-gate is required for GPU training campaigns')
-        check_training(args.training_gate)
+        if args.gate is not None:
+            check(args.gate, 32, 2)
+        if args.training_gate is not None:
+            check_training(args.training_gate)
     args.output_dir.mkdir(parents=True)
     manifest = dict(format='pier-joint-qwen-campaign-v1', scenario=args.scenario, repeat_id=args.repeat_id,
                     created_utc=datetime.now(timezone.utc).isoformat(), sources=sources(),
                     slurm_job_id=os.environ.get('SLURM_JOB_ID'), scope='32 A100-40GB, Qwen3B/TP2, synthetic tokens',
                     planned_cases=planned, measured_cycles=3 if args.scenario == 'fixed' else 8,
                     budget_announcements=budget_announcements,
+                    validation=dict(operator_gate=str(args.gate) if args.gate else None,
+                                    training_gate=str(args.training_gate) if args.training_gate else None,
+                                    in_run_checks='pinned model/data, finite loss/model, master-to-model commit, complete cycles'),
+                    paper_target='Table VI / fixed-budget ablation' if args.scenario == 'fixed' else
+                                 'Section V-G / budget transitions and cumulative savings',
                     cost_source=str(args.cost_table) if args.cost_table else 'uncalibrated analytic estimate',
                     plan_only=args.plan_only, cases=[])
     for case in planned:
@@ -119,8 +124,12 @@ def main():
         exit_code = run_n2(directory)
         manifest['cases'].append(dict(name=case['name'], directory=str(directory), exit_code=exit_code))
         path.write_text(json.dumps(manifest, indent=2) + '\n')
+        if exit_code:
+            print(f"Case {case['name']} did not complete; inspect its summary before spending time on another case.", flush=True)
+            return 1
     print('All campaign attempts recorded; use qwen_summary.py to retain infeasible and failed controls separately.')
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

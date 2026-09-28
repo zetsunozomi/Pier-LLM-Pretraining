@@ -13,6 +13,7 @@ from unittest.mock import patch
 
 from experiments.joint.benchmark import cases
 from experiments.joint.qwen import configurations
+from experiments.joint import qwen
 from experiments.joint.summarize import aggregate
 from experiments.joint.qwen_summary import boundaries
 from experiments.joint.training_gate import GATE_ENV, phase_plan, run as run_training_gate, summarize as summarize_training_gate
@@ -23,6 +24,31 @@ from types import SimpleNamespace
 
 
 class JointExperimentTests(unittest.TestCase):
+    def test_paper_case_launches_without_standalone_gates_and_keeps_main_recipe(self):
+        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, {'PIER_N2_NODES': '8', 'SLURM_JOB_NUM_NODES': '8'}), \
+                patch.object(qwen, 'sources', return_value={'fixture': 'v1'}), \
+                patch.object(qwen, 'check') as operator_gate, patch.object(qwen, 'check_training') as training_gate:
+            output = Path(folder) / 'campaign'
+            def launch(directory):
+                config = configuration()
+                self.assertEqual(config['attempts'], 250)
+                self.assertEqual(config['warmup_cycles'], 2)
+                self.assertEqual(config['measured_cycles'], 3)
+                self.assertEqual(config['joint_recipe']['variant'], 'joint')
+                self.assertEqual(config['arms'], ['P'])
+                self.assertEqual(directory.name, 'joint-s1')
+                return 0
+            with patch.object(qwen, 'run_n2', side_effect=launch) as run, \
+                    patch.object(sys, 'argv', ['qwen.py', '--only', 'joint-s1', '--output-dir', str(output)]):
+                self.assertEqual(qwen.main(), 0)
+            self.assertEqual(run.call_count, 1)
+            operator_gate.assert_not_called()
+            training_gate.assert_not_called()
+            manifest = json.loads((output / 'campaign.json').read_text())
+            self.assertIn('Table VI', manifest['paper_target'])
+            self.assertIsNone(manifest['validation']['operator_gate'])
+            self.assertEqual([r['name'] for r in manifest['planned_cases']], ['joint-s1'])
+
     @staticmethod
     def completed_gate_phase(command, **kwargs):
         """Synthetic complete rank receipts exercise the real partial-gate validator."""

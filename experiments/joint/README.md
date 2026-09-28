@@ -1,8 +1,8 @@
 # Joint reference-refresh experiments
 
 These entrypoints implement the current paper's missing runtime experiments.
-They do not reuse historical timings as concurrent controls. All CUDA results
-remain pending until the cluster jobs below run. Local CPU/Gloo evidence checks
+They do not reuse historical timings as concurrent controls. CUDA performance results
+remain pending until the corresponding measurement jobs run. Local CPU/Gloo evidence checks
 the production algorithm, training trajectory, restart, and experiment wiring;
 it is not CUDA performance evidence.
 
@@ -55,126 +55,87 @@ reservation scenario, not a claim that production jobs naturally changed their
 memory requirements. The caller must reserve future training/library needs;
 an allocation that already exceeds physical memory cannot be recovered here.
 
-## Cluster preparation and gate
+## Paper-first submission workflow
 
-Prefer an interactive allocation for one-node/four-GPU correctness work.
-Request **30 minutes** for short jobs; estimate larger jobs from returned phase
-timings before choosing a longer limit. Leave about five minutes for startup,
-Slurm cleanup and returning logs. Backfill is handled by the scheduler; a short
-honest walltime helps fit available gaps but does not guarantee a start time.
-See the [NERSC scheduling guide](https://docs.nersc.gov/jobs/scheduling/) and
-[interactive guide](https://docs.nersc.gov/jobs/interactive/).
+The objective is to replace the marked draft results with actual measurements.
+The [paper progress ledger](PAPER_PROGRESS.md) maps every marked result group to
+its data source. No standalone validation allocation is a paper prerequisite.
+The completed four-GPU training/restart gate is supporting evidence already in
+`out/`; do not rerun it merely because a launcher or reporting script changes.
+The optional `verify` and `training_gate` entrypoints remain developer diagnostics.
 
-First sync the checkout **before** requesting the allocation. From the repository
-on Perlmutter, using the existing environment (no package/model download):
+The next submission directly measures **Table VI, joint runtime, fixed budget**:
 
 ```bash
 cd /pscratch/sd/s/syfan/Pier
 export PIER_ROOT="$PWD"
 export PIER_OUT_ROOT="$PWD/out"
 export PIER_PYTHON=/pscratch/sd/s/syfan/conda/envs/diloco/bin/python
-# Request 1 node / 4 A100-40GB / 00:30:00 with your usual salloc account.
-# Once the allocation is ready, start immediately:
-unset PIER_JOINT_TRAINING_RESUME
-bash experiments/joint/training_gate.sbatch --max-phases 2
+sbatch experiments/joint/paper.sbatch joint-s1 1
 ```
 
-Run the script with `bash` directly inside the allocation: its `#SBATCH` lines
-are ignored, and its internal `srun` launches the workers with explicit GPU
-resources. Do not wrap it in another `srun` or submit another allocation from
-inside the interactive one. If using batch instead, submit from the login node:
+This requests **8 nodes / 32 A100-40GB GPUs / 30 minutes** and runs exactly one
+Qwen2.5-3B/TP2 case: 100 warmup steps followed by 150 measured steps, r=50.
+It is independent repeat 1, not a separate pilot or correctness test. Historical
+250-step static runs took about 14 minutes per case; the new joint executor's
+walltime remains to be measured. One case leaves substantially more margin than
+putting two historical 14-minute cases into a 30-minute allocation. If interrupted,
+return its logs and partial cycle reports; do not treat an incomplete window as
+finished evidence. The launcher retains pinned-input, finite-loss/model, model
+commit, complete-cycle, hardware and source checks inside the measurement.
+It does not add an oracle suite to the performance timer.
+
+The output is printed as `out/joint-paper-fixed-.../`. Return that whole text
+result directory, including `campaign/campaign.json`, per-case `summary.json`,
+`manifest.json`, per-rank `cycles-rank-*.json`, initialization/worker receipts and
+logs. No checkpoint or model binary needs to be transferred. Review this first
+result before submitting another method or repeat; this command starts no array
+and submits no dependent jobs.
+
+`paper.sbatch CASE REPEAT` accepts the four variants (`single-s1/s2/s16`,
+`pipeline-s1/s2/s16`, `separate-s1`, `joint-s1`) and the original colocated static
+controls (`reference-s1/s2/s16`). REPEAT is 1, 2 or 3. Each invocation preserves
+the same full measurement window. Do not use a new repeat ID for the samples
+inside one launch. A failed case stops its campaign so it does not silently spend
+more allocation time on later cases.
+
+For split case jobs, aggregate their returned campaign files with:
 
 ```bash
-sbatch --time=00:30:00 experiments/joint/training_gate.sbatch --max-phases 2
+python experiments/joint/qwen_summary.py --split-allocations \
+  /path/to/case-repeat-1/campaign/campaign.json \
+  /path/to/another-case-repeat-1/campaign/campaign.json \
+  --output /path/to/paper-progress.json
 ```
 
-This first chunk runs `reference-tp1` and `single-tp1`. It records each phase's
-elapsed walltime in `exit.json`. The driver defaults to a 1,500-second budget,
-caps each Slurm step to the remaining budget, and saves `summary.json` after
-every phase. It stops between phases if the remaining budget is too small for
-another phase based on the timings observed in that invocation. These are
-guards, not a claim that an unmeasured phase will finish within 30 minutes.
-If you start late in an existing allocation, pass a smaller `--budget-seconds`.
-An unfinished phase is a failed gate requiring inspection, never a passed gate.
+Keep adding the actual returned files as experiments finish. Missing rows and
+insufficient independent repeats stay incomplete. Cross-allocation comparisons
+are explicitly **unpaired**, even if they share a repeat number; only cases
+actually co-run on the same allocation may be labeled paired. Changed sources,
+case configs, input recipes or GPU/software types and duplicate case/repeat
+receipts are rejected. The summary exposes measured allocated/reserved peaks
+alongside latency. It does not turn the first repeat into a finished Table VI.
 
-The complete 13-phase gate uses the actual `pretrain_gpt.py` entrypoint,
-with BF16/FP32 AdamW, dropout, an injected global skip, all four variants, TP1,
-TP2 and inner-DP2. It checks complete trajectories and checkpoint restore both
-at attempt 4 (an outer boundary) and attempt 5 (inside a local cycle), against
-the static reference. It needs no pretrained model or downloaded corpus.
-Its workers explicitly set `NCCL_ALGO=Ring` and `CUBLAS_WORKSPACE_CONFIG=:4096:8`
-for Megatron's deterministic correctness mode, with that environment frozen in
-the launch receipt. Performance jobs retain their separately recorded settings.
+Without `--cost-table`, planner selection uses the recorded analytic model.
+The selected configurations and observed costs are real measurements, but must
+not be described as an empirically calibrated optimum. Calibration scans are
+not a mandatory extra submission; decide whether any are needed from the main
+results. The paper's fixed-budget and changing-budget results remain separate.
 
-For a step-by-step first run, run only the first chunk and return its evidence
-for a quick check before continuing. `status: incomplete` with no errors and
-11 pending phases is expected after two successful phases. The launcher prints
-the exact fresh `out/joint-training-gate-.../` directory in the terminal or Slurm output.
-After the job exits, use `git add out/joint-training-gate-<actual-run>/` on the
-cluster to return the complete text evidence, including `gate/summary.json`,
-`gate/manifest.json`, all phase/rank JSON files and logs. The repository ignore
-rules retain nested JSON/log/txt files while excluding binary checkpoints and
-caches. Keep the checkpoint files on the cluster. Return the directory even
-when a phase fails or the time limit is reached; logs can diagnose a partial run.
+Optional prior receipts can be checked by explicitly passing `--gate` or
+`--training-gate` to `qwen.py` / `qwen.sbatch`. They are never picked up implicitly
+from old environment variables and are not required by `paper.sbatch`.
 
-After that quick check, clean partial gates can continue in a new allocation:
+## Additional measurement entrypoints (submit only after the preceding quick check)
 
-```bash
-# Use the actual gate directory from the previous chunk; keep checkpoints there.
-export PIER_JOINT_TRAINING_RESUME=/absolute/path/to/out/joint-training-gate-RUN/gate
-bash experiments/joint/training_gate.sbatch --max-phases 2
-```
+The commands below are capabilities, not a queue to submit now. Each
+`--array=1-3%1` creates three independent job launches; use it only after the
+first result has been reviewed. Do not add the diagnostic scans unless they
+answer a specific marked paper result. Samples inside one launch are not
+independent repeats. The long-form Qwen entrypoint has a six-hour default for
+whole campaigns; prefer `paper.sbatch` for one fixed-budget case in 30 minutes.
 
-The phase count can be adjusted after measuring the first chunk. Resume checks
-the frozen source, configs and phase plan, validates completed phase evidence,
-and skips those phases. It refuses changed sources or damaged/interrupted phases;
-return these for diagnosis before retrying. Only all 13 validated phases produce
-`status: passed`. Do not run two continuations concurrently in the same directory.
-Return the same directory after each chunk; checkpoints stay on the cluster.
-
-| Stage | Nodes / GPUs | Allocation plan |
-|---|---|---|
-| Real-training/restart gate | 1 / 4 | Interactive, 30 min per chunk; first chunk is two phases |
-| Optional small operator gate | 1 / 4 | Interactive, 30 min; does not replace the full topology gate |
-| Required TP2/K16 operator gate | 8 / 32 | Batch, 30 min initial limit |
-| W numerical diagnostic | 8 / 32 | Batch, 30 min initial limit |
-| Pipeline/transition scans and traces | 8 / 32 | Measure a small configuration subset first; size later batches for 30 min when feasible |
-| Full Qwen fixed/changing-budget experiments | 8 / 32 | Measure complete case duration first; preserve full cycles and paired comparisons when splitting |
-
-The full operator gate is the next stage after the complete training gate passes:
-
-```bash
-sbatch --time=00:30:00 experiments/joint/outer.sbatch verify
-```
-
-It defaults to eight four-GPU A100-40GB nodes, TP2, K16. The Slurm output
-points to `out/joint-verify-*/report.json`. The CUDA gate checks the production
-executor against an independent NumPy FP32 oracle, all directed cohort edges,
-partial/padded tiles, slot counts 1/2/4, remote momentum, fragmented master/BF16
-commit and serialized state restore.
-
-Set the **actual returned path**, then keep that source checkout unchanged:
-
-```bash
-export PIER_JOINT_GATE=/absolute/path/to/out/joint-verify-RUN/report.json
-export PIER_JOINT_TRAINING_GATE=/absolute/path/to/out/joint-training-gate-RUN/gate/summary.json
-```
-
-The Slurm performance entrypoints verify the operator gate's CUDA status, world/TP topology
-and source hashes. A CPU gate or stale hash is rejected. For an inexpensive
-four-GPU preliminary gate use `PIER_JOINT_TP=1 bash experiments/joint/outer.sbatch verify`
-inside a one-node interactive allocation;
-it does not replace the 32-GPU gate.
-Qwen campaigns additionally require the passed real-training/restart gate.
-
-## Required experiments and exact entrypoints
-
-Each `--array=1-3%1` creates three independent job launches, serialized to limit
-concurrent allocation demand. Samples inside one launch are not independent
-repeats. Run each command separately; these jobs are not automatically submitted
-by editing this repository.
-
-| Evidence | Command after the gate |
+| Evidence | Available command |
 |---|---|
 | Fixed-layout pipeline/tile/slot scan | `sbatch --array=1-3%1 experiments/joint/outer.sbatch pipeline` |
 | Directed transitions, standalone versus joint conversion, calibration | `sbatch --array=1-3%1 experiments/joint/outer.sbatch transitions` |
@@ -203,9 +164,9 @@ Forced runs use s=1→2→16→2→1. Static controls that do not fit are retain
 excluded from the best feasible static comparison. Each method has its own
 fresh training process, and the full source/argv/data/initialization receipt.
 
-`--only` permits splitting a long campaign into explicit subsets. Do not pool
-different subsets as if they were one completed paired campaign: the summary
-rejects changed planned cases across repeats. The fixed/budgets default runs
+`--only` permits splitting a long campaign into explicit subsets. Use
+`qwen_summary.py --split-allocations` to combine them with explicit unpaired
+comparison labels and case/repeat coverage checks. The fixed/budgets default runs
 all four variants, static layouts, original colocated controls and G/OS/R/W.
 Control-only subsets retain the common budget trace and are summarized against
 the same measured-memory criterion; they do not by themselves complete the
@@ -215,7 +176,7 @@ To inspect the launch plan without GPUs or a model snapshot:
 
 ```bash
 python experiments/joint/qwen.py --scenario budgets --plan-only \
-  --gate /path/to/future-gate.json --output-dir /tmp/pier-joint-plan
+  --output-dir /tmp/pier-joint-plan
 ```
 
 ## Aggregation and planner calibration

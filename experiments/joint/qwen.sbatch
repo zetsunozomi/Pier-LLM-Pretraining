@@ -20,6 +20,5 @@ pier_capture_output joint-qwen
 scenario="${1:-fixed}"
 if [[ $# -gt 0 ]]; then shift; fi
 exec "$PIER_PYTHON" experiments/joint/qwen.py --scenario "$scenario" \
-    --repeat-id "${SLURM_ARRAY_TASK_ID:-1}" --gate "${PIER_JOINT_GATE:?set the passed CUDA gate JSON}" \
-    --training-gate "${PIER_JOINT_TRAINING_GATE:?set the passed real-training gate summary JSON}" \
+    --repeat-id "${SLURM_ARRAY_TASK_ID:-1}" \
     --output-dir "$PIER_OUT_DIR/campaign" "$@"
