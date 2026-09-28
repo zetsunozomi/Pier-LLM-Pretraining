@@ -1,0 +1,31 @@
+{
+  "format": "pier-centered-v1",
+  "iteration": 10,
+  "world": 4,
+  "files": [
+    {
+      "rank": 0,
+      "name": "rank-0.pt",
+      "bytes": 11378940,
+      "sha256": "af2ea8a154ad181d198ab87eb7957c5e81d62ef88c2f99771c32029efab8420a"
+    },
+    {
+      "rank": 1,
+      "name": "rank-1.pt",
+      "bytes": 11378940,
+      "sha256": "a2ae4573f903a5deb1fd8f7ad527a3596f1ecb91ae952abd2ee69be122d66cf6"
+    },
+    {
+      "rank": 2,
+      "name": "rank-2.pt",
+      "bytes": 11378940,
+      "sha256": "953452746f418b89e323759d09be5bd850f190ee93a00980e487a63cb4eed6a6"
+    },
+    {
+      "rank": 3,
+      "name": "rank-3.pt",
+      "bytes": 11378940,
+      "sha256": "8e53237f31e17cefa96b38376aa1fb7acf1bd0f92660c4a82e39a4ee0cd19e06"
+    }
+  ]
+}

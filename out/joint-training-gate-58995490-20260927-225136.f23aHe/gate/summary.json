@@ -1,7 +1,7 @@
 {
   "format": "pier-joint-training-gate-v1",
   "kind": "training_correctness",
-  "status": "incomplete",
+  "status": "failed",
   "GPU_executed": true,
   "world_size": 4,
   "torch_versions": [
@@ -574,35 +574,14 @@
     "tests/qwen/test_training.py": "462153fd8291aec8bf9cdf9c1a34cbbd3806c2b9ae239f190745b5e5e1292401",
     "tests/qwen/test_weights.py": "a77736d40698174822eacbd9d2fba91273d7a92988ecae3536f4a9cf6431c954"
   },
-  "comparisons": [
-    {
-      "phase": "single-tp1",
-      "rank": 0,
-      "bitwise_trajectory_equal": true
-    },
-    {
-      "phase": "single-tp1",
-      "rank": 1,
-      "bitwise_trajectory_equal": true
-    },
-    {
-      "phase": "single-tp1",
-      "rank": 2,
-      "bitwise_trajectory_equal": true
-    },
-    {
-      "phase": "single-tp1",
-      "rank": 3,
-      "bitwise_trajectory_equal": true
-    }
+  "comparisons": [],
+  "errors": [
+    "resume-step/rank0: post-sync forward was not checked",
+    "resume-step/rank1: post-sync forward was not checked",
+    "resume-step/rank2: post-sync forward was not checked",
+    "resume-step/rank3: post-sync forward was not checked"
   ],
-  "errors": [],
   "pending_phases": [
-    "pipeline-tp1",
-    "separate-tp1",
-    "joint-tp1",
-    "split-step",
-    "resume-step",
     "split-boundary",
     "resume-boundary",
     "reference-tp2",
