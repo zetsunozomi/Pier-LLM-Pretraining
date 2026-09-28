@@ -1,6 +1,7 @@
 """Four-process production adapter/clock/checkpoint regression on real CPU Gloo."""
 
 import copy
+import json
 from datetime import timedelta
 from pathlib import Path
 import random
@@ -21,7 +22,7 @@ from megatron.core.outer_sync.runtime import CenteredRuntime, StepClock, digest
 
 
 def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_dir=None, measure=False,
-            schedule='reference'):
+            schedule='reference', joint_config=None):
     torch.manual_seed(7)
     model = torch.nn.Sequential(torch.nn.Linear(3, 4), torch.nn.Dropout(.2), torch.nn.Linear(4, 2))
     inner = torch.optim.AdamW(model.parameters(), lr=.01, foreach=False)
@@ -45,6 +46,11 @@ def fixture(rank, cohort, directory, arm=None, oracle_storage='memory', trace_di
                            qwen_recipe={'snapshot_sha256': 'test-snapshot', 'data_sha256': 'test-data'},
                            train_iters=11, save=str(directory), consumed_train_samples=0,
                            consumed_valid_samples=0, skipped_train_samples=0)
+    if joint_config is not None:
+        Path(directory).mkdir(parents=True, exist_ok=True)
+        path = Path(directory) / f'joint-config-rank{rank}.json'
+        path.write_text(json.dumps(joint_config))
+        args.outer_joint_config = str(path)
     runtime = CenteredRuntime(args, [model], optimizer, group=dist.group.WORLD)
     torch.manual_seed(100 + rank)
     random.seed(200 + rank)

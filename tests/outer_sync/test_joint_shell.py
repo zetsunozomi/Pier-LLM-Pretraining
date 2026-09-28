@@ -1,0 +1,69 @@
+"""Run the real submission shells with recording Slurm/Python stand-ins."""
+
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+import unittest
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+class JointShellTests(unittest.TestCase):
+    def invoke(self, script, nodes, extra=(), missing_training=False):
+        with tempfile.TemporaryDirectory(prefix='pier-joint-shell-') as folder:
+            root = Path(folder)
+            capture = root / 'args.txt'
+            tools = root / 'bin'
+            tools.mkdir()
+            for name, content in {
+                'scontrol': '#!/bin/bash\necho fixture-node\n',
+                'srun': '#!/bin/bash\nprintf "srun\\n%s\\n" "$*" >> "$CAPTURE"\n',
+                'python-recorder': '#!/bin/bash\nprintf "python\\n%s\\n" "$*" >> "$CAPTURE"\n',
+            }.items():
+                path = tools / name
+                path.write_text(content)
+                path.chmod(0o755)
+            # Slurm runs a spool copy; BASH_SOURCE cannot locate the repository.
+            spool = root / 'slurm_script'
+            shutil.copyfile(ROOT / 'experiments/joint' / script, spool)
+            env = {**os.environ, 'PATH': str(tools) + os.pathsep + os.environ['PATH'],
+                   'CAPTURE': str(capture), 'SLURM_SUBMIT_DIR': str(ROOT),
+                   'SLURM_JOB_NUM_NODES': str(nodes), 'SLURM_JOB_NODELIST': 'fixture',
+                   'SLURM_JOB_ID': '901', 'SLURM_ARRAY_TASK_ID': '2',
+                   'PIER_PYTHON': str(tools / 'python-recorder'), 'PIER_OUT_ROOT': str(root / 'out'),
+                   'PIER_JOINT_GATE': '/fixture/operator.json'}
+            env.pop('PIER_ROOT', None)
+            env.pop('PIER_JOINT_TRAINING_GATE', None)
+            if not missing_training:
+                env['PIER_JOINT_TRAINING_GATE'] = '/fixture/training.json'
+            result = subprocess.run(['bash', str(spool), *extra], cwd=root, env=env,
+                                    text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            return result, capture.read_text() if capture.exists() else ''
+
+    def test_outer_array_uses_real_stage_repeat_and_gate(self):
+        result, captured = self.invoke('outer.sbatch', 8, ('transitions', '--slots', '2'))
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn('require_gate.py /fixture/operator.json --world 32 --tp 2', captured)
+        self.assertIn('--scenario transitions --repeat-id 2 --slots 2', captured)
+        self.assertIn('--nodes=8 --ntasks=8', captured)
+
+    def test_qwen_requires_both_gates_and_routes_repeat(self):
+        result, captured = self.invoke('qwen.sbatch', 8, ('budgets', '--only', 'joint-s1'))
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn('--repeat-id 2 --gate /fixture/operator.json --training-gate /fixture/training.json', captured)
+        self.assertIn('--only joint-s1', captured)
+        result, _ = self.invoke('qwen.sbatch', 8, missing_training=True)
+        self.assertNotEqual(result.returncode, 0)
+
+    def test_training_gate_rejects_wrong_allocation(self):
+        result, captured = self.invoke('training_gate.sbatch', 1)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn('training_gate.py --output-dir', captured)
+        result, _ = self.invoke('training_gate.sbatch', 8)
+        self.assertNotEqual(result.returncode, 0)
+
+
+if __name__ == '__main__':
+    unittest.main()

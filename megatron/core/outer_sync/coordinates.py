@@ -58,6 +58,23 @@ class ParameterCoordinates:
         for master, offset, size in self._segments(start, source.numel()):
             master.copy_(source[offset:offset + size])
 
+    @torch.no_grad()
+    def commit_from(self, start, source):
+        """Commit a returned tile to its existing master and forward destinations."""
+        if start < 0 or start + source.numel() > self.numel:
+            raise ValueError('coordinate range outside master vector')
+        cursor = 0
+        while cursor < source.numel():
+            index = bisect_right(self.offsets, start + cursor) - 1
+            local = start + cursor - self.offsets[index]
+            count = min(source.numel() - cursor, self.offsets[index + 1] - start - cursor)
+            _, master, model = self.pairs[index]
+            value = source[cursor:cursor + count]
+            master.view(-1)[local:local + count].copy_(value)
+            if master.data_ptr() != model.data_ptr() or master.dtype != model.dtype:
+                model.view(-1)[local:local + count].copy_(value)
+            cursor += count
+
     def storage_tensors(self):
         return [p for _, master, model in self.pairs for p in (master, model)]
 

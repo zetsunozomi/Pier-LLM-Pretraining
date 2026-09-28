@@ -32,6 +32,7 @@ RECIPE_FIELDS = (
     'outer_sync_interval', 'outer_momentum', 'outer_learning_rate', 'outer_cohort_size',
     'outer_cpu_offload', 'outer_verify', 'outer_inject_skip_at', 'outer_inject_skip_rank',
     'qwen_recipe', 'outer_arm', 'outer_verify_storage', 'outer_pier_schedule',
+    'outer_joint_recipe',
     'recompute_granularity', 'recompute_method', 'recompute_num_layers',
     'distribute_saved_activations',
 )
@@ -120,7 +121,8 @@ def save(runtime, iteration, scheduler, flops):
              'outer_ranks': runtime.peers, 'inner_ranks': runtime.inner_ranks,
              'model': [module.state_dict() for module in runtime.model],
              'optimizer': runtime.optimizer.state_dict(), 'scheduler': scheduler.state_dict(),
-             'reference': runtime.executor.reference, 'momentum': runtime.executor.momentum,
+             'reference': None if runtime.joint_controller else runtime.executor.reference,
+             'momentum': None if runtime.joint_controller else runtime.executor.momentum,
              'clock': asdict(runtime.clock), 'rng': rng_state(),
              'consumed_train_samples': args.consumed_train_samples,
              'consumed_valid_samples': args.consumed_valid_samples,
@@ -129,6 +131,10 @@ def save(runtime, iteration, scheduler, flops):
              'pending_consumer': runtime.pending_consumer,
              'events': runtime.events,
              'oracle_reference': runtime.oracle_reference, 'oracle_momentum': runtime.oracle_momentum}
+    if runtime.joint_controller:
+        state['joint_executor'] = runtime.executor.state_dict()
+        if state['joint_executor']['round'] != runtime.clock.boundaries:
+            raise ValueError('joint executor and successful-step boundary clocks differ')
     if runtime.streamed_oracle is not None:
         # The complete training R/M is already stored above. Keep only identity
         # of the independent oracle; rebuild its disposable files from owners.
@@ -185,10 +191,16 @@ def load(runtime, load_dir, scheduler):
                    for key in expected_recipe if expected_recipe[key] != state['recipe'].get(key)}
     if differences:
         raise ValueError(f'checkpoint recipe differs: {differences}')
-    for key in ('reference', 'momentum'):
-        expected = getattr(runtime.executor, key)
-        if state[key].dtype != expected.dtype or state[key].shape != expected.shape:
-            raise ValueError(f'checkpoint {key} dtype/shape differs')
+    if bool(runtime.joint_controller) != ('joint_executor' in state):
+        raise ValueError('checkpoint executor kind differs')
+    if runtime.joint_controller:
+        if state['joint_executor']['round'] != state['clock']['boundaries']:
+            raise ValueError('joint checkpoint boundary clock differs')
+    else:
+        for key in ('reference', 'momentum'):
+            expected = getattr(runtime.executor, key)
+            if state[key].dtype != expected.dtype or state[key].shape != expected.shape:
+                raise ValueError(f'checkpoint {key} dtype/shape differs')
     if (runtime.streamed_oracle is not None) != ('streamed_oracle' in state):
         raise ValueError('checkpoint oracle storage differs')
     if runtime.streamed_oracle is not None and state['streamed_oracle']['boundaries_checked'] != state['clock']['boundaries']:
@@ -202,8 +214,12 @@ def load(runtime, load_dir, scheduler):
     runtime.optimizer.commit_outer_update()
     scheduler.load_state_dict(state['scheduler'])
     with torch.no_grad():
-        runtime.executor.reference.copy_(state['reference'])
-        runtime.executor.momentum.copy_(state['momentum'])
+        if runtime.joint_controller:
+            runtime.executor.load_state_dict(state['joint_executor'])
+            runtime.s = runtime.executor.s
+        else:
+            runtime.executor.reference.copy_(state['reference'])
+            runtime.executor.momentum.copy_(state['momentum'])
     if runtime.verify:
         runtime.coordinates.assert_model_committed()
         if digest(runtime.optimizer.state_dict()) != state['optimizer_digest']:

@@ -23,6 +23,8 @@ def source_identity():
     paths += [str(p.relative_to(ROOT)) for pattern in ('n2*', 'n3*', 'n4*')
               for p in (ROOT / 'experiments/qwen').glob(pattern) if p.is_file()]
     paths += [str(p.relative_to(ROOT)) for p in (ROOT / 'megatron/core/outer_sync').glob('*.py')]
+    paths += [str(p.relative_to(ROOT)) for p in (ROOT / 'experiments/joint').glob('*')
+              if p.is_file() and p.suffix in ('.py', '.sh', '.sbatch', '.json')]
     hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
               for name in sorted(set(paths)) if name and (ROOT / name).is_file()}
     return hashes
@@ -60,8 +62,8 @@ def run(output):
         reference = os.environ.get('PIER_N3_REFERENCE')
         if reference:
             copy_historical_reference(Path(reference), output)
-    print('Pilot: 50 warmup steps + 50 measured steps per arm.' if cfg['profile'] == 'pilot'
-          else 'Main window: 100 warmup steps + 150 measured steps per arm.', flush=True)
+    print(f"{cfg['profile']}: {cfg['warmup_cycles'] * cfg['interval']} warmup steps + "
+          f"{cfg['measured_cycles'] * cfg['interval']} measured steps per arm.", flush=True)
     interrupted = False
     try:
         for case in manifest['cases']:

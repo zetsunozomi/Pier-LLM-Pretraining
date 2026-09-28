@@ -37,8 +37,15 @@ def configuration(env=None):
     if workspace not in (64, 256):
         raise ValueError('PIER_N2_WORKSPACE_MIB must be 64 or 256')
     pier_schedule = env.get('PIER_N2_PIER_SCHEDULE', 'reference')
-    if pier_schedule not in ('reference', 'contiguous'):
-        raise ValueError('PIER_N2_PIER_SCHEDULE must be reference or contiguous')
+    if pier_schedule not in ('reference', 'contiguous', 'joint'):
+        raise ValueError('PIER_N2_PIER_SCHEDULE must be reference, contiguous or joint')
+    joint_path = env.get('PIER_N2_JOINT_CONFIG')
+    if bool(joint_path) != (pier_schedule == 'joint'):
+        raise ValueError('joint schedule requires PIER_N2_JOINT_CONFIG, exclusively')
+    joint_recipe = None
+    if joint_path:
+        from megatron.core.outer_sync.joint_config import read_config
+        joint_recipe = read_config(joint_path)
     repeats = int(env.get('PIER_N2_REPEATS', '1' if profile == 'pilot' else '3'))
     if not 1 <= repeats <= 3:
         raise ValueError('PIER_N2_REPEATS must be 1..3')
@@ -47,16 +54,21 @@ def configuration(env=None):
         raise ValueError('repeat range must lie within 1..3; set PIER_N2_REPEATS=1 for split jobs')
     prefix = env.get('PIER_QWEN_DATA_PREFIX') or None
     root = Path(env.get('PIER_ROOT', ROOT)).resolve()
+    measured_cycles = int(env.get('PIER_N2_MEASURED_CYCLES', '1' if profile == 'pilot' else '3'))
+    warmup_cycles = 1 if profile == 'pilot' else 2
+    if not 1 <= measured_cycles <= 10 - warmup_cycles:
+        raise ValueError('measured cycles must keep the complete run within 500 steps')
     return dict(repository=str(root), profile=profile, suite=suite,
                 stage='N3' if suite == 'cohorts' else 'N2',
                 cohorts=sorted(set((1, 2, learners))) if suite == 'cohorts' else [cohort],
                 log_interval=1, expected_gpu=env.get('PIER_N2_EXPECTED_GPU') or None,
                 nodes=nodes, world_size=nodes * 4, tp=2, learners=learners,
                 arms=arms, cohort=cohort, workspace_mib=workspace, pier_schedule=pier_schedule,
+                joint_config=str(Path(joint_path).resolve()) if joint_path else None, joint_recipe=joint_recipe,
                 repeats=repeats, repeat_start=repeat_start,
-                interval=50, warmup_cycles=1 if profile == 'pilot' else 2,
-                measured_cycles=1 if profile == 'pilot' else 3,
-                attempts=100 if profile == 'pilot' else 250,
+                interval=50, warmup_cycles=warmup_cycles,
+                measured_cycles=measured_cycles,
+                attempts=(warmup_cycles + measured_cycles) * 50,
                 sequence=2048, microbatch=1, accumulation=8, global_batch=learners * 8,
                 snapshot=str(Path(env.get('PIER_QWEN_SNAPSHOT') or
                     root / 'local/qwen/models' / f'Qwen2.5-{model_size}' / pin['revision']).resolve()),
@@ -115,6 +127,8 @@ def training_args(config, case, directory):
         options.pop('--outer-workspace-mib')
     if case['backend'] == 'pier' and config.get('pier_schedule', 'reference') != 'reference':
         options['--outer-pier-schedule'] = config['pier_schedule']
+        if config['pier_schedule'] == 'joint':
+            options['--outer-joint-config'] = config['joint_config']
     argv = [item for pair in options.items() for item in (pair[0], str(pair[1]))]
     argv += ['--bf16', '--accumulate-allreduce-grads-in-fp32', '--local-sgd-inner-average']
     if case['arm'] in ('O', 'OS'):

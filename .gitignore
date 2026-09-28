@@ -110,6 +110,14 @@ samples_record*
 /out/n3-*/run-*/*
 !/out/n3-*/run-*/*.json
 
+# Joint runtime gates/campaigns: return nested text evidence through Git.
+# Keep binary checkpoints, datasets and caches on the cluster.
+/out/joint-*/**/*
+!/out/joint-*/**/
+!/out/joint-*/**/*.json
+!/out/joint-*/**/*.log
+!/out/joint-*/**/*.txt
+
 # Capacity scan: resumable per-arm probes, text evidence only.
 !/out/capacity40-*/
 !/out/capacity40-*/*/

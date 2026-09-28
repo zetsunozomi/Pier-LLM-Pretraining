@@ -80,10 +80,18 @@ class StepClock:
 def validate_args(args):
     """Reject unsupported ownership/restore semantics before model allocation."""
     schedule = getattr(args, 'outer_pier_schedule', 'reference')
-    if schedule not in ('reference', 'contiguous'):
+    if schedule not in ('reference', 'contiguous', 'joint'):
         raise ValueError('unknown Pier schedule')
     if schedule != 'reference' and (not enabled(args) or (getattr(args, 'outer_arm', None) or 'pier') != 'pier'):
         raise ValueError('the Pier schedule option requires the centered Pier arm')
+    joint_path = getattr(args, 'outer_joint_config', None)
+    if (schedule == 'joint') != bool(joint_path):
+        raise ValueError('joint schedule requires --outer-joint-config, exclusively')
+    if joint_path:
+        from .joint_config import read_config
+        read_config(joint_path)
+        if args.outer_cpu_offload or getattr(args, 'outer_verify_storage', 'memory') == 'streamed':
+            raise ValueError('joint runtime uses device state and the small independent in-memory oracle')
     if not enabled(args):
         if (getattr(args, 'outer_arm', None) is not None or getattr(args, 'outer_measure_dir', None)
                 or getattr(args, 'outer_workspace_mib', None) is not None
@@ -217,48 +225,60 @@ class CenteredRuntime:
             raise ValueError('unknown oracle storage')
         if self.verify and self.oracle_storage == 'memory' and self.coordinates.numel > 1_000_000:
             raise ValueError('in-memory full-state oracle is limited to 1M parameters; use explicit streamed validation')
-        width = (self.coordinates.numel + self.k - 1) // self.k
-        g, b = self.k // self.s, self.outer_rank % self.s
-        state_device = torch.device('cpu') if args.outer_cpu_offload else self.device
-        naive = self.arm == 'cpu_offload'
-        if naive and (not args.outer_cpu_offload or getattr(args, 'outer_workspace_mib', None) is not None):
-            raise ValueError('naive cpu_offload requires CPU state and no tiled workspace cap')
-        pinned = state_device.type == 'cpu' and self.device.type == 'cuda' and not naive
-        if naive:
-            reference_size, start = self.coordinates.numel, 0
-        elif self.arm in ('pier', 'dtensor'):
-            reference_size, start = g * width, b * g * width
-        elif self.arm == 'resident':
-            reference_size, start = self.k * width, 0
-        else:
-            reference_size, start = width, self.outer_rank * width
-        reference = torch.zeros(reference_size, dtype=torch.float32, device=state_device, pin_memory=pinned)
-        momentum = torch.zeros(self.coordinates.numel if naive else width, dtype=torch.float32,
-                               device=state_device, pin_memory=pinned)
-        # Read this state's interval directly from existing masters.
-        valid = max(0, min(reference_size, self.coordinates.numel - start))
-        if valid:
-            self.coordinates.read_into(start, reference[:valid])
         initial = digest([p for _, p, _ in self.coordinates.pairs])
         dist.all_gather_object(fingerprints, initial, group=self.group)
         if len(set(fingerprints)) != 1:
             raise ValueError('initial FP32 reference differs across learners')
-        budget = getattr(args, 'outer_workspace_mib', None)
-        capacity = (tile_for_budget(self.k, self.arm, self.s, width, int(budget * 2**20))
-                    if budget is not None else args.outer_tile_elements)
-        if naive:
-            self.executor = NaiveCPUOffloadExecutor(reference, momentum, coordinates=self.coordinates, group=self.group)
-        elif self.arm == 'pier':
-            self.executor = CenteredExecutor(None, reference, momentum, cohort=self.s,
-                                            tile_elements=capacity, coordinates=self.coordinates, group=self.group,
-                                            schedule=getattr(args, 'outer_pier_schedule', 'reference'))
-        elif self.arm == 'dtensor':
-            from .dtensor import DTensorExecutor
-            self.executor = DTensorExecutor(None, reference, momentum, cohort=self.s,
-                                           tile_elements=capacity, coordinates=self.coordinates, group=self.group)
+        self.joint_controller = None
+        if getattr(args, 'outer_pier_schedule', 'reference') == 'joint':
+            from .joint import JointExecutor
+            from .joint_config import JointController, read_config
+            self.joint_controller = JointController(read_config(args.outer_joint_config))
+            args.outer_joint_recipe = self.joint_controller.config
+            if args.outer_cpu_offload or self.oracle_storage == 'streamed':
+                raise ValueError('joint runtime requires device state and an in-memory verification oracle')
+            self.executor = JointExecutor(coordinates=self.coordinates, group=self.group,
+                                          cohort=self.s, **self.joint_controller.executor_options())
+            reference, momentum = self.executor.reference, self.executor.momentum
         else:
-            self.executor = CollectiveExecutor(None, reference, momentum, arm=self.arm,
-                                              tile_elements=capacity, coordinates=self.coordinates, group=self.group)
+            width = (self.coordinates.numel + self.k - 1) // self.k
+            g, b = self.k // self.s, self.outer_rank % self.s
+            state_device = torch.device('cpu') if args.outer_cpu_offload else self.device
+            naive = self.arm == 'cpu_offload'
+            if naive and (not args.outer_cpu_offload or getattr(args, 'outer_workspace_mib', None) is not None):
+                raise ValueError('naive cpu_offload requires CPU state and no tiled workspace cap')
+            pinned = state_device.type == 'cpu' and self.device.type == 'cuda' and not naive
+            if naive:
+                reference_size, start = self.coordinates.numel, 0
+            elif self.arm in ('pier', 'dtensor'):
+                reference_size, start = g * width, b * g * width
+            elif self.arm == 'resident':
+                reference_size, start = self.k * width, 0
+            else:
+                reference_size, start = width, self.outer_rank * width
+            reference = torch.zeros(reference_size, dtype=torch.float32, device=state_device, pin_memory=pinned)
+            momentum = torch.zeros(self.coordinates.numel if naive else width, dtype=torch.float32,
+                                   device=state_device, pin_memory=pinned)
+            # Read this state's interval directly from existing masters.
+            valid = max(0, min(reference_size, self.coordinates.numel - start))
+            if valid:
+                self.coordinates.read_into(start, reference[:valid])
+            budget = getattr(args, 'outer_workspace_mib', None)
+            capacity = (tile_for_budget(self.k, self.arm, self.s, width, int(budget * 2**20))
+                        if budget is not None else args.outer_tile_elements)
+            if naive:
+                self.executor = NaiveCPUOffloadExecutor(reference, momentum, coordinates=self.coordinates, group=self.group)
+            elif self.arm == 'pier':
+                self.executor = CenteredExecutor(None, reference, momentum, cohort=self.s,
+                                                tile_elements=capacity, coordinates=self.coordinates, group=self.group,
+                                                schedule=getattr(args, 'outer_pier_schedule', 'reference'))
+            elif self.arm == 'dtensor':
+                from .dtensor import DTensorExecutor
+                self.executor = DTensorExecutor(None, reference, momentum, cohort=self.s,
+                                               tile_elements=capacity, coordinates=self.coordinates, group=self.group)
+            else:
+                self.executor = CollectiveExecutor(None, reference, momentum, arm=self.arm,
+                                                  tile_elements=capacity, coordinates=self.coordinates, group=self.group)
         self.nonfinite = torch.zeros(1, device=self.device, dtype=torch.float32)
         self.unity = torch.ones(1, device=self.device, dtype=torch.float32)
         self.pending_consumer = False
@@ -282,8 +302,9 @@ class CenteredRuntime:
                                               'allocation': self.executor.allocation_bytes(),
                                               'state_storage': {
                                                   name: {'device': tensor.device.type,
-                                                         'bytes': tensor.numel() * tensor.element_size(),
-                                                         'pinned': tensor.is_pinned()}
+                                                         'bytes': (tensor.nbytes if self.joint_controller and name == 'reference'
+                                                                   else tensor.numel() * tensor.element_size()),
+                                                         'pinned': (False if self.joint_controller else tensor.is_pinned())}
                                                   for name, tensor in (('reference', reference), ('momentum', momentum))},
                                               'tile_elements': self.executor.capacity})
         self.streamed_oracle = None
@@ -362,10 +383,28 @@ class CenteredRuntime:
         oracle = self._oracle() if self.verify and boundary else None
         if boundary:
             moments = self._moment_digest() if self.verify else None
+            training_peak, training_budget = None, None
+            if self.joint_controller is not None and self.meter is not None and self.device.type == 'cuda':
+                # CycleMeter resets peaks at the start of each local-training
+                # interval. Capture this before the outer update is allowed to
+                # use the separate transition capacity.
+                training_peak = torch.cuda.max_memory_allocated(self.device)
+                if self.executor.round:
+                    training_budget = int(self.joint_controller.announcement(self.executor.round)['next_phase_mib'] * 2**20)
+                    if training_peak > training_budget:
+                        raise MemoryError('local-training peak exceeded the previously announced next-phase budget')
             if self.meter is not None:
                 self.meter.before_outer()
-            payload = self.executor.step(mu=self.args.outer_momentum, eta=self.args.outer_learning_rate)
-            self.optimizer.commit_outer_update()
+            if self.joint_controller is not None:
+                payload = self.joint_controller.step(self.executor, mu=self.args.outer_momentum,
+                                                     eta=self.args.outer_learning_rate)
+                payload['training_peak_before_outer_bytes'] = training_peak
+                payload['training_budget_bytes'] = training_budget
+                self.s = self.executor.s
+            else:
+                payload = self.executor.step(mu=self.args.outer_momentum, eta=self.args.outer_learning_rate)
+            if not getattr(self.executor, 'commits_model', False):
+                self.optimizer.commit_outer_update()
             self.pending_consumer = True
             if self.verify:
                 self._check_oracle(oracle)
@@ -407,6 +446,13 @@ class CenteredRuntime:
         e = self.executor
         reference = np.pad(expected['reference'], (0, e.width * e.k - e.n))
         momentum = np.pad(expected['momentum'], (0, e.width * e.k - e.n))
+        if self.joint_controller is not None:
+            for (shard, offset), value in e.reference.pages.items():
+                start = shard * e.width + offset
+                same(value, torch.from_numpy(reference[start:start + value.numel()]), 'production paged R')
+            start = e.rank * e.width
+            same(e.momentum, torch.from_numpy(momentum[start:start + e.width]), 'production fixed-home M')
+            return
         start = e.b * e.g * e.width
         same(e.reference.view(-1), torch.from_numpy(reference[start:start + e.g * e.width]), 'production R')
         start = (e.b * e.g + e.a) * e.width

@@ -49,6 +49,10 @@ def main():
         import safetensors
         import transformers
         argv = training_args(manifest['config'], case, directory)
+        if case['backend'] == 'pier' and manifest['config'].get('pier_schedule') == 'joint':
+            from megatron.core.outer_sync.joint_config import read_config
+            if read_config(manifest['config']['joint_config']) != manifest['config']['joint_recipe']:
+                raise ValueError('joint configuration changed after the launch plan was recorded')
         if 'training_argv' in manifest and argv != manifest['training_argv'][case['id']]:
             raise ValueError('training arguments changed after the launch plan was recorded')
         write(directory / f'worker-rank-{rank}.json', {
