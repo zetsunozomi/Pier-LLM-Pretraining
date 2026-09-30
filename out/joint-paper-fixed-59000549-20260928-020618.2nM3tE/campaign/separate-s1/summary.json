@@ -1,0 +1,1713 @@
+{
+  "stage": "N2",
+  "status": "complete",
+  "config": {
+    "repository": "/pscratch/sd/s/syfan/Pier",
+    "profile": "main",
+    "suite": "baselines",
+    "stage": "N2",
+    "cohorts": [
+      1
+    ],
+    "log_interval": 1,
+    "expected_gpu": "NVIDIA A100-SXM4-40GB",
+    "nodes": 8,
+    "world_size": 32,
+    "tp": 2,
+    "learners": 16,
+    "arms": [
+      "P"
+    ],
+    "cohort": 1,
+    "workspace_mib": 64,
+    "pier_schedule": "joint",
+    "joint_config": "/pscratch/sd/s/syfan/Pier/out/joint-paper-fixed-59000549-20260928-020618.2nM3tE/campaign/separate-s1.json",
+    "joint_recipe": {
+      "version": 1,
+      "variant": "separate",
+      "page_elements": 65536,
+      "capacities": [
+        65536,
+        262144,
+        1048576
+      ],
+      "slot_counts": [
+        1,
+        2,
+        4
+      ],
+      "workspace_mib": 64,
+      "headroom_mib": 1536,
+      "trace": false,
+      "budgets": [
+        {
+          "round": 1,
+          "transition_mib": 39936,
+          "next_phase_mib": 35840,
+          "remaining_rounds": 3
+        }
+      ],
+      "costs": []
+    },
+    "repeats": 1,
+    "repeat_start": 1,
+    "interval": 50,
+    "warmup_cycles": 2,
+    "measured_cycles": 3,
+    "attempts": 250,
+    "sequence": 2048,
+    "microbatch": 1,
+    "accumulation": 8,
+    "global_batch": 128,
+    "snapshot": "/pscratch/sd/s/syfan/Pier/local/qwen/models/Qwen2.5-3B/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b",
+    "data_prefix": null,
+    "data_kind": "synthetic_tokens",
+    "seed": 1234,
+    "order_seed": 421,
+    "model_size": "3B",
+    "model": "Qwen/Qwen2.5-3B",
+    "revision": "3aab1f1954e9cc14eb9509a215f9e5ca08227a9b"
+  },
+  "cases": [
+    {
+      "id": "run-1-P",
+      "repeat": 1,
+      "arm": "P",
+      "backend": "pier",
+      "cohort": 1,
+      "status": "measured",
+      "launcher": {
+        "exit_code": 0,
+        "wall_seconds_including_startup": 881.0187259779777,
+        "command": [
+          "srun",
+          "--nodes=8",
+          "--ntasks=8",
+          "--ntasks-per-node=1",
+          "--gpus-per-node=4",
+          "--kill-on-bad-exit=1",
+          "--gpu-bind=none",
+          "bash",
+          "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+          "/pscratch/sd/s/syfan/Pier/out/joint-paper-fixed-59000549-20260928-020618.2nM3tE/campaign/separate-s1",
+          "run-1-P"
+        ]
+      },
+      "GPU_executed": true,
+      "run_id": "518ae945-319e-4828-9c83-b446ffc637e6",
+      "successful_loss_tokens_global": 39321600,
+      "sum_slowest_rank_cycle_seconds": 485.44187305599917,
+      "useful_tokens_per_second": 81001.66504479513,
+      "outer_and_commit_seconds_mean": 9.63042840033692,
+      "outer_and_commit_seconds_median": 9.627153302018996,
+      "outer_and_commit_seconds_min": 9.581609845976345,
+      "outer_and_commit_seconds_max": 9.682522053015418,
+      "eligible_cycles": 3,
+      "peak_allocated_gib": 33.332523345947266,
+      "peak_reserved_gib": 34.62109375,
+      "final_loss_by_rank": [
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082,
+        0.004942953120917082
+      ],
+      "recipe": {
+        "snapshot_sha256": "6a010df8a7a9df926c8d6bd4b80557c119477500850fb5d286514fcac0d95562",
+        "architecture": {
+          "layers": 36,
+          "hidden": 2048,
+          "intermediate": 11008,
+          "heads": 16,
+          "kv_heads": 2,
+          "vocab": 151936,
+          "max_positions": 32768,
+          "rms_epsilon": 1e-06,
+          "rope_base": 1000000.0,
+          "tied_embeddings": true,
+          "attention_dropout": 0.0,
+          "init_std": 0.02
+        },
+        "data": {
+          "kind": "synthetic_tokens",
+          "dataset": "Megatron MockGPTDataset",
+          "documents": "ascending token IDs followed by the pinned tokenizer EOD",
+          "document_seed": 0,
+          "training_seed": 1234,
+          "quality_evaluation": false
+        },
+        "eod": 151643,
+        "initialization": "weights-only warm start"
+      },
+      "hardware": [
+        {
+          "hostname": "nid001288",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001288",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001288",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001288",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001733",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001733",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001733",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001733",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001836",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001836",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001836",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid001836",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002001",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002001",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002001",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002001",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002113",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002113",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002113",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid002113",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003377",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003377",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003377",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003377",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003380",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003380",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003380",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003380",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003381",
+          "local_rank": 0,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003381",
+          "local_rank": 1,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003381",
+          "local_rank": 2,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        },
+        {
+          "hostname": "nid003381",
+          "local_rank": 3,
+          "gpu": "NVIDIA A100-SXM4-40GB",
+          "gpu_total_bytes": 42404806656,
+          "python": "3.11.14",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4",
+          "transformers": "4.57.3",
+          "safetensors": "0.7.0",
+          "tf32": false,
+          "bf16_reduced_precision_reduction": true,
+          "nccl_algo": "automatic"
+        }
+      ],
+      "allocations": [
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        },
+        {
+          "reference_bytes": 6172176384,
+          "momentum_bytes": 385761024,
+          "workspace_tensor_bytes": 0,
+          "slot_count": 0,
+          "cohort": 1,
+          "tile_elements": 65536,
+          "page_elements": 65536,
+          "schedule": "joint",
+          "momentum_home": "canonical shard j -> outer rank j",
+          "excluded": [
+            "other training allocations",
+            "allocator/library storage"
+          ]
+        }
+      ],
+      "tile_elements": [
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536,
+        65536
+      ],
+      "measurement_contract": {
+        "token_semantics": "global DP-reduced non-padding loss tokens on successful updates; TP counted once",
+        "timing_scope": "data/inner attempts/intermediate logging/outer/master-model commit, drained at boundaries",
+        "excluded_from_cycle": [
+          "initial model/data/checkpoint loading",
+          "boundary barriers and report I/O",
+          "logging/callbacks between independent cycle windows"
+        ]
+      },
+      "input_reports": [
+        {
+          "name": "cycles-rank-0.json",
+          "bytes": 20121,
+          "sha256": "3acca91925c2d86e4e3709f21eea650ef8d9e3b1de1b0f8ace4153ebc2184b43"
+        },
+        {
+          "name": "cycles-rank-1.json",
+          "bytes": 20121,
+          "sha256": "32d18758e3e25c2883d62bcb464f9e75e8e6bb93cdd56e18b468d9be952741b4"
+        },
+        {
+          "name": "cycles-rank-10.json",
+          "bytes": 20122,
+          "sha256": "09352b6507b5929718f1047653310efba18184c385db360c75b28c3202ad43a8"
+        },
+        {
+          "name": "cycles-rank-11.json",
+          "bytes": 20123,
+          "sha256": "a7cfb11bae564299080a9b6c6bae74be795542f166d3221028a7432da4930beb"
+        },
+        {
+          "name": "cycles-rank-12.json",
+          "bytes": 20120,
+          "sha256": "408acca88efb3b1368873672ec0eafc18c27b2564543d238e5fc508c33f655f3"
+        },
+        {
+          "name": "cycles-rank-13.json",
+          "bytes": 20120,
+          "sha256": "95a1ec643fbb8cf414a4451e29617f46eab30dc0f658a986ba5318e2d45eaaa5"
+        },
+        {
+          "name": "cycles-rank-14.json",
+          "bytes": 20123,
+          "sha256": "1feca242a0037900f6d595d0873457a73608be910700e3ac9451c663489498a6"
+        },
+        {
+          "name": "cycles-rank-15.json",
+          "bytes": 20123,
+          "sha256": "a93e792d8001df8ed8472ada7c68f7fd8211e5f8aa871e6a2650d99c1b1519fb"
+        },
+        {
+          "name": "cycles-rank-16.json",
+          "bytes": 20119,
+          "sha256": "f637093029e8a9edcc853dd487c46dae6d03b6f50e434d7aaa0af0b4bfc0dde8"
+        },
+        {
+          "name": "cycles-rank-17.json",
+          "bytes": 20122,
+          "sha256": "1a13fd5b30c1c73dcef675061d4734722dc1d720ed4b6cac0f93e05bcbb1bf2b"
+        },
+        {
+          "name": "cycles-rank-18.json",
+          "bytes": 20117,
+          "sha256": "4e9af1a0f536418b8c9c368c18f2358dd360805735d35d06bb257e13b9d9ceb5"
+        },
+        {
+          "name": "cycles-rank-19.json",
+          "bytes": 20121,
+          "sha256": "eb3daf6df85245b03f160ef0b66e30dca3b60d3b26c307760185dcc0790c8968"
+        },
+        {
+          "name": "cycles-rank-2.json",
+          "bytes": 20121,
+          "sha256": "b81ffaf6c5ed16d8e736a901f6ea177a04c6530f2daf63aad31633e24e262575"
+        },
+        {
+          "name": "cycles-rank-20.json",
+          "bytes": 20122,
+          "sha256": "e58bbc2e27fdde8494e99ad0b04f3abf572483e61ec2ef3c7690df6bdfe089f8"
+        },
+        {
+          "name": "cycles-rank-21.json",
+          "bytes": 20122,
+          "sha256": "755db4d3dfa09c63368986c2fbc8a4621c1e243b724772afc4a517e8bd76af6e"
+        },
+        {
+          "name": "cycles-rank-22.json",
+          "bytes": 20121,
+          "sha256": "0f6480001b5284529f29c2d8af0c660ec77113417e182b6f533abd22e42c45be"
+        },
+        {
+          "name": "cycles-rank-23.json",
+          "bytes": 20122,
+          "sha256": "93965853139e65b0989df7470921599a00b877a26c80f4e579de6b78e470051f"
+        },
+        {
+          "name": "cycles-rank-24.json",
+          "bytes": 20119,
+          "sha256": "5310f3556052ea747df60c3c20dba1f46d3c92197dfefb553aeb0d95dbacceaf"
+        },
+        {
+          "name": "cycles-rank-25.json",
+          "bytes": 20124,
+          "sha256": "55181f2abb3d0a044883c06473deb94a563c6ae7bdefa97c62871bc7e70368be"
+        },
+        {
+          "name": "cycles-rank-26.json",
+          "bytes": 20117,
+          "sha256": "5c7ba39af234b0e251e1397431dd5af7cd6db97f4d4be73585f013cf383d9b0f"
+        },
+        {
+          "name": "cycles-rank-27.json",
+          "bytes": 20120,
+          "sha256": "3a1194b914df76286af02cdb9cd373575f4dc272ddb8e53d243dabac5bfdbb7c"
+        },
+        {
+          "name": "cycles-rank-28.json",
+          "bytes": 20123,
+          "sha256": "4795f335a1b64406d536b00263f13a6c42ea212d7ab85bf92b6cee2748dc2c5b"
+        },
+        {
+          "name": "cycles-rank-29.json",
+          "bytes": 20122,
+          "sha256": "405dea841301974eabf27ecb0d9ebff0193bae2318c9ed8f8b19fd7f2eea0745"
+        },
+        {
+          "name": "cycles-rank-3.json",
+          "bytes": 20119,
+          "sha256": "5d89b3cf532c378822adeb8d1f5b629020f94949ee72b81bb2ec650c29250573"
+        },
+        {
+          "name": "cycles-rank-30.json",
+          "bytes": 20122,
+          "sha256": "486e84be9117011b19c351e20ea8b22a4a58991eea981cf4bf6f8535674c785a"
+        },
+        {
+          "name": "cycles-rank-31.json",
+          "bytes": 20123,
+          "sha256": "a86d30d5b4fe1223f85c8b753b0a78ac749286d664243059d1282188cb9225e7"
+        },
+        {
+          "name": "cycles-rank-4.json",
+          "bytes": 20119,
+          "sha256": "51fe0aac8d09ae1584c8a5a5c098fcff3458b0f57e013704a23e077401bca9d3"
+        },
+        {
+          "name": "cycles-rank-5.json",
+          "bytes": 20119,
+          "sha256": "d6d41bf6e39b83111dc6e594d7071dee0b919413c6baec85484da19039e6abb4"
+        },
+        {
+          "name": "cycles-rank-6.json",
+          "bytes": 20117,
+          "sha256": "96b9680aea87fb39f7e26bb01af295ac741c6d679473ebedfd79ca6303786b26"
+        },
+        {
+          "name": "cycles-rank-7.json",
+          "bytes": 20120,
+          "sha256": "7e0a386d6402023c8316082fa09d075f7b7713e21031ecd1d351a1b2d049a6c7"
+        },
+        {
+          "name": "cycles-rank-8.json",
+          "bytes": 20118,
+          "sha256": "e878bb36bcaf5539009f56c38439db62d392d07b33dafe0f6c6ae8aaa4e720dc"
+        },
+        {
+          "name": "cycles-rank-9.json",
+          "bytes": 20123,
+          "sha256": "b018d87b8fcc6e9e61194fdf2b2f61c24a51fdd7c9ddee4c3eac318610761490"
+        }
+      ],
+      "pier_schedule": "joint",
+      "state_storage_by_rank": [
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        },
+        {
+          "reference": {
+            "device": "cuda",
+            "bytes": 6172176384,
+            "pinned": false
+          },
+          "momentum": {
+            "device": "cuda",
+            "bytes": 385761024,
+            "pinned": false
+          }
+        }
+      ],
+      "host_outer_state_gib_max_rank": 0.0,
+      "speedup_vs_G": null
+    }
+  ],
+  "by_arm": [
+    {
+      "arm": "P",
+      "independent_launches": 1,
+      "tokens_per_second_median": 81001.66504479513
+    }
+  ],
+  "performance_result": true,
+  "paper_ready": false,
+  "cycles_treated_as_independent_runs": false,
+  "remaining_for_main_table": [
+    "32-GPU paired repeats, equal 64/256 MiB tuning and independent baseline S",
+    "short-window numerical comparison for the native reduction arms"
+  ],
+  "memory_scope": "maximum rank PyTorch allocated/reserved peak in measured cycles; not device/NVML",
+  "data_note": "Synthetic-token runs measure Qwen execution, not training quality on a corpus."
+}

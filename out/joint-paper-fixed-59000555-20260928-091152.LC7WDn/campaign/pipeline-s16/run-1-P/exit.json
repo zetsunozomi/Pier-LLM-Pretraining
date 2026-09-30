@@ -1,0 +1,17 @@
+{
+  "exit_code": 0,
+  "wall_seconds_including_startup": 939.0081707789795,
+  "command": [
+    "srun",
+    "--nodes=8",
+    "--ntasks=8",
+    "--ntasks-per-node=1",
+    "--gpus-per-node=4",
+    "--kill-on-bad-exit=1",
+    "--gpu-bind=none",
+    "bash",
+    "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+    "/pscratch/sd/s/syfan/Pier/out/joint-paper-fixed-59000555-20260928-091152.LC7WDn/campaign/pipeline-s16",
+    "run-1-P"
+  ]
+}

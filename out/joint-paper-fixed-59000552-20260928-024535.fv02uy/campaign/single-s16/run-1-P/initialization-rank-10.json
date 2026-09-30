@@ -1,0 +1,59 @@
+{
+  "initialization": "weights-only warm start",
+  "tp_size": 2,
+  "tp_rank": 0,
+  "loaded_parameters": 254,
+  "local_parameter_elements": 1543044096,
+  "unique_model_elements": 3085938688,
+  "optimizer_state_restored": false,
+  "GPU_conversion_validated": false,
+  "architecture": {
+    "layers": 36,
+    "hidden": 2048,
+    "intermediate": 11008,
+    "heads": 16,
+    "kv_heads": 2,
+    "vocab": 151936,
+    "max_positions": 32768,
+    "rms_epsilon": 1e-06,
+    "rope_base": 1000000.0,
+    "tied_embeddings": true,
+    "attention_dropout": 0.0,
+    "init_std": 0.02
+  },
+  "exact_output_vocabulary": 151936,
+  "loaded_before_optimizer_construction": true,
+  "activation_recompute": {
+    "recompute_granularity": "full",
+    "recompute_method": "uniform",
+    "recompute_num_layers": 1,
+    "distribute_saved_activations": false
+  },
+  "qwen_recipe": {
+    "snapshot_sha256": "6a010df8a7a9df926c8d6bd4b80557c119477500850fb5d286514fcac0d95562",
+    "architecture": {
+      "layers": 36,
+      "hidden": 2048,
+      "intermediate": 11008,
+      "heads": 16,
+      "kv_heads": 2,
+      "vocab": 151936,
+      "max_positions": 32768,
+      "rms_epsilon": 1e-06,
+      "rope_base": 1000000.0,
+      "tied_embeddings": true,
+      "attention_dropout": 0.0,
+      "init_std": 0.02
+    },
+    "data": {
+      "kind": "synthetic_tokens",
+      "dataset": "Megatron MockGPTDataset",
+      "documents": "ascending token IDs followed by the pinned tokenizer EOD",
+      "document_seed": 0,
+      "training_seed": 1234,
+      "quality_evaluation": false
+    },
+    "eod": 151643,
+    "initialization": "weights-only warm start"
+  }
+}

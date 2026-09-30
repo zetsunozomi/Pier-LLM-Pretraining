@@ -1,0 +1,4 @@
+N2: complete
+Pier schedule: joint
+case           status       tokens/s    outer+commit(s)   alloc/reserved GiB   speedup/G
+run-1-P        measured     80993.96             9.6512    33.33/34.62   -

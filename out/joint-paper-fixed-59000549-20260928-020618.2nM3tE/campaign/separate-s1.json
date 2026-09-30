@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "variant": "separate",
+  "page_elements": 65536,
+  "capacities": [
+    65536,
+    262144,
+    1048576
+  ],
+  "slot_counts": [
+    1,
+    2,
+    4
+  ],
+  "workspace_mib": 64,
+  "headroom_mib": 1536,
+  "trace": false,
+  "budgets": [
+    {
+      "round": 1,
+      "transition_mib": 39936,
+      "next_phase_mib": 35840,
+      "remaining_rounds": 3
+    }
+  ],
+  "costs": []
+}

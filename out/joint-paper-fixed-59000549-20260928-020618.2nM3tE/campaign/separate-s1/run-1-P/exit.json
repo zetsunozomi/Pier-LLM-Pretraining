@@ -1,0 +1,17 @@
+{
+  "exit_code": 0,
+  "wall_seconds_including_startup": 881.0187259779777,
+  "command": [
+    "srun",
+    "--nodes=8",
+    "--ntasks=8",
+    "--ntasks-per-node=1",
+    "--gpus-per-node=4",
+    "--kill-on-bad-exit=1",
+    "--gpu-bind=none",
+    "bash",
+    "/pscratch/sd/s/syfan/Pier/experiments/qwen/n2_node.sh",
+    "/pscratch/sd/s/syfan/Pier/out/joint-paper-fixed-59000549-20260928-020618.2nM3tE/campaign/separate-s1",
+    "run-1-P"
+  ]
+}
